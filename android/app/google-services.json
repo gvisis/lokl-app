@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "343191793177",
+    "project_id": "kilo-first-app",
+    "storage_bucket": "kilo-first-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343191793177:android:9df4b772c0d360eb778488",
+        "android_client_info": {
+          "package_name": "com.kilofirstapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343191793177-bgd1de9ktfn4bt24ss96nqu168e816n1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUhJOuhVklRk-iZbmWRdIzFPFus3RJZlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343191793177-bgd1de9ktfn4bt24ss96nqu168e816n1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
