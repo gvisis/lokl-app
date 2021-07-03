@@ -1,8 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
+import {Header} from '../../components';
 import auth from '@react-native-firebase/auth';
 
-const LoginView = ({userEmail}) => {
+export const LoginView = ({userEmail}) => {
   const logOff = () => {
     auth()
       .signOut()
@@ -15,10 +16,15 @@ const LoginView = ({userEmail}) => {
   };
   return (
     <View>
-      <Text>Laba Diena {userEmail}</Text>
+      <Header title="Logged in" />
+      <Text>Hello {userEmail}!</Text>
       <Button title="Logoff" onPress={logOff} />
     </View>
   );
 };
 
-export default LoginView;
+const style = StyleSheet.create({
+  textStyle: {
+    paddingVertical: 15,
+  },
+});

@@ -1,14 +1,27 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View, ImageBackground} from 'react-native';
 
-const LandingPageView = () => {
+export const LandingPageView = () => {
+  const landingPageBgImage = require('../../assets/images/landingPageImage.png');
   return (
-    <View>
-      <Text>LandingPageVIew</Text>
+    <View style={styles.container}>
+      <ImageBackground
+        style={styles.landingCover}
+        source={landingPageBgImage}
+      />
     </View>
   );
 };
 
-export default LandingPageView;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+  landingCover: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    position: 'absolute',
+  },
+});

@@ -1,14 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Header} from '../../components';
 
-const ForgotPasswordView = () => {
+export const ForgotPasswordView = () => {
   return (
     <View>
-      <Text>PasswordView</Text>
+      <Header title="Forgot password" />
     </View>
   );
 };
-
-export default ForgotPasswordView;
 
 const styles = StyleSheet.create({});

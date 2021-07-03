@@ -2,9 +2,11 @@ import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {View, Text, Button, TextInput} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import LoginView from './containers/LoginFlow/LoginView';
+import {LandingPageView} from './containers/LandingFlow';
+import {LoginView, ForgotPasswordView, RegisterView} from './containers/LoginFlow';
+import { HomeView } from './containers/HomeFlow/HomeView';
+
 import {Header} from './components/';
-import RegisterView from './containers/LoginFlow/RegisterView';
 
 import auth from '@react-native-firebase/auth';
 
@@ -75,10 +77,13 @@ function App() {
       </View>
     );
   }
-  return (
+  return (  
     <NavigationContainer>
-      {/* <LoginView userEmail={user.email} /> */}
-      <RegisterView />
+      <LoginView userEmail={user.email} />
+      {/* <LandingPageView /> */}
+      {/* <HomeView /> */}
+      {/* <ForgotPasswordView /> */}
+      {/* <RegisterView /> */}
     </NavigationContainer>
   );
 }

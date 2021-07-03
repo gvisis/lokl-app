@@ -1,12 +1,11 @@
 import React from 'react';
 import {Header} from '../../components';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 
-const RegisterView = () => {
+export const RegisterView = () => {
   return (
     <View>
       <Header title="Register View" />
     </View>
   );
 };
-export default RegisterView;
