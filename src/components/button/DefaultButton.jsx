@@ -4,9 +4,10 @@ import styled from 'styled-components/native';
 const Buttonas = styled.TouchableOpacity`
   width: 90%;
   border-radius: 10px;
-  background-color: ${props => props.backgroundColor || 'yellow'}
+  background-color: ${props => props.backgroundColor || 'pink'}
   align-items: center;
   padding: 10px;
+  align-self: ${props => (props.center ? 'center' : 'flex-start')}
 `;
 const ButtonText = styled.Text`
   color: ${props => props.color || 'white'};

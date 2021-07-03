@@ -1,12 +1,10 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {LandingPageView} from './containers/LandingFlow';
-import {LoginView, ForgotPasswordView, RegisterView} from './containers/LoginFlow';
-import { HomeView } from './containers/HomeFlow/HomeView';
+import {HomeView} from './containers/HomeFlow/HomeView';
 
-import {Header} from './components/';
+import {Header, CustomBtn} from './components/';
 
 import auth from '@react-native-firebase/auth';
 
@@ -73,15 +71,21 @@ function App() {
           placeholder={'Password'}
           secureTextEntry={false}
         />
-        <Button title="Login" onPress={signIn} />
+        <CustomBtn
+          text="Login"
+          backgroundColor="green"
+          onPress={signIn}
+          center
+          activeOpacity={0.5}
+        />
       </View>
     );
   }
-  return (  
+  return (
     <NavigationContainer>
       {/* <LoginView /> */}
       {/* <LandingPageView /> */}
-      <HomeView userEmail={user.email}/>
+      <HomeView userEmail={user.email} />
       {/* <ForgotPasswordView /> */}
       {/* <RegisterView /> */}
     </NavigationContainer>

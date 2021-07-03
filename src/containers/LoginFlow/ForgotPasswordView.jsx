@@ -9,5 +9,3 @@ export const ForgotPasswordView = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
