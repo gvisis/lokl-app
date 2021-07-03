@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 const HeaderContainer = styled.View`
   background-color: #023047;
-  height: 40%;
+  height: 30%;
   align-items: center;
   justify-content: center;
 `;

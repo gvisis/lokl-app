@@ -1,13 +1,42 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Header} from '../../components';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Header, CustomBtn} from '../../components';
+import auth from '@react-native-firebase/auth';
 
-export const HomeView = () => {
+export const HomeView = ({userEmail}) => {
+  const logOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        console.log('User signed out!');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   return (
-    <View>
-      <Header title="HomeView" />
+    <View style={styles.container}>
+      <Header title="Welcome Home!" />
+      <Text style={styles.textStyle}>Your email: {userEmail}!</Text>
+      <CustomBtn
+        text="LogOut"
+        style={styles.logOutButton}
+        onPress={logOut}
+        activeOpacity={0.5}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  logOutButton: {
+    position: 'absolute',
+    bottom: 15,
+    marginLeft: 'auto',
+    backgroundColor: 'red',
+    alignSelf: 'center',
+  },
+});

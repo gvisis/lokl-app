@@ -79,9 +79,9 @@ function App() {
   }
   return (  
     <NavigationContainer>
-      <LoginView userEmail={user.email} />
+      {/* <LoginView /> */}
       {/* <LandingPageView /> */}
-      {/* <HomeView /> */}
+      <HomeView userEmail={user.email}/>
       {/* <ForgotPasswordView /> */}
       {/* <RegisterView /> */}
     </NavigationContainer>
