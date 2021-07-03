@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Button} from 'react-native';
 import {Header, CustomBtn} from '../../components';
 import auth from '@react-native-firebase/auth';
 
-export const HomeView = ({userEmail}) => {
+export const HomeView = ({userEmail, navigation}) => {
   const logOut = () => {
     auth()
       .signOut()
@@ -18,6 +18,14 @@ export const HomeView = ({userEmail}) => {
     <View style={styles.container}>
       <Header title="Welcome Home!" />
       <Text style={styles.textStyle}>Your email: {userEmail}!</Text>
+      <Button
+        title="Register"
+        onPress={() =>
+          navigation.navigate('Register', {
+            name: 'Gvidas',
+          })
+        }
+      />
       <CustomBtn
         text="LogOut"
         style={styles.logOutButton}

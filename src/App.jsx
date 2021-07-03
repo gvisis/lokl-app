@@ -1,12 +1,19 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput} from 'react-native';
+import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {AppProvider} from './state/context';
 import {HomeView} from './containers/HomeFlow/HomeView';
-
+import {
+  RegisterView,
+  LoginView,
+  ForgotPasswordView,
+} from './containers/LoginFlow';
 import {Header, CustomBtn} from './components/';
 
-import auth from '@react-native-firebase/auth';
+const Stack = createStackNavigator();
 
 function App() {
   // Set an initializing state whilst Firebase connects
@@ -82,13 +89,18 @@ function App() {
     );
   }
   return (
-    <NavigationContainer>
-      {/* <LoginView /> */}
-      {/* <LandingPageView /> */}
-      <HomeView userEmail={user.email} />
-      {/* <ForgotPasswordView /> */}
-      {/* <RegisterView /> */}
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeView}
+            options={{title: 'It\'s coming home'}}
+          />
+          <Stack.Screen name="Register" component={RegisterView} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppProvider>
   );
 }
 
