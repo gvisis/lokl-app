@@ -1,2 +1,2 @@
 export * from './header/Header';
-export * from './button/DefaultButton';
+export * from './button/CustomBtn';

@@ -2,34 +2,23 @@ import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import {Header, CustomBtn} from '../../components';
 import auth from '@react-native-firebase/auth';
+import {useGlobalContext} from '../../state/context';
 
-export const HomeView = ({userEmail, navigation}) => {
-  const logOut = () => {
-    auth()
-      .signOut()
-      .then(() => {
-        console.log('User signed out!');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+export const HomeView = ({navigation}) => {
+  const {userEmail,handleLogOut} = useGlobalContext();
+
   return (
     <View style={styles.container}>
       <Header title="Welcome Home!" />
       <Text style={styles.textStyle}>Your email: {userEmail}!</Text>
       <Button
         title="Register"
-        onPress={() =>
-          navigation.navigate('Register', {
-            name: 'Gvidas',
-          })
-        }
+        onPress={() => navigation.navigate('Register')}
       />
       <CustomBtn
         text="LogOut"
         style={styles.logOutButton}
-        onPress={logOut}
+        onPress={handleLogOut}
         activeOpacity={0.5}
       />
     </View>
