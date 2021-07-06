@@ -1,12 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, ImageBackground, Text, TextInput} from 'react-native';
+import {StyleSheet, View, ImageBackground} from 'react-native';
 import {Dimensions} from 'react-native';
 import {Header, CustomBtn} from '../../components/';
+import {ROUTES} from '../../routes/RouteNames'
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
 const landingPageBgImage = require('../../assets/images/landingPageImage.png');
 
-export const LandingPageView = () => {
+export const LandingPageView = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <Header title="Nyan Cat says hi!" height="5px" />
@@ -16,7 +17,7 @@ export const LandingPageView = () => {
         resizeMethod="scale"
       />
       <View style={styles.buttonWrapper}>
-        <CustomBtn text="Login to cat" center activeOpacity={0.8} />
+        <CustomBtn text="Login to cat" center activeOpacity={0.8} onPress={navigation.navigate(ROUTES.Home)} />
         <CustomBtn text="Create new cat account" center activeOpacity={0.8} />
       </View>
     </View>

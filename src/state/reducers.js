@@ -4,14 +4,11 @@ import auth from '@react-native-firebase/auth';
 const reducer = (state, action) => {
   switch (action.type) {
     case constants.app.IS_LOGGED_IN:
-      console.warn(state.isLoggedIn);
-      return {...state};
+      return action.isLoggedIn;
     case constants.app.LOG_IN:
+      const {email, password} = action.payload;
       auth()
-        .signInWithEmailAndPassword(
-          action.payload.email,
-          action.payload.password,
-        )
+        .signInWithEmailAndPassword(email, password)
         .then(() => {
           console.log('User signed in!');
         })
@@ -37,10 +34,6 @@ const reducer = (state, action) => {
           console.error(error);
         });
       return {...state, isLoggedIn: false};
-    case constants.app.CHANGE_LOGGED:
-      return {...state, isLoggedIn: !state.isLoggedIn};
-    case constants.app.SET_USER_EMAIL:
-      return {...state, userEmail: action.payload};
     default:
       return state;
   }

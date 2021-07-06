@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import {Header, CustomBtn} from '../../components';
-import auth from '@react-native-firebase/auth';
 import {useGlobalContext} from '../../state/context';
 
 export const HomeView = ({navigation}) => {
