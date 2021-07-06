@@ -15,19 +15,22 @@ import {ROUTES} from '../../routes/RouteNames';
 export const LoginView = ({navigation}) => {
   const logoImg = require('../../assets/images/logoCat.png');
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <Image source={logoImg} style={styles.logoImg} resizeMode="contain" />
-          <Text style={{color: 'red'}}>Labas</Text>
+          <Text
+            style={{color: 'red', position: 'absolute', top: '30%', right: 30}}>
+            NYAN CAT LOGIN
+          </Text>
           <InputContainer>
             <CustomInput placeholder="Email" />
             <CustomInput placeholder="Password" />
           </InputContainer>
           <CustomBtn text="Login" center activeOpacity={0.8} />
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -38,8 +41,7 @@ const styles = StyleSheet.create({
   },
   logoImg: {
     width: '100%',
-    position: 'absolute',
-    top: 0,
+    height: '40%',
   },
 });
 
