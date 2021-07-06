@@ -1,1 +1,1 @@
-export * from './LandingPageView';
+export * from './LandingView';
