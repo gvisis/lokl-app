@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const HeaderContainer = styled.View`
-  background-color: #023047;
-  height: 40%;
+  height: ${props => (props.height ? props.height : '20%')};
+  width: 100%;
   align-items: center;
   justify-content: center;
+  background-color: #02304795;
 `;
 const TitleText = styled.Text`
   color: white;

@@ -1,24 +1,48 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import auth from '@react-native-firebase/auth';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import {CustomBtn, CustomInput, Header, InputContainer} from '../../components';
 
-const LoginView = ({userEmail}) => {
-  const logOff = () => {
-    auth()
-      .signOut()
-      .then(() => {
-        console.log('User signed out!');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+import {ROUTES} from '../../routes/RouteNames';
+
+export const LoginView = ({navigation}) => {
+  const logoImg = require('../../assets/images/logoCat.png');
   return (
-    <View>
-      <Text>Laba Diena {userEmail}</Text>
-      <Button title="Logoff" onPress={logOff} />
-    </View>
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <Image source={logoImg} style={styles.logoImg} resizeMode="contain" />
+          <Text
+            style={{color: 'red', position: 'absolute', top: '30%', right: 30}}>
+            NYAN CAT LOGIN
+          </Text>
+          <InputContainer>
+            <CustomInput placeholder="Email" />
+            <CustomInput placeholder="Password" />
+          </InputContainer>
+          <CustomBtn text="Login" center activeOpacity={0.8} />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
-export default LoginView;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#003466',
+  },
+  logoImg: {
+    width: '100%',
+    height: '40%',
+  },
+});
+
+export default styles;
