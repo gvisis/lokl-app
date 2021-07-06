@@ -2,10 +2,22 @@
 
 import {constants} from '../constants';
 
-export const logToConsole = () => ({
-  type: constants.app.IS_LOGGED_IN,
+export const login = (email, password) => ({
+  type: constants.app.LOGIN,
+  payload: {email, password},
+});
+
+export const logout = () => ({
+  type: constants.app.LOGOUT,
+});
+
+export const register = (password, email) => ({
+  type: constants.app.REGISTER,
+  payload: {password, email},
 });
 
 export const appActions = {
-  logToConsole,
+  login,
+  logout,
+  register,
 };

@@ -3,8 +3,6 @@ import auth from '@react-native-firebase/auth';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case constants.app.IS_LOGGED_IN:
-      return action.isLoggedIn;
     case constants.app.LOG_IN:
       const {email, password} = action.payload;
       auth()

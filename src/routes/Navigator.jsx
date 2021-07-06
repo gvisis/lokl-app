@@ -13,6 +13,7 @@ import {useGlobalContext} from '../state/context';
 
 const Navigator = () => {
   const {isLoggedIn} = useGlobalContext();
+
   // Set an initializing state whilst Firebase connects
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState();
@@ -32,7 +33,7 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {user ? (
+        {isLoggedIn ? (
           <Stack.Screen name="Home" component={HomeNavigation} />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigation} />
