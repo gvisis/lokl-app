@@ -8,6 +8,6 @@ const StyledContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
-export const InputContainer = ({children}) => {
-  return <StyledContainer>{children}</StyledContainer>;
+export const InputContainer = ({children, style}) => {
+  return <StyledContainer style={style}>{children}</StyledContainer>;
 };

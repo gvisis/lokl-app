@@ -1,5 +1,6 @@
 export enum ROUTES {
   Home = 'home',
+  Error = 'error',
 
   // Tabs
 
@@ -8,6 +9,4 @@ export enum ROUTES {
   Login = 'login',
   ForgotPassword = 'forgotPassword',
   Register = 'register',
-  Success = 'success',
-  Error = 'error',
 }
