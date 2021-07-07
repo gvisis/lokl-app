@@ -1,18 +1,21 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useEffect, useReducer} from 'react';
 
 import reducer from './reducers';
 import {constants} from './constants';
 
-export const AppContext = React.createContext();
+const AppContext = React.createContext();
 
 const initialState = {
   isLoggedIn: false,
   userEmail: '',
 };
-
-console.warn(initialState.isLoggedIn);
-export const AppProvider = ({children}) => {
+console.warn(initialState.userEmail, 'contexte');
+const AppProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const getUserEmail = () => {
+    dispatch({type: constants.app.GET_USER_EMAIL});
+  };
 
   const handleLogin = (email, password) =>
     dispatch({
@@ -28,22 +31,25 @@ export const AppProvider = ({children}) => {
   const handleRegistration = (email, password) =>
     dispatch({
       type: constants.app.REGISTER,
-      email,
-      password,
+      payload: {email, password},
     });
+
   return (
     <AppContext.Provider
       value={{
         ...state,
         handleLogout,
-        handleRegistration,
         handleLogin,
+        handleRegistration,
+        getUserEmail,
       }}>
       {children}
     </AppContext.Provider>
   );
 };
 
-export const useGlobalContext = () => {
+const useGlobalContext = () => {
   return useContext(AppContext);
 };
+
+export {AppContext, AppProvider, useGlobalContext};

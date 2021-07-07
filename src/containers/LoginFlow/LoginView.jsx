@@ -7,17 +7,15 @@ import {CustomBtn, CustomInput} from '../../components';
 import {ROUTES} from '../../routes/RouteNames';
 
 export const LoginView = ({navigation}) => {
-  const {isLoggedIn} = useGlobalContext();
-  console.warn(isLoggedIn);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {handleLogin, handleRegister, handleLogout} = useGlobalContext();
+  const {handleLogin} = useGlobalContext();
   return (
     <AuthContainer headerTitle="Login">
       <CustomInput placeholder="Email" onChangeText={setEmail} value={email} />
       <CustomInput
         placeholder="Password"
-        onChangeText={setPassword}
+        onChangeText={password => setPassword(password)}
         value={password}
       />
       <CustomBtn

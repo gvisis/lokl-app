@@ -24,10 +24,11 @@ i18n
 
     interpolation: {
       escapeValue: false, // react already safes from xss
+      formatSeparator: ',',
     },
     react: {
       useSuspense: true,
     },
   });
 
-export default i18n;
+export const locale = i18n;

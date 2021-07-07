@@ -1,5 +1,5 @@
 //! To be used with redux later on ?? Not sure if it is needed yet in context api
-// Import file to context.js ? 
+//! Import file to context.js ? 
 
 import {constants} from '../constants';
 

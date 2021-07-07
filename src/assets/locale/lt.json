@@ -1,5 +1,5 @@
 {
-  "translation": {
-    "Welcome to React": "Sveiki atvyke i reacta!"
+  "landing": {
+    "title": "Nyan katyte sveikinasi!"
   }
 }
