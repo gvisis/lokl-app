@@ -6,7 +6,7 @@ import {ROUTES} from '../../routes/RouteNames';
 
 export const LoginView = ({navigation}) => {
   return (
-    <AuthContainer headerTitle="Login" buttonText="Login">
+    <AuthContainer headerTitle="Login">
       <CustomInput placeholder="Email" />
       <CustomInput placeholder="Password" />
       <CustomBtn text="Login" center activeOpacity={0.8} />
