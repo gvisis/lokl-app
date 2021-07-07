@@ -25,7 +25,7 @@ export const ForgotPasswordView = ({navigation}) => {
     <AuthContainer headerTitle="Password reset">
       <CustomInput
         placeholder="Enter your email"
-        onChangeText={setEmail}
+        onChangeText={email => setEmail(email)}
         value={email}
       />
       <CustomBtn
