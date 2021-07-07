@@ -3,12 +3,12 @@ import auth from '@react-native-firebase/auth';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case constants.app.LOG_IN:
+    case constants.app.LOGIN:
       const {email, password} = action.payload;
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          console.log('User signed in!');
+          return {...state, isLoggedIn: true, userEmail: email};
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -21,8 +21,8 @@ const reducer = (state, action) => {
 
           console.error(error);
         });
-      return {...state, isLoggedIn: true};
-    case constants.app.LOG_OUT:
+      return {...state};
+    case constants.app.LOGOUT:
       auth()
         .signOut()
         .then(() => {
@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         .catch(error => {
           console.error(error);
         });
-      return {...state, isLoggedIn: false};
+      return {...state, isLoggedIn: false, userEmail: null};
     default:
       return state;
   }

@@ -15,6 +15,12 @@ const StyledInput = styled.TextInput.attrs({
   background-color: white;
 `;
 
-export const CustomInput = ({placeholder}) => {
-  return <StyledInput placeholder={placeholder}></StyledInput>;
+export const CustomInput = ({...props}) => {
+  return (
+    <StyledInput
+      placeholder={props.placeholder}
+      onChangeText={props.onChangeText}
+      value={props.value}
+    />
+  );
 };

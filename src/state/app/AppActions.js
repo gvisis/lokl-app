@@ -1,10 +1,12 @@
-//! To be used with redux later on
+//! To be used with redux later on ?? Not sure if it is needed yet in context api
+// Import file to context.js ? 
 
 import {constants} from '../constants';
 
 export const login = (email, password) => ({
   type: constants.app.LOGIN,
-  payload: {email, password},
+  email,
+  password,
 });
 
 export const logout = () => ({
