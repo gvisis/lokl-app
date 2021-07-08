@@ -1,5 +1,31 @@
 {
   "landing": {
-    "title": "Nyan Cat says hi!"
+    "appName": "NyanCapp!"
+  },
+  "home": {
+    "title": "Welcome back home!"
+  },
+  "login": {
+    "title": "Login"
+  },
+  "register": {
+    "title": "Register"
+  },
+  "common": {
+    "Create new": "Create new account",
+    "Login": "Login",
+    "Logout": "Logout",
+    "Login to": "Login to your account",
+    "Forgot password": "Forgot password?",
+    "Or": "or",
+    "Password": "Password",
+    "Password reset": "Password reset",
+    "Email": "Email",
+    "Reset": "Reset",
+    "Go back": "Go back",
+    "Register": "Register",
+    "Enter email": "Enter your email",
+    "Enter pass": "Enter your password",
+    "Create account": "Create account"
   }
 }

@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
+import {theme} from '../../assets/theme';
+
+const {
+  colors,
+  fonts: {size},
+} = theme;
+
 const StyledButton = styled.TouchableOpacity`
   width: ${props => (props.width ? props.width : '90')}%;
   border-radius: 10px;
@@ -11,11 +18,10 @@ const StyledButton = styled.TouchableOpacity`
   margin-top: ${props => (props.marginTop ? props.marginTop : '15')}px;
 `;
 const StyledButtonText = styled.Text`
-  color: ${props => props.color || 'white'};
-  font-size: ${props => (props.fontSize ? props.fontSize : '15')}px;
+  color: ${props => props.color || colors.white};
+  font-size: ${props => (props.fontSize ? props.fontSize : size.l)}px;
   text-align: center;
-  text-transform: ${props =>
-    props.textTransform ? props.textTransform : 'none'};
+  text-transform: ${props => props.textTransform};
 `;
 
 export const CustomBtn = props => {
@@ -27,7 +33,7 @@ export const CustomBtn = props => {
 };
 
 StyledButton.defaultProps = {
-  backgroundColor: '#EF9241',
+  backgroundColor: colors.secondary,
 };
 
 StyledButtonText.propTypes = {
