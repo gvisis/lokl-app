@@ -3,6 +3,7 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 import {AppProvider, useGlobalContext} from './state/context';
 import Navigator from './routes/Navigator';
+import './utils/locale';
 
 function App() {
   console.warn(useGlobalContext(), 'app');

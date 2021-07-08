@@ -1,36 +1,41 @@
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+
 import {AuthContainer} from './';
 import {useGlobalContext} from '../../state/context';
 import {CustomBtn, CustomInput} from '../../components';
+import {theme} from '../../assets/theme/default';
 
 export const RegisterView = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {handleRegistration} = useGlobalContext();
-  
+  const {t} = useTranslation();
+
+  const {colors} = theme;
   return (
-    <AuthContainer headerTitle="Register" buttonText="Create account">
+    <AuthContainer headerTitle={t('register:title')}>
       <CustomInput
-        placeholder="Enter your email"
+        placeholder={t('common:Enter email')} 
         onChangeText={email => setEmail(email)}
         value={email}
       />
       <CustomInput
-        placeholder="Enter your new password"
+        placeholder={t('common:Enter pass')} 
         onChangeText={password => setPassword(password)}
         value={password}
       />
       <CustomBtn
-        text="Create account"
+        text={t('common:Create account')} 
         center
         activeOpacity={0.8}
         onPress={() => handleRegistration(email, password)}
       />
       <CustomBtn
-        text="Go back"
+        text={t('common:Go back')} 
         center
         width="30"
-        backgroundColor="red"
+        backgroundColor={colors.secondaryBtn}
         activeOpacity={0.8}
         onPress={() => navigation.goBack()}
       />

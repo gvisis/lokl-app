@@ -3,14 +3,14 @@ import React, {useContext, useEffect, useReducer} from 'react';
 import reducer from './reducers';
 import {constants} from './constants';
 
-const AppContext = React.createContext();
+export const AppContext = React.createContext();
 
 const initialState = {
   isLoggedIn: false,
   userEmail: '',
 };
 console.warn(initialState.userEmail, 'contexte');
-const AppProvider = ({children}) => {
+export const AppProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const getUserEmail = () => {
@@ -48,8 +48,6 @@ const AppProvider = ({children}) => {
   );
 };
 
-const useGlobalContext = () => {
+export const useGlobalContext = () => {
   return useContext(AppContext);
 };
-
-export {AppContext, AppProvider, useGlobalContext};
