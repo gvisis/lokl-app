@@ -1,5 +1,25 @@
 {
-  "translation": {
-    "Welcome to React": "Sveiki atvyke i reacta!"
+  "landing": {
+    "appName": "NyanCapp!"
+  },
+  "home": {
+    "title": "Prisijungete prie namu! :)"
+  },
+  "common": {
+    "Create new": "Sukurti paskyra",
+    "Login": "Prisijungti",
+    "Logout": "Atsijungti",
+    "Login to": "Prisijungti prie paskyros",
+    "Forgot password": "Pamiršote slaptažodį?",
+    "Or": "arba",
+    "Password": "Slaptažodis",
+    "Password reset": "Slaptažodžio atstatymas",
+    "Email": "El.paštas",
+    "Reset": "Atstatyti",
+    "Go back": "Grįžti",
+    "Register": "Registruotis",
+    "Enter email": "Įveskite el.paštą",
+    "Enter pass": "Įveskite slaptažodė",
+    "Create account": "Sukurti nauja paskyra"
   }
 }

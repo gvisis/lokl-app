@@ -14,8 +14,9 @@ import {useGlobalContext} from '../state/context';
 const Navigator = () => {
   // Set an initializing state whilst Firebase connects
   const [isLoading, setIsLoading] = useState(true);
-  const {isLoggedIn} = useGlobalContext();
+  const {userEmail} = useGlobalContext();
   const [user, setUser] = useState();
+
 
   // Handle user state changes
   function onAuthStateChanged(user) {
@@ -30,7 +31,7 @@ const Navigator = () => {
   if (isLoading) return null;
 
   const Stack = createStackNavigator();
-
+  console.warn(userEmail, 'navigator');
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -38,7 +39,7 @@ const Navigator = () => {
           <Stack.Screen
             name="Home"
             component={HomeNavigation}
-            initalParams={{email: user.email}}
+            initalParams={{email: user.email}} //! not working if not used with navigation.navigate() ??? 
           />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigation} />

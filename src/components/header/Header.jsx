@@ -1,16 +1,21 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {theme} from '../../assets/theme/default';
 
+const {
+  colors,
+  fonts: {size},
+} = theme;
 const HeaderContainer = styled.View`
   height: ${props => (props.height ? props.height : '20%')};
   width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: #02304795;
+  background-color: ${colors.primary80};
 `;
 const TitleText = styled.Text`
-  color: white;
-  font-size: 25px;
+  color: ${colors.white}
+  font-size: ${size.xxl};
   font-weight: bold;
   text-transform: uppercase;
 `;
