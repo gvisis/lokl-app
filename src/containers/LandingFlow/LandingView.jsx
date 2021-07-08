@@ -1,16 +1,19 @@
 import React from 'react';
 import {StyleSheet, View, ImageBackground} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {Dimensions} from 'react-native';
+
 import {Header, CustomBtn} from '../../components';
 import {ROUTES} from '../../routes/RouteNames';
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
-const landingPageBgImage = require('../../assets/images/landingPageImage.png');
 
 export const LandingView = ({navigation}) => {
+  const landingPageBgImage = require('../../assets/images/landingPageImage.png');
+  const {t} = useTranslation();
   return (
-    <View style={{flex: 1}}>
-      <Header title="Nyan Cat says hi!" height="5px" />
+    <View style={styles.container}>
+      <Header title={t('landing:appName')} height="5px" />
       <ImageBackground
         style={styles.landingCover}
         source={landingPageBgImage}
@@ -18,13 +21,13 @@ export const LandingView = ({navigation}) => {
       />
       <View style={styles.buttonWrapper}>
         <CustomBtn
-          text="Login to cat"
+          text={t('common:Login to')}
           center
           activeOpacity={0.8}
           onPress={() => navigation.navigate(ROUTES.Login)}
         />
         <CustomBtn
-          text="Create new cat account"
+          text={t('common:Create account')}
           center
           activeOpacity={0.8}
           onPress={() => navigation.navigate(ROUTES.Register)}
@@ -35,6 +38,9 @@ export const LandingView = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   landingCover: {
     width: windowWidth,
     height: windowHeight,
@@ -48,15 +54,5 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textInput: {
-    backgroundColor: 'white',
-    height: 40,
-    color: 'red',
-    marginTop: 20,
-    width: windowWidth - 50,
-    borderRadius: 5,
-    padding: 5,
-    fontSize: 16,
   },
 });

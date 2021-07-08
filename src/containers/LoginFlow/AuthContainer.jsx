@@ -9,6 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 import {InputContainer} from '../../components';
+import {theme} from '../../assets/theme/default';
 
 export const AuthContainer = ({children, headerTitle}) => {
   const logoImg = require('../../assets/images/logoCat.png');
@@ -24,23 +25,27 @@ export const AuthContainer = ({children, headerTitle}) => {
     </KeyboardAvoidingView>
   );
 };
+const {
+  colors,
+  fonts: {size},
+} = theme;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003466',
+    backgroundColor: colors.background,
   },
   logoImg: {
     width: '100%',
     height: '40%',
   },
   logoTxt: {
-    color: 'white',
+    color: colors.white,
     textTransform: 'uppercase',
     position: 'absolute',
     top: '30%',
     right: 30,
-    fontSize: 25,
+    fontSize: size.xxxl,
     letterSpacing: 1,
   },
 });
