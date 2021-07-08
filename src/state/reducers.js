@@ -11,22 +11,24 @@ const reducer = (state, action) => {
     }
     case constants.app.LOGIN:
       const {email, password} = action.payload;
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          return {...state, isLoggedIn: true, userEmail: email};
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-
-          console.error(error);
-        });
+      if (email !== '' && password !== '') {
+        auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(() => {
+            return {...state, isLoggedIn: true, userEmail: email};
+          })
+          .catch(error => {
+            if (error.code === 'auth/email-already-in-use') {
+              console.log('That email address is already in use!');
+            }
+            if (error.code === 'auth/invalid-email') {
+              console.log('That email address is invalid!');
+            }
+            console.error(error);
+          });
+      } else {
+        console.warn(`Login failed: ${email}`);
+      }
       return {...state};
 
     case constants.app.LOGOUT:
@@ -57,6 +59,19 @@ const reducer = (state, action) => {
             console.log('That email address is invalid!');
             return {...state, isLoggedIn: false};
           }
+        });
+      return {...state};
+    }
+    case constants.app.PASSWORD_RESET: {
+      auth()
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          console.warn(`Password reset email sent to ${usersEmail}`);
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.warn(errorCode, errorMessage);
         });
     }
     default:
