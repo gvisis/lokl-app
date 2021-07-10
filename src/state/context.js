@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer} from 'react';
+import React, {useContext, useReducer} from 'react';
 
 import reducer from './reducers';
 import {constants} from './constants';
@@ -33,6 +33,11 @@ export const AppProvider = ({children}) => {
       type: constants.app.REGISTER,
       payload: {email, password},
     });
+  const handlePasswordReset = email =>
+    dispatch({
+      type: constants.app.PASSWORD_RESET,
+      payload: {email},
+    });
 
   return (
     <AppContext.Provider
@@ -41,6 +46,7 @@ export const AppProvider = ({children}) => {
         handleLogout,
         handleLogin,
         handleRegistration,
+        handlePasswordReset,
         getUserEmail,
       }}>
       {children}

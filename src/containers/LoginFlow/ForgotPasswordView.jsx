@@ -1,27 +1,17 @@
 import React, {useState} from 'react';
-import auth from '@react-native-firebase/auth';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 import {AuthContainer} from './';
 import {CustomBtn, CustomInput} from '../../components';
-import {theme} from '../../assets/theme/default'
+import {theme} from '../../assets/theme/default';
+import {useGlobalContext} from '../../state/context';
+
 export const ForgotPasswordView = ({navigation}) => {
   const [email, setEmail] = useState('');
   const {colors} = theme;
   const {t} = useTranslation();
-  const handleResetPassword = usersEmail => {
-    auth()
-      .sendPasswordResetEmail(usersEmail)
-      .then(() => {
-        console.warn(`Password reset email sent to ${usersEmail}`);
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-      });
-    setEmail('');
-  };
+  const {handlePasswordReset} = useGlobalContext();
+
   return (
     <AuthContainer headerTitle={t('common:Password reset')}>
       <CustomInput
@@ -33,7 +23,7 @@ export const ForgotPasswordView = ({navigation}) => {
         text={t('common:Reset')}
         center
         activeOpacity={0.8}
-        onPress={() => handleResetPassword(email)}
+        onPress={() => handlePasswordReset(email)}
       />
       <CustomBtn
         text={t('common:Go back')}

@@ -4,4 +4,5 @@ export const appConstants = {
   LOGOUT: 'app/LOGOUT',
   REGISTER: 'app/REGISTER',
   GET_USER_EMAIL: 'app/GET_USER_EMAIL',
+  PASSWORD_RESET: 'app/PASSWORD_RESET',
 };
