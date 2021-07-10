@@ -1,25 +1,27 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
-import {actions} from '../../state/actions';
-import {AuthContainer} from '.';
-import {CustomBtn, CustomInput} from '../../components';
-import {theme} from '../../assets/theme/default';
+import { actions } from '../../state/actions';
+import { AuthContainer } from '.';
+import { CustomBtn, CustomInput } from '../../components';
+import { theme } from '../../assets/theme/default';
 
-export const RegisterView = ({navigation}) => {
+export const RegisterView = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {t} = useTranslation();
-  const {message} = useSelector(state => state.ui.status);
-  const {colors} = theme;
+  const { t } = useTranslation();
+  const { message } = useSelector(state => state.ui.status);
+  const { colors } = theme;
   const dispatch = useDispatch();
 
   const handleRegistration = async (userEmail, userPassword) => {
     if (userEmail === '' || userPassword === '') {
-      dispatch(actions.ui.setStatus('error', true, 'Enter all fields'));
+      dispatch(
+        actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
+      );
     } else {
       await auth()
         .createUserWithEmailAndPassword(userEmail, userPassword)
@@ -36,7 +38,9 @@ export const RegisterView = ({navigation}) => {
           dispatch(actions.user.setUserInfo(userInfo));
         })
         .catch(error => {
-          dispatch(actions.ui.setStatus('error', true, error.code));
+          dispatch(
+            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
+          );
         });
     }
   };

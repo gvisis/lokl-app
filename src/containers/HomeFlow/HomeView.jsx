@@ -1,24 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
+import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
-import {actions} from '../../state/actions';
-import {CustomBtn, Header} from '../../components';
-import {theme} from '../../assets/theme/default';
+import { actions } from '../../state/actions';
+import { CustomBtn, Header, ScreenLoader } from '../../components';
+import { theme } from '../../assets/theme/default';
 
-const {colors} = theme;
+const { colors } = theme;
 
-export const HomeView = ({navigation, route}) => {
-  const {t} = useTranslation();
+export const HomeView = ({ navigation, route }) => {
+  const { t } = useTranslation();
   const userInfo = useSelector(state => state.user.userInfo);
-  console.warn(userInfo);
-  const handleLogout = () => {
-    auth()
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await auth()
       .signOut()
       .then(() => {
-        console.warn(userInfo, 'User signed out!');
+        dispatch(actions.ui.setOnSync('user', true));
       })
       .catch(error => {
         console.error(error.code);

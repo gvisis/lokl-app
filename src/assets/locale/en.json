@@ -12,7 +12,6 @@
     "title": "Register"
   },
   "common": {
-    "Create new": "Create new account",
     "Login": "Login",
     "Logout": "Logout",
     "Login to": "Login to your account",
@@ -26,6 +25,25 @@
     "Register": "Register",
     "Enter email": "Enter your email",
     "Enter pass": "Enter your password",
-    "Create account": "Create account"
+    "Create account": "Create account",
+    "Password sent": "Password sent to your email: {{email}}"
+  },
+  "errors": {
+    "auth/account-exists-with-different-credential": "Account already exists",
+    "auth/email-already-in-use": "Email already in use",
+    "auth/invalid-email": "Invalid email",
+    "auth/operation-not-allowed": "Operation not allowed",
+    "auth/operation-not-supported-in-this-environment": "Operation not supported in this environment",
+    "auth/quota-exceeded": "Quota exceeded",
+    "auth/timeout": "Timeout",
+    "auth/unauthorized-continue-uri": "Unauthorized continue URI",
+    "auth/user-disabled": "User disabled",
+    "auth/user-not-found": "User not found",
+    "auth/weak-password": "Weak password",
+    "auth/wrong-password": "Wrong password",
+    "auth/network-request-failed": "Network request failed",
+    "auth/too-many-requests": "Too many requests",
+    "auth/unknown": "Unknown error",
+    "auth/fill-all-fields": "Please fill all fields"
   }
 }
