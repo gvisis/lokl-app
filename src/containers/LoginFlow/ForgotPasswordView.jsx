@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
-import {AuthContainer} from '.';
-import {CustomBtn, CustomInput} from '../../components';
-import {actions} from '../../state/actions';
-import {theme} from '../../assets/theme/default';
+import { AuthContainer } from '.';
+import { CustomBtn, CustomInput } from '../../components';
+import { actions } from '../../state/actions';
+import { theme } from '../../assets/theme/default';
 
-export const ForgotPasswordView = ({navigation}) => {
+export const ForgotPasswordView = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const {colors} = theme;
-  const {t} = useTranslation();
+  const { colors } = theme;
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {message} = useSelector(state => state.ui.status);
+  const { message } = useSelector(state => state.ui.status);
 
   const handlePasswordReset = async resetEmail => {
     if (resetEmail) {
@@ -25,15 +25,17 @@ export const ForgotPasswordView = ({navigation}) => {
             actions.ui.setStatus(
               `success`,
               true,
-              `Password sent to ${resetEmail}`,
+              t(`common:Password sent`, { email: resetEmail }),
             ),
           );
         })
         .catch(error => {
-          dispatch(actions.ui.setStatus('error', true, error.code));
+          dispatch(
+            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
+          );
         });
     } else {
-      dispatch(actions.ui.setStatus('error', true, `Enter your email`));
+      dispatch(actions.ui.setStatus('error', true, t(`common:Enter email`)));
     }
   };
 

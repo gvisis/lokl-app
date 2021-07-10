@@ -1,48 +1,56 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
-import {Text} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Text } from 'react-native';
 
-import {AuthContainer} from '.';
-import {CustomBtn, CustomInput} from '../../components';
-import {ROUTES} from '../../routes/RouteNames';
-import {actions} from '../../state/actions';
-import {theme} from '../../assets/theme/default';
+import { AuthContainer } from '.';
+import { CustomBtn, CustomInput } from '../../components';
+import { ROUTES } from '../../routes/RouteNames';
+import { actions } from '../../state/actions';
+import { theme } from '../../assets/theme/default';
 
-export const LoginView = ({navigation}) => {
+export const LoginView = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {
     colors,
-    fonts: {size},
+    fonts: { size },
   } = theme;
-  const {t} = useTranslation();
-  const {message, error, success} = useSelector(state => state.ui.status);
+  const { t } = useTranslation();
+  const { message, error, success } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
   const handleLogin = async (userEmail, userPassword) => {
     if (userEmail === '' || userPassword === '') {
-      dispatch(actions.ui.setStatus('error', true, 'Fill all fields'));
+      dispatch(
+        actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
+      );
     } else {
       await auth()
-        .signInWithEmailAndPassword(userEmail, userPassword)
+        .signInWithEmailAndPassword(
+          (userEmail = 'email@example.com'),
+          (userPassword = 'password123'),
+        )
         .then(() => {
           const userInfo = {
             email: auth().currentUser.email,
             id: auth().currentUser.uid,
           };
+          dispatch(actions.ui.setOnSync('user', true));
           dispatch(actions.user.setUserInfo(userInfo));
         })
         .catch(error => {
-          dispatch(actions.ui.setStatus('error', true, error.code));
+          dispatch(
+            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
+          );
         });
     }
   };
 
   return (
     <AuthContainer headerTitle={t('login:title')}>
-      {(error || success) && <Text style={{color: 'white'}}>{message}</Text>}
+      {(error || success) && <Text style={{ color: 'white' }}>{message}</Text>}
       <CustomInput
         placeholder={t('common:Email')}
         onChangeText={setEmail}
@@ -68,7 +76,7 @@ export const LoginView = ({navigation}) => {
         textTransform="uppercase"
         onPress={() => navigation.navigate(ROUTES.ForgotPassword)}
       />
-      <Text style={{color: colors.white, marginTop: 5, lineHeight: 17}}>
+      <Text style={{ color: colors.white, marginTop: 5, lineHeight: 17 }}>
         {t('common:Or')}{' '}
       </Text>
       <CustomBtn

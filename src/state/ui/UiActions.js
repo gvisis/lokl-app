@@ -1,8 +1,8 @@
 import { constants } from '../constants';
 
-const setOnSync = payload => ({
+const setOnSync = (key, bool) => ({
 	type: constants.ui.SET_ON_SYNC,
-	payload,
+	key, bool,
 });
 
 const setStatus = (key, bool, message) => ({
