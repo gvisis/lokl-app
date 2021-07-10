@@ -15,6 +15,7 @@ export const ForgotPasswordView = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {message} = useSelector(state => state.ui.status);
+
   const handlePasswordReset = async resetEmail => {
     if (resetEmail) {
       await auth()
@@ -35,6 +36,7 @@ export const ForgotPasswordView = ({navigation}) => {
       dispatch(actions.ui.setStatus('error', true, `Enter your email`));
     }
   };
+
   return (
     <AuthContainer headerTitle={t('common:Password reset')}>
       <Text>{message}</Text>

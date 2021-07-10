@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {Text} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
 
-import {AuthContainer} from './';
+import {actions} from '../../state/actions';
+import {AuthContainer} from '.';
 import {CustomBtn, CustomInput} from '../../components';
 import {theme} from '../../assets/theme/default';
 
@@ -9,10 +13,37 @@ export const RegisterView = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {t} = useTranslation();
-
+  const {message} = useSelector(state => state.ui.status);
   const {colors} = theme;
+  const dispatch = useDispatch();
+
+  const handleRegistration = async (userEmail, userPassword) => {
+    if (userEmail === '' || userPassword === '') {
+      dispatch(actions.ui.setStatus('error', true, 'Enter all fields'));
+    } else {
+      await auth()
+        .createUserWithEmailAndPassword(userEmail, userPassword)
+        .then(() => {
+          const userInfo = {
+            email: auth().currentUser.email,
+            id: auth().currentUser.uid,
+            name: auth().currentUser.displayName,
+          };
+          //! Needs an in status message to be displayed
+          dispatch(
+            actions.ui.setStatus('success', true, 'Registration successful'),
+          );
+          dispatch(actions.user.setUserInfo(userInfo));
+        })
+        .catch(error => {
+          dispatch(actions.ui.setStatus('error', true, error.code));
+        });
+    }
+  };
+
   return (
     <AuthContainer headerTitle={t('register:title')}>
+      <Text>{message}</Text>
       <CustomInput
         placeholder={t('common:Enter email')}
         onChangeText={email => setEmail(email)}

@@ -1,25 +1,39 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
-import {Header, CustomBtn} from '../../components';
-import {useGlobalContext} from '../../state/context';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+
+import {actions} from '../../state/actions';
+import {CustomBtn, Header} from '../../components';
 import {theme} from '../../assets/theme/default';
-import { useTranslation } from 'react-i18next';
+
 const {colors} = theme;
 
 export const HomeView = ({navigation, route}) => {
-  const {handleLogout, getUserEmail} = useGlobalContext();
   const {t} = useTranslation();
-  // console.warn(getUserEmail(), 'homeview'); // render loops
+  const userInfo = useSelector(state => state.user.userInfo);
+  console.warn(userInfo);
+  const handleLogout = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        console.warn(userInfo, 'User signed out!');
+      })
+      .catch(error => {
+        console.error(error.code);
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <Header title={t('home:title')}/>
-      <Text style={styles.textStyle}>Your email: not working...!</Text>
+      <Header title={t('home:title')} />
+      <Text style={styles.textStyle}>Your email: {userInfo.email}!</Text>
       <CustomBtn
         text={t('common:Logout')}
         style={styles.logOutButton}
-        onPress={handleLogout}
         activeOpacity={0.5}
+        onPress={handleLogout}
       />
     </View>
   );
@@ -30,10 +44,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logOutButton: {
-    position: 'absolute',
+    alignSelf: 'center',
+    backgroundColor: colors.secondaryBtn,
     bottom: 15,
     marginLeft: 'auto',
-    backgroundColor: colors.secondaryBtn,
-    alignSelf: 'center',
+    position: 'absolute',
   },
 });

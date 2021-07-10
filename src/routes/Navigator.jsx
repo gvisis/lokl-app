@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Navigations routes
-// import {HomeNavigation} from './HomeNavigation';
+import {HomeNavigation} from './HomeNavigation';
 import {AuthNavigation} from './AuthNavigation';
 
 const Navigator = () => {
@@ -28,15 +28,12 @@ const Navigator = () => {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {user ? (
           <Stack.Screen name="Home" component={HomeNavigation} />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigation} />
         )}
-      </Stack.Navigator> */}
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Auth" component={AuthNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

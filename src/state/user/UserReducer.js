@@ -8,11 +8,9 @@ const INITIAL_STATE = {
 }
 
 export const userReducer = createReducer(INITIAL_STATE, {
-	[constants.SET_USER_INFO]: (state, { userInfo }) => {
-		if (userInfo.id) {
-			state.auth = true;
-			state.userInfo = userInfo;
-		}
+	[constants.user.SET_USER_INFO]: (state, action) => {
+		state.auth = true;
+		state.userInfo = action.payload;
 	},
 	[constants.user.LOG_OUT]: () => INITIAL_STATE
 })

@@ -18,12 +18,12 @@ export const LoginView = ({navigation}) => {
     fonts: {size},
   } = theme;
   const {t} = useTranslation();
-  const {errorMessage, error} = useSelector(state => state.ui);
+  const {message, error, success} = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
   const handleLogin = async (userEmail, userPassword) => {
     if (userEmail === '' || userPassword === '') {
-      dispatch(actions.ui.setError('Fill all fields'));
+      dispatch(actions.ui.setStatus('error', true, 'Fill all fields'));
     } else {
       await auth()
         .signInWithEmailAndPassword(userEmail, userPassword)
@@ -31,19 +31,18 @@ export const LoginView = ({navigation}) => {
           const userInfo = {
             email: auth().currentUser.email,
             id: auth().currentUser.uid,
-            name: auth().currentUser.displayName,
           };
           dispatch(actions.user.setUserInfo(userInfo));
         })
         .catch(error => {
-          dispatch(actions.ui.setError(error.code));
+          dispatch(actions.ui.setStatus('error', true, error.code));
         });
     }
   };
 
   return (
     <AuthContainer headerTitle={t('login:title')}>
-      {error && <Text style={{color: 'white'}}>{errorMessage}</Text>}
+      {(error || success) && <Text style={{color: 'white'}}>{message}</Text>}
       <CustomInput
         placeholder={t('common:Email')}
         onChangeText={setEmail}
@@ -69,7 +68,7 @@ export const LoginView = ({navigation}) => {
         textTransform="uppercase"
         onPress={() => navigation.navigate(ROUTES.ForgotPassword)}
       />
-      {/*<Text style={{color: colors.white, marginTop: 5, lineHeight: 17}}>
+      <Text style={{color: colors.white, marginTop: 5, lineHeight: 17}}>
         {t('common:Or')}{' '}
       </Text>
       <CustomBtn
@@ -81,7 +80,7 @@ export const LoginView = ({navigation}) => {
         textTransform="uppercase"
         marginTop="5"
         onPress={() => navigation.navigate(ROUTES.Register)}
-      /> */}
+      />
     </AuthContainer>
   );
 };
