@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {AuthContainer} from './';
+import {AuthContainer} from '.';
 import {CustomBtn, CustomInput} from '../../components';
 import {theme} from '../../assets/theme/default';
-import {useGlobalContext} from '../../state/context';
 
 export const ForgotPasswordView = ({navigation}) => {
   const [email, setEmail] = useState('');
   const {colors} = theme;
   const {t} = useTranslation();
-  const {handlePasswordReset} = useGlobalContext();
-
   return (
     <AuthContainer headerTitle={t('common:Password reset')}>
       <CustomInput

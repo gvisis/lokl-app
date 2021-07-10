@@ -1,17 +1,18 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {StatusBar} from 'react-native';
-import {AppProvider, useGlobalContext} from './state/context';
+import {Provider} from 'react-redux';
+
 import Navigator from './routes/Navigator';
 import './utils/locale';
+import {store} from './state/store';
 
 function App() {
-  console.warn(useGlobalContext(), 'app');
   return (
-    <AppProvider>
+    <Provider store={store}>
       <StatusBar hidden />
       <Navigator />
-    </AppProvider>
+    </Provider>
   );
 }
 

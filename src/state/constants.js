@@ -1,5 +1,9 @@
-import {appConstants} from './app/AppConstants';
+import { appConstants } from './app/AppConstants';
+import { uiConstants } from './ui/UiConstants';
+import { userConstants } from './user/UserConstants';
 
 export const constants = {
-  app: appConstants,
+	app: appConstants,
+	user: userConstants,
+	ui: uiConstants,
 };

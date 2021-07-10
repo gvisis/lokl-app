@@ -1,22 +1,17 @@
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Navigations routes
-import {HomeNavigation} from './HomeNavigation';
+// import {HomeNavigation} from './HomeNavigation';
 import {AuthNavigation} from './AuthNavigation';
-
-// Global Context
-import {useGlobalContext} from '../state/context';
 
 const Navigator = () => {
   // Set an initializing state whilst Firebase connects
   const [isLoading, setIsLoading] = useState(true);
-  const {userEmail} = useGlobalContext();
   const [user, setUser] = useState();
-
 
   // Handle user state changes
   function onAuthStateChanged(user) {
@@ -31,19 +26,17 @@ const Navigator = () => {
   if (isLoading) return null;
 
   const Stack = createStackNavigator();
-  console.warn(userEmail, 'navigator');
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      {/* <Stack.Navigator screenOptions={{headerShown: false}}>
         {user ? (
-          <Stack.Screen
-            name="Home"
-            component={HomeNavigation}
-            initalParams={{email: user.email}} //! not working if not used with navigation.navigate() ??? 
-          />
+          <Stack.Screen name="Home" component={HomeNavigation} />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigation} />
         )}
+      </Stack.Navigator> */}
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Auth" component={AuthNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

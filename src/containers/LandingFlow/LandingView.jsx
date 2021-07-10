@@ -1,9 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, ImageBackground} from 'react-native';
+import {Dimensions, ImageBackground, StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {Dimensions} from 'react-native';
 
-import {Header, CustomBtn} from '../../components';
+import {CustomBtn, Header} from '../../components';
 import {ROUTES} from '../../routes/RouteNames';
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
@@ -38,21 +37,21 @@ export const LandingView = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: windowHeight / 2 - 100,
+    width: '100%',
+  },
   container: {
     flex: 1,
   },
   landingCover: {
-    width: windowWidth,
     height: windowHeight,
+    position: 'absolute',
     resizeMode: 'contain',
-    position: 'absolute',
+    width: windowWidth,
     zIndex: -1,
-  },
-  buttonWrapper: {
-    position: 'absolute',
-    top: windowHeight / 2 - 100,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
