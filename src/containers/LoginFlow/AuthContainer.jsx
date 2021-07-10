@@ -1,13 +1,14 @@
 import React from 'react';
 import {
+  Image,
+  Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
-  Image,
-  View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from 'react-native';
+
 import {InputContainer} from '../../components';
 import {theme} from '../../assets/theme/default';
 
@@ -32,20 +33,20 @@ const {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.background,
+    flex: 1,
   },
   logoImg: {
-    width: '100%',
     height: '40%',
+    width: '100%',
   },
   logoTxt: {
     color: colors.white,
-    textTransform: 'uppercase',
-    position: 'absolute',
-    top: '30%',
-    right: 30,
     fontSize: size.xxxl,
     letterSpacing: 1,
+    position: 'absolute',
+    right: 30,
+    textTransform: 'uppercase',
+    top: '30%',
   },
 });
