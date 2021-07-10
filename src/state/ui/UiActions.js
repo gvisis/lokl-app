@@ -5,12 +5,12 @@ const setOnSync = payload => ({
 	payload,
 });
 
-const setError = payload => ({
-	type: constants.ui.SET_ERROR,
-	payload
+const setStatus = (key, bool, message) => ({
+	type: constants.ui.SET_STATUS,
+	key, bool, message
 });
 
 export const uiActions = {
 	setOnSync,
-	setError,
+	setStatus,
 };

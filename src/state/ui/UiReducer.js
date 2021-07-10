@@ -8,8 +8,11 @@ const INITIAL_STATE = {
 		app: false,
 		button: false,
 	},
-	error: false,
-	errorMessage: 'nera',
+	status: {
+		success: false,
+		error: false,
+		message: '',
+	}
 }
 
 export const uiReducer = createReducer(INITIAL_STATE, {
@@ -19,8 +22,14 @@ export const uiReducer = createReducer(INITIAL_STATE, {
 	[constants.ui.SET_ON_SYNC]: (state, { key, bool }) => {
 		state.onSync[key] = bool;
 	},
-	[constants.ui.SET_ERROR]: (state, action) => { //! can i destructure it ? 
-		state.errorMessage = action.payload;
-		state.error = true;
+	[constants.ui.SET_STATUS]: (state, { key, bool, message }) => {
+		if (key === 'success') {
+			state.status.error = false;
+		}
+		if (key === 'error') {
+			state.status.success = false;
+		}
+		state.status[key] = bool;
+		state.status.message = message;
 	}
 });

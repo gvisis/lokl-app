@@ -16,9 +16,9 @@ export const AuthNavigation = () => (
 		<AuthStack.Screen name={ROUTES.Landing} component={LandingView} />
 		<AuthStack.Screen name={ROUTES.Login} component={LoginView} />
 		{/* <AuthStack.Screen name={ROUTES.Register} component={RegisterView} /> */}
-		{/* <AuthStack.Screen
+		<AuthStack.Screen
 			name={ROUTES.ForgotPassword}
 			component={ForgotPasswordView}
-		/> */}
+		/>
 	</AuthStack.Navigator>
 );

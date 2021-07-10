@@ -6,17 +6,17 @@ import {Text} from 'react-native';
 
 import {AuthContainer} from '.';
 import {CustomBtn, CustomInput} from '../../components';
-// import {ROUTES} from '../../routes/RouteNames';
+import {ROUTES} from '../../routes/RouteNames';
 import {actions} from '../../state/actions';
-// import {theme} from '../../assets/theme/default';
+import {theme} from '../../assets/theme/default';
 
-export const LoginView = () => {
+export const LoginView = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const {
-  //   colors,
-  //   fonts: {size},
-  // } = theme;
+  const {
+    colors,
+    fonts: {size},
+  } = theme;
   const {t} = useTranslation();
   const {errorMessage, error} = useSelector(state => state.ui);
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ export const LoginView = () => {
         activeOpacity={0.8}
         onPress={() => handleLogin(email, password)}
       />
-      {/* <CustomBtn
+      <CustomBtn
         text={t('common:Forgot password')}
         center
         activeOpacity={0.8}
@@ -69,7 +69,7 @@ export const LoginView = () => {
         textTransform="uppercase"
         onPress={() => navigation.navigate(ROUTES.ForgotPassword)}
       />
-      <Text style={{color: colors.white, marginTop: 5, lineHeight: 17}}>
+      {/*<Text style={{color: colors.white, marginTop: 5, lineHeight: 17}}>
         {t('common:Or')}{' '}
       </Text>
       <CustomBtn
