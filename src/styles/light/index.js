@@ -1,4 +1,4 @@
-const DefaultTheme = {
+export const lightTheme = {
 	colors: {
 		primary: '#fff',
 		primary60: 'rgba(0, 53, 102, 0.6)',
@@ -22,5 +22,3 @@ const DefaultTheme = {
 		},
 	},
 };
-
-export const theme = DefaultTheme;

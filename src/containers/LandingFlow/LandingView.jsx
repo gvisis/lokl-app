@@ -1,16 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {Dimensions, ImageBackground, StyleSheet, View} from 'react-native';
-import {useTranslation} from 'react-i18next';
+import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-import {CustomBtn, Header} from '../../components';
-import {ROUTES} from '../../routes/RouteNames';
+import { CustomBtn, Header } from '../../components';
+import { ROUTES } from '../../routes/RouteNames';
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
+const { width: windowWidth, height: windowHeight } = Dimensions.get('screen');
 
-export const LandingView = ({navigation}) => {
+export const LandingView = ({ navigation }) => {
   const landingPageBgImage = require('../../assets/images/landingPageImage.png');
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <Header title={t('landing:appName')} height="5px" />
@@ -35,6 +35,12 @@ export const LandingView = ({navigation}) => {
       </View>
     </View>
   );
+};
+
+LandingView.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
 };
 
 const styles = StyleSheet.create({

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,7 @@ import { theme } from '../../assets/theme/default';
 
 const { colors } = theme;
 
-export const HomeView = ({ navigation, route }) => {
+export const HomeView = () => {
   const { t } = useTranslation();
   const userInfo = useSelector(state => state.user.userInfo);
   const dispatch = useDispatch();
