@@ -80,7 +80,7 @@ export const LoginView = ({ navigation }) => {
         {t('common:Or')}{' '}
       </Text>
       <CustomBtn
-        text={t('common:Create new')}
+        text={t('common:Create account')}
         center
         activeOpacity={0.8}
         width="50"

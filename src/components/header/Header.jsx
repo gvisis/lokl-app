@@ -10,8 +10,7 @@ const HeaderContainer = styled.View`
 `;
 const TitleText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
-  font-size: 13;
-  font-size: ${({ theme }) => theme.fonts.size.xxl};
+  font-size: ${({ theme }) => theme.fonts.size.xxl}px;
   font-weight: bold;
   text-transform: uppercase;
 `;
