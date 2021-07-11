@@ -13,14 +13,15 @@ const { colors } = theme;
 
 export const HomeView = () => {
   const { t } = useTranslation();
-  const userInfo = useSelector(state => state.user.userInfo);
   const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.user.userInfo);
 
   const handleLogout = async () => {
+    dispatch(actions.ui.setOnSync('user', true));
     await auth()
       .signOut()
       .then(() => {
-        dispatch(actions.ui.setOnSync('user', true));
+        console.warn('User signed out!');
       })
       .catch(error => {
         console.error(error.code);
