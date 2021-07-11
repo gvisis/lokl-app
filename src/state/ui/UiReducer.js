@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
+import { themes } from '../../styles';
 import { constants } from '../constants';
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
 		success: false,
 		error: false,
 		message: '',
-	}
+	},
+	theme: themes.dark,
 }
 
 export const uiReducer = createReducer(INITIAL_STATE, {
@@ -31,5 +33,8 @@ export const uiReducer = createReducer(INITIAL_STATE, {
 		}
 		state.status[key] = bool;
 		state.status.message = message;
+	},
+	[constants.ui.SET_THEME]: (state, { bool }) => {
+		state.theme = bool ? themes.dark : themes.light;
 	}
 });

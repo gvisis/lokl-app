@@ -10,7 +10,13 @@ const setStatus = (key, bool, message) => ({
 	key, bool, message
 });
 
+const setTheme = bool => ({
+	type: constants.ui.SET_THEME,
+	bool
+});
+
 export const uiActions = {
+	setTheme,
 	setOnSync,
 	setStatus,
 };

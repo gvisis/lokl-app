@@ -7,11 +7,9 @@ import { Text } from 'react-native';
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { actions } from '../../state/actions';
-import { theme } from '../../assets/theme/default';
 
 export const ForgotPasswordView = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const { colors } = theme;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { message } = useSelector(state => state.ui.status);
@@ -56,8 +54,8 @@ export const ForgotPasswordView = ({ navigation }) => {
       <CustomBtn
         text={t('common:Go back')}
         center
-        width="30"
-        backgroundColor={colors.secondaryBtn}
+        width={30}
+        secondary
         activeOpacity={0.8}
         onPress={navigation.goBack}
       />

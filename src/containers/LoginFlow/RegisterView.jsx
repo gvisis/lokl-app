@@ -7,14 +7,12 @@ import auth from '@react-native-firebase/auth';
 import { actions } from '../../state/actions';
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
-import { theme } from '../../assets/theme/default';
 
 export const RegisterView = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { t } = useTranslation();
-  const { message } = useSelector(state => state.ui.status);
-  const { colors } = theme;
+  const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
   const handleRegistration = async (userEmail, userPassword) => {
@@ -47,7 +45,7 @@ export const RegisterView = ({ navigation }) => {
 
   return (
     <AuthContainer headerTitle={t('register:title')}>
-      <Text>{message}</Text>
+      {error && <Text>{message}</Text>}
       <CustomInput
         placeholder={t('common:Enter email')}
         onChangeText={email => setEmail(email)}
@@ -68,7 +66,7 @@ export const RegisterView = ({ navigation }) => {
         text={t('common:Go back')}
         center
         width="30"
-        backgroundColor={colors.secondaryBtn}
+        secondary
         activeOpacity={0.8}
         onPress={navigation.goBack}
       />

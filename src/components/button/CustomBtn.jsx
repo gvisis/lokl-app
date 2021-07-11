@@ -2,29 +2,23 @@ import React from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 
-import { theme } from '../../assets/theme';
-
-const {
-  colors,
-  fonts: { size },
-} = theme;
-
 const StyledButton = styled.TouchableOpacity`
-  width: ${props => (props.width ? props.width : '90')}%;
+  width: ${({ width }) => (width ? width : '90')}%;
   border-radius: 10px;
-  background-color: ${props => props.backgroundColor};
+  background-color: ${({ secondary, theme }) =>
+    !secondary ? theme.colors.secondary : theme.colors.secondaryBtn};
   align-items: center;
   padding: 10px;
-  align-self: ${props => (props.center ? 'center' : 'flex-start')};
-  margin-top: ${props => (props.marginTop ? props.marginTop : '15')}px;
+  align-self: ${({ center }) => (center ? 'center' : 'flex-start')};
+  margin-top: ${({ marginTop }) => (marginTop ? marginTop : '15')}px;
 `;
 const StyledButtonText = styled.Text`
-  color: ${props => props.color || colors.white};
-  font-size: ${props => (props.fontSize ? props.fontSize : size.l)}px;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme, fontSize }) =>
+    fontSize ? fontSize : theme.fonts.size.l}px;
   text-align: center;
-  text-transform: ${props => props.textTransform};
+  text-transform: ${({ textTransform }) => textTransform};
 `;
-
 export const CustomBtn = props => (
   <StyledButton {...props}>
     <StyledButtonText>{props.text}</StyledButtonText>
@@ -32,7 +26,7 @@ export const CustomBtn = props => (
 );
 
 StyledButton.defaultProps = {
-  backgroundColor: colors.secondary,
+  backgroundColor: `${({ theme }) => theme.colors.secondary}`,
 };
 
 StyledButtonText.propTypes = {
