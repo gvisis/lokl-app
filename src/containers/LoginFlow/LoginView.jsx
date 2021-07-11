@@ -26,7 +26,9 @@ export const LoginView = ({ navigation }) => {
       dispatch(
         actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
       );
+      dispatch(actions.ui.setOnSync('user', false));
     } else {
+      dispatch(actions.ui.setOnSync('user', true));
       await auth()
         .signInWithEmailAndPassword(
           (userEmail = 'email@example.com'),
@@ -37,20 +39,20 @@ export const LoginView = ({ navigation }) => {
             email: auth().currentUser.email,
             id: auth().currentUser.uid,
           };
-          dispatch(actions.ui.setOnSync('user', true));
           dispatch(actions.user.setUserInfo(userInfo));
         })
         .catch(error => {
           dispatch(
             actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
           );
+          dispatch(actions.ui.setOnSync('user', false));
         });
     }
   };
 
   return (
     <AuthContainer headerTitle={t('login:title')}>
-      {(error || success) && <Text style={{ color: 'white' }}>{message}</Text>}
+      {error && <Text style={{ color: 'white' }}>{message}</Text>}
       <CustomInput
         placeholder={t('common:Email')}
         onChangeText={setEmail}
@@ -80,7 +82,7 @@ export const LoginView = ({ navigation }) => {
         {t('common:Or')}{' '}
       </Text>
       <CustomBtn
-        text={t('common:Create new')}
+        text={t('common:Create account')}
         center
         activeOpacity={0.8}
         width="50"

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -8,6 +9,11 @@ const StyledContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
-export const InputContainer = ({children, style}) => {
-  return <StyledContainer style={style}>{children}</StyledContainer>;
+export const InputContainer = ({ children, style }) => (
+  <StyledContainer style={style}>{children}</StyledContainer>
+);
+
+InputContainer.propTypes = {
+  children: PropTypes.any,
+  style: PropTypes.any,
 };
