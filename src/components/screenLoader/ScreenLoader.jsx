@@ -9,10 +9,8 @@ const LoaderContainer = styled.View`
   justify-content: center;
 `;
 
-export const ScreenLoader = props => {
-  return (
-    <LoaderContainer>
-      <ActivityIndicator {...props} />
-    </LoaderContainer>
-  );
-};
+export const ScreenLoader = props => (
+  <LoaderContainer>
+    <ActivityIndicator {...props} />
+  </LoaderContainer>
+);

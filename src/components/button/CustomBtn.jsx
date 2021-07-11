@@ -34,7 +34,6 @@ StyledButtonText.propTypes = {
   color: PropTypes.string,
   backgroundColor: PropTypes.string,
   center: PropTypes.string,
-  text: PropTypes.string.isRequired,
 };
 
 StyledButtonText.defaultProps = {

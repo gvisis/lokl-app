@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { Switch } from 'react-native';
+import { Button, StatusBar, Switch } from 'react-native';
+import { ThemeProvider } from 'styled-components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { ScreenLoader } from '../components';
 import { actions } from '../state/actions';
@@ -15,6 +16,7 @@ import { AuthNavigation } from './AuthNavigation';
 const Navigator = () => {
   // Set an initializing state whilst Firebase connects
   const [user, setUser] = useState();
+  const [themeSwitch, setThemeSwitch] = useState(true);
   const dispatch = useDispatch();
 
   // Handle user state changes
@@ -28,17 +30,27 @@ const Navigator = () => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
+  const switchTheme = () => {
+    dispatch(actions.ui.setTheme(!themeSwitch));
+    setThemeSwitch(!themeSwitch);
+  };
+  const { theme } = useSelector(state => state.ui);
+
   const Stack = createStackNavigator();
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-          <Stack.Screen name="Home" component={HomeNavigation} />
-        ) : (
-          <Stack.Screen name="Auth" component={AuthNavigation} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <StatusBar hidden />
+        <Button title="Switch theme" onPress={switchTheme} />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {user ? (
+            <Stack.Screen name="Home" component={HomeNavigation} />
+          ) : (
+            <Stack.Screen name="Auth" component={AuthNavigation} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 
