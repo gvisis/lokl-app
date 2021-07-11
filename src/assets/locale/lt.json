@@ -5,6 +5,12 @@
   "home": {
     "title": "Prisijungete prie namu! :)"
   },
+  "login": {
+    "title": "Prisijungimas"
+  },
+  "register": {
+    "title": "Registracija"
+  },
   "common": {
     "Login": "Prisijungti",
     "Logout": "Atsijungti",
@@ -19,6 +25,25 @@
     "Register": "Registruotis",
     "Enter email": "Įveskite el.paštą",
     "Enter pass": "Įveskite slaptažodė",
-    "Create account": "Sukurti nauja paskyra"
+    "Create account": "Sukurti nauja paskyra",
+    "Password sent": "Slaptažodis išsiųstas adresu: {{email}}"
+  },
+  "errors": {
+    "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",
+    "auth/email-already-in-use": "El.paštas jau naudojamas",
+    "auth/invalid-email": "Neteisingas el.pašto adresas",
+    "auth/operation-not-allowed": "Veiksmas negalimas",
+    "auth/operation-not-supported-in-this-environment": "Veiksmas šioje aplinkoje nepalaikomas",
+    "auth/quota-exceeded": "Viršytas kiekis",
+    "auth/timeout": "Nepavyko prisijungti per laiką",
+    "auth/unauthorized-continue-uri": "Negalimas puslapis",
+    "auth/user-disabled": "Vartotojas sustabdytas",
+    "auth/user-not-found": "Vartotojas nerastas",
+    "auth/weak-password": "Silpnas slaptažodis",
+    "auth/wrong-password": "Blogas slaptažodis",
+    "auth/network-request-failed": "Prisijungimo klaida",
+    "auth/too-many-requests": "Per daug bandymu",
+    "auth/unknown": "Nežinoma klaida",
+    "auth/fill-all-fields": "Užpildyke laukelius"
   }
 }

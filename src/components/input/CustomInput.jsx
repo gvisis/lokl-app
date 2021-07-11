@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {theme} from '../../assets/theme/default';
+import { theme } from '../../assets/theme/default';
 
 const {
   colors,
-  fonts: {size},
+  fonts: { size },
 } = theme;
 
 const StyledInput = styled.TextInput.attrs({
@@ -21,8 +21,8 @@ const StyledInput = styled.TextInput.attrs({
   background-color: ${colors.white};
 `;
 
-export const CustomInput = ({...props}) => {
-  const {placeholder, value, onChangeText} = props;
+export const CustomInput = ({ ...props }) => {
+  const { placeholder, value, onChangeText } = props;
   return (
     <StyledInput
       placeholder={placeholder}

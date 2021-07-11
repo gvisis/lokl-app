@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "extends": [
+    "@kilohealth/eslint-config-rn",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    },
+    "rules": {
+      "react/no-unused-prop-types": 0,
+      "react/prop-types": 0
+    },
+    "env": {
+      "es6": true
+    }
+  }
+}
