@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-const StyledInput = styled.TextInput.attrs({
-  placeholderTextColor: `${({ theme }) => theme.colors.secondary}`,
-})`
+// const StyledInput = styled.TextInput.attrs({
+//   placeholderTextColor: `${({ theme }) => theme.colors.secondary}`,
+// })`
+const StyledInput = styled.TextInput`
   width: 90%;
   padding: 5px;
   margin-top: 15px;
