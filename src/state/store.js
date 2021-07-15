@@ -15,6 +15,7 @@ const configStore = (initialState = {}) => {
 	configureSaga(sagaMiddleware, rootSaga);
 	return { store };
 };
+
 const { store } = configStore();
 storeRegistry.register(store);
 export { store };

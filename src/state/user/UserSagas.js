@@ -3,7 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import actions from '../actions'
 import constants from '../constants';
-import api from '../../api/Api';
+import api from '../../api';
 
 // const { t } = useTranslation();
 function* handleLogin(action) {
