@@ -87,6 +87,7 @@ function* handlePasswordReset({ email }) {
 			actions.ui.setStatus('error', true, e.code))
 	} finally {
 		yield put(actions.ui.setOnSync('user', false));
+		yield put(actions.ui.setStatus('success', true, `Password reset link sent to ${email}`))
 	}
 }
 
