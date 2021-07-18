@@ -5,12 +5,28 @@ export const setUserInfo = payload => ({
 	payload,
 });
 
-export const login = payload => ({
+export const login = (email, password) => ({
 	type: constants.user.LOGIN,
-	payload
+	email, password
 });
+
+export const logout = () => ({
+	type: constants.user.LOG_OUT
+})
+
+export const passwordReset = email => ({
+	type: constants.user.PASSWORD_RESET,
+	email
+})
+
+export const clearUserState = () => ({
+	type: constants.user.CLEAR_USER_STATE,
+})
 
 export const userActions = {
 	setUserInfo,
-	login
+	login,
+	logout,
+	passwordReset,
+	clearUserState
 };

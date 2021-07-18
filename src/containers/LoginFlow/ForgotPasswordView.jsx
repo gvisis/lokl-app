@@ -14,27 +14,8 @@ export const ForgotPasswordView = ({ navigation }) => {
   const dispatch = useDispatch();
   const { message } = useSelector(state => state.ui.status);
 
-  const handlePasswordReset = async resetEmail => {
-    if (resetEmail) {
-      await auth()
-        .sendPasswordResetEmail(resetEmail)
-        .then(() => {
-          dispatch(
-            actions.ui.setStatus(
-              `success`,
-              true,
-              t(`common:Password sent`, { email: resetEmail }),
-            ),
-          );
-        })
-        .catch(error => {
-          dispatch(
-            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
-          );
-        });
-    } else {
-      dispatch(actions.ui.setStatus('error', true, t(`common:Enter email`)));
-    }
+  const handlePasswordReset = resetEmail => {
+    dispatch(actions.user.passwordReset(resetEmail));
   };
 
   return (

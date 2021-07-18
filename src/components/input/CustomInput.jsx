@@ -11,7 +11,7 @@ const StyledInput = styled.TextInput`
   justify-content: center;
   align-items: center;
   color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.fonts.size.xl};
+  font-size: ${({ theme }) => theme.fonts.size.xl}px;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
