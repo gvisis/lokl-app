@@ -1,14 +1,13 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { ScreenLoader } from '../components';
-import { actions } from '../state/actions';
 import { AuthNavigation, HomeNavigation } from '.';
 
 const Navigator = () => {
@@ -17,13 +16,11 @@ const Navigator = () => {
   const loading = useSelector(state => state.ui.onSync.user);
   // const [themeSwitch, setThemeSwitch] = useState(true);
 
-  const dispatch = useDispatch();
   const { theme } = useSelector(state => state.ui);
 
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
-    dispatch(actions.ui.setOnSync('user', false));
   }
 
   useEffect(() => {

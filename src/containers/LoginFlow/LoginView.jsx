@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import auth from '@react-native-firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
@@ -18,36 +17,11 @@ export const LoginView = ({ navigation }) => {
     fonts: { size },
   } = theme;
   const { t } = useTranslation();
-  const { message, error, success } = useSelector(state => state.ui.status);
+  const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
-  const handleLogin = async (userEmail, userPassword) => {
-    if (userEmail === '' || userPassword === '') {
-      dispatch(
-        actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
-      );
-      dispatch(actions.ui.setOnSync('user', false));
-    } else {
-      dispatch(actions.ui.setOnSync('user', true));
-      await auth()
-        .signInWithEmailAndPassword(
-          (userEmail = 'email@example.com'),
-          (userPassword = 'password123'),
-        )
-        .then(() => {
-          const userInfo = {
-            email: auth().currentUser.email,
-            id: auth().currentUser.uid,
-          };
-          dispatch(actions.user.setUserInfo(userInfo));
-        })
-        .catch(error => {
-          dispatch(
-            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
-          );
-          dispatch(actions.ui.setOnSync('user', false));
-        });
-    }
+  const handleLoginForm = (email, password) => {
+    dispatch(actions.user.login(email, password));
   };
 
   return (
@@ -67,7 +41,7 @@ export const LoginView = ({ navigation }) => {
         text={t('common:Login')}
         center
         activeOpacity={0.8}
-        onPress={() => handleLogin(email, password)}
+        onPress={() => handleLoginForm(email, password)}
       />
       <CustomBtn
         text={t('common:Forgot password')}
