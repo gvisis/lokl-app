@@ -34,6 +34,10 @@ export const uiReducer = createReducer(INITIAL_STATE, {
 		state.status[key] = bool;
 		state.status.message = message;
 	},
+	[constants.ui.CLEAR_ERRORS]: state => {
+		state.status.message = '';
+	},
+
 	[constants.ui.SET_THEME]: (state, { bool }) => {
 		state.theme = bool ? themes.dark : themes.light;
 	}

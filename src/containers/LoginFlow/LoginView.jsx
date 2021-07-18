@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import auth from '@react-native-firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
+import { Formik } from 'formik';
 
+import { validator } from '../../utils/validators';
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
@@ -11,64 +12,59 @@ import { actions } from '../../state/actions';
 import { theme } from '../../assets/theme/default';
 
 export const LoginView = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const {
     colors,
     fonts: { size },
   } = theme;
   const { t } = useTranslation();
-  const { message, error, success } = useSelector(state => state.ui.status);
+  const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
-
-  const handleLogin = async (userEmail, userPassword) => {
-    if (userEmail === '' || userPassword === '') {
-      dispatch(
-        actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
-      );
-      dispatch(actions.ui.setOnSync('user', false));
-    } else {
-      dispatch(actions.ui.setOnSync('user', true));
-      await auth()
-        .signInWithEmailAndPassword(
-          (userEmail = 'email@example.com'),
-          (userPassword = 'password123'),
-        )
-        .then(() => {
-          const userInfo = {
-            email: auth().currentUser.email,
-            id: auth().currentUser.uid,
-          };
-          dispatch(actions.user.setUserInfo(userInfo));
-        })
-        .catch(error => {
-          dispatch(
-            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
-          );
-          dispatch(actions.ui.setOnSync('user', false));
-        });
-    }
-  };
 
   return (
     <AuthContainer headerTitle={t('login:title')}>
-      {error && <Text style={{ color: 'white' }}>{message}</Text>}
-      <CustomInput
-        placeholder={t('common:Email')}
-        onChangeText={setEmail}
-        value={email}
-      />
-      <CustomInput
-        placeholder={t('common:Password')}
-        onChangeText={setPassword}
-        value={password}
-      />
-      <CustomBtn
-        text={t('common:Login')}
-        center
-        activeOpacity={0.8}
-        onPress={() => handleLogin(email, password)}
-      />
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validator.login}
+        onSubmit={({ email, password }) =>
+          dispatch(actions.user.login(email, password))
+        }>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          errors,
+          values,
+          touched,
+        }) => (
+          <>
+            {touched.email && errors.email && <Text>{errors.email}</Text>}
+            <CustomInput
+              placeholder={t('common:Email')}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+              border={errors.email && '1px solid red'}
+            />
+            {touched.password && errors.password && (
+              <Text>{errors.password}</Text>
+            )}
+            <CustomInput
+              placeholder={t('common:Password')}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+              border={errors.password && '1px solid red'}
+              secureTextEntry
+            />
+            <CustomBtn
+              text={t('common:Login')}
+              center
+              activeOpacity={0.8}
+              onPress={handleSubmit}
+            />
+          </>
+        )}
+      </Formik>
       <CustomBtn
         text={t('common:Forgot password')}
         center

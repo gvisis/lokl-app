@@ -25,6 +25,7 @@
     "Register": "Register",
     "Enter email": "Enter your email",
     "Enter pass": "Enter your password",
+    "Confirm pass": "Confirm password",
     "Create account": "Create account",
     "Password sent": "Password sent to your email: {{email}}"
   },

@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import auth from '@react-native-firebase/auth';
 
 import { actions } from '../../state/actions';
 import { CustomBtn, Header, ScreenLoader } from '../../components';
@@ -17,15 +15,7 @@ export const HomeView = () => {
   const userInfo = useSelector(state => state.user.userInfo);
 
   const handleLogout = async () => {
-    dispatch(actions.ui.setOnSync('user', true));
-    await auth()
-      .signOut()
-      .then(() => {
-        console.warn('User signed out!');
-      })
-      .catch(error => {
-        console.error(error.code);
-      });
+    dispatch(actions.user.logout());
   };
 
   return (

@@ -25,6 +25,7 @@
     "Register": "Registruotis",
     "Enter email": "Įveskite el.paštą",
     "Enter pass": "Įveskite slaptažodė",
+    "Confirm pass": "Patvirtinkite slaptažodį",
     "Create account": "Sukurti nauja paskyra",
     "Password sent": "Slaptažodis išsiųstas adresu: {{email}}"
   },
