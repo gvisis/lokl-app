@@ -6,9 +6,8 @@ const login = async (email, password) =>
 const logout = async () =>
 	auth().signOut();
 
-const register = async (email, password) => {
-	auth().createUserWithEmailAndPassword(email, password)
-}
+const register = async (email, password) => auth().createUserWithEmailAndPassword(email, password)
+
 const getUserInfo = () => auth().currentUser;
 
 export const api = {

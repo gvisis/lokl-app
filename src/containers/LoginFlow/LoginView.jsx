@@ -37,7 +37,7 @@ export const LoginView = ({ navigation }) => {
           touched,
         }) => (
           <>
-            {touched.password && errors.email && <Text>{errors.email}</Text>}
+            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Email')}
               onChangeText={handleChange('email')}

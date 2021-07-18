@@ -14,6 +14,11 @@ export const logout = () => ({
 	type: constants.user.LOG_OUT
 })
 
+export const register = (email, password) => ({
+	type: constants.user.REGISTER,
+	email, password
+});
+
 export const passwordReset = email => ({
 	type: constants.user.PASSWORD_RESET,
 	email
@@ -28,5 +33,6 @@ export const userActions = {
 	login,
 	logout,
 	passwordReset,
-	clearUserState
+	clearUserState,
+	register
 };

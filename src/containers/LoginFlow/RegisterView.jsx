@@ -2,66 +2,69 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import auth from '@react-native-firebase/auth';
+import { Formik } from 'formik';
 
 import { actions } from '../../state/actions';
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
+import { validator } from '../../utils/validators';
 
 export const RegisterView = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { t } = useTranslation();
   const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
-  const handleRegistration = async (userEmail, userPassword) => {
-    if (userEmail === '' || userPassword === '') {
-      dispatch(
-        actions.ui.setStatus('error', true, t('errors:auth/fill-all-fields')),
-      );
-    } else {
-      await auth()
-        .createUserWithEmailAndPassword(userEmail, userPassword)
-        .then(() => {
-          const userInfo = {
-            email: auth().currentUser.email,
-            id: auth().currentUser.uid,
-            name: auth().currentUser.displayName,
-          };
-          //! Needs an in status message to be displayed
-          dispatch(
-            actions.ui.setStatus('success', true, 'Registration successful'),
-          );
-          dispatch(actions.user.setUserInfo(userInfo));
-        })
-        .catch(error => {
-          dispatch(
-            actions.ui.setStatus('error', true, t(`errors:${error.code}`)),
-          );
-        });
-    }
-  };
-
   return (
     <AuthContainer headerTitle={t('register:title')}>
-      {error && <Text>{message}</Text>}
-      <CustomInput
-        placeholder={t('common:Enter email')}
-        onChangeText={email => setEmail(email)}
-        value={email}
-      />
-      <CustomInput
-        placeholder={t('common:Enter pass')}
-        onChangeText={password => setPassword(password)}
-        value={password}
-      />
-      <CustomBtn
-        text={t('common:Create account')}
-        center
-        activeOpacity={0.8}
-        onPress={() => handleRegistration(email, password)}
-      />
+      <Formik
+        initialValues={{ email: '', password: '', confirmPassword: '' }}
+        validationSchema={validator.register}
+        onSubmit={({ email, password }) =>
+          dispatch(actions.user.register(email, password))
+        }>
+        {({
+          errors,
+          values,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <>
+            {touched.email && errors.email && <Text>{errors.email}</Text>}
+            <CustomInput
+              placeholder={t('common:Enter email')}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+            />
+            {touched.password && errors.password && (
+              <Text>{errors.password}</Text>
+            )}
+            <CustomInput
+              placeholder={t('common:Enter pass')}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+            />
+            {touched.confirmPassword && errors.confirmPassword && (
+              <Text>{errors.confirmPassword}</Text>
+            )}
+            <CustomInput
+              placeholder={t('common:Confirm pass')}
+              onChangeText={handleChange('confirmPassword')}
+              onBlur={handleBlur('confirmPassword')}
+              value={values.confirmPassword}
+            />
+            <CustomBtn
+              text={t('common:Create account')}
+              center
+              activeOpacity={0.8}
+              onPress={handleSubmit}
+            />
+          </>
+        )}
+      </Formik>
       <CustomBtn
         text={t('common:Go back')}
         center
