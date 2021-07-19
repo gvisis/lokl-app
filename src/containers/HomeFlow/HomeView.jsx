@@ -1,46 +1,51 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components/native';
 
 import { actions } from '../../state/actions';
-import { CustomBtn, Header, ScreenLoader } from '../../components';
-import { theme } from '../../assets/theme/default';
-
-const { colors } = theme;
+import { CustomBtn, Header } from '../../components';
 
 export const HomeView = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.user.userInfo);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(() => {
     dispatch(actions.user.logout());
-  };
+  }, []);
 
   return (
-    <View style={styles.container}>
+    <HomeWrap>
       <Header title={t('home:title')} />
-      <Text style={styles.textStyle}>Your email: {userInfo.email}!</Text>
-      <CustomBtn
-        text={t('common:Logout')}
-        style={styles.logOutButton}
-        activeOpacity={0.5}
-        onPress={handleLogout}
-      />
-    </View>
+      <WelcomeTitle>Your email: {userInfo.email}!</WelcomeTitle>
+      <ButtonWrap>
+        <CustomBtn
+          text={t('common:Logout')}
+          secondary
+          center
+          activeOpacity={0.5}
+          onPress={handleLogout}
+        />
+      </ButtonWrap>
+    </HomeWrap>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  logOutButton: {
-    alignSelf: 'center',
-    backgroundColor: colors.secondaryBtn,
-    bottom: 15,
-    marginLeft: 'auto',
-    position: 'absolute',
-  },
-});
+const HomeWrap = styled.View`
+  flex: 1;
+`;
+
+const WelcomeTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fonts.size.xl}px;
+  text-align: center;
+  padding: 10px;
+  flex: 4;
+`;
+
+const ButtonWrap = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
