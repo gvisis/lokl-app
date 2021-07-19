@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
-import { Text } from 'react-native';
 
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';

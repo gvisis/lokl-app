@@ -1,40 +1,38 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { CustomBtn, Header } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
-
-const { width: windowWidth, height: windowHeight } = Dimensions.get('screen');
+import { useFunction } from '../../utils/hooks';
 
 export const LandingView = ({ navigation }) => {
   const landingPageBgImage = require('../../assets/images/landingPageImage.png');
   const { t } = useTranslation();
 
+  const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);
+  const navigateToRegister = useFunction(navigation.navigate, ROUTES.Register);
+
   return (
-    <View style={styles.container}>
+    <Wrapper>
       <Header title={t('landing:appName')} height="5px" />
-      <ImageBackground
-        style={styles.landingCover}
-        source={landingPageBgImage}
-        resizeMethod="scale"
-      />
-      <View style={styles.buttonWrapper}>
+      <LandingBackground source={landingPageBgImage} resizeMethod="scale" />
+      <ButtonWrappper>
         <CustomBtn
           text={t('common:Login to')}
           center
           activeOpacity={0.8}
-          onPress={() => navigation.navigate(ROUTES.Login)}
+          onPress={navigateToLogin}
         />
         <CustomBtn
           text={t('common:Create account')}
           center
           activeOpacity={0.8}
-          onPress={() => navigation.navigate(ROUTES.Register)}
+          onPress={navigateToRegister}
         />
-      </View>
-    </View>
+      </ButtonWrappper>
+    </Wrapper>
   );
 };
 
@@ -44,22 +42,19 @@ LandingView.propTypes = {
   }),
 };
 
-const styles = StyleSheet.create({
-  buttonWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    top: windowHeight / 2 - 100,
-    width: '100%',
-  },
-  container: {
-    flex: 1,
-  },
-  landingCover: {
-    height: windowHeight,
-    position: 'absolute',
-    resizeMode: 'contain',
-    width: windowWidth,
-    zIndex: -1,
-  },
-});
+const ButtonWrappper = styled.View`
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const Wrapper = styled.View`
+  flex: 1;
+`;
+
+const LandingBackground = styled.ImageBackground`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+`;

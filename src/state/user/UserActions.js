@@ -32,7 +32,7 @@ export const userActions = {
 	setUserInfo,
 	login,
 	logout,
+	register,
 	passwordReset,
 	clearUserState,
-	register
 };

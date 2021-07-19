@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Image,
@@ -8,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import styled from 'styled-components/native';
 
 import { InputContainer } from '../../components';
 import { theme } from '../../assets/theme/default';
@@ -15,48 +17,40 @@ import { theme } from '../../assets/theme/default';
 export const AuthContainer = ({ children, headerTitle }) => {
   const logoImg = require('../../assets/images/logoCat.png');
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
+    <KeyboardAvoidsView behavior="height">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <View style={styles.imgContainer}>
-            <Image
-              source={logoImg}
-              style={styles.logoImg}
-              resizeMode="contain"
-            />
-            <Text style={styles.logoTxt}>{headerTitle}</Text>
-          </View>
+          <ImageContainer>
+            <LogoImage source={logoImg} resizeMode="contain" />
+            <HeaderTitle>{headerTitle}</HeaderTitle>
+          </ImageContainer>
           <InputContainer>{children}</InputContainer>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidsView>
   );
 };
-const {
-  colors,
-  fonts: { size },
-} = theme;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  imgContainer: {
-    height: '35%',
-    width: '100%',
-  },
-  logoImg: {
-    height: '100%',
-    width: '100%',
-  },
-  logoTxt: {
-    bottom: 0,
-    color: colors.white,
-    fontSize: size.xxxl,
-    letterSpacing: 1,
-    position: 'absolute',
-    right: 30,
-    textTransform: 'uppercase',
-  },
-});
+const ImageContainer = styled.View`
+  height: 35%;
+  width: 100%;
+`;
+const KeyboardAvoidsView = styled.KeyboardAvoidingView`
+  background-color: ${({ theme }) => theme.colors.background};
+  flex: 1;
+`;
+
+const HeaderTitle = styled.Text`
+  bottom: 0;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fonts.size.xxxl};
+  letter-spacing: 1px;
+  position: absolute;
+  right: 30;
+  text-transform: uppercase;
+`;
+
+const LogoImage = styled.Image`
+  height: 100%;
+  width: 100%;
+`;
