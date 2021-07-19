@@ -8,11 +8,14 @@ const logout = async () =>
 
 const register = async (email, password) => auth().createUserWithEmailAndPassword(email, password)
 
+const passworReset = async email => auth().sendPasswordResetEmail(email);
+
 const getUserInfo = () => auth().currentUser;
 
 export const api = {
 	getUserInfo,
 	login,
 	logout,
-	register
+	register,
+	passworReset
 }

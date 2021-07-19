@@ -7,7 +7,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ScreenLoader } from '../components';
+import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, HomeNavigation } from '.';
 
 const Navigator = () => {
@@ -40,17 +40,17 @@ const Navigator = () => {
     <NavigationContainer>
       <ThemeProvider theme={theme}>
         <StatusBar hidden />
-        {loading ? (
+        <Stack.Navigator headerMode="none">
+          {user ? (
+            <Stack.Screen name="Home" component={HomeNavigation} />
+          ) : (
+            <Stack.Screen name="Auth" component={AuthNavigation} />
+          )}
+        </Stack.Navigator>
+        {loading && (
           <ScreenLoader size={100} color={theme.colors.secondaryBtn} />
-        ) : (
-          <Stack.Navigator headerMode="none">
-            {user ? (
-              <Stack.Screen name="Home" component={HomeNavigation} />
-            ) : (
-              <Stack.Screen name="Auth" component={AuthNavigation} />
-            )}
-          </Stack.Navigator>
         )}
+        <GlobalErrorSuccess />
       </ThemeProvider>
     </NavigationContainer>
   );
