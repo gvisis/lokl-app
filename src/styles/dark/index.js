@@ -6,9 +6,10 @@ export const darkTheme = {
 		secondary: '#EF8F3B',
 		secondaryBtn: '#00B896',
 		background: '#003566',
-		white: '#fff',
-		black: '#000',
+		white: '#ffffff',
+		black: '#000000',
 		lightGrey: '#8c8c8c',
+		red: '#FF0000'
 	},
 	fonts: {
 		size: {

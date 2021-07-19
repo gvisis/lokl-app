@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
-import { Text } from 'react-native';
 
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
@@ -28,12 +27,13 @@ export const ForgotPasswordView = ({ navigation }) => {
           touched,
         }) => (
           <>
-            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Enter email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
+              error={errors.email}
+              touched={touched.email}
             />
             <CustomBtn
               text={t('common:Reset')}

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
 import { Formik } from 'formik';
 
+import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
 import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
@@ -17,8 +18,13 @@ export const LoginView = ({ navigation }) => {
     fonts: { size },
   } = theme;
   const { t } = useTranslation();
-  const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
+
+  const navigateToRegister = useFunction(navigation.navigate, ROUTES.Register);
+  const navigateToForgotPassword = useFunction(
+    navigation.navigate,
+    ROUTES.ForgotPassword,
+  );
 
   return (
     <AuthContainer headerTitle={t('login:title')}>
@@ -37,23 +43,21 @@ export const LoginView = ({ navigation }) => {
           touched,
         }) => (
           <>
-            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
-              border={errors.email && '1px solid red'}
+              error={errors.email}
+              touched={touched.email}
             />
-            {touched.password && errors.password && (
-              <Text>{errors.password}</Text>
-            )}
             <CustomInput
               placeholder={t('common:Password')}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
-              border={errors.password && '1px solid red'}
+              error={errors.password}
+              touched={touched.password}
               secureTextEntry
             />
             <CustomBtn
@@ -72,7 +76,7 @@ export const LoginView = ({ navigation }) => {
         width="50"
         fontSize={size.xxl}
         textTransform="uppercase"
-        onPress={() => navigation.navigate(ROUTES.ForgotPassword)}
+        onPress={navigateToForgotPassword}
       />
       <Text style={{ color: colors.white, marginTop: 5, lineHeight: 17 }}>
         {t('common:Or')}{' '}
@@ -85,7 +89,7 @@ export const LoginView = ({ navigation }) => {
         fontSize={size.xxl}
         textTransform="uppercase"
         marginTop="5"
-        onPress={() => navigation.navigate(ROUTES.Register)}
+        onPress={navigateToRegister}
       />
     </AuthContainer>
   );

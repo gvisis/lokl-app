@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
 import { actions } from '../../state/actions';
@@ -11,7 +10,6 @@ import { validator } from '../../utils/validators';
 
 export const RegisterView = ({ navigation }) => {
   const { t } = useTranslation();
-  const { message, error } = useSelector(state => state.ui.status);
   const dispatch = useDispatch();
 
   return (
@@ -31,30 +29,29 @@ export const RegisterView = ({ navigation }) => {
           handleSubmit,
         }) => (
           <>
-            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Enter email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
+              error={errors.email}
+              touched={touched.email}
             />
-            {touched.password && errors.password && (
-              <Text>{errors.password}</Text>
-            )}
             <CustomInput
               placeholder={t('common:Enter pass')}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
+              error={errors.password}
+              touched={touched.password}
             />
-            {touched.confirmPassword && errors.confirmPassword && (
-              <Text>{errors.confirmPassword}</Text>
-            )}
             <CustomInput
               placeholder={t('common:Confirm pass')}
               onChangeText={handleChange('confirmPassword')}
               onBlur={handleBlur('confirmPassword')}
               value={values.confirmPassword}
+              error={errors.confirmPassword}
+              touched={touched.confirmPassword}
             />
             <CustomBtn
               text={t('common:Create account')}

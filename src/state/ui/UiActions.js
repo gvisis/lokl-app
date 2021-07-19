@@ -15,8 +15,13 @@ const setTheme = bool => ({
 	bool
 });
 
+const clearErrors = () => ({
+	type: constants.ui.CLEAR_ERRORS,
+});
+
 export const uiActions = {
 	setTheme,
 	setOnSync,
 	setStatus,
+	clearErrors
 };
