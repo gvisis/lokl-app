@@ -28,12 +28,13 @@ export const ForgotPasswordView = ({ navigation }) => {
           touched,
         }) => (
           <>
-            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Enter email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
+              error={errors.email}
+              touched={touched.email}
             />
             <CustomBtn
               text={t('common:Reset')}

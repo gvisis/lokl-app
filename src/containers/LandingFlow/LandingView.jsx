@@ -11,6 +11,7 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get('screen');
 export const LandingView = ({ navigation }) => {
   const landingPageBgImage = require('../../assets/images/landingPageImage.png');
   const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <Header title={t('landing:appName')} height="5px" />
