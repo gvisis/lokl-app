@@ -20,13 +20,13 @@ export const LandingView = ({ navigation }) => {
       <LandingBackground source={landingPageBgImage} resizeMethod="scale" />
       <ButtonWrappper>
         <CustomBtn
-          text={t('common:Login to')}
+          label={t('common:Login to')}
           center
           activeOpacity={0.8}
           onPress={navigateToLogin}
         />
         <CustomBtn
-          text={t('common:Create account')}
+          label={t('common:Create account')}
           center
           activeOpacity={0.8}
           onPress={navigateToRegister}

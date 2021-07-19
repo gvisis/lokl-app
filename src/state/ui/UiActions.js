@@ -19,9 +19,20 @@ const clearErrors = () => ({
 	type: constants.ui.CLEAR_ERRORS,
 });
 
+const passResetSuccess = bool => ({
+	type: constants.ui.PASS_RESET_SUCCESS,
+	bool,
+});
+const clearPassResetStatus = () => ({
+	type: constants.ui.CLEAR_PASS_RESET_STATUS,
+});
+
+
 export const uiActions = {
 	setTheme,
 	setOnSync,
 	setStatus,
-	clearErrors
+	clearErrors,
+	passResetSuccess,
+	clearPassResetStatus,
 };

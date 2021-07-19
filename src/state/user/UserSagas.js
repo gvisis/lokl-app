@@ -1,13 +1,10 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import i18n from 'i18next';
-import { navigation } from '@react-navigation/native';
 
 import { actions } from '../actions'
-import { ROUTES } from '../../routes/RouteNames'
 import { constants } from '../constants';
 import { api } from '../../api';
 
-//! needs a seperate error handler
 function* handleLogin({ email, password }) {
 	try {
 		yield put(actions.ui.setOnSync('user', true));
@@ -58,14 +55,13 @@ function* handleRegistration({ email, password }) {
 
 function* handlePasswordReset({ email }) {
 	try {
-		yield put(actions.ui.setOnSync('user', true));
+		yield put(actions.ui.setOnSync('button', true));
 		yield call(api.passworReset, email);
-		yield put(actions.ui.setStatus('success', true, `Password reset link sent to ${email}`))
-		yield put(navigation.navigate(ROUTES.Login))
+		yield put(actions.ui.passResetSuccess(true))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
 	} finally {
-		yield put(actions.ui.setOnSync('user', false));
+		yield put(actions.ui.setOnSync('button', false));
 	}
 }
 

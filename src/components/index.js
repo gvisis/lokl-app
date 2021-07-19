@@ -5,3 +5,4 @@ export * from './input/CustomInput';
 export * from './screenLoader/ScreenLoader';
 export * from './themeSwitch/ThemeSwitch';
 export * from './errors/GlobalErrorSuccess'
+export * from './passReset/PassResetForm'

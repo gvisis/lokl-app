@@ -54,7 +54,7 @@ export const RegisterView = ({ navigation }) => {
               touched={touched.confirmPassword}
             />
             <CustomBtn
-              text={t('common:Create account')}
+              label={t('common:Create account')}
               center
               activeOpacity={0.8}
               onPress={handleSubmit}
@@ -63,7 +63,7 @@ export const RegisterView = ({ navigation }) => {
         )}
       </Formik>
       <CustomBtn
-        text={t('common:Go back')}
+        label={t('common:Go back')}
         center
         width="30"
         secondary

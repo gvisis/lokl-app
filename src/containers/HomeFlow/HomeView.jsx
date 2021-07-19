@@ -20,7 +20,7 @@ export const HomeView = () => {
       <WelcomeTitle>Your email: {userInfo.email}!</WelcomeTitle>
       <ButtonWrap>
         <CustomBtn
-          text={t('common:Logout')}
+          label={t('common:Logout')}
           secondary
           center
           activeOpacity={0.5}

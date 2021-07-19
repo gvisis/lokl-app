@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
 import { Formik } from 'formik';
+import styled from 'styled-components/native';
 
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
@@ -10,13 +10,8 @@ import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
-import { theme } from '../../assets/theme/default';
 
 export const LoginView = ({ navigation }) => {
-  const {
-    colors,
-    fonts: { size },
-  } = theme;
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -61,7 +56,7 @@ export const LoginView = ({ navigation }) => {
               secureTextEntry
             />
             <CustomBtn
-              text={t('common:Login')}
+              label={t('common:Login')}
               center
               activeOpacity={0.8}
               onPress={handleSubmit}
@@ -69,28 +64,28 @@ export const LoginView = ({ navigation }) => {
           </>
         )}
       </Formik>
-      <CustomBtn
-        text={t('common:Forgot password')}
-        center
-        activeOpacity={0.8}
-        width="50"
-        fontSize={size.xxl}
-        textTransform="uppercase"
-        onPress={navigateToForgotPassword}
-      />
-      <Text style={{ color: colors.white, marginTop: 5, lineHeight: 17 }}>
-        {t('common:Or')}{' '}
-      </Text>
-      <CustomBtn
-        text={t('common:Create account')}
-        center
-        activeOpacity={0.8}
-        width="50"
-        fontSize={size.xxl}
-        textTransform="uppercase"
-        marginTop="5"
-        onPress={navigateToRegister}
-      />
+      <SecondaryContainer>
+        <StyledText onPress={navigateToRegister}>Create new account</StyledText>
+        <StyledText onPress={navigateToForgotPassword}>
+          Forgot password?
+        </StyledText>
+      </SecondaryContainer>
     </AuthContainer>
   );
 };
+
+const SecondaryContainer = styled.View`
+  width: 90%;
+  background-color: ${({ theme }) => theme.colors.primary60};
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  margin-top: 25px;
+`;
+
+const StyledText = styled.Text`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  text-decoration: underline;
+`;
