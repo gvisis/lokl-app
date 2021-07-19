@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
+import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
 import { CustomBtn, Header } from '../../components';
 
@@ -11,9 +12,7 @@ export const HomeView = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.user.userInfo);
 
-  const handleLogout = useCallback(() => {
-    dispatch(actions.user.logout());
-  }, []);
+  const handleLogout = useFunction(dispatch, actions.user.logout());
 
   return (
     <HomeWrap>
