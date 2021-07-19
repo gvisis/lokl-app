@@ -37,23 +37,21 @@ export const LoginView = ({ navigation }) => {
           touched,
         }) => (
           <>
-            {touched.email && errors.email && <Text>{errors.email}</Text>}
             <CustomInput
               placeholder={t('common:Email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
-              border={errors.email && '1px solid red'}
+              error={errors.email}
+              touched={touched.email}
             />
-            {touched.password && errors.password && (
-              <Text>{errors.password}</Text>
-            )}
             <CustomInput
               placeholder={t('common:Password')}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
-              border={errors.password && '1px solid red'}
+              error={errors.password}
+              touched={touched.password}
               secureTextEntry
             />
             <CustomBtn
