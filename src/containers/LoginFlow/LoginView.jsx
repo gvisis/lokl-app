@@ -65,9 +65,11 @@ export const LoginView = ({ navigation }) => {
         )}
       </Formik>
       <SecondaryContainer>
-        <StyledText onPress={navigateToRegister}>Create new account</StyledText>
+        <StyledText onPress={navigateToRegister}>
+          {t('common:Create account')}
+        </StyledText>
         <StyledText onPress={navigateToForgotPassword}>
-          Forgot password?
+          {t('common:Forgot password')}
         </StyledText>
       </SecondaryContainer>
     </AuthContainer>

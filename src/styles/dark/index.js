@@ -10,7 +10,8 @@ export const darkTheme = {
 		white60: 'rgba(255, 255, 255, 0.7)',
 		black: '#000000',
 		lightGrey: '#8c8c8c',
-		red: '#FF0000'
+		red: '#FF0000',
+		error: '#edfe00'
 	},
 	fonts: {
 		size: {

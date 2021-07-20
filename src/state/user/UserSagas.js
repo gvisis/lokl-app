@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import i18n from 'i18next';
 
 import { actions } from '../actions'
@@ -15,7 +15,7 @@ function* handleLogin({ email, password }) {
 			id: api.getUserInfo().uid,
 		}
 		yield put(actions.user.setUserInfo(userInfo))
-		yield put(actions.ui.setStatus('success', true, 'Succesfuly logged in!'))
+		yield put(actions.ui.setStatus('success', true, i18n.t('common:Login success')))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
 	} finally {
@@ -27,7 +27,7 @@ function* handleLogout() {
 	try {
 		yield put(actions.ui.setOnSync('user', true));
 		yield call(api.logout);
-		yield put(actions.ui.setStatus('success', true, 'User signed out!'))
+		yield put(actions.ui.setStatus('success', true, i18n.t('common:Logout success')))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
 	} finally {
@@ -45,7 +45,7 @@ function* handleRegistration({ email, password }) {
 			id: api.getUserInfo().uid,
 		}
 		yield put(actions.user.setUserInfo(userInfo))
-		yield put(actions.ui.setStatus('success', true, 'Succesfuly registered!'))
+		yield put(actions.ui.setStatus('success', true, i18n.t('common:Register success')))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
 	} finally {

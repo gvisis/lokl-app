@@ -12,7 +12,6 @@ import { validator } from '../../utils/validators';
 const ResetSuccessBox = styled.View`
   width: 90%;
   height: 150px;
-  /* background-color: ${({ theme }) => theme.colors.secondary}; */
   align-items: center;
   border-radius: 5px;
   border: 2px solid ${({ theme }) => theme.colors.secondaryBtn};
@@ -21,9 +20,9 @@ const ResetSuccessBox = styled.View`
 `;
 
 const BoxMessage = styled.Text`
-  color: ${({ theme }) => theme.colors.white}
+  color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
-	text-align: center;
+  text-align: center;
 `;
 const ContainerWrapper = styled.View`
   width: 100%;
@@ -50,7 +49,7 @@ export const PassResetForm = ({ navigation }) => {
             size={40}
             color={theme.colors.secondaryBtn}
           />
-          <BoxMessage>New password was sent to your email</BoxMessage>
+          <BoxMessage>{t('common:Password sent')}</BoxMessage>
         </ResetSuccessBox>
       ) : (
         <Formik

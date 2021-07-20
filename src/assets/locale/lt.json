@@ -16,7 +16,6 @@
     "Logout": "Atsijungti",
     "Login to": "Prisijungti prie paskyros",
     "Forgot password": "Pamiršote slaptažodį?",
-    "Or": "arba",
     "Password": "Slaptažodis",
     "Password reset": "Slaptažodžio atstatymas",
     "Email": "El.paštas",
@@ -27,7 +26,10 @@
     "Enter pass": "Įveskite slaptažodė",
     "Confirm pass": "Patvirtinkite slaptažodį",
     "Create account": "Sukurti nauja paskyra",
-    "Password sent": "Slaptažodis išsiųstas adresu: {{email}}"
+    "Register success": "Sėkmingai užsiregistravote!",
+    "Login success": "Sėkmingai prisijungėte!",
+    "Logout success": "Atsijungėte. Iki kito karto!",
+    "Password sent": "Naujas slaptažodis išsiųstas nurodytu adresu"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",
@@ -46,5 +48,14 @@
     "auth/too-many-requests": "Per daug bandymu",
     "auth/unknown": "Nežinoma klaida",
     "auth/fill-all-fields": "Užpildyke laukelius"
+  },
+  "yup": {
+    "email-required": "Įveskite el.paštą",
+    "email-invalid-format": "Neteisingas el.pašto formatas",
+    "pass-required": "Reikalingas slaptažodis",
+    "pass-confirm": "Patvirtinkite slaptažodį",
+    "pass-match": "Slaptažodžiai nesutampa",
+    "pass-size-min": "Slaptažodis netrumpesnis nei {{min}} simboliai",
+    "pass-size-max": "Slaptažodis neilgesnis nei {{max}} simbolių"
   }
 }
