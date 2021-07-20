@@ -44,7 +44,7 @@ const Navigator = () => {
           <ScreenLoader size={100} color={theme.colors.secondaryBtn} />
         )}
         <GlobalErrorSuccess />
-        <ThemeSwitch />
+        {!loading && <ThemeSwitch />}
       </ThemeProvider>
     </NavigationContainer>
   );
