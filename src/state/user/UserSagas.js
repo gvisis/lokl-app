@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
 import { actions } from '../actions'
@@ -10,11 +11,6 @@ function* handleLogin({ email, password }) {
 		yield put(actions.ui.setOnSync('user', true));
 		yield call(api.login, 'email@example.com', 'password123');
 		// yield call(api.login, email, password);
-		const userInfo = {
-			email: api.getUserInfo().email,
-			id: api.getUserInfo().uid,
-		}
-		yield put(actions.user.setUserInfo(userInfo))
 		yield put(actions.ui.setStatus('success', true, i18n.t('common:Login success')))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
@@ -35,16 +31,11 @@ function* handleLogout() {
 		yield put(actions.ui.setOnSync('user', false));
 	}
 }
-
 function* handleRegistration({ email, password }) {
 	try {
 		yield put(actions.ui.setOnSync('user', true));
 		yield call(api.register, email, password);
-		const userInfo = {
-			email: api.getUserInfo().email,
-			id: api.getUserInfo().uid,
-		}
-		yield put(actions.user.setUserInfo(userInfo))
+		yield call(handleCreateUserDb, email);
 		yield put(actions.ui.setStatus('success', true, i18n.t('common:Register success')))
 	} catch (e) {
 		yield put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)))
@@ -63,6 +54,26 @@ function* handlePasswordReset({ email }) {
 	} finally {
 		yield put(actions.ui.setOnSync('button', false));
 	}
+}
+
+function* handleCreateUserDb(email) {
+	try {
+		const userInfo = {
+			email: email,
+			name: '',
+			city: '',
+			age: 0,
+		}
+		const newUserId = api.getUserInfo().uid;
+		database()
+			.ref(`users/${newUserId}`)
+			.set(userInfo)
+
+		yield put(actions.user.setUserInfo(userInfo))
+	} catch (e) {
+		console.log(e)
+	}
+
 }
 
 export function* userSaga() {

@@ -5,6 +5,11 @@ export const setUserInfo = payload => ({
 	payload,
 });
 
+export const updateUserInfo = payload => ({
+	type: constants.user.UPDATE_USER_INFO,
+	payload,
+});
+
 export const login = (email, password) => ({
 	type: constants.user.LOGIN,
 	email, password
@@ -34,5 +39,6 @@ export const userActions = {
 	logout,
 	register,
 	passwordReset,
-	clearUserState,
+	updateUserInfo,
+	clearUserState
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import styled, { ThemeContext } from 'styled-components/native';
+import { ThemeContext } from 'styled-components/native';
 
+import { capitalizeFirst } from '../utils/functions';
 import { ROUTES } from './RouteNames';
 import { ProfileNavigation } from '.';
 import { HomeView } from '../containers/HomeFlow';
@@ -30,8 +31,8 @@ export const HomeNavigation = () => {
 				inactiveTintColor: theme.colors.lightGrey,
 			}}
 		>
-			<Tab.Screen name={ROUTES.Home} component={HomeView} options={{ tabBarLabel: 'Home' }} />
-			<Tab.Screen name={ROUTES.Profile} component={ProfileNavigation} options={{ tabBarLabel: 'Profile' }} />
+			<Tab.Screen name={ROUTES.Home} component={HomeView} options={{ tabBarLabel: capitalizeFirst(ROUTES.Home) }} />
+			<Tab.Screen name={ROUTES.Profile} component={ProfileNavigation} options={{ tabBarLabel: capitalizeFirst(ROUTES.Profile) }} />
 		</Tab.Navigator>
 	)
 }
