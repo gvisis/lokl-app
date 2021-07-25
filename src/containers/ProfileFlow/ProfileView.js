@@ -3,28 +3,23 @@ import { useTranslation } from 'react-i18next';
 import database from '@react-native-firebase/database';
 import { Button, Text, View } from 'react-native';
 import styled from 'styled-components/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { api } from '../../api';
 import { ROUTES } from '../../routes/RouteNames';
+import { actions } from '../../state/actions';
 
 export const ProfileView = ({ navigation }) => {
 	const { userInfo } = useSelector(state => state.user)
+	const dispatch = useDispatch()
 
-	const updateUserInfo = async () => {
-		try {
-			const userId = await api.getUserInfo().uid;
-			const newInfo = {
-				age: 35,
-				name: 'Gvidas',
-				city: 'Vilnius'
-			}
-			await database()
-				.ref(`users/${userId}`)
-				.update(newInfo)
-		} catch (error) {
-			console.log(error);
+	const updateUserInfo = () => {
+		const newInfo = {
+			age: 31,
+			name: 'Siauliai',
+			city: 'SouthParkas'
 		}
+		dispatch(actions.user.updateUserInfo(newInfo))
 	}
 
 	return (

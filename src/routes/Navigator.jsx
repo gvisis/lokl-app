@@ -16,41 +16,29 @@ const Navigator = () => {
   // Set an initializing state whilst Firebase connects
   const [user, setUser] = useState();
   const loading = useSelector(state => state.ui.onSync.user);
-  // const [themeSwitch, setThemeSwitch] = useState(true);
+  const { userInfo } = useSelector(state => state.user);
 
   const { theme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
 
   //! Handle user state changes - TEMPORARY CODE!!!
-  async function onAuthStateChanged(user) {
+  const onAuthStateChanged = user => {
     setUser(user);
-
     if (user) {
-      try {
-        const userDbRef = await database().ref(
-          `users/${auth().currentUser.uid}`,
-        );
-        await userDbRef.once('value', snapshot =>
-          dispatch(actions.user.setUserInfo(snapshot.val())),
-        );
-      } catch (error) {
-        console.log('onauth', error);
-      }
+      database()
+        .ref(`/users/${user.uid}`)
+        .once('value')
+        .then(snap => dispatch(actions.user.setUserInfo(snap.val())))
+        .catch(err => console.warn('userauth', err));
     }
     if (loading) dispatch(actions.ui.setOnSync('user', false));
-  }
+  };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
     return subscriber; // unsubscribe on unmount
   }, []);
-
-  // Theme switcher
-  // const handleThemeSwitch = () => {
-  //   dispatch(actions.ui.setTheme(!themeSwitch));
-  //   setThemeSwitch(!themeSwitch);
-  // };
 
   const Stack = createStackNavigator();
   return (

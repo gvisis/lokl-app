@@ -24,7 +24,7 @@ export const LoginView = ({ navigation }) => {
   return (
     <AuthContainer headerTitle={t('login:title')}>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: 'email@example.com', password: 'password123' }}
         validationSchema={validator.login}
         onSubmit={({ email, password }) =>
           dispatch(actions.user.login(email, password))
