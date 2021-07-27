@@ -16,7 +16,6 @@ const Navigator = () => {
   // Set an initializing state whilst Firebase connects
   const [user, setUser] = useState();
   const loading = useSelector(state => state.ui.onSync.user);
-  const { userInfo } = useSelector(state => state.user);
 
   const { theme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const Navigator = () => {
       database()
         .ref(`/users/${user.uid}`)
         .once('value')
-        .then(snap => dispatch(actions.user.setUserInfo(snap.val())))
+        .then(snap => dispatch(actions.user.setUserInfo(snap.val()))) // i guess userwatcher should do that instead ?
         .catch(err => console.warn('userauth', err));
     }
     if (loading) dispatch(actions.ui.setOnSync('user', false));

@@ -1,39 +1,38 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import database from '@react-native-firebase/database';
+import React, { useCallback } from 'react';
 import { Button, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { api } from '../../api';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
+import { useFunction } from '../../utils/hooks';
 
 export const ProfileView = ({ navigation }) => {
 	const { userInfo } = useSelector(state => state.user)
 	const dispatch = useDispatch()
+	const handleProfileEditNav = useFunction(navigation.navigate, ROUTES.ProfileEdit);
 
-	const updateUserInfo = () => {
-		const newInfo = {
-			age: 31,
-			name: 'Siauliai',
-			city: 'SouthParkas'
+	const updateUserInfo = useCallback(() => {
+		const updatedInfo = {
+			age: 40,
+			name: 'Rocky',
+			city: 'London'
 		}
-		dispatch(actions.user.updateUserInfo(newInfo))
-	}
+		dispatch(actions.user.updateUserInfo(updatedInfo))
+	}, []);
 
 	return (
 		<HomeWrap>
 			<WelcomeTitle>Profile view!</WelcomeTitle>
 			<View>
-				<Text>Vardas: {userInfo && userInfo.name}</Text>
-				<Text>Amzius: {userInfo && userInfo.age}</Text>
-				<Text>Miestas: {userInfo && userInfo.city}</Text>
+				<Text>Name: {userInfo && userInfo.name}</Text>
+				<Text>Age: {userInfo && userInfo.age}</Text>
+				<Text>City: {userInfo && userInfo.city}</Text>
 				<Text>Email: {userInfo && userInfo.email}</Text>
 			</View>
 			<Button
 				title="Go to Profile Edit"
-				onPress={() => navigation.navigate(ROUTES.ProfileEdit)}
+				onPress={handleProfileEditNav}
 			/>
 			<Button
 				title="update info"

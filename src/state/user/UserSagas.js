@@ -54,13 +54,15 @@ function* handlePasswordReset({ email }) {
 		yield put(actions.ui.setOnSync('button', false));
 	}
 }
-function* handleUserInfoDbUpdate({ payload }) {
+//!!! should i keep it here? !!!
+function* handleUserInfoDbUpdate({ updatedInfo }) {
+	console.log('updatedInfo:', updatedInfo);
 
 	const userId = api.getUserInfo().uid;
 	try {
 		database()
 			.ref(`/users/${userId}`)
-			.update(payload)
+			.update(updatedInfo)
 	} catch (e) {
 		console.log('huserinfoupdate', e)
 	}

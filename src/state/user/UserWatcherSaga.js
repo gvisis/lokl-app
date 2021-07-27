@@ -1,4 +1,5 @@
 import { call, put, take } from 'redux-saga/effects';
+import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { eventChannel } from 'redux-saga';
 
@@ -23,17 +24,18 @@ const usersChannel = uid => {
 }
 
 export function* watchUser() {
-	console.log('watching');
-	const userId = api.getUserInfo().uid;
-	console.warn('userid', userId);
-	const channel = yield call(usersChannel, userId);
-	try {
-		while (true) {
-			const { user } = yield take(channel);
-			console.warn('takeuser', user);
-			yield put(actions.user.updateUserInfo(user))
+	if (auth().currentUser) {
+		console.warn('watcher inside');
+		const userId = api.getUserInfo().uid;
+		const channel = yield call(usersChannel, userId);
+		try {
+			while (true) {
+				const { user } = yield take(channel);
+				console.warn('takeuser', user);
+				yield put(actions.user.updateUserInfo(user))
+			}
+		} catch (e) {
+			console.warn('watch erroras', e);
 		}
-	} catch (e) {
-		console.warn('watch erroras', e);
 	}
 }
