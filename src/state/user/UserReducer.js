@@ -3,7 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { constants } from '../constants';
 
 const INITIAL_STATE = {
-	userInfo: {},
+	userInfo: null,
 }
 
 export const userReducer = createReducer(INITIAL_STATE, {
