@@ -5,6 +5,7 @@ export enum ROUTES {
   // Tabs
   Profile = 'profile',
   ProfileEdit = 'profileEdit',
+  Settings = 'settings',
 
   // Login flow
   Landing = 'landing',
