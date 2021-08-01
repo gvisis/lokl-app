@@ -11,7 +11,6 @@ export const HomeView = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.user);
-  console.warn('home', userInfo);
 
   const handleLogout = useFunction(dispatch, actions.user.logout());
 

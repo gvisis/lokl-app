@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import database from '@react-native-firebase/database';
@@ -14,23 +14,19 @@ import { actions } from '../state/actions';
 
 const Navigator = () => {
   // Set an initializing state whilst Firebase connects
-  const [user, setUser] = useState();
   const loading = useSelector(state => state.ui.onSync.user);
-
+  const { userInfo } = useSelector(state => state.user);
   const { theme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
 
   //! Handle user state changes - TEMPORARY CODE!!!
   const onAuthStateChanged = user => {
-    setUser(user);
     if (user) {
       database()
         .ref(`/users/${user.uid}`)
         .once('value')
-        .then(snap => dispatch(actions.user.setUserInfo(snap.val()))) // i guess userwatcher should do that instead ?
-        .catch(err => console.warn('userauth', err));
+        .then(snap => dispatch(actions.user.setUserInfo(snap.val())));
     }
-    if (loading) dispatch(actions.ui.setOnSync('user', false));
   };
 
   useEffect(() => {
@@ -44,8 +40,9 @@ const Navigator = () => {
     <NavigationContainer>
       <ThemeProvider theme={theme}>
         <StatusBar hidden />
+
         <Stack.Navigator headerMode="none">
-          {user ? (
+          {userInfo ? (
             <Stack.Screen name="Home" component={HomeNavigation} />
           ) : (
             <Stack.Screen name="Auth" component={AuthNavigation} />

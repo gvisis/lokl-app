@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -54,12 +54,11 @@ function* handlePasswordReset({ email }) {
 		yield put(actions.ui.setOnSync('button', false));
 	}
 }
-//!!! should i keep it here? !!!
-function* handleUserInfoDbUpdate({ updatedInfo }) {
-	console.log('updatedInfo:', updatedInfo);
 
+function* handleUpdateUserDb({ updatedInfo }) {
 	const userId = api.getUserInfo().uid;
 	try {
+		yield put(actions.ui.setOnSync('button', true));
 		database()
 			.ref(`/users/${userId}`)
 			.update(updatedInfo)
@@ -85,13 +84,12 @@ function* handleCreateUserDb(email) {
 	} catch (e) {
 		console.log('huserinfocreate', e)
 	}
-
 }
 
 export function* userSaga() {
-	yield takeLatest(constants.user.LOGIN, handleLogin);
-	yield takeLatest(constants.user.LOG_OUT, handleLogout);
-	yield takeLatest(constants.user.REGISTER, handleRegistration);
-	yield takeLatest(constants.user.PASSWORD_RESET, handlePasswordReset);
-	yield takeLatest(constants.user.UPDATE_USER_INFO, handleUserInfoDbUpdate);
+	yield takeEvery(constants.user.LOGIN, handleLogin);
+	yield takeEvery(constants.user.LOG_OUT, handleLogout);
+	yield takeEvery(constants.user.REGISTER, handleRegistration);
+	yield takeEvery(constants.user.PASSWORD_RESET, handlePasswordReset);
+	yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
 }
