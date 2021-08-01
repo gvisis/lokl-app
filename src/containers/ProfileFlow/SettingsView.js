@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
 import { useFunction } from '../../utils/hooks';
-import { CustomBtn, ThemeSwitch } from '../../components';
+import { CustomBtn, Switcher } from '../../components';
 
 export const SettingsView = ({ navigation }) => {
 	const { userInfo } = useSelector(state => state.user)
@@ -22,13 +22,13 @@ export const SettingsView = ({ navigation }) => {
 	return (
 		<HomeWrap>
 			{/* make as a list later on */}
-			<SettingsFullRow iconName="paint-brush" rowTitle="Change theme:" />
-			<SettingsFullRow iconName="language" rowTitle="Change language:" />
+			<SettingsFullRow iconName="paint-brush" rowTitle="Change theme:" toggle="themeSwitch" />
+			<SettingsFullRow iconName="language" rowTitle="Change language:" toggle="langSwitch" />
 		</HomeWrap>
 	);
 };
 
-const SettingsFullRow = ({ iconName, rowTitle }) => (
+const SettingsFullRow = ({ iconName, rowTitle, toggle }) => (
 	<RowWrap>
 		<IconWrap>
 			<StyledIcon
@@ -37,10 +37,12 @@ const SettingsFullRow = ({ iconName, rowTitle }) => (
 		</IconWrap>
 		<RowTitle>{rowTitle}</RowTitle>
 		<SwitchWrap>
-			<ThemeSwitch />
+			<Switcher toggle={toggle} />
 		</SwitchWrap>
 	</RowWrap>
 )
+
+
 const HomeWrap = styled.View`
 	flex: 1;
 	width: 100%;
