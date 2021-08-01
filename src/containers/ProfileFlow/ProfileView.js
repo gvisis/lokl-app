@@ -1,50 +1,28 @@
-import React, { useCallback, useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import React from 'react';
 import styled from 'styled-components/native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { actions } from '../../state/actions';
 import { useFunction } from '../../utils/hooks';
-import { CustomBtn } from '../../components';
+
 
 export const ProfileView = ({ navigation }) => {
-	const { userInfo } = useSelector(state => state.user)
-	const { onSync } = useSelector(state => state.ui);
-	const dispatch = useDispatch()
+
 	const handleProfileEditNav = useFunction(navigation.navigate, ROUTES.ProfileEdit);
-
-	const updateUserInfo = useCallback(() => {
-		const updatedInfo = {
-			age: 40
-		}
-		dispatch(actions.user.updateUserInfo(updatedInfo))
-	}, []);
-
-	useEffect(() => () => {
-		dispatch(actions.ui.setOnSync('button', false))
-	}, [userInfo.age])
+	const handleSettingsNav = useFunction(navigation.navigate, ROUTES.Settings);
 
 	return (
 		<HomeWrap>
 			<WelcomeTitle>Profile view!</WelcomeTitle>
-			<View>
-				<Text>Name: {userInfo.name}</Text>
-				<Text>Age: {userInfo.age}</Text>
-				<Text>City: {userInfo.city}</Text>
-				<Text>Email: {userInfo.email}</Text>
-			</View>
 			<Button
 				title="Go to Profile Edit"
 				onPress={handleProfileEditNav}
 			/>
-			<CustomBtn
-				label={'Update info'}
-				secondary
-				center
-				onPress={updateUserInfo}
-				onSync={onSync.button}
+			<Button
+				title="Go to Settings"
+				onPress={handleSettingsNav}
 			/>
+
 		</HomeWrap>
 	);
 };

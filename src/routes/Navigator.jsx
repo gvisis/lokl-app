@@ -8,7 +8,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { GlobalErrorSuccess, ScreenLoader, ThemeSwitch } from '../components';
+import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, HomeNavigation } from '.';
 import { actions } from '../state/actions';
 
@@ -51,7 +51,6 @@ const Navigator = () => {
           <ScreenLoader size={100} color={theme.colors.secondaryBtn} />
         )}
         <GlobalErrorSuccess />
-        {!loading && <ThemeSwitch />}
       </ThemeProvider>
     </NavigationContainer>
   );
