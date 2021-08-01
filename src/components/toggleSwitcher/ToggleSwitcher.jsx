@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../../state/actions';
 import { locale } from '../../utils/locale';
 
-export const Switcher = ({ toggle }) => {
+export const ToggleSwitcher = ({ toggle }) => {
   const [switcherBool, setSwitchBool] = useState(true);
   const dispatch = useDispatch();
   const [toggleText, setToggleText] = useState({});

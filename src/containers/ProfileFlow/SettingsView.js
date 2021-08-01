@@ -1,17 +1,13 @@
-import React, { useCallback, useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
-import { useFunction } from '../../utils/hooks';
-import { CustomBtn, Switcher } from '../../components';
+import { ToggleSwitcher } from '../../components';
 
-export const SettingsView = ({ navigation }) => {
+export const SettingsView = () => {
 	const { userInfo } = useSelector(state => state.user)
-	const { onSync } = useSelector(state => state.ui);
 	const dispatch = useDispatch()
 
 	useEffect(() => () => {
@@ -37,7 +33,7 @@ const SettingsFullRow = ({ iconName, rowTitle, toggle }) => (
 		</IconWrap>
 		<RowTitle>{rowTitle}</RowTitle>
 		<SwitchWrap>
-			<Switcher toggle={toggle} />
+			<ToggleSwitcher toggle={toggle} />
 		</SwitchWrap>
 	</RowWrap>
 )
