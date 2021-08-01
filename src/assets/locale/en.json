@@ -51,7 +51,7 @@
   },
   "yup": {
     "email-required": "Email is required",
-    "email-invalid-f": "Invalid email format",
+    "email-invalid-format": "Invalid email format",
     "pass-required": "Password is required",
     "pass-confirm": "Confirm your password",
     "pass-match": "Password does not match",

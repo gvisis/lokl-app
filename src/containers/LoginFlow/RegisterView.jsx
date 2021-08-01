@@ -15,7 +15,11 @@ export const RegisterView = ({ navigation }) => {
   return (
     <AuthContainer headerTitle={t('register:title')}>
       <Formik
-        initialValues={{ email: '', password: '', confirmPassword: '' }}
+        initialValues={{
+          email: 'email@example.com',
+          password: 'password123',
+          confirmPassword: 'password123',
+        }}
         validationSchema={validator.register}
         onSubmit={({ email, password }) =>
           dispatch(actions.user.register(email, password))

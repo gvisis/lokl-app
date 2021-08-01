@@ -3,6 +3,8 @@ export enum ROUTES {
   Error = 'error',
 
   // Tabs
+  Profile = 'profile',
+  ProfileEdit = 'profileEdit',
 
   // Login flow
   Landing = 'landing',
