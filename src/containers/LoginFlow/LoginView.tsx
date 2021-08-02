@@ -6,12 +6,12 @@ import styled from 'styled-components/native';
 
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
-import { AuthContainer } from '.';
+import { AuthContainer, Container } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
 
-export const LoginView = ({ navigation }) => {
+export const LoginView: React.FC<Container> = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 

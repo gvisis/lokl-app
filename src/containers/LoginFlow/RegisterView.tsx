@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
 import { actions } from '../../state/actions';
-import { AuthContainer } from '.';
+import { AuthContainer, Container } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { validator } from '../../utils/validators';
 
-export const RegisterView = ({ navigation }) => {
+export const RegisterView: React.FC<Container> = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ export const RegisterView = ({ navigation }) => {
       <CustomBtn
         label={t('common:Go back')}
         center
-        width="30"
+        width={30}
         secondary
         activeOpacity={0.8}
         onPress={navigation.goBack}
