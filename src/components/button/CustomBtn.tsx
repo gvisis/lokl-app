@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components/native';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/native';
 import PropTypes from 'prop-types';
+import { ActivityIndicator } from 'react-native';
 
 const StyledButton = styled.TouchableOpacity`
   width: ${({ width }) => (width ? width : '90')}%;
@@ -15,15 +16,36 @@ const StyledButton = styled.TouchableOpacity`
 const StyledButtonText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme, fontSize }) =>
-    fontSize ? fontSize : theme.fonts.size.l}px;
+    fontSize ? fontSize : theme.fonts.size.xl}px;
   text-align: center;
   text-transform: ${({ textTransform }) => textTransform};
 `;
-export const CustomBtn = props => (
-  <StyledButton {...props}>
-    <StyledButtonText>{props.text}</StyledButtonText>
-  </StyledButton>
-);
+
+interface CustomBtnProps {
+  label: string;
+  onSync?: boolean;
+  center?: boolean;
+  activeOpacity?: number;
+  onPress: () => void;
+  width?: number;
+}
+
+export const CustomBtn: React.FC<CustomBtnProps> = ({
+  onSync,
+  label,
+  ...rest
+}) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <StyledButton disabled={onSync} {...rest}>
+      {onSync ? (
+        <ActivityIndicator size={theme.fonts.size.xxxl} color="#fff" />
+      ) : (
+        <StyledButtonText>{label}</StyledButtonText>
+      )}
+    </StyledButton>
+  );
+};
 
 StyledButton.defaultProps = {
   backgroundColor: `${({ theme }) => theme.colors.secondary}`,

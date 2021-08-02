@@ -13,7 +13,7 @@ const StyledInput = styled.TextInput`
 `;
 
 const ErrorMessage = styled.Text`
-  color: #fe0000;
+  color: ${({ theme }) => theme.colors.error};
   padding: 5px 0;
   font-size: ${({ theme }) => theme.fonts.size.l}px;
 `;

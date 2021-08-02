@@ -1,31 +1,21 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 
 import { InputContainer } from '../../components';
-import { theme } from '../../assets/theme/default';
 
 export const AuthContainer = ({ children, headerTitle }) => {
   const logoImg = require('../../assets/images/logoCat.png');
   return (
     <KeyboardAvoidsView behavior="height">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
+        <>
           <ImageContainer>
             <LogoImage source={logoImg} resizeMode="contain" />
             <HeaderTitle>{headerTitle}</HeaderTitle>
           </ImageContainer>
           <InputContainer>{children}</InputContainer>
-        </View>
+        </>
       </TouchableWithoutFeedback>
     </KeyboardAvoidsView>
   );
@@ -43,10 +33,10 @@ const KeyboardAvoidsView = styled.KeyboardAvoidingView`
 const HeaderTitle = styled.Text`
   bottom: 0;
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fonts.size.xxxl};
+  font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
   letter-spacing: 1px;
   position: absolute;
-  right: 30;
+  right: 30px;
   text-transform: uppercase;
 `;
 

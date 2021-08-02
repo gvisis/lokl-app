@@ -9,6 +9,8 @@ export const lightTheme = {
 		white: '#fff',
 		black: '#000',
 		lightGrey: '#8c8c8c',
+		red: '#FF0000',
+		error: '#edfe00'
 	},
 	fonts: {
 		size: {

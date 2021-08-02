@@ -16,7 +16,6 @@
     "Logout": "Logout",
     "Login to": "Login to your account",
     "Forgot password": "Forgot password?",
-    "Or": "or",
     "Password": "Password",
     "Password reset": "Password reset",
     "Email": "Email",
@@ -26,8 +25,11 @@
     "Enter email": "Enter your email",
     "Enter pass": "Enter your password",
     "Confirm pass": "Confirm password",
-    "Create account": "Create account",
-    "Password sent": "Password sent to your email: {{email}}"
+    "Create account": "Create new account",
+    "Register success": "Succesfuly registered!",
+    "Login success": "Succesfuly logged in!",
+    "Logout success": "You signed out. See you!",
+    "Password sent": "New password was sent to your email."
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Account already exists",
@@ -46,5 +48,14 @@
     "auth/too-many-requests": "Too many requests",
     "auth/unknown": "Unknown error",
     "auth/fill-all-fields": "Please fill all fields"
+  },
+  "yup": {
+    "email-required": "Email is required",
+    "email-invalid-format": "Invalid email format",
+    "pass-required": "Password is required",
+    "pass-confirm": "Confirm your password",
+    "pass-match": "Password does not match",
+    "pass-size-min": "Password must be at least {{min}} characters long",
+    "pass-size-max": "Password must be at most {{max}} characters long"
   }
 }

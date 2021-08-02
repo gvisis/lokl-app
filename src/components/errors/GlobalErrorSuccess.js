@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../state/actions';
 
 
-export const GlobalErrorSuccess = ({ navigation }) => {
+export const GlobalErrorSuccess = () => {
 	const { error, success, message } = useSelector(state => state.ui.status);
 	const errorType = error ? 'error' : success ? 'success' : null;
 	const dispatch = useDispatch()

@@ -1,6 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+interface HeaderProps {
+  title: string;
+  height?: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({ title }) => (
+  <HeaderContainer>
+    <TitleText>{title}</TitleText>
+  </HeaderContainer>
+);
+
 const HeaderContainer = styled.View`
   height: ${({ height }) => (height ? height : '20%')};
   width: 100%;
@@ -14,9 +25,3 @@ const TitleText = styled.Text`
   font-weight: bold;
   text-transform: uppercase;
 `;
-
-export const Header = ({ title }) => (
-  <HeaderContainer>
-    <TitleText>{title}</TitleText>
-  </HeaderContainer>
-);

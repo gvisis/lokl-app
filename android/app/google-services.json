@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "343191793177",
+    "firebase_url": "https://kilo-first-app-default-rtdb.firebaseio.com",
     "project_id": "kilo-first-app",
     "storage_bucket": "kilo-first-app.appspot.com"
   },

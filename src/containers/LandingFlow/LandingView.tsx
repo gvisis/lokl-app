@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -7,7 +6,7 @@ import { CustomBtn, Header } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { useFunction } from '../../utils/hooks';
 
-export const LandingView = ({ navigation }) => {
+export const LandingView: React.FC = ({ navigation }) => {
   const landingPageBgImage = require('../../assets/images/landingPageImage.png');
   const { t } = useTranslation();
 
@@ -16,17 +15,17 @@ export const LandingView = ({ navigation }) => {
 
   return (
     <Wrapper>
-      <Header title={t('landing:appName')} height="5px" />
+      <Header title={t('landing:appName')} />
       <LandingBackground source={landingPageBgImage} resizeMethod="scale" />
       <ButtonWrappper>
         <CustomBtn
-          text={t('common:Login to')}
+          label={t('common:Login to')}
           center
           activeOpacity={0.8}
           onPress={navigateToLogin}
         />
         <CustomBtn
-          text={t('common:Create account')}
+          label={t('common:Create account')}
           center
           activeOpacity={0.8}
           onPress={navigateToRegister}
@@ -34,12 +33,6 @@ export const LandingView = ({ navigation }) => {
       </ButtonWrappper>
     </Wrapper>
   );
-};
-
-LandingView.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }),
 };
 
 const ButtonWrappper = styled.View`

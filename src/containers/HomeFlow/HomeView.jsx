@@ -10,17 +10,17 @@ import { CustomBtn, Header } from '../../components';
 export const HomeView = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const userInfo = useSelector(state => state.user.userInfo);
+  const { userInfo } = useSelector(state => state.user);
 
   const handleLogout = useFunction(dispatch, actions.user.logout());
 
   return (
     <HomeWrap>
       <Header title={t('home:title')} />
-      <WelcomeTitle>Your email: {userInfo.email}!</WelcomeTitle>
+      <WelcomeTitle>Your email: {userInfo && userInfo.email}!</WelcomeTitle>
       <ButtonWrap>
         <CustomBtn
-          text={t('common:Logout')}
+          label={t('common:Logout')}
           secondary
           center
           activeOpacity={0.5}

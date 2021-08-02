@@ -15,7 +15,11 @@ export const RegisterView = ({ navigation }) => {
   return (
     <AuthContainer headerTitle={t('register:title')}>
       <Formik
-        initialValues={{ email: '', password: '', confirmPassword: '' }}
+        initialValues={{
+          email: 'email@example.com',
+          password: 'password123',
+          confirmPassword: 'password123',
+        }}
         validationSchema={validator.register}
         onSubmit={({ email, password }) =>
           dispatch(actions.user.register(email, password))
@@ -54,7 +58,7 @@ export const RegisterView = ({ navigation }) => {
               touched={touched.confirmPassword}
             />
             <CustomBtn
-              text={t('common:Create account')}
+              label={t('common:Create account')}
               center
               activeOpacity={0.8}
               onPress={handleSubmit}
@@ -63,7 +67,7 @@ export const RegisterView = ({ navigation }) => {
         )}
       </Formik>
       <CustomBtn
-        text={t('common:Go back')}
+        label={t('common:Go back')}
         center
         width="30"
         secondary
