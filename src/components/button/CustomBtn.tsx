@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/native';
 import PropTypes from 'prop-types';
 import { ActivityIndicator } from 'react-native';
@@ -20,8 +20,21 @@ const StyledButtonText = styled.Text`
   text-align: center;
   text-transform: ${({ textTransform }) => textTransform};
 `;
-export const CustomBtn = ({ onSync, label, ...rest }) => {
-  const theme = React.useContext(ThemeContext);
+
+interface CustomBtnProps {
+  label: string;
+  onSync?: boolean;
+  center?: boolean;
+  activeOpacity?: number;
+  onPress: () => void;
+}
+
+export const CustomBtn: React.FC<CustomBtnProps> = ({
+  onSync,
+  label,
+  ...rest
+}) => {
+  const theme = useContext(ThemeContext);
   return (
     <StyledButton disabled={onSync} {...rest}>
       {onSync ? (

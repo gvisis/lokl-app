@@ -1,8 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+interface HeaderProps {
+  title: string;
+  height: number;
+}
+
+export const Header: React.FC<HeaderProps> = ({ title }) => (
+  <HeaderContainer>
+    <TitleText>{title}</TitleText>
+  </HeaderContainer>
+);
+
 const HeaderContainer = styled.View`
-  height: ${({ height }) => (height ? height : '20%')};
+  height: ${({ height }) => (height ? height : '20%')}px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -14,9 +25,3 @@ const TitleText = styled.Text`
   font-weight: bold;
   text-transform: uppercase;
 `;
-
-export const Header = ({ title }) => (
-  <HeaderContainer>
-    <TitleText>{title}</TitleText>
-  </HeaderContainer>
-);
