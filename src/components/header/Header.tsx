@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 interface HeaderProps {
   title: string;
-  height: number;
+  height?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({ title }) => (
@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => (
 );
 
 const HeaderContainer = styled.View`
-  height: ${({ height }) => (height ? height : '20%')}px;
+  height: ${({ height }) => (height ? height : '20%')};
   width: 100%;
   align-items: center;
   justify-content: center;

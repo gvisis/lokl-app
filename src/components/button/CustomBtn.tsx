@@ -27,6 +27,7 @@ interface CustomBtnProps {
   center?: boolean;
   activeOpacity?: number;
   onPress: () => void;
+  width?: number;
 }
 
 export const CustomBtn: React.FC<CustomBtnProps> = ({
