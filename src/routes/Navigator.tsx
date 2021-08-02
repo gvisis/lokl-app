@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import database from '@react-native-firebase/database';
@@ -13,7 +13,7 @@ import { AuthNavigation, HomeNavigation } from '.';
 import { actions } from '../state/actions';
 import { RootState } from '../state/reducers';
 
-const Navigator: React.FC = memo(() => {
+const Navigator: React.FC = () => {
   // Set an initializing state whilst Firebase connects
   const loading = useSelector((state: RootState) => state.ui.onSync.user);
   const { userInfo } = useSelector((state: RootState) => state.user);
@@ -55,6 +55,6 @@ const Navigator: React.FC = memo(() => {
       </ThemeProvider>
     </NavigationContainer>
   );
-});
+};
 
 export default Navigator;

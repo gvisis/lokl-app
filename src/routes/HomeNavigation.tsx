@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ThemeContext } from 'styled-components/native';
@@ -10,13 +10,14 @@ import { HomeView } from '../containers/HomeFlow';
 
 const Tab = createBottomTabNavigator();
 
-export const HomeNavigation: React.FC = memo(() => {
+export const HomeNavigation: React.FC = () => {
   const theme = useContext(ThemeContext);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        // eslint-disable-next-line react/display-name
         tabBarIcon: ({ color, size }) => {
-          let iconName: string = route.name === ROUTES.Home ? 'home' : 'user';
+          const iconName: string = route.name === ROUTES.Home ? 'home' : 'user';
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
@@ -36,4 +37,4 @@ export const HomeNavigation: React.FC = memo(() => {
       />
     </Tab.Navigator>
   );
-});
+};

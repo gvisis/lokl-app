@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { ROUTES } from './RouteNames';
@@ -11,7 +11,7 @@ import { LandingView } from '../containers/LandingFlow';
 
 const AuthStack = createStackNavigator();
 
-export const AuthNavigation: React.FC = memo(() => (
+export const AuthNavigation: React.FC = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>
     <AuthStack.Screen name={ROUTES.Landing} component={LandingView} />
     <AuthStack.Screen name={ROUTES.Login} component={LoginView} />
@@ -21,4 +21,4 @@ export const AuthNavigation: React.FC = memo(() => (
       component={ForgotPasswordView}
     />
   </AuthStack.Navigator>
-));
+);

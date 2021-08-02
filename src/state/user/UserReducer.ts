@@ -4,7 +4,12 @@ import { AnyObject } from '../../types/general';
 import { constants } from '../constants';
 
 export interface UserReducerState {
-  userInfo: AnyObject;
+  userInfo: {
+    name: string;
+    email: string;
+    age: number;
+    city: string;
+  };
 }
 
 const INITIAL_STATE: UserReducerState = {

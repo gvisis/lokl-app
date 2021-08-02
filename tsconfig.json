@@ -30,7 +30,6 @@
     ],
     "jsx": "react",
     "strict": false,
-    "types": [],
     "declaration": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -40,6 +39,5 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
-  "files": ["src/modules.d.ts"],
-  "types": ["jest", "styled-components-react-native"]
+  "types": ["styled-components-react-native"]
 }
