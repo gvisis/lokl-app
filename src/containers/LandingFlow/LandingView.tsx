@@ -15,7 +15,7 @@ export const LandingView: React.FC = ({ navigation }) => {
 
   return (
     <Wrapper>
-      <Header title={t('landing:appName')} height={5} />
+      <Header title={t('landing:appName')} />
       <LandingBackground source={landingPageBgImage} resizeMethod="scale" />
       <ButtonWrappper>
         <CustomBtn
