@@ -5,12 +5,13 @@ import styled from 'styled-components/native';
 
 import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
+import { RootState } from '../../state/reducers';
 import { CustomBtn, Header } from '../../components';
 
-export const HomeView = () => {
+export const HomeView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector(state => state.user);
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   const handleLogout = useFunction(dispatch, actions.user.logout());
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AuthContainer } from '.';
+import { AuthContainer, Container } from '.';
 import { PassResetForm } from '../../components';
 
-export const ForgotPasswordView = ({ navigation }) => {
+export const ForgotPasswordView: React.FC<Container> = ({ navigation }) => {
   const { t } = useTranslation();
 
   return (

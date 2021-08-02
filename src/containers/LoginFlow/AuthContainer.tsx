@@ -4,7 +4,15 @@ import styled from 'styled-components/native';
 
 import { InputContainer } from '../../components';
 
-export const AuthContainer = ({ children, headerTitle }) => {
+export interface Container {
+  headerTitle: string;
+  children: React.ReactNode;
+}
+
+export const AuthContainer: React.FC<Container> = ({
+  children,
+  headerTitle,
+}) => {
   const logoImg = require('../../assets/images/logoCat.png');
   return (
     <KeyboardAvoidsView behavior="height">
