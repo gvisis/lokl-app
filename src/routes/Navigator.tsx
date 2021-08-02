@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import database from '@react-native-firebase/database';
@@ -11,16 +11,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, HomeNavigation } from '.';
 import { actions } from '../state/actions';
+import { RootState } from '../state/reducers';
 
-const Navigator = () => {
+const Navigator: React.FC = memo(() => {
   // Set an initializing state whilst Firebase connects
-  const loading = useSelector(state => state.ui.onSync.user);
-  const { userInfo } = useSelector(state => state.user);
-  const { theme } = useSelector(state => state.ui);
+  const loading = useSelector((state: RootState) => state.ui.onSync.user);
+  const { userInfo } = useSelector((state: RootState) => state.user);
+  const { theme } = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
 
   //! Handle user state changes - TEMPORARY CODE!!!
-  const onAuthStateChanged = user => {
+  const onAuthStateChanged = (user: any): void => {
     if (user) {
       database()
         .ref(`/users/${user.uid}`)
@@ -54,6 +55,6 @@ const Navigator = () => {
       </ThemeProvider>
     </NavigationContainer>
   );
-};
+});
 
 export default Navigator;

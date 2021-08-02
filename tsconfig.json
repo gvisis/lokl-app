@@ -41,5 +41,5 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "files": ["src/modules.d.ts"],
-  "types": ["styled-components-react-native"]
+  "types": ["jest", "styled-components-react-native"]
 }
