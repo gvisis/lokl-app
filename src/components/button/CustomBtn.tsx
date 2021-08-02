@@ -28,6 +28,7 @@ interface CustomBtnProps {
   activeOpacity?: number;
   onPress: () => void;
   width?: number;
+  secondary?: boolean;
 }
 
 export const CustomBtn: React.FC<CustomBtnProps> = ({
