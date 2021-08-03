@@ -43,12 +43,9 @@ export const PassResetForm: React.FC = ({ navigation }) => {
     navigation.goBack();
   }, []);
 
-  const handlePassReset = useCallback(
-    (email): void => {
-      dispatch(actions.user.passwordReset(email));
-    },
-    [dispatch],
-  );
+  const handlePassReset = useCallback((email: string): void => {
+    dispatch(actions.user.passwordReset(email));
+  }, []);
 
   return (
     <ContainerWrapper>
@@ -66,7 +63,14 @@ export const PassResetForm: React.FC = ({ navigation }) => {
           initialValues={{ email: '' }}
           validationSchema={validator.passwordReset}
           onSubmit={({ email }) => handlePassReset(email)}>
-          {({ handleChange, handleBlur, errors, values, touched }) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            errors,
+            values,
+            touched,
+          }) => (
             <>
               <CustomInput
                 placeholder={t('common:Enter email')}
@@ -81,6 +85,7 @@ export const PassResetForm: React.FC = ({ navigation }) => {
                 center
                 onSync={onSync.button}
                 activeOpacity={0.8}
+                onPress={handleSubmit}
               />
             </>
           )}

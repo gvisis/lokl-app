@@ -1,4 +1,5 @@
 import React from 'react';
+import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import styled from 'styled-components/native';
 
 const StyledInput = styled.TextInput`
@@ -29,6 +30,7 @@ interface CustomInputProps {
   placeholder?: string;
   value?: string;
   onChangeText?: (value: string) => void;
+  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   error?: string;
   touched: boolean;
   secureTextEntry?: boolean;
