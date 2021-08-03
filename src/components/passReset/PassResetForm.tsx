@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { CustomBtn, CustomInput } from '..';
 import { actions } from '../../state/actions';
+import { RootState } from '../../state/reducers';
 import { validator } from '../../utils/validators';
 
 const ResetSuccessBox = styled.View`
@@ -29,16 +30,25 @@ const ContainerWrapper = styled.View`
   align-items: center;
 `;
 
-export const PassResetForm = ({ navigation }) => {
+export const PassResetForm: React.FC = ({ navigation }) => {
   const theme = React.useContext(ThemeContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { onSync, passResetStatus } = useSelector(state => state.ui);
+  const { onSync, passResetStatus } = useSelector(
+    (state: RootState) => state.ui,
+  );
 
-  const handlePassResetBack = useCallback(() => {
+  const handlePassResetBack = useCallback((): void => {
     dispatch(actions.ui.clearPassResetStatus());
     navigation.goBack();
-  });
+  }, []);
+
+  const handlePassReset = useCallback(
+    (email): void => {
+      dispatch(actions.user.passwordReset(email));
+    },
+    [dispatch],
+  );
 
   return (
     <ContainerWrapper>
@@ -55,15 +65,8 @@ export const PassResetForm = ({ navigation }) => {
         <Formik
           initialValues={{ email: '' }}
           validationSchema={validator.passwordReset}
-          onSubmit={({ email }) => dispatch(actions.user.passwordReset(email))}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            errors,
-            values,
-            touched,
-          }) => (
+          onSubmit={({ email }) => handlePassReset(email)}>
+          {({ handleChange, handleBlur, errors, values, touched }) => (
             <>
               <CustomInput
                 placeholder={t('common:Enter email')}
@@ -78,7 +81,6 @@ export const PassResetForm = ({ navigation }) => {
                 center
                 onSync={onSync.button}
                 activeOpacity={0.8}
-                onPress={handleSubmit}
               />
             </>
           )}

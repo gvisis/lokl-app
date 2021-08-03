@@ -25,7 +25,16 @@ const InputWrapper = styled.View`
   border-top-right-radius: 5px;
 `;
 
-export const CustomInput = ({
+interface CustomInputProps {
+  placeholder?: string;
+  value?: string;
+  onChangeText?: (value: string) => void;
+  error?: string;
+  touched: boolean;
+  secureTextEntry?: boolean;
+}
+
+export const CustomInput: React.FC<CustomInputProps> = ({
   placeholder,
   value,
   onChangeText,

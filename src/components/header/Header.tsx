@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => (
   </HeaderContainer>
 );
 
-const HeaderContainer = styled.View`
+const HeaderContainer = styled.View<{ height?: number }>`
   height: ${({ height }) => (height ? height : '20%')};
   width: 100%;
   align-items: center;

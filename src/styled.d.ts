@@ -27,5 +27,6 @@ declare module 'styled-components/native' {
         xxxl: number;
       };
     };
+    width: number;
   }
 }

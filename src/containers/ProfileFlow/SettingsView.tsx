@@ -38,7 +38,7 @@ export const SettingsView: React.FC = () => {
 interface SettingsRowProps {
   iconName: string;
   rowTitle: string;
-  toggle: string;
+  toggle?: string;
 }
 
 const SettingsFullRow = ({ iconName, rowTitle, toggle }: SettingsRowProps) => (
