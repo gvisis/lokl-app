@@ -1,17 +1,16 @@
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
-const login = async (
+type ApiProps = (
   email: string,
   password: string,
-): Promise<FirebaseAuthTypes.UserCredential> =>
+) => Promise<FirebaseAuthTypes.UserCredential>;
+
+const login: ApiProps = async (email, password) =>
   auth().signInWithEmailAndPassword(email, password);
 
 const logout = async (): Promise<void> => auth().signOut();
 
-const register = async (
-  email: string,
-  password: string,
-): Promise<FirebaseAuthTypes.UserCredential> =>
+const register: ApiProps = async (email, password) =>
   auth().createUserWithEmailAndPassword(email, password);
 
 const passworReset = async (email: string): Promise<void> =>

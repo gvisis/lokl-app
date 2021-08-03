@@ -4,9 +4,9 @@
 let sagaRunner;
 
 export default (sagaMiddleware, rootSaga) => {
-	if (__DEV__ && module.hot && sagaRunner) {
-		sagaRunner.cancel();
-	}
+  if (__DEV__ && module.hot && sagaRunner) {
+    sagaRunner.cancel();
+  }
 
-	sagaRunner = sagaMiddleware.run(rootSaga);
+  sagaRunner = sagaMiddleware.run(rootSaga);
 };
