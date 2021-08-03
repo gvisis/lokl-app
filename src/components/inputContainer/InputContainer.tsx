@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { AnyObject } from 'src/types/general';
 import styled from 'styled-components/native';
 
 const StyledContainer = styled.View`
@@ -9,11 +9,12 @@ const StyledContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
-export const InputContainer = ({ children, style }) => (
+
+interface InputProps {
+  children: React.ReactNode;
+  style?: AnyObject;
+}
+
+export const InputContainer: React.FC<InputProps> = ({ children, style }) => (
   <StyledContainer style={style}>{children}</StyledContainer>
 );
-
-InputContainer.propTypes = {
-  children: PropTypes.any,
-  style: PropTypes.any,
-};

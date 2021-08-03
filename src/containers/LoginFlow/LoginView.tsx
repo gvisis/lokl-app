@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
@@ -21,14 +21,19 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
     ROUTES.ForgotPassword,
   );
 
+  const handleLoginSubmit = useCallback(
+    (email: string, password: string): void => {
+      dispatch(actions.user.login(email, password));
+    },
+    [dispatch],
+  );
+
   return (
     <AuthContainer headerTitle={t('login:title')}>
       <Formik
         initialValues={{ email: 'email@example.com', password: 'password123' }}
         validationSchema={validator.login}
-        onSubmit={({ email, password }) =>
-          dispatch(actions.user.login(email, password))
-        }>
+        onSubmit={({ email, password }) => handleLoginSubmit(email, password)}>
         {({
           handleChange,
           handleBlur,

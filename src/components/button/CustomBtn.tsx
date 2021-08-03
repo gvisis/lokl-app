@@ -1,9 +1,17 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/native';
-import PropTypes from 'prop-types';
 import { ActivityIndicator } from 'react-native';
 
-const StyledButton = styled.TouchableOpacity`
+interface StyledButtonProps {
+  width?: number;
+  secondary?: boolean;
+  center?: boolean;
+  fontSize?: number;
+  marginTop?: number;
+  textTransform?: string;
+}
+
+const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
   width: ${({ width }) => (width ? width : '90')}%;
   border-radius: 10px;
   background-color: ${({ secondary, theme }) =>
@@ -13,7 +21,7 @@ const StyledButton = styled.TouchableOpacity`
   align-self: ${({ center }) => (center ? 'center' : 'flex-start')};
   margin-top: ${({ marginTop }) => (marginTop ? marginTop : '15')}px;
 `;
-const StyledButtonText = styled.Text`
+const StyledButtonText = styled.Text<StyledButtonProps>`
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme, fontSize }) =>
     fontSize ? fontSize : theme.fonts.size.xl}px;
@@ -26,7 +34,7 @@ interface CustomBtnProps {
   onSync?: boolean;
   center?: boolean;
   activeOpacity?: number;
-  onPress: () => void;
+  onPress?: () => void;
   width?: number;
   secondary?: boolean;
 }
@@ -46,17 +54,6 @@ export const CustomBtn: React.FC<CustomBtnProps> = ({
       )}
     </StyledButton>
   );
-};
-
-StyledButton.defaultProps = {
-  backgroundColor: `${({ theme }) => theme.colors.secondary}`,
-};
-
-StyledButtonText.propTypes = {
-  textTransform: PropTypes.string,
-  color: PropTypes.string,
-  backgroundColor: PropTypes.string,
-  center: PropTypes.string,
 };
 
 StyledButtonText.defaultProps = {

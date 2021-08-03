@@ -7,6 +7,7 @@ import { InputContainer } from '../../components';
 export interface Container {
   headerTitle: string;
   children: React.ReactNode;
+  onSubmit?: (email: string, password: string) => void;
 }
 
 export const AuthContainer: React.FC<Container> = ({
