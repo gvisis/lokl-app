@@ -10,8 +10,8 @@ const InputContainer = styled.View`
 `;
 const ErrorMessage = styled.Text`
   color: ${({ theme }) => theme.colors.red};
-  padding: 5px 0;
   font-size: ${({ theme }) => theme.fonts.size.s}px;
+  margin-bottom: 5px;
 `;
 const InputWrapper = styled.View`
   width: 90%;
@@ -26,11 +26,10 @@ const IconWrapper = styled.View`
   align-items: center;
   width: 15%;
 `;
+
 const StyledInput = styled.TextInput`
   width: 85%;
-  padding: 8px;
-  justify-content: center;
-  align-items: center;
+  padding: 10px;
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   border-color: ${({ theme }) => theme.colors.lightGrey2};
