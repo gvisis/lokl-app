@@ -40,6 +40,7 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
               value={values.email}
               error={errors.email}
               touched={touched.email}
+              iconName={'account'}
             />
             <CustomInput
               placeholder={t('common:Enter pass')}
@@ -48,6 +49,7 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
               value={values.password}
               error={errors.password}
               touched={touched.password}
+              iconName={'key-variant'}
             />
             <CustomInput
               placeholder={t('common:Confirm pass')}
@@ -56,6 +58,7 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
               value={values.confirmPassword}
               error={errors.confirmPassword}
               touched={touched.confirmPassword}
+              iconName={'key-variant'}
             />
             <CustomBtn
               label={t('common:Create account')}
