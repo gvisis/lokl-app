@@ -40,10 +40,10 @@ function* handleLogout() {
     yield put(actions.ui.setOnSync('user', false));
   }
 }
-function* handleRegistration({ email, password }: UserAuthCredentials) {
+function* handleSignup({ email, password }: UserAuthCredentials) {
   try {
     yield put(actions.ui.setOnSync('user', true));
-    yield call(api.register, email, password);
+    yield call(api.signup, email, password);
     yield call(handleCreateUserDb, email);
     yield put(
       actions.ui.setStatus('success', true, i18n.t('common:Register success')),
@@ -96,7 +96,7 @@ function* handleCreateUserDb(email: string) {
 export function* userSaga() {
   yield takeEvery(constants.user.LOGIN, handleLogin);
   yield takeEvery(constants.user.LOG_OUT, handleLogout);
-  yield takeEvery(constants.user.REGISTER, handleRegistration);
+  yield takeEvery(constants.user.SIGN_UP, handleSignup);
   yield takeEvery(constants.user.PASSWORD_RESET, handlePasswordReset);
   yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
 }

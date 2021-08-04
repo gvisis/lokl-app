@@ -13,16 +13,16 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   return (
-    <AuthContainer headerTitle={t('register:title')}>
+    <AuthContainer headerTitle={t('signup:title')}>
       <Formik
         initialValues={{
           email: 'email@example.com',
           password: 'password123',
           confirmPassword: 'password123',
         }}
-        validationSchema={validator.register}
+        validationSchema={validator.signup}
         onSubmit={({ email, password }) =>
-          dispatch(actions.user.register(email, password))
+          dispatch(actions.user.signup(email, password))
         }>
         {({
           errors,

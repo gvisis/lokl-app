@@ -21,8 +21,8 @@ export const logout = () => ({
   type: constants.user.LOG_OUT,
 });
 
-export const register = (email: string, password: string) => ({
-  type: constants.user.REGISTER,
+export const signup = (email: string, password: string) => ({
+  type: constants.user.SIGN_UP,
   email,
   password,
 });
@@ -40,7 +40,7 @@ export const userActions = {
   setUserInfo,
   login,
   logout,
-  register,
+  signup,
   passwordReset,
   clearUserState,
   updateUserInfo,

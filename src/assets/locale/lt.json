@@ -8,8 +8,8 @@
   "login": {
     "title": "Prisijungimas"
   },
-  "register": {
-    "title": "Registracija"
+  "signup": {
+    "title": "Nauja registracija"
   },
   "common": {
     "Login": "Prisijungti",

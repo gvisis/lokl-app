@@ -31,7 +31,7 @@ const INITIAL_STATE: UiReducerState = {
     message: '',
   },
   passResetStatus: false,
-  theme: themes.dark,
+  theme: themes.light,
 };
 
 export interface UiStateSetter {

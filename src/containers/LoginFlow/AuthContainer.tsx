@@ -1,7 +1,10 @@
 import React from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
+import { ThemeContext } from 'styled-components';
 
+import Logo from '../../assets/images/logo.svg';
 import { InputContainer } from '../../components';
 
 export interface Container {
@@ -14,15 +17,28 @@ export const AuthContainer: React.FC<Container> = ({
   children,
   headerTitle,
 }) => {
-  const logoImg = require('../../assets/images/logoCat.png');
+  const theme = React.useContext(ThemeContext);
   return (
     <KeyboardAvoidsView behavior="height">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
-          <ImageContainer>
-            <LogoImage source={logoImg} resizeMode="contain" />
-            <HeaderTitle>{headerTitle}</HeaderTitle>
-          </ImageContainer>
+          <HeaderContainer>
+            <LinearGradient
+              colors={[
+                theme.colors.background5,
+                theme.colors.background10,
+                theme.colors.background,
+              ]}
+              locations={[0.2, 0.3, 1]}>
+              <HeaderImage
+                source={{
+                  uri: 'https://images.unsplash.com/photo-1524053821891-fadb2cc83d52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80',
+                }}
+              />
+              <AppLogo width={120} height={160} fill={'red'} />
+              <HeaderTitle>{headerTitle}</HeaderTitle>
+            </LinearGradient>
+          </HeaderContainer>
           <InputContainer>{children}</InputContainer>
         </>
       </TouchableWithoutFeedback>
@@ -30,26 +46,30 @@ export const AuthContainer: React.FC<Container> = ({
   );
 };
 
-const ImageContainer = styled.View`
-  height: 35%;
-  width: 100%;
+const HeaderContainer = styled.View`
+  justify-content: center;
 `;
+
 const KeyboardAvoidsView = styled.KeyboardAvoidingView`
   background-color: ${({ theme }) => theme.colors.background};
   flex: 1;
 `;
 
-const HeaderTitle = styled.Text`
-  bottom: 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
-  letter-spacing: 1px;
-  position: absolute;
-  right: 30px;
-  text-transform: uppercase;
+const AppLogo = styled(Logo)`
+  margin: 10px auto 0;
 `;
 
-const LogoImage = styled.Image`
+const HeaderTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.secondary1};
+  font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
+  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
+  letter-spacing: 1px;
+  text-align: center;
+`;
+
+const HeaderImage = styled.ImageBackground`
+  position: absolute;
   height: 100%;
   width: 100%;
+  z-index: -1;
 `;

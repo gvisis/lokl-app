@@ -10,7 +10,7 @@ const login: ApiProps = async (email, password) =>
 
 const logout = async (): Promise<void> => auth().signOut();
 
-const register: ApiProps = async (email, password) =>
+const signup: ApiProps = async (email, password) =>
   auth().createUserWithEmailAndPassword(email, password);
 
 const passworReset = async (email: string): Promise<void> =>
@@ -22,6 +22,6 @@ export const api = {
   getUserInfo,
   login,
   logout,
-  register,
+  signup,
   passworReset,
 };

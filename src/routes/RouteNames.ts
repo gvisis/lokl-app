@@ -11,5 +11,5 @@ export enum ROUTES {
   Landing = 'landing',
   Login = 'login',
   ForgotPassword = 'forgotPassword',
-  Register = 'register',
+  Signup = 'signup',
 }

@@ -8,8 +8,8 @@
   "login": {
     "title": "Login"
   },
-  "register": {
-    "title": "Register"
+  "signup": {
+    "title": "Sign up"
   },
   "common": {
     "Login": "Login",

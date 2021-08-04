@@ -17,7 +17,7 @@ const HeaderContainer = styled.View<{ height?: number }>`
   width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.primary80};
+  background-color: ${({ theme }) => theme.colors.primary1};
 `;
 const TitleText = styled.Text`
   color: ${({ theme }) => theme.colors.white};

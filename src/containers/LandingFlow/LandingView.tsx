@@ -11,7 +11,7 @@ export const LandingView: React.FC = ({ navigation }) => {
   const { t } = useTranslation();
 
   const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);
-  const navigateToRegister = useFunction(navigation.navigate, ROUTES.Register);
+  const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
 
   return (
     <Wrapper>
@@ -28,7 +28,7 @@ export const LandingView: React.FC = ({ navigation }) => {
           label={t('common:Create account')}
           center
           activeOpacity={0.8}
-          onPress={navigateToRegister}
+          onPress={navigateToSignup}
         />
       </ButtonWrappper>
     </Wrapper>
