@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 import { CustomBtn, Header } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
@@ -12,7 +12,6 @@ export const LandingView: React.FC = ({ navigation }) => {
 
   const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);
   const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
-
   return (
     <Wrapper>
       <Header title={t('landing:appName')} />

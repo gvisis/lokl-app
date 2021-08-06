@@ -21,7 +21,7 @@ const Navigator: React.FC = () => {
   const dispatch = useDispatch();
 
   //! Handle user state changes - TEMPORARY CODE!!!
-  const onAuthStateChanged = (user: any): void => {
+  const onAuthStateChanged = (user): void => {
     if (user) {
       database()
         .ref(`/users/${user.uid}`)

@@ -69,6 +69,6 @@ export const uiReducer = createReducer(INITIAL_STATE, {
   },
 
   [constants.ui.SET_THEME]: (state, { bool }: UiStateSetter) => {
-    state.theme = bool ? themes.dark : themes.light;
+    state.theme = bool ? themes.light : themes.dark;
   },
 });

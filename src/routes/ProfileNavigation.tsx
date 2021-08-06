@@ -21,7 +21,7 @@ export const ProfileNavigation: React.FC = ({ navigation, route }) => {
 
   const profileOptions = {
     headerStyle: {
-      backgroundColor: theme.colors.primary3,
+      backgroundColor: theme.colors.background,
     },
     headerTintColor: theme.colors.white,
     headerTitle: getHeaderTitle(route),

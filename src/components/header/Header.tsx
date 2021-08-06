@@ -14,14 +14,16 @@ export const Header: React.FC<HeaderProps> = ({ title }) => (
 
 const HeaderContainer = styled.View<{ height?: number }>`
   height: ${({ height }) => (height ? height : '20%')};
-  width: 100%;
-  align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.primary1};
+  flex: 1.2;
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
+
 const TitleText = styled.Text`
+  width: 100%;
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fonts.size.xxl}px;
   font-weight: bold;
+  text-align: center;
   text-transform: uppercase;
 `;

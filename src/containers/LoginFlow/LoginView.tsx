@@ -50,6 +50,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               value={values.email}
               error={errors.email}
               touched={touched.email}
+              iconName={'account'}
             />
             <CustomInput
               placeholder={t('common:Password')}
@@ -58,6 +59,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               value={values.password}
               error={errors.password}
               touched={touched.password}
+              iconName={'key-variant'}
               secureTextEntry
             />
             <CustomBtn

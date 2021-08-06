@@ -29,8 +29,9 @@ export const AuthContainer: React.FC<Container> = ({
                 theme.colors.background10,
                 theme.colors.background,
               ]}
-              locations={[0.2, 0.3, 1]}>
+              locations={[0.3, 0.6, 0.85]}>
               <HeaderImage
+                resizeMode="cover"
                 source={{
                   uri: 'https://images.unsplash.com/photo-1524053821891-fadb2cc83d52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80',
                 }}
@@ -48,6 +49,8 @@ export const AuthContainer: React.FC<Container> = ({
 
 const HeaderContainer = styled.View`
   justify-content: center;
+  border-bottom-width: 3px;
+  border-bottom-color: ${props => props.theme.colors.lightGrey2};
 `;
 
 const KeyboardAvoidsView = styled.KeyboardAvoidingView`
@@ -56,7 +59,7 @@ const KeyboardAvoidsView = styled.KeyboardAvoidingView`
 `;
 
 const AppLogo = styled(Logo)`
-  margin: 10px auto 0;
+  margin: 30px auto;
 `;
 
 const HeaderTitle = styled.Text`
@@ -65,6 +68,7 @@ const HeaderTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.nexaBold};
   letter-spacing: 1px;
   text-align: center;
+  margin-bottom: 5px;
 `;
 
 const HeaderImage = styled.ImageBackground`

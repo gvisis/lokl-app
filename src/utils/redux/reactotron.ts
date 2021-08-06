@@ -18,12 +18,3 @@ export const initReactotron = () => {
 
   return Reactotron;
 };
-
-// Expected 1 arguments, but got 0.ts(2554)
-// index.d.ts(4, 26): An argument for 'pluginConfig' was not provided.
-// (alias) sagaPlugin(pluginConfig: PluginConfig): (reactotron: Reactotron<ReactotronCore>) => {
-//     features: {
-//         createSagaMonitor: () => SagaMonitor;
-//     };
-// }
-// import sagaPlugin

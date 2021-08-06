@@ -17,7 +17,7 @@ export const lightTheme = {
     background5: '#F9FAFE0D',
     background10: '#F9FAFE1A',
     white: '#fff',
-    white60: 'rgba(255, 255, 255, 0.7)',
+    white60: '#FFFFF99',
     black: '#09051C',
     grey: '#444352',
     lightGrey: '#86848F',

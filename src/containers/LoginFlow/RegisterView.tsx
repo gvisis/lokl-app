@@ -35,7 +35,7 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
           handleChange,
           handleSubmit,
         }) => (
-          <>
+          <Wrapper>
             <CustomInput
               placeholder={t('common:Enter email')}
               onChangeText={handleChange('email')}
@@ -76,7 +76,7 @@ export const RegisterView: React.FC<Container> = ({ navigation }) => {
             <StyledText onPress={navigateToLogin}>
               {t('common:Already account')}
             </StyledText>
-          </>
+          </Wrapper>
         )}
       </Formik>
     </AuthContainer>
@@ -88,4 +88,10 @@ const StyledText = styled.Text`
   color: ${({ theme }) => theme.colors.red};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
   text-decoration: underline;
+`;
+
+const Wrapper = styled.View`
+  margin: 5% auto;
+  align-items: center;
+  justify-content: center;
 `;

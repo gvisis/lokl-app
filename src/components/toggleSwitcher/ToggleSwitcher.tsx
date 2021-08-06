@@ -14,6 +14,7 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
   const [switcherBool, setSwitchBool] = useState(true);
   const dispatch = useDispatch();
   const [toggleText, setToggleText] = useState({ onText: '', offText: '' });
+  const theme = useContext(ThemeContext);
 
   const handleSwitch = () => {
     if (toggle === 'themeSwitch') {
@@ -28,8 +29,9 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
   useEffect(() => {
     if (toggle === 'themeSwitch') {
       setToggleText({
-        onText: 'Dark',
-        offText: 'Light',
+        //! need to get previous info from state
+        onText: 'Light',
+        offText: 'Dark',
       });
     }
     if (toggle === 'langSwitch') {
@@ -40,7 +42,6 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
     }
   }, [toggle]);
 
-  const theme = useContext(ThemeContext);
   return (
     <ToggleSwitch
       text={{
@@ -49,19 +50,16 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
         activeTextColor: theme.colors.white,
         inactiveTextColor: theme.colors.white,
       }}
-      textStyle={{
-        fontWeight: 'bold',
-      }}
       color={{
         indicator: theme.colors.white,
         active: theme.colors.secondary,
-        inactive: theme.colors.secondaryBtn,
         activeBorder: theme.colors.secondary,
+        inactive: theme.colors.secondaryBtn,
         inactiveBorder: theme.colors.secondaryBtn,
       }}
       active={switcherBool}
       disabled={false}
-      width={35}
+      width={45}
       radius={10}
       onValueChange={handleSwitch}
     />
