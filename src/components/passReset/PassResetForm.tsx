@@ -14,7 +14,7 @@ const ResetSuccessBox = styled.View`
   width: 90%;
   height: 150px;
   align-items: center;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.border.radius10}px;
   border: 2px solid ${({ theme }) => theme.colors.tertiary};
   justify-content: space-evenly;
   padding: 10px;
