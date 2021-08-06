@@ -11,7 +11,7 @@ export const HomeRow: React.FC<RowProps> = ({ title, children }) => (
     <TitleWrap>
       <RowTitle>{title}</RowTitle>
       <TouchableOpacity onPress={() => console.warn(title)}>
-        <MoreText>View more</MoreText>
+        <AllText>View all</AllText>
       </TouchableOpacity>
     </TitleWrap>
     <RowWrap>{children}</RowWrap>
@@ -20,34 +20,31 @@ export const HomeRow: React.FC<RowProps> = ({ title, children }) => (
 
 const RowContainer = styled.View`
   width: 100%;
-  padding: 10px;
   flex: 1;
   margin-bottom: 10px;
 `;
 
 const TitleWrap = styled.View`
-  background: ${({ theme }) => theme.colors.primary};
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border-top-left-radius: ${({ theme }) => theme.border.radius10}px;
-  border-top-right-radius: ${({ theme }) => theme.border.radius10}px;
 `;
 
 const RowTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fonts.size.xl}px;
   font-family: ${({ theme }) => theme.fonts.family.benton};
 `;
-const MoreText = styled.Text`
-  color: ${({ theme }) => theme.colors.primary3};
+
+const AllText = styled.Text`
+  color: ${({ theme }) => theme.colors.secondary2};
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
 `;
+
 const RowWrap = styled.View`
-  padding: 10px;
   width: 100%;
   justify-content: center;
   align-items: center;

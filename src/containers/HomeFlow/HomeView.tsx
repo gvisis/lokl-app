@@ -15,41 +15,8 @@ import {
   HomeRow,
   ProduceItem,
 } from '../../components';
+import data from '../../assets/data';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d73',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d74',
-    title: 'five Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d75',
-    title: 'six Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d76',
-    title: 'seven Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d77',
-    title: 'eight Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d78',
-    title: 'nine Item',
-  },
-];
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -59,47 +26,22 @@ export const HomeView: React.FC = () => {
   return (
     <Container>
       <HomeHeader title={'Find your produce'} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HomeContent>
           <HomeRow title={'Produce'}>
             <FlatList
-              data={DATA}
-              renderItem={({ item }) => <ProduceItem itemTitle={item.title} />}
+              data={data}
+              renderItem={({ item }) => <ProduceItem item={item} />}
               keyExtractor={item => item.id}
               horizontal
+              showsHorizontalScrollIndicator={false}
             />
           </HomeRow>
-          <HomeRow title={'Companies'}>
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => <ProduceItem itemTitle={item.title} />}
-              keyExtractor={item => item.id}
-              horizontal
-            />
-          </HomeRow>
-          <HomeRow title={'Popular Items'}>
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => <ProduceItem itemTitle={item.title} />}
-              keyExtractor={item => item.id}
-              horizontal
-            />
-          </HomeRow>
-          <HomeRow title={'Ads'}>
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => <ProduceItem itemTitle={item.title} />}
-              keyExtractor={item => item.id}
-              horizontal
-            />
-          </HomeRow>
+          <HomeRow title={'Companies'} />
+          <HomeRow title={'Popular Items'} />
+          <HomeRow title={'Ads'} />
         </HomeContent>
       </ScrollView>
-      {/* <Produce /> */}
-      {/* <Sellers /> */}
-      {/* <PopularItems /> */}
-      {/* <Ads /> */}
-
       <ButtonWrap>
         <CustomBtn
           label={t('common:Logout')}
@@ -116,7 +58,6 @@ export const HomeView: React.FC = () => {
 const HomeContent = styled.View`
   flex: 1;
   align-items: center;
-  padding: 10px;
 `;
 
 const ButtonWrap = styled.View`
