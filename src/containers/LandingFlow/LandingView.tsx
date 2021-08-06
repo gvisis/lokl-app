@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 import { CustomBtn, Header } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
@@ -11,8 +11,7 @@ export const LandingView: React.FC = ({ navigation }) => {
   const { t } = useTranslation();
 
   const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);
-  const navigateToRegister = useFunction(navigation.navigate, ROUTES.Register);
-
+  const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
   return (
     <Wrapper>
       <Header title={t('landing:appName')} />
@@ -28,7 +27,7 @@ export const LandingView: React.FC = ({ navigation }) => {
           label={t('common:Create account')}
           center
           activeOpacity={0.8}
-          onPress={navigateToRegister}
+          onPress={navigateToSignup}
         />
       </ButtonWrappper>
     </Wrapper>

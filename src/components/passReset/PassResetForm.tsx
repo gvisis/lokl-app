@@ -14,14 +14,15 @@ const ResetSuccessBox = styled.View`
   width: 90%;
   height: 150px;
   align-items: center;
-  border-radius: 5px;
-  border: 2px solid ${({ theme }) => theme.colors.secondaryBtn};
+  border-radius: 10px;
+  border: 2px solid ${({ theme }) => theme.colors.tertiary};
   justify-content: space-evenly;
   padding: 10px;
+  margin-top: 10px;
 `;
 
 const BoxMessage = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.tertiary1};
   font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
   text-align: center;
 `;
@@ -51,11 +52,7 @@ export const PassResetForm: React.FC = ({ navigation }) => {
     <ContainerWrapper>
       {passResetStatus ? (
         <ResetSuccessBox>
-          <Icon
-            name="check-circle"
-            size={40}
-            color={theme.colors.secondaryBtn}
-          />
+          <Icon name="check-circle" size={40} color={theme.colors.tertiary1} />
           <BoxMessage>{t('common:Password sent')}</BoxMessage>
         </ResetSuccessBox>
       ) : (
@@ -79,6 +76,7 @@ export const PassResetForm: React.FC = ({ navigation }) => {
                 value={values.email}
                 error={errors.email}
                 touched={touched.email}
+                iconName={'email'}
               />
               <CustomBtn
                 label={t('common:Reset')}

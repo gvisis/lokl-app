@@ -31,7 +31,7 @@ const INITIAL_STATE: UiReducerState = {
     message: '',
   },
   passResetStatus: false,
-  theme: themes.dark,
+  theme: themes.light,
 };
 
 export interface UiStateSetter {
@@ -69,6 +69,6 @@ export const uiReducer = createReducer(INITIAL_STATE, {
   },
 
   [constants.ui.SET_THEME]: (state, { bool }: UiStateSetter) => {
-    state.theme = bool ? themes.dark : themes.light;
+    state.theme = bool ? themes.light : themes.dark;
   },
 });

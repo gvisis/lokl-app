@@ -15,7 +15,7 @@ const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
   width: ${({ width }) => (width ? width : '90')}%;
   border-radius: 10px;
   background-color: ${({ secondary, theme }) =>
-    !secondary ? theme.colors.secondary : theme.colors.secondaryBtn};
+    !secondary ? theme.colors.secondary : theme.colors.tertiary};
   align-items: center;
   padding: 10px;
   align-self: ${({ center }) => (center ? 'center' : 'flex-start')};

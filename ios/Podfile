@@ -12,6 +12,10 @@ target 'KiloFirstApp' do
     :hermes_enabled => false
   )
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'KiloFirstAppTests' do
     inherit! :complete
     # Pods for testing

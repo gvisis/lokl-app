@@ -35,10 +35,9 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "checkJs": false,
-    "types": ["webpack-env"]
+    "checkJs": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
-  "types": ["styled-components-react-native"]
+  "types": ["styled-components-react-native", "webpack-env"]
 }

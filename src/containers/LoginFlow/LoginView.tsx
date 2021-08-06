@@ -15,7 +15,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const navigateToRegister = useFunction(navigation.navigate, ROUTES.Register);
+  const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
   const navigateToForgotPassword = useFunction(
     navigation.navigate,
     ROUTES.ForgotPassword,
@@ -50,6 +50,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               value={values.email}
               error={errors.email}
               touched={touched.email}
+              iconName={'account'}
             />
             <CustomInput
               placeholder={t('common:Password')}
@@ -58,6 +59,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               value={values.password}
               error={errors.password}
               touched={touched.password}
+              iconName={'key-variant'}
               secureTextEntry
             />
             <CustomBtn
@@ -70,7 +72,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
         )}
       </Formik>
       <SecondaryContainer>
-        <StyledText onPress={navigateToRegister}>
+        <StyledText onPress={navigateToSignup}>
           {t('common:Create account')}
         </StyledText>
         <StyledText onPress={navigateToForgotPassword}>
@@ -83,7 +85,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
 
 const SecondaryContainer = styled.View`
   width: 90%;
-  background-color: ${({ theme }) => theme.colors.primary60};
+  background-color: ${({ theme }) => theme.colors.primary1};
   flex-direction: row;
   justify-content: space-around;
   align-items: center;

@@ -7,33 +7,21 @@ import { actions } from '../../state/actions';
 import { ToggleSwitcher } from '../../components';
 import { RootState } from '../../state/reducers';
 
-export const SettingsView: React.FC = () => {
-  const { userInfo } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
-
-  useEffect(
-    () => () => {
-      dispatch(actions.ui.setOnSync('button', false));
-    },
-    [userInfo.age],
-  );
-
-  return (
-    <HomeWrap>
-      {/* make as a list later on */}
-      <SettingsFullRow
-        iconName="paint-brush"
-        rowTitle="Change theme:"
-        toggle="themeSwitch"
-      />
-      <SettingsFullRow
-        iconName="language"
-        rowTitle="Change language:"
-        toggle="langSwitch"
-      />
-    </HomeWrap>
-  );
-};
+export const SettingsView: React.FC = () => (
+  <HomeWrap>
+    {/* make as a list later on */}
+    <SettingsFullRow
+      iconName="paint-brush"
+      rowTitle="Change theme:"
+      toggle="themeSwitch"
+    />
+    <SettingsFullRow
+      iconName="language"
+      rowTitle="Change language:"
+      toggle="langSwitch"
+    />
+  </HomeWrap>
+);
 
 interface SettingsRowProps {
   iconName: string;

@@ -8,8 +8,8 @@
   "login": {
     "title": "Prisijungimas"
   },
-  "register": {
-    "title": "Registracija"
+  "signup": {
+    "title": "Nauja registracija"
   },
   "common": {
     "Login": "Prisijungti",
@@ -26,6 +26,7 @@
     "Enter pass": "Įveskite slaptažodė",
     "Confirm pass": "Patvirtinkite slaptažodį",
     "Create account": "Sukurti nauja paskyra",
+    "Already account": "Jau turite paskyrą?",
     "Register success": "Sėkmingai užsiregistravote!",
     "Login success": "Sėkmingai prisijungėte!",
     "Logout success": "Atsijungėte. Iki kito karto!",
