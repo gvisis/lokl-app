@@ -6,7 +6,10 @@ import {
 } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 
+import { AnyObject } from '../../types/general';
+
 interface ProduceItemProps {
+  item: AnyObject; //! Change after item propertires are known
   size?: number;
 }
 export const ProduceItem: React.FC<ProduceItemProps> = ({ item, size }) => {

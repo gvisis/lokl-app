@@ -13,10 +13,10 @@ export const HomeView: React.FC = () => {
 
   return (
     <Container>
-      <HomeHeader title={'Find your produce'} />
+      <HomeHeader title={t('home:title')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeContent>
-          <HomeRow title={'Produce'}>
+          <HomeRow title={t('home:row Produce')}>
             <FlatList
               data={data.produce.sort((a, b) => sortAsc(a.title, b.title))}
               renderItem={({ item }) => <ProduceItem item={item} />}
@@ -25,7 +25,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           </HomeRow>
-          <HomeRow title={'Companies'}>
+          <HomeRow title={t('home:row Company')}>
             <FlatList
               data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
               renderItem={({ item }) => <ProduceItem size={250} item={item} />}
@@ -34,7 +34,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           </HomeRow>
-          <HomeRow title={'Popular Items'}>
+          <HomeRow title={t('home:row Popular')}>
             <FlatList
               data={data.popular.sort((a, b) => sortAsc(a.title, b.title))}
               renderItem={({ item }) => <ProduceItem size={300} item={item} />}
@@ -43,10 +43,10 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           </HomeRow>
-          <HomeRow title={'Ads'}>
+          <HomeRow title={t('home:row Ads')}>
             <FlatList
-              data={data}
-              renderItem={({ item }) => <ProduceItem size={250} item={item} />}
+              data={data.ads.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => <ProduceItem size={200} item={item} />}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}

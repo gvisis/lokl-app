@@ -1,22 +1,27 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface RowProps {
   title: string;
 }
 
-export const HomeRow: React.FC<RowProps> = ({ title, children }) => (
-  <RowContainer>
-    <TitleWrap>
-      <RowTitle>{title}</RowTitle>
-      <TouchableOpacity onPress={() => console.warn(title)}>
-        <MoreText>View more</MoreText>
-      </TouchableOpacity>
-    </TitleWrap>
-    <RowWrap>{children}</RowWrap>
-  </RowContainer>
-);
+export const HomeRow: React.FC<RowProps> = ({ title, children }) => {
+  const { t } = useTranslation();
+
+  return (
+    <RowContainer>
+      <TitleWrap>
+        <RowTitle>{title}</RowTitle>
+        <TouchableOpacity onPress={() => console.warn(title)}>
+          <MoreText>{t('home:view more')}</MoreText>
+        </TouchableOpacity>
+      </TitleWrap>
+      <RowWrap>{children}</RowWrap>
+    </RowContainer>
+  );
+};
 
 const RowContainer = styled.View`
   width: 100%;

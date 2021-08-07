@@ -26,6 +26,11 @@ const data = {
       image:
         'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&dpr=2&h800&w=600',
     },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29gs75',
+      title: 'Craft drinks',
+      image: 'https://i.imgur.com/vgJY0z3.jpg',
+    },
   ],
   companies: [
     {
@@ -197,6 +202,78 @@ const data = {
       image: faker.random.image('unsplash'),
       description: faker.commerce.productDescription(),
       price: faker.commerce.price(),
+    },
+  ],
+  ads: [
+    {
+      id: faker.datatype.uuid(),
+      title: faker.commerce.product(),
+      image: faker.random.image('unsplash'),
+      description: faker.commerce.productDescription(),
+      price: faker.commerce.price(),
+      date: faker.date.past(),
+      author: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        city: faker.address.city(),
+      },
+    },
+    {
+      id: faker.datatype.uuid(),
+      title: faker.commerce.product(),
+      image: faker.random.image('unsplash'),
+      description: faker.commerce.productDescription(),
+      price: faker.commerce.price(),
+      date: faker.date.past(),
+      author: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        city: faker.address.city(),
+      },
+    },
+    {
+      id: faker.datatype.uuid(),
+      title: faker.commerce.product(),
+      image: faker.random.image('unsplash'),
+      description: faker.commerce.productDescription(),
+      price: faker.commerce.price(),
+      date: faker.date.past(),
+      author: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        city: faker.address.city(),
+      },
+    },
+    {
+      id: faker.datatype.uuid(),
+      title: faker.commerce.product(),
+      image: faker.random.image('unsplash'),
+      description: faker.commerce.productDescription(),
+      price: faker.commerce.price(),
+      date: faker.date.past(),
+      author: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        city: faker.address.city(),
+      },
+    },
+    {
+      id: faker.datatype.uuid(),
+      title: faker.commerce.product(),
+      image: faker.random.image('unsplash'),
+      description: faker.commerce.productDescription(),
+      price: faker.commerce.price(),
+      date: faker.date.past(),
+      author: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        city: faker.address.city(),
+      },
     },
   ],
 };

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   title: string;
@@ -9,6 +10,7 @@ interface HeaderProps {
 
 export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
   const [focused, setFocused] = useState(false);
+  const { t } = useTranslation();
 
   const handleFocus = useCallback(() => {
     setFocused(!focused);
@@ -23,7 +25,7 @@ export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
         </IconWrap>
         <SearchRow focused={focused}>
           <SearchBar
-            placeholder={'Search for ...'}
+            placeholder={t('home:search bar')}
             placeholderTextColor="#9c9c9c"
             onFocus={() => handleFocus()}
             onBlur={() => handleFocus()}
