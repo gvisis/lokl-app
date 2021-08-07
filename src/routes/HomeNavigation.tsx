@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 export const HomeNavigation: React.FC = () => {
   const theme = useContext(ThemeContext);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -28,7 +29,9 @@ export const HomeNavigation: React.FC = () => {
       <Tab.Screen
         name={ROUTES.Home}
         component={HomeView}
-        options={{ tabBarLabel: capitalizeFirst(ROUTES.Home) }}
+        options={{
+          tabBarLabel: capitalizeFirst(ROUTES.Home),
+        }}
       />
       <Tab.Screen
         name={ROUTES.Profile}

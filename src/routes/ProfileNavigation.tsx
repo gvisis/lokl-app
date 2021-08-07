@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
 
@@ -13,17 +13,13 @@ import {
 const Profile = createStackNavigator();
 
 export const ProfileNavigation: React.FC = ({ navigation, route }) => {
-  useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-  }, [navigation, route]);
-
   const theme = useContext(ThemeContext);
 
   const profileOptions = {
     headerStyle: {
       backgroundColor: theme.colors.background,
     },
-    headerTintColor: theme.colors.white,
+    headerTintColor: theme.colors.secondary1,
     headerTitle: getHeaderTitle(route),
   };
 

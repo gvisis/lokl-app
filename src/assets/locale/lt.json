@@ -3,7 +3,13 @@
     "appName": "NyanCapp!"
   },
   "home": {
-    "title": "Prisijungete prie namu! :)"
+    "title": "Rask savo produktą",
+    "row Produce": "Produktai",
+    "row Company": "Pardavėjai",
+    "row Popular": "Populiaru",
+    "row Ads": "Skelbimai",
+    "search bar": "Ieškau...",
+    "view more": "Daugiau"
   },
   "login": {
     "title": "Prisijungimas"

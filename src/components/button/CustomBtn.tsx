@@ -13,7 +13,7 @@ interface StyledButtonProps {
 
 const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
   width: ${({ width }) => (width ? width : '90')}%;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.border.radius10}px;
   background-color: ${({ secondary, theme }) =>
     !secondary ? theme.colors.secondary : theme.colors.tertiary};
   align-items: center;

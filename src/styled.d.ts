@@ -17,6 +17,8 @@ declare module 'styled-components/native' {
       tertiary2: string;
       tertiary3: string;
       background: string;
+      background5: string;
+      background10: string;
       white: string;
       white60: string;
       black: string;
@@ -52,5 +54,12 @@ declare module 'styled-components/native' {
       };
     };
     width: number;
+    border: {
+      radius5: number;
+      radius10: number;
+      radius15: number;
+      radius25: number;
+      radius50: number;
+    };
   }
 }
