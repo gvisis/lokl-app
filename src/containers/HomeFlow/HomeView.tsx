@@ -5,7 +5,13 @@ import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { sortAsc } from '../../utils/functions';
-import { Container, HomeHeader, HomeRow, ProduceItem } from '../../components';
+import {
+  Container,
+  HomeHeader,
+  HomeRow,
+  ProduceItem,
+  Product,
+} from '../../components';
 import data from '../../assets/data';
 
 export const HomeView: React.FC = () => {
@@ -28,16 +34,18 @@ export const HomeView: React.FC = () => {
           <HomeRow title={t('home:row Company')}>
             <FlatList
               data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <ProduceItem size={250} item={item} />}
+              renderItem={({ item }) => <ProduceItem width={250} item={item} />}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
             />
           </HomeRow>
-          <HomeRow title={t('home:row Popular')}>
+          <HomeRow title={t('home:row Products')}>
             <FlatList
-              data={data.popular.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <ProduceItem size={300} item={item} />}
+              data={data.products.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => (
+                <Product width={325} item={item} height={200} />
+              )}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -46,7 +54,7 @@ export const HomeView: React.FC = () => {
           <HomeRow title={t('home:row Ads')}>
             <FlatList
               data={data.ads.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <ProduceItem size={200} item={item} />}
+              renderItem={({ item }) => <ProduceItem width={200} item={item} />}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
