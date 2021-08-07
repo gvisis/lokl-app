@@ -11,7 +11,7 @@ export const HomeRow: React.FC<RowProps> = ({ title, children }) => (
     <TitleWrap>
       <RowTitle>{title}</RowTitle>
       <TouchableOpacity onPress={() => console.warn(title)}>
-        <AllText>View all</AllText>
+        <MoreText>View more</MoreText>
       </TouchableOpacity>
     </TitleWrap>
     <RowWrap>{children}</RowWrap>
@@ -39,7 +39,7 @@ const RowTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.benton};
 `;
 
-const AllText = styled.Text`
+const MoreText = styled.Text`
   color: ${({ theme }) => theme.colors.secondary2};
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
 `;

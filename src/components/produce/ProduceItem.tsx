@@ -6,7 +6,10 @@ import {
 } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 
-export const ProduceItem: React.FC = ({ item }) => {
+interface ProduceItemProps {
+  size?: number;
+}
+export const ProduceItem: React.FC<ProduceItemProps> = ({ item, size }) => {
   const theme = React.useContext(ThemeContext);
   if (Platform.OS === 'android') {
     return (
@@ -16,27 +19,27 @@ export const ProduceItem: React.FC = ({ item }) => {
           false,
         )}
         useForeground={true}>
-        <Item>
+        <ItemWrap size={size}>
           <ItemText>{item.title}</ItemText>
           <ItemImage resizeMode="cover" source={{ uri: item.image }} />
-        </Item>
+        </ItemWrap>
       </TouchableNativeFeedback>
     );
   } else {
     return (
-      <TouchableOpacity activeOpacity={0.5}>
-        <Item>
+      <TouchableOpacity activeOpacity={0.8}>
+        <ItemWrap>
           <ItemText>{item.title}</ItemText>
           <ItemImage resizeMode="cover" source={{ uri: item.image }} />
-        </Item>
+        </ItemWrap>
       </TouchableOpacity>
     );
   }
 };
 
-const Item = styled.View`
+const ItemWrap = styled.View`
   margin: 10px;
-  width: 150px;
+  width: ${(props: ProduceItemProps) => props.size}px;
   height: 150px;
   justify-content: center;
   align-items: center;
@@ -46,17 +49,17 @@ const Item = styled.View`
   elevation: 3;
 `;
 const ItemText = styled.Text`
+  color: ${({ theme }) => theme.colors.primary3};
+  background: ${({ theme }) => theme.colors.secondary};
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 5px 5px 8px;
   opacity: 0.7;
   text-align: center;
-  color: ${({ theme }) => theme.colors.primary3};
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   letter-spacing: 2px;
-  background: ${({ theme }) => theme.colors.secondary};
 `;
 const ItemImage = styled.ImageBackground`
   position: absolute;
@@ -64,3 +67,7 @@ const ItemImage = styled.ImageBackground`
   width: 100%;
   z-index: -1;
 `;
+
+ItemWrap.defaultProps = {
+  size: 150,
+};

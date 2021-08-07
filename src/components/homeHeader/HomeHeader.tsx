@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -7,22 +7,35 @@ interface HeaderProps {
   title: string;
 }
 
-export const HomeHeader: React.FC<HeaderProps> = ({ title }) => (
-  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <HeaderContainer>
-      <TitleText size={40}>{title}</TitleText>
-      <IconWrap>
-        <Basket name="basket-outline" size={30} />
-      </IconWrap>
-      <SearchRow>
-        <SearchBar placeholder={'Search for ...'} />
+export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = useCallback(() => {
+    setFocused(!focused);
+  }, [focused]);
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <HeaderContainer>
+        <TitleText size={40}>{title}</TitleText>
         <IconWrap>
-          <FilterSort name="menu-open" size={30} color={'green'} />
+          <Basket name="basket-outline" size={30} />
         </IconWrap>
-      </SearchRow>
-    </HeaderContainer>
-  </TouchableWithoutFeedback>
-);
+        <SearchRow focused={focused}>
+          <SearchBar
+            placeholder={'Search for ...'}
+            placeholderTextColor="#9c9c9c"
+            onFocus={() => handleFocus()}
+            onBlur={() => handleFocus()}
+          />
+          <IconWrap>
+            <FilterSort name="menu-open" size={30} color={'green'} />
+          </IconWrap>
+        </SearchRow>
+      </HeaderContainer>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const IconWrap = styled.TouchableOpacity`
   align-items: center;
@@ -50,18 +63,20 @@ const HeaderContainer = styled.View<{ height?: number }>`
 const SearchRow = styled.View`
   width: 100%;
   padding: 5px;
-  background: ${({ theme }) => theme.colors.red1};
   border-radius: ${({ theme }) => theme.border.radius15}px;
   flex-direction: row;
   margin-top: 20px;
+  border-width: 1px;
+  border-color: ${({ theme, focused }: { focused: boolean }) =>
+    focused ? theme.colors.secondary : theme.colors.lightGrey2};
 `;
 
 const SearchBar = styled.TextInput`
   flex: 3;
-  background-color: ${({ theme }) => theme.colors.red1};
+  padding: 0 10px;
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
-  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  font-family: ${({ theme }) => theme.fonts.family.benton};
   border-color: ${({ theme }) => theme.colors.tertiary2};
   letter-spacing: 1px;
   border-right-width: 1px;
