@@ -14,7 +14,7 @@ import {
 } from '../../components';
 import data from '../../assets/data';
 
-export const HomeView: React.FC = () => {
+export const HomeView: React.FC = ({ navigation }) => {
   const { t } = useTranslation();
 
   return (
@@ -44,7 +44,12 @@ export const HomeView: React.FC = () => {
             <FlatList
               data={data.products.sort((a, b) => sortAsc(a.title, b.title))}
               renderItem={({ item }) => (
-                <Product width={325} item={item} height={200} />
+                <Product
+                  navigation={navigation}
+                  width={325}
+                  item={item}
+                  height={200}
+                />
               )}
               keyExtractor={item => item.id}
               horizontal

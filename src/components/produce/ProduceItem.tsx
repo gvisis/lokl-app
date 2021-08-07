@@ -37,7 +37,7 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
   } else {
     return (
       <TouchableOpacity activeOpacity={0.8}>
-        <ProductWrap>
+        <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
           <ItemImage resizeMode="cover" source={{ uri: item.image }} />
         </ProductWrap>

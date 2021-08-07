@@ -4,6 +4,8 @@ import styled, { ThemeContext } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 
+import { ROUTES } from '../../routes/RouteNames';
+
 interface ProductProps {
   item: {
     id: string;
@@ -21,7 +23,12 @@ interface ProductProps {
   height?: number;
 }
 
-export const Product: React.FC<ProductProps> = ({ item, width, height }) => {
+export const Product: React.FC<ProductProps> = ({
+  navigation,
+  item,
+  width,
+  height,
+}) => {
   const theme = React.useContext(ThemeContext);
   if (Platform.OS === 'android') {
     return (
@@ -30,7 +37,8 @@ export const Product: React.FC<ProductProps> = ({ item, width, height }) => {
           theme.colors.primary3,
           false,
         )}
-        useForeground={true}>
+        useForeground={true}
+        onPress={() => navigation.navigate(ROUTES.Product, { item })}>
         <ProductWrap width={width} height={height}>
           <ProductTop>
             <AddToCart>
