@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { ProductScreenProps } from '../../components/produce/Product';
 import { sortAsc } from '../../utils/functions';
 import {
   Container,
@@ -14,7 +15,7 @@ import {
 } from '../../components';
 import data from '../../assets/data';
 
-export const HomeView: React.FC = ({ navigation }) => {
+export const HomeView: React.FC = () => {
   const { t } = useTranslation();
 
   return (
@@ -44,12 +45,7 @@ export const HomeView: React.FC = ({ navigation }) => {
             <FlatList
               data={data.products.sort((a, b) => sortAsc(a.title, b.title))}
               renderItem={({ item }) => (
-                <Product
-                  navigation={navigation}
-                  width={325}
-                  item={item}
-                  height={200}
-                />
+                <Product width={325} product={item} height={200} />
               )}
               keyExtractor={item => item.id}
               horizontal

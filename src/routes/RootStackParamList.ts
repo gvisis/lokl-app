@@ -1,3 +1,4 @@
+import { ProductScreenProps } from '../components/produce/Product';
 import { ROUTES } from './RouteNames';
 
 export type RootStackParamList = {
@@ -7,6 +8,7 @@ export type RootStackParamList = {
   [ROUTES.AuthNav]: undefined;
   [ROUTES.Error]: undefined;
   [ROUTES.Product]: undefined;
+  [ROUTES.SingleProduct]: ProductScreenProps | undefined;
   [ROUTES.Company]: undefined;
   [ROUTES.Ads]: undefined;
   [ROUTES.Profile]: undefined;

@@ -28,7 +28,7 @@ export const HomeNavigation: React.FC = () => {
         component={HomeView}
         options={{ headerShown: false }}
       />
-      <HomeStack.Screen name={ROUTES.Product} component={ProductView} />
+      <HomeStack.Screen name={ROUTES.SingleProduct} component={ProductView} />
     </HomeStack.Navigator>
   );
 };

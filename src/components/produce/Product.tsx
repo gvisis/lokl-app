@@ -1,18 +1,23 @@
-import React from 'react';
-import { Platform, Text, TouchableNativeFeedback, View } from 'react-native';
+import React, { useCallback } from 'react';
+import {
+  GestureResponderEvent,
+  Platform,
+  TouchableNativeFeedback,
+} from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/core';
 
 import { ROUTES } from '../../routes/RouteNames';
 
-interface ProductProps {
-  item: {
+export interface ProductScreenProps {
+  product: {
     id: string;
     owner: string;
     title: string;
     image: string;
-    description: string;
+    description?: string;
     category: string;
     price: number;
     delivery: boolean;
@@ -21,15 +26,21 @@ interface ProductProps {
   };
   width?: number;
   height?: number;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
-export const Product: React.FC<ProductProps> = ({
-  navigation,
-  item,
+export const Product: React.FC<ProductScreenProps> = ({
+  product,
   width,
   height,
 }) => {
   const theme = React.useContext(ThemeContext);
+  const navigation = useNavigation();
+
+  const handleSingleProductNav = useCallback(() => {
+    navigation.navigate(ROUTES.SingleProduct, { product });
+  }, [product]); //! check later if working
+
   if (Platform.OS === 'android') {
     return (
       <TouchableNativeFeedback
@@ -38,7 +49,7 @@ export const Product: React.FC<ProductProps> = ({
           false,
         )}
         useForeground={true}
-        onPress={() => navigation.navigate(ROUTES.Product, { item })}>
+        onPress={handleSingleProductNav}>
         <ProductWrap width={width} height={height}>
           <ProductTop>
             <AddToCart>
@@ -56,15 +67,15 @@ export const Product: React.FC<ProductProps> = ({
                 <CartIcon name={'basket-fill'} size={25} />
               </LinearGradient>
             </AddToCart>
-            {item.delivery && (
+            {product.delivery && (
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
-            <ProductImage resizeMode="cover" source={{ uri: item.image }} />
-            <ProductOwner>{item.owner}</ProductOwner>
+            <ProductImage resizeMode="cover" source={{ uri: product.image }} />
+            <ProductOwner>{product.owner}</ProductOwner>
           </ProductTop>
           <ProductBottom>
-            <ProductName>{item.title}</ProductName>
-            <ProductPrice>${item.price}</ProductPrice>
+            <ProductName>{product.title}</ProductName>
+            <ProductPrice>${product.price}</ProductPrice>
             <ProductRating>
               <Icon name={'food-apple'} size={20} />
               <Icon name={'food-apple'} size={20} />

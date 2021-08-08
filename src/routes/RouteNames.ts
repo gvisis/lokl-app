@@ -7,6 +7,7 @@ export enum ROUTES {
 
   // Product
   Product = 'product',
+  SingleProduct = 'singleProduct',
   Company = 'company',
   Ads = 'ads',
 
