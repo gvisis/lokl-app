@@ -8,13 +8,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
@@ -118,42 +112,33 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
           backdropComponent={BottomSheetBackdrop}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}>
-            <SheetWrap>
-              <SheetTitle>{product.title}</SheetTitle>
-              <SelectWrap>
-                <SelectTitle>How many?</SelectTitle>
-                <SelectOptionWrap>
-                  <TouchableOpacity onPress={handleDecreaseQuantity}>
-                    <IncDecButton name="minus-circle" size={50} />
-                  </TouchableOpacity>
-                  <QuantityValue>{selectedQuantity}</QuantityValue>
-                  <TouchableOpacity onPress={handleIncreaseQuantity}>
-                    <IncDecButton name="plus-circle" size={50} />
-                  </TouchableOpacity>
-                </SelectOptionWrap>
-                <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
-              </SelectWrap>
-              <SheetFooter>
-                <AddWrap onPress={handleCloseSheet}>
-                  <AddButton>Add to cart</AddButton>
-                </AddWrap>
-              </SheetFooter>
-            </SheetWrap>
-          </KeyboardAvoidingView>
+          <SheetWrap>
+            <SheetTitle>{product.title}</SheetTitle>
+            <SelectWrap>
+              <SelectTitle>How many?</SelectTitle>
+              <SelectOptionWrap>
+                <TouchableOpacity onPress={handleDecreaseQuantity}>
+                  <IncDecButton name="minus-circle" size={50} />
+                </TouchableOpacity>
+                <QuantityValue>{selectedQuantity}</QuantityValue>
+                <TouchableOpacity onPress={handleIncreaseQuantity}>
+                  <IncDecButton name="plus-circle" size={50} />
+                </TouchableOpacity>
+              </SelectOptionWrap>
+              <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
+            </SelectWrap>
+            <SheetFooter>
+              <AddWrap onPress={handleCloseSheet}>
+                <AddButton>Add to cart</AddButton>
+              </AddWrap>
+            </SheetFooter>
+          </SheetWrap>
         </BottomSheet>
       </Container>
     );
   },
 );
 
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-  },
-});
 const ItemHeader = styled.View`
   flex: 1.5;
   width: 100%;
