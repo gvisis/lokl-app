@@ -1,6 +1,15 @@
 export enum ROUTES {
   Home = 'home',
+  HomeTab = 'homeTab',
   Error = 'error',
+  TabNav = 'tabNav',
+  AuthNav = 'authNav',
+
+  // Product
+  Product = 'product',
+  SingleProduct = 'singleProduct',
+  Company = 'company',
+  Ads = 'ads',
 
   // Tabs
   Profile = 'profile',

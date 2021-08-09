@@ -9,9 +9,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { GlobalErrorSuccess, ScreenLoader } from '../components';
-import { AuthNavigation, HomeNavigation } from '.';
+import { AuthNavigation, TabNavigation } from '.';
 import { actions } from '../state/actions';
 import { RootState } from '../state/reducers';
+import { RootStackParamList } from './RootStackParamList';
+import { ROUTES } from './RouteNames';
 
 const Navigator: React.FC = () => {
   // Set an initializing state whilst Firebase connects
@@ -35,17 +37,16 @@ const Navigator: React.FC = () => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator<RootStackParamList>();
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
         <StatusBar hidden />
-
         <Stack.Navigator headerMode="none">
           {userInfo ? (
-            <Stack.Screen name="Home" component={HomeNavigation} />
+            <Stack.Screen name={ROUTES.TabNav} component={TabNavigation} />
           ) : (
-            <Stack.Screen name="Auth" component={AuthNavigation} />
+            <Stack.Screen name={ROUTES.AuthNav} component={AuthNavigation} />
           )}
         </Stack.Navigator>
         {loading && (

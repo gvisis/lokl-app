@@ -3,6 +3,7 @@ export * from './input/CustomInput';
 export * from './container/Container';
 export * from './homeRow/HomeRow';
 export * from './produce/ProduceItem';
+export * from './produce/Product';
 export * from './homeHeader/HomeHeader';
 export * from './passReset/PassResetForm';
 export * from './errors/GlobalErrorSuccess';

@@ -6,13 +6,19 @@ import {
 } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 
+import { ProductWrap } from './Product';
 import { AnyObject } from '../../types/general';
 
 interface ProduceItemProps {
   item: AnyObject; //! Change after item propertires are known
-  size?: number;
+  width?: number;
+  height?: number;
 }
-export const ProduceItem: React.FC<ProduceItemProps> = ({ item, size }) => {
+export const ProduceItem: React.FC<ProduceItemProps> = ({
+  item,
+  width,
+  height,
+}) => {
   const theme = React.useContext(ThemeContext);
   if (Platform.OS === 'android') {
     return (
@@ -22,35 +28,24 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({ item, size }) => {
           false,
         )}
         useForeground={true}>
-        <ItemWrap size={size}>
+        <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
           <ItemImage resizeMode="cover" source={{ uri: item.image }} />
-        </ItemWrap>
+        </ProductWrap>
       </TouchableNativeFeedback>
     );
   } else {
     return (
       <TouchableOpacity activeOpacity={0.8}>
-        <ItemWrap>
+        <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
           <ItemImage resizeMode="cover" source={{ uri: item.image }} />
-        </ItemWrap>
+        </ProductWrap>
       </TouchableOpacity>
     );
   }
 };
 
-const ItemWrap = styled.View`
-  margin: 10px;
-  width: ${(props: ProduceItemProps) => props.size}px;
-  height: 150px;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.border.radius25}px;
-  background: ${({ theme }) => theme.colors.red1};
-  overflow: hidden;
-  elevation: 3;
-`;
 const ItemText = styled.Text`
   color: ${({ theme }) => theme.colors.primary3};
   background: ${({ theme }) => theme.colors.secondary};
@@ -71,6 +66,7 @@ const ItemImage = styled.ImageBackground`
   z-index: -1;
 `;
 
-ItemWrap.defaultProps = {
-  size: 150,
+ProductWrap.defaultProps = {
+  width: 150,
+  height: 150,
 };

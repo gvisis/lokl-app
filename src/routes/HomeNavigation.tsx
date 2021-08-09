@@ -1,43 +1,34 @@
 import React, { useContext } from 'react';
-import Icon from 'react-native-vector-icons/Feather';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
 
-import { capitalizeFirst } from '../utils/functions';
 import { ROUTES } from './RouteNames';
-import { ProfileNavigation } from '.';
+import { ProductView } from '../containers/ProductFlow';
 import { HomeView } from '../containers/HomeFlow';
+import { RootStackParamList } from './RootStackParamList';
 
-const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator<RootStackParamList>();
 
 export const HomeNavigation: React.FC = () => {
   const theme = useContext(ThemeContext);
-
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        // eslint-disable-next-line react/display-name
-        tabBarIcon: ({ color, size }) => {
-          const iconName: string = route.name === ROUTES.Home ? 'home' : 'user';
-          return <Icon name={iconName} size={size} color={color} />;
+    <HomeStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.secondary,
         },
-      })}
-      tabBarOptions={{
-        activeTintColor: theme.colors.secondaryBtn,
-        inactiveTintColor: theme.colors.lightGrey,
+        headerTintColor: theme.colors.white,
+        headerTitleStyle: {
+          fontFamily: theme.fonts.family.bentonBook,
+          textTransform: 'capitalize',
+        },
       }}>
-      <Tab.Screen
+      <HomeStack.Screen
         name={ROUTES.Home}
         component={HomeView}
-        options={{
-          tabBarLabel: capitalizeFirst(ROUTES.Home),
-        }}
+        options={{ headerShown: false }}
       />
-      <Tab.Screen
-        name={ROUTES.Profile}
-        component={ProfileNavigation}
-        options={{ tabBarLabel: capitalizeFirst(ROUTES.Profile) }}
-      />
-    </Tab.Navigator>
+      <HomeStack.Screen name={ROUTES.SingleProduct} component={ProductView} />
+    </HomeStack.Navigator>
   );
 };

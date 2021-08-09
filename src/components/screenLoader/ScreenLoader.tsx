@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, ActivityIndicatorProps } from 'react-native';
 
 const LoaderContainer = styled.View`
   position: absolute;
@@ -13,7 +13,7 @@ const LoaderContainer = styled.View`
   justify-content: center;
 `;
 
-export const ScreenLoader: React.FC = props => (
+export const ScreenLoader: React.FC<ActivityIndicatorProps> = props => (
   <LoaderContainer>
     <ActivityIndicator {...props} />
   </LoaderContainer>
