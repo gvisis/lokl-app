@@ -90,8 +90,8 @@ export const Product: React.FC<ProductScreenProps> = ({
 
 const ProductWrap = styled.View`
   margin: 10px;
-  width: ${(props: ProductProps) => props.width}px;
-  height: ${(props: ProductProps) => props.height}px;
+  width: ${(props: ProductScreenProps) => props.width}px;
+  height: ${(props: ProductScreenProps) => props.height}px;
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius10}px;
@@ -139,7 +139,7 @@ const ProductOwner = styled.Text`
 `;
 
 const ProductBottom = styled.View`
-  flex: 0.5;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;

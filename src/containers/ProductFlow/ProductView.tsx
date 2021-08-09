@@ -15,6 +15,7 @@ import { ROUTES } from 'src/routes/RouteNames';
 import { RootStackParamList } from 'src/routes/RootStackParamList';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import { AirbnbRating, Rating } from 'react-native-ratings';
 
 import { Container } from '../../components';
 
@@ -67,6 +68,8 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
       navigation.setOptions({ title: product.title });
     }, [product]);
 
+    const ratingCustomImage = require('../../assets/images/ratingfull.png');
+
     return (
       <Container>
         <ItemHeader>
@@ -97,13 +100,18 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>
-          <ItemRating>
-            Customers rated this product: {product.rating}
-          </ItemRating>
-          <AddWrap onPress={handleOpenSheet}>
-            <AddButton>Add to cart</AddButton>
-          </AddWrap>
+          <ItemRating>Rate:</ItemRating>
+          <AirbnbRating
+            count={5}
+            showRating={false}
+            defaultRating={product.rating}
+            size={25}
+            starImage={ratingCustomImage}
+          />
         </ItemFooter>
+        <AddWrap onPress={handleOpenSheet}>
+          <AddButton>Add to cart</AddButton>
+        </AddWrap>
 
         <BottomSheet
           ref={bottomSheetRef}
@@ -230,22 +238,25 @@ const ItemDescription = styled.Text`
 `;
 
 const ItemFooter = styled.View`
-  flex: 0.8;
-  justify-content: space-between;
+  flex: 0.2;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  border-color: ${({ theme }) => theme.colors.lightGrey1};
 `;
 
 const ItemRating = styled.Text`
-  width: 100%;
-  padding: 10px;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  text-align: right;
-  border-color: ${({ theme }) => theme.colors.lightGrey1};
+  font-family: ${({ theme }) => theme.fonts.family.bentonLight};
+  font-size: ${({ theme }) => theme.fonts.size.m}px;
+  margin-right: 10px;
 `;
+
 const AddWrap = styled.TouchableOpacity`
   width: 90%;
   padding: 10px;
-  margin: auto 0;
+  margin: 10px;
   background: ${({ theme }) => theme.colors.tertiary1};
   align-self: center;
   justify-content: center;
