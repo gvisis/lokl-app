@@ -79,7 +79,7 @@ function* handleUpdateUserDb({ updatedInfo }: AnyObject) {
 
 function* handleCreateUserDb(email: string) {
   const userInfo = {
-    email: email,
+    email,
     name: '',
     city: '',
     age: 0,
@@ -92,6 +92,20 @@ function* handleCreateUserDb(email: string) {
     console.log('huserinfocreate', e);
   }
 }
+function* handleGetUserAds() {
+  try {
+    yield put(actions.ui.setOnSync('button', true));
+    const currentUser: string = api.getUserInfo().uid;
+    database()
+      .ref(`/users/${currentUser}`)
+      .once('value')
+      .then(snap => console.log(snap.val().ads));
+  } catch (e) {
+    console.log('userinfoerror', e);
+  } finally {
+    yield put(actions.ui.setOnSync('button', false));
+  }
+}
 
 export function* userSaga() {
   yield takeEvery(constants.user.LOGIN, handleLogin);
@@ -99,4 +113,5 @@ export function* userSaga() {
   yield takeEvery(constants.user.SIGN_UP, handleSignup);
   yield takeEvery(constants.user.PASSWORD_RESET, handlePasswordReset);
   yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
+  yield takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
 }

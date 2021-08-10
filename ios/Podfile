@@ -16,6 +16,8 @@ target 'KiloFirstApp' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'KiloFirstAppTests' do
     inherit! :complete
     # Pods for testing

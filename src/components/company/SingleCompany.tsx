@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { RootStackParamList } from '../../routes/RootStackParamList';
+import { RootStackParamList } from '../../types/general';
 import { Container } from '..';
 
 type SingleCompanyProps = {

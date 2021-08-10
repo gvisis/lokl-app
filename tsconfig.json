@@ -23,7 +23,8 @@
             "shadow-offset",
             "shadow-opacity",
             "shadow-radius",
-            "tint-color"
+            "tint-color",
+            "text-align-vertical"
           ]
         }
       }

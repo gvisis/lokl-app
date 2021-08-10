@@ -6,17 +6,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { AirbnbRating, Rating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
 
+import { RootStackParamList } from '../../types/general';
 import { Container } from '../../components';
 
 type ProductScreenProps = {
@@ -29,7 +28,6 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
   ({ navigation, route }) => {
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
-    const { t } = useTranslation();
     const { product } = route.params;
 
     // =========== BottomSheet config =================

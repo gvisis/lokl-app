@@ -12,7 +12,7 @@ import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, TabNavigation } from '.';
 import { actions } from '../state/actions';
 import { RootState } from '../state/reducers';
-import { RootStackParamList } from './RootStackParamList';
+import { RootStackParamList } from '../types/general';
 import { ROUTES } from './RouteNames';
 
 const Navigator: React.FC = () => {

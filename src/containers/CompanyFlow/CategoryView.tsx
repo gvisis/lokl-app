@@ -4,8 +4,8 @@ import { Dimensions, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 
+import { RootStackParamList } from '../../types/general';
 import { SingleCompany } from '../../components';
 
 type CompanyScreenProps = {

@@ -26,3 +26,29 @@ export const getHeaderTitle = (route: Partial<Route<string, object>>) => {
       return 'Home';
   }
 };
+
+export const getTabLabel = (routeName: string) => {
+  switch (routeName) {
+    case ROUTES.HomeTab:
+      return capitalizeFirst(ROUTES.Home);
+    case ROUTES.AdsTab:
+      return capitalizeFirst(ROUTES.Ads);
+    case ROUTES.Profile:
+      return capitalizeFirst(ROUTES.Profile);
+    default:
+      return capitalizeFirst(ROUTES.Home);
+  }
+};
+
+export const getTabIconName = (routeName: string) => {
+  switch (routeName) {
+    case ROUTES.HomeTab:
+      return 'home';
+    case ROUTES.AdsTab:
+      return 'tag';
+    case ROUTES.Profile:
+      return 'user';
+    default:
+      return 'home';
+  }
+};
