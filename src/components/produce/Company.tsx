@@ -43,8 +43,7 @@ export const Company: React.FC<CompanyItemProps> = ({
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.Home);
-    // navigation.navigate(ROUTES.SingleCompany, { company });
+    navigation.navigate(ROUTES.SingleCompany, { company });
   }, []); //! check later if working
 
   if (Platform.OS === 'android') {
