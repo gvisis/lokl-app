@@ -30,6 +30,7 @@ export interface CompanyItemProps {
   };
   width?: number;
   height?: number;
+  category?: string;
   onPress?: (event: GestureResponderEvent) => void;
 }
 

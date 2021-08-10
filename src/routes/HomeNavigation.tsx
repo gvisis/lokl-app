@@ -4,7 +4,7 @@ import { ThemeContext } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
 import { ProductView } from '../containers/ProductFlow';
-import { CompanyView } from '../containers/CompanyFlow';
+import { CategoryView, CompanyView } from '../containers/CompanyFlow';
 import { HomeView } from '../containers/HomeFlow';
 import { RootStackParamList } from './RootStackParamList';
 
@@ -31,6 +31,10 @@ export const HomeNavigation: React.FC = () => {
       />
       <HomeStack.Screen name={ROUTES.SingleProduct} component={ProductView} />
       <HomeStack.Screen name={ROUTES.SingleCompany} component={CompanyView} />
+      <HomeStack.Screen
+        name={ROUTES.CompanyCategory}
+        component={CategoryView}
+      />
     </HomeStack.Navigator>
   );
 };
