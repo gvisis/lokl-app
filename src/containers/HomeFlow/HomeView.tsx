@@ -1,51 +1,73 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-import { useFunction } from '../../utils/hooks';
-import { actions } from '../../state/actions';
-import { RootState } from '../../state/reducers';
-import { CustomBtn, Header } from '../../components';
+import { sortAsc } from '../../utils/functions';
+import {
+  Company,
+  Container,
+  HomeHeader,
+  HomeRow,
+  ProduceItem,
+  Product,
+} from '../../components';
+import data from '../../assets/data';
 
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { userInfo } = useSelector((state: RootState) => state.user);
-
-  const handleLogout = useFunction(dispatch, actions.user.logout());
 
   return (
-    <HomeWrap>
-      <Header title={t('home:title')} />
-      <WelcomeTitle>Your email: {userInfo && userInfo.email}!</WelcomeTitle>
-      <ButtonWrap>
-        <CustomBtn
-          label={t('common:Logout')}
-          secondary
-          center
-          activeOpacity={0.5}
-          onPress={handleLogout}
-        />
-      </ButtonWrap>
-    </HomeWrap>
+    <Container>
+      <HomeHeader title={t('home:title')} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HomeContent>
+          <HomeRow title={t('home:row Produce')}>
+            <FlatList
+              data={data.produce.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => <ProduceItem item={item} />}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </HomeRow>
+          <HomeRow title={t('home:row Company')}>
+            <FlatList
+              data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => <Company width={325} company={item} />}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </HomeRow>
+          <HomeRow title={t('home:row Products')}>
+            <FlatList
+              data={data.products.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => (
+                <Product width={325} product={item} height={200} />
+              )}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </HomeRow>
+          <HomeRow title={t('home:row Ads')}>
+            <FlatList
+              data={data.ads.sort((a, b) => sortAsc(a.title, b.title))}
+              renderItem={({ item }) => <ProduceItem width={200} item={item} />}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </HomeRow>
+        </HomeContent>
+      </ScrollView>
+    </Container>
   );
 };
 
-const HomeWrap = styled.View`
+const HomeContent = styled.View`
   flex: 1;
-`;
-
-const WelcomeTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fonts.size.xl}px;
-  text-align: center;
-  padding: 10px;
-  flex: 4;
-`;
-
-const ButtonWrap = styled.View`
-  justify-content: center;
   align-items: center;
-  flex: 1;
 `;

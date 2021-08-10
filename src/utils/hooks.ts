@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 export const useFunction = (func, ...args) =>
-  useCallback(() => func(...args), [func, ...args]);
+  React.useCallback(() => func(...args), [func, ...args]);

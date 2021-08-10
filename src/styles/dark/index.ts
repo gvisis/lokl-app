@@ -50,4 +50,12 @@ export const darkTheme = {
       bentonBook: 'BentonSans-Book',
     },
   },
+  border: {
+    radius5: 5,
+    radius10: 10,
+    radius15: 10,
+    radius25: 25,
+    radius30: 30,
+    radius50: 50,
+  },
 };

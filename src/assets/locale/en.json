@@ -3,7 +3,13 @@
     "appName": "NyanCapp!"
   },
   "home": {
-    "title": "Welcome back home!"
+    "title": "Find your produce",
+    "row Produce": "Produce",
+    "row Company": "Companies",
+    "row Products": "Products",
+    "row Ads": "Ads",
+    "search bar": "Search for...",
+    "view more": "View more"
   },
   "login": {
     "title": "Login"

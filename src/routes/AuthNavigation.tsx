@@ -8,8 +8,9 @@ import {
   RegisterView,
 } from '../containers/LoginFlow';
 import { LandingView } from '../containers/LandingFlow';
+import { RootStackParamList } from './RootStackParamList';
 
-const AuthStack = createStackNavigator();
+const AuthStack = createStackNavigator<RootStackParamList>();
 
 export const AuthNavigation: React.FC = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>

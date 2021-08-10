@@ -1,6 +1,10 @@
-import React, { useContext, useLayoutEffect } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useContext } from 'react';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
+import { RouteProp } from '@react-navigation/core';
 
 import { getHeaderTitle } from '../utils/functions';
 import { ROUTES } from './RouteNames';
@@ -9,21 +13,23 @@ import {
   ProfileView,
   SettingsView,
 } from '../containers/ProfileFlow';
+import { RootStackParamList } from './RootStackParamList';
 
-const Profile = createStackNavigator();
+type ProfileNavRouteProps = RouteProp<RootStackParamList, ROUTES.Profile>;
+type ProfileNavProps = {
+  route: ProfileNavRouteProps;
+};
 
-export const ProfileNavigation: React.FC = ({ navigation, route }) => {
-  useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-  }, [navigation, route]);
+const Profile = createStackNavigator<RootStackParamList>();
 
+export const ProfileNavigation: React.FC<ProfileNavProps> = ({ route }) => {
   const theme = useContext(ThemeContext);
 
   const profileOptions = {
     headerStyle: {
       backgroundColor: theme.colors.background,
     },
-    headerTintColor: theme.colors.white,
+    headerTintColor: theme.colors.secondary1,
     headerTitle: getHeaderTitle(route),
   };
 
