@@ -8,6 +8,7 @@ import styled, { ThemeContext } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
+import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
 
@@ -36,7 +37,7 @@ export const Product: React.FC<ProductScreenProps> = ({
 }) => {
   const theme = React.useContext(ThemeContext);
   const navigation = useNavigation();
-
+  const ratingCustomImage = require('../../assets/images/ratingfull.png');
   const handleSingleProductNav = useCallback(() => {
     navigation.navigate(ROUTES.SingleProduct, { product });
   }, [product]); //! check later if working
@@ -77,9 +78,16 @@ export const Product: React.FC<ProductScreenProps> = ({
             <ProductName>{product.title}</ProductName>
             <ProductPrice>${product.price}</ProductPrice>
             <ProductRating>
-              <Icon name={'food-apple'} size={20} />
-              <Icon name={'food-apple'} size={20} />
-              <Icon name={'food-apple-outline'} size={20} />
+              <AirbnbRating
+                count={5}
+                showRating={false}
+                isDisabled={true}
+                defaultRating={product.rating}
+                size={15}
+                selectedColor={theme.colors.red}
+                unSelectedColor={theme.colors.red1}
+                starImage={ratingCustomImage}
+              />
             </ProductRating>
           </ProductBottom>
         </ProductWrap>
@@ -169,13 +177,10 @@ const ProductDelivery = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.s}px;
 `;
 
-const ProductRating = styled.Text`
+const ProductRating = styled.View`
   width: 100%;
-  margin-bottom: 5px;
-  color: ${({ theme }) => theme.colors.secondary};
-  flex-direction: row;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  align-items: flex-start;
+  margin-top: 20px;
 `;
 
 export { ProductWrap };

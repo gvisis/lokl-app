@@ -4,9 +4,9 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { ProductScreenProps } from '../../components/produce/Product';
 import { sortAsc } from '../../utils/functions';
 import {
+  Company,
   Container,
   HomeHeader,
   HomeRow,
@@ -35,7 +35,7 @@ export const HomeView: React.FC = () => {
           <HomeRow title={t('home:row Company')}>
             <FlatList
               data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <ProduceItem width={250} item={item} />}
+              renderItem={({ item }) => <Company width={325} company={item} />}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}

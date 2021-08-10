@@ -1,4 +1,5 @@
 import { ProductScreenProps } from '../components/produce/Product';
+import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from './RouteNames';
 
 export type RootStackParamList = {
@@ -9,7 +10,8 @@ export type RootStackParamList = {
   [ROUTES.Error]: undefined;
   [ROUTES.Product]: undefined;
   [ROUTES.SingleProduct]: ProductScreenProps | undefined;
-  [ROUTES.Company]: undefined;
+  [ROUTES.SingleCompany]: CompanyItemProps | undefined;
+  [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;
