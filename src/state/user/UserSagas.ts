@@ -6,6 +6,7 @@ import { actions } from '../actions';
 import { constants } from '../constants';
 import { api } from '../../api';
 import { AnyObject } from '../../types/general';
+import { firebaseDb } from '../../api/firebaseDb';
 
 interface UserAuthCredentials {
   email: string;
@@ -92,6 +93,19 @@ function* handleCreateUserDb(email: string) {
     console.log('huserinfocreate', e);
   }
 }
+function* handleCreateNewAd(adInfo) {
+  try {
+    yield put(actions.ui.setOnSync('app', true));
+    yield call(firebaseDb.createAd, adInfo);
+    // later updated with ad Watcher
+    yield put(actions.app.setAllAds(firebaseDb.fetchAllAds));
+  } catch (e) {
+    console.log(e);
+  } finally {
+    yield put(actions.ui.setOnSync('app', false));
+  }
+}
+
 function* handleGetUserAds() {
   try {
     yield put(actions.ui.setOnSync('button', true));
@@ -114,4 +128,5 @@ export function* userSaga() {
   yield takeEvery(constants.user.PASSWORD_RESET, handlePasswordReset);
   yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
   yield takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
+  yield takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
 }

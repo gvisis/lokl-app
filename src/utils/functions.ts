@@ -1,4 +1,5 @@
 import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import { ROUTES } from '../routes/RouteNames';
 
@@ -51,4 +52,28 @@ export const getTabIconName = (routeName: string) => {
     default:
       return 'home';
   }
+};
+// not f working
+export const pickImage = () => {
+  const options = {
+    mediaType: 'photo',
+    quality: 1,
+    maxWidth: 800,
+    maxHeight: 600,
+  };
+  launchImageLibrary(options, ({ didCancel, errorMessage, assets }) => {
+    if (didCancel) {
+      const pickError = 'User cancelled image picker';
+    }
+    if (assets) {
+      const imageUrl = assets[0].uri;
+      const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
+      const tempImage = { url: imageUrl, id: imageId };
+      return tempImage;
+    }
+    if (errorMessage) {
+      const pickError = errorMessage;
+    }
+  });
+  console.log(launchImage);
 };

@@ -1,17 +1,22 @@
-import React from 'react';
-import { Button, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Button, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/core';
-import database from '@react-native-firebase/database';
 
 import { actions } from '../../state/actions';
-import { Container } from '../../components';
+import {
+  Container,
+  CustomBtn,
+  HomeHeader,
+  ItemCard,
+  ScreenLoader,
+} from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
-import { api } from '../../api';
-import { getUserAds } from '../../state/user/UserActions';
+import { RootState } from '../../state/reducers';
+import { useFunction } from '../../utils/hooks';
 
 type AdsViewProps = {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleProduct>;
@@ -20,91 +25,42 @@ type AdsViewProps = {
 
 export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [allAds, setAllAds] = React.useState(null);
+  const adsFromState = useSelector((state: RootState) => state.app.allAppAds);
+  const { onSync } = useSelector((state: RootState) => state.ui);
 
-  function createAd() {
-    const adInfo = {
-      id: Math.floor(Math.random() * 999999).toString(),
-      title: 'naujas item',
-      images: 'imgUri',
-      category: 'baked',
-      price: 32,
-      description: 'aprasymas',
-      dateRequired: new Date().toString(),
-      dateAdded: new Date().toString(),
-      owner: {
-        id: api.getUserInfo().uid,
-        name: 'gvidas',
-        email: api.getUserInfo().email,
-        city: 'vilnius',
-      },
-    };
+  const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
 
-    try {
-      const newRef = database().ref('/ads').push();
-      console.log('Auto generated key: ', newRef.key);
-      newRef.set(adInfo).then(() => {
-        console.log('updated', adInfo);
-      });
-    } catch (e) {
-      console.log('huserinfocreate', e);
-    }
-  }
-  async function getAllAds() {
-    const adsRef = await database().ref(`/ads`);
-    const adsData = await adsRef.once('value').then(snap => snap.val());
-    setAllAds(adsData);
-  }
+  // First fetch all ads from server
+  useEffect(() => {
+    dispatch(actions.app.fetchAllAds());
+  }, []);
+
+  const renderItem = ({ item }) => {
+    const adInfo = item[1];
+    return <ItemCard title={adInfo.title} price={adInfo.price} />;
+  };
 
   return (
     <Container>
-      <Button
-        title="your ads"
-        onPress={() => getAllAds()}
-        // onPress={() => dispatch(actions.user.getUserAds())}
-      />
-      <Text>AdsView</Text>
-      <Button
-        title="add ad"
-        onPress={() => navigation.navigate(ROUTES.AddAd)}
-      />
-      <Button title="create ad" onPress={() => createAd()} />
+      <HomeHeader title={'Ads View'} />
       <AdContainer>
-        {/* {console.log(Object.keys(allAds)).map(ad => (
-          <Ad key={ad.id}>
-            <AdTitle>{ad.title}</AdTitle>
-            <AdPrice>{ad.price}</AdPrice>
-            <AdDate>{ad.dateAdded}</AdDate>
-          </Ad>
-        ))} */}
+        {adsFromState && (
+          <FlatList
+            numColumns={2}
+            keyExtractor={item => item[1].id}
+            data={adsFromState}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+        {onSync.app && <ScreenLoader size={100} color={'red'} />}
       </AdContainer>
+      <CustomBtn label="Create new ad" center onPress={handleCreateAd} />
     </Container>
   );
 };
 
 const AdContainer = styled.View`
-  flex: 0.5;
-  background: red;
-  flex-direction: row;
-`;
-
-const Ad = styled.TouchableOpacity`
-  background: chartreuse;
-  flex: 0.3;
-  margin: 10px;
-`;
-
-const AdTitle = styled.Text`
-  font-size: 20px;
-  color: black;
-`;
-
-const AdDate = styled.Text`
-  font-size: 20px;
-  color: white;
-`;
-
-const AdPrice = styled.Text`
-  font-size: 20px;
-  color: white;
+  flex: 1;
+  align-items: center;
 `;

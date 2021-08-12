@@ -8,4 +8,5 @@ export const userConstants = {
   GET_USER_ADS: 'user/GET_USER_ADS',
   UPDATE_USER_INFO: 'user/UPDATE_USER_INFO',
   CLEAR_USER_STATE: 'user/CLEAR_USER_STATE',
+  CREATE_NEW_AD: 'user/CREATE_NEW_AD',
 };
