@@ -75,5 +75,4 @@ export const pickImage = () => {
       const pickError = errorMessage;
     }
   });
-  console.log(launchImage);
 };

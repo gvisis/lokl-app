@@ -8,7 +8,7 @@ import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
 import { ROUTES } from '../../routes/RouteNames';
 
-export const ProfileView = ({ navigation }) => {
+export const ProfileView: React.FC = ({ navigation }) => {
   const { t } = useTranslation();
   const handleProfileEditNav = useFunction(
     navigation.navigate,
@@ -38,9 +38,4 @@ const WelcomeTitle = styled.Text`
   text-align: center;
   padding: 10px;
   flex: 4;
-`;
-const ButtonWrap = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex: 0.1;
 `;

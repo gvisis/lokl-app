@@ -93,10 +93,10 @@ function* handleCreateUserDb(email: string) {
     console.log('huserinfocreate', e);
   }
 }
-function* handleCreateNewAd(adInfo) {
+function* handleCreateNewAd({ newAd }) {
   try {
     yield put(actions.ui.setOnSync('app', true));
-    yield call(firebaseDb.createAd, adInfo);
+    yield call(firebaseDb.createAd, newAd);
     // later updated with ad Watcher
     yield put(actions.app.setAllAds(firebaseDb.fetchAllAds));
   } catch (e) {

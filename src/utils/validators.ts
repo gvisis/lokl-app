@@ -58,6 +58,11 @@ const adValidatorSchema = Yup.object().shape({
     .required('Please enter the price')
     .typeError('Digits only')
     .positive('Positive number only'),
+  title: Yup.string()
+    .required('Please enter the title')
+    .min(5, 'At least ${min} characters')
+    .max(40, 'max ${max}')
+    .trim(),
   // .test(
   //   'maxDigits',
   //   'No more than 6 digits',

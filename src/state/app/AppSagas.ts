@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
@@ -9,7 +9,6 @@ function* handleFetchAllAds() {
   try {
     yield put(actions.ui.setOnSync('app', true));
     const allAds: unknown = yield call(firebaseDb.fetchAllAds);
-    console.log('sagadata', allAds);
     const objectEntriesToArray = Object.entries(allAds);
     yield put(actions.app.setAllAds(objectEntriesToArray));
     yield put(actions.ui.setOnSync('app', false));
@@ -28,6 +27,8 @@ function* handleUploadImages({ adId, images }: UploadImageProps) {
 }
 
 export function* appSaga() {
-  yield takeEvery(constants.app.GET_ALL_ADS, handleFetchAllAds);
-  yield takeEvery(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
+  yield takeLatest(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
+
+  //! error: no overload matches this call?
+  yield takeLatest(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
 }

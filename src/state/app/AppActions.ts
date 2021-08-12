@@ -7,7 +7,7 @@ export const setLanguage = (payload: string) => ({
 });
 
 export const fetchAllAds = () => ({
-  type: constants.app.GET_ALL_ADS,
+  type: constants.app.FETCH_ALL_ADS,
 });
 
 export const setAllAds = ads => ({

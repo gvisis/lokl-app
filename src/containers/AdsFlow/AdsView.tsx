@@ -30,15 +30,15 @@ export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
 
   const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
 
-  // First fetch all ads from server
-  useEffect(() => {
-    dispatch(actions.app.fetchAllAds());
-  }, []);
-
   const renderItem = ({ item }) => {
     const adInfo = item[1];
     return <ItemCard title={adInfo.title} price={adInfo.price} />;
   };
+
+  // First fetch all ads from server (does not work after creating a new ad??)
+  useEffect(() => {
+    dispatch(actions.app.fetchAllAds());
+  }, []);
 
   return (
     <Container>

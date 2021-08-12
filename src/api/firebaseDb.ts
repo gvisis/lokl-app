@@ -3,13 +3,14 @@ import storage from '@react-native-firebase/storage';
 
 import { ImagesProps } from '../state/app/AppInterfaces';
 
-const fetchAllAds = async (): Promise<void> => {
+const fetchAllAds = async () => {
   const adsRef = await database().ref(`/ads/`);
   const ads = await adsRef.once('value').then(snap => snap.val());
   return ads;
 };
 
-const createAd = async (adInfo): Promise<void> => {
+const createAd = async adInfo => {
+  console.log('createAd adinfo', adInfo);
   const newAdRef = await database().ref('/ads').push();
   await newAdRef.set(adInfo).then(() => {
     console.log('newAd', adInfo);
@@ -24,6 +25,8 @@ const uploadImageToStorage = (adId: string, images: ImagesProps[]) => {
         'images/ads/' + adId + '/' + newImageName,
       );
       const storagePut = storageRef.putFile(tempImage.url);
+
+      // make it pretty later, with loading state
       storagePut.on('state_changed', taskSnapshot => {
         console.log(
           `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,

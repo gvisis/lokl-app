@@ -17,6 +17,7 @@ import { Formik } from 'formik';
 import { launchImageLibrary } from 'react-native-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/core';
 
 import { Container, CustomBtn, DatePicker } from '../../components';
 import { actions } from '../../state/actions';
@@ -24,6 +25,7 @@ import { validator } from '../../utils/validators';
 import { pickImage } from '../../utils/functions';
 import { api } from '../../api';
 import { RootState } from '../../state/reducers';
+import { ROUTES } from '../../routes/RouteNames';
 
 interface UserAd {
   id: string;
@@ -55,21 +57,25 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
 
   const [userAd, setUserAd] = useState<UserAd>(null);
   const currentUser = useSelector((state: RootState) => state.user.userInfo);
-
+  const navigation = useNavigation();
   useEffect(() => {
     setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
     console.log('effect useradid', userAd);
   }, []);
 
-  const handleAdSubmit = (price, description) => {
+  const handleAdSubmit = (
+    price: string,
+    title: string,
+    description: string,
+  ) => {
     dispatch(
       actions.user.createNewAd({
         ...userAd,
-        title: 'naujas item',
-        category: categoryPicker,
+        title,
+        category: 'meat',
         price,
         description,
-        subCategory: subCategoryPicker,
+        subCategory: 'sausages',
         dateRequired: date.toString(),
         dateAdded: new Date().toString(),
         owner: {
@@ -81,6 +87,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
       }),
     );
     dispatch(actions.app.uploadAdImages(userAd.id, tempImages));
+    navigation.navigate(ROUTES.Ads);
   };
   // ===== IMAGE PICKER =====
   //! not working
@@ -144,35 +151,53 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   return (
     <Container>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <AdContainer>
-          <AdHeader>
-            {tempImages.length !== 0 &&
-              tempImages.map(image => (
-                <AddedImage key={image.id} source={{ uri: image.url }} />
-              ))}
-            {tempImages.length != 3 && (
-              <AddImage onPress={handleImagePicker}>
-                <Icon name={'image-plus'} size={30} />
-              </AddImage>
-            )}
-          </AdHeader>
-          <AdHeaderBottom>
-            {/* Render later from available category/subcategory lists */}
-            <DatePicker />
-          </AdHeaderBottom>
+        <Formik
+          initialValues={{
+            price: '',
+            description: '',
+            title: '',
+          }}
+          enableReinitialize
+          validationSchema={validator.ad}
+          onSubmit={({
+            price,
+            title,
+            description,
+          }: {
+            price: string;
+            title: string;
+            description: string;
+          }) => handleAdSubmit(price, title, description)}>
+          {({ errors, values, handleChange, handleSubmit, touched }) => (
+            <AdContainer>
+              {errors.title && touched && (
+                <ErrorMessage>{errors.title}</ErrorMessage>
+              )}
+              <AdTitle
+                onChangeText={handleChange('title')}
+                value={values.title}
+                placeholder={'Enter ad title'}
+              />
+              <AdHeader>
+                {tempImages.length !== 0 &&
+                  tempImages.map(image => (
+                    <AddedImage key={image.id} source={{ uri: image.url }} />
+                  ))}
+                {tempImages.length != 3 && (
+                  <AddImage onPress={handleImagePicker}>
+                    <Icon name={'image-plus'} size={30} />
+                  </AddImage>
+                )}
+              </AdHeader>
+              <AdHeaderBottom>
+                {/* Render later from available category/subcategory lists */}
+                <DatePicker />
+              </AdHeaderBottom>
 
-          <Formik
-            initialValues={{
-              price: '',
-              description: '',
-            }}
-            enableReinitialize
-            validationSchema={validator.ad}
-            onSubmit={({ price, description }) =>
-              handleAdSubmit(price, description)
-            }>
-            {({ errors, values, handleChange, handleSubmit, touched }) => (
               <AdDescriptionWrap>
+                {errors.description && touched && (
+                  <ErrorMessage>{errors.description}</ErrorMessage>
+                )}
                 <AdDescription
                   placeholder="Describe what are you looking for.."
                   placeholderTextColor="green"
@@ -211,9 +236,9 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 <Text>{date.toString()}</Text>
                 <CustomBtn center label={'Create add'} onPress={handleSubmit} />
               </AdDescriptionWrap>
-            )}
-          </Formik>
-        </AdContainer>
+            </AdContainer>
+          )}
+        </Formik>
       </TouchableWithoutFeedback>
     </Container>
   );
@@ -228,10 +253,17 @@ const ErrorMessage = styled.Text`
   margin-bottom: 5px;
 `;
 const AdHeader = styled.View`
-  padding: 10px;
+  /* padding: 10px; */
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+  border-bottom-width: 1px;
+`;
+
+const AdTitle = styled.TextInput`
+  color: ${({ theme }) => theme.colors.secondary};
+  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  width: 100%;
   border-bottom-width: 1px;
 `;
 
