@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -7,6 +7,7 @@ import { constants } from '../constants';
 import { api } from '../../api';
 import { AnyObject } from '../../types/general';
 import { firebaseDb } from '../../api/firebaseDb';
+import { RootState } from '../reducers';
 
 interface UserAuthCredentials {
   email: string;
@@ -96,11 +97,13 @@ function* handleCreateUserDb(email: string) {
 function* handleCreateNewAd({ newAd }) {
   try {
     yield put(actions.ui.setOnSync('app', true));
-    yield call(firebaseDb.createAd, newAd);
+    const currentUser = api.getUserInfo().uid;
+    yield call(firebaseDb.createAd, currentUser, newAd);
     // later updated with ad Watcher
-    yield put(actions.app.setAllAds(firebaseDb.fetchAllAds));
+    const allAds = yield select((state): RootState => state.app.allAppAds);
+    yield put(actions.app.setAllAds([...allAds, newAd]));
   } catch (e) {
-    console.log(e);
+    console.log('newaderror', e);
   } finally {
     yield put(actions.ui.setOnSync('app', false));
   }

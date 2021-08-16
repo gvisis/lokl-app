@@ -1,20 +1,19 @@
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 
+import { api } from '.';
 import { ImagesProps } from '../state/app/AppInterfaces';
 
 const fetchAllAds = async () => {
-  const adsRef = await database().ref(`/ads/`);
+  const currentUser = api.getUserInfo().uid;
+  const adsRef = await database().ref(`/users/${currentUser}/ads/`);
   const ads = await adsRef.once('value').then(snap => snap.val());
   return ads;
 };
 
-const createAd = async adInfo => {
-  console.log('createAd adinfo', adInfo);
-  const newAdRef = await database().ref('/ads').push();
-  await newAdRef.set(adInfo).then(() => {
-    console.log('newAd', adInfo);
-  });
+const createAd = async (userId, adInfo) => {
+  const newAdRef = await database().ref(`/users/${userId}/ads/`).push();
+  await newAdRef.set(adInfo);
 };
 
 const uploadImageToStorage = (adId: string, images: ImagesProps[]) => {

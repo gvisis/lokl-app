@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -27,15 +27,13 @@ export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
   const dispatch = useDispatch();
   const adsFromState = useSelector((state: RootState) => state.app.allAppAds);
   const { onSync } = useSelector((state: RootState) => state.ui);
-
   const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
 
-  const renderItem = ({ item }) => {
-    const adInfo = item[1];
-    return <ItemCard title={adInfo.title} price={adInfo.price} />;
-  };
+  const renderItem = ({ item }) => (
+    <ItemCard title={item.title} price={item.price} />
+  );
 
-  // First fetch all ads from server (does not work after creating a new ad??)
+  // Fetch all ads from server (create ads watcher later)
   useEffect(() => {
     dispatch(actions.app.fetchAllAds());
   }, []);
@@ -47,7 +45,7 @@ export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
         {adsFromState && (
           <FlatList
             numColumns={2}
-            keyExtractor={item => item[1].id}
+            keyExtractor={item => item.id}
             data={adsFromState}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}

@@ -14,6 +14,10 @@ export const setAllAds = ads => ({
   type: constants.app.SET_ALL_ADS,
   ads,
 });
+export const setTempImages = images => ({
+  type: constants.app.SET_TEMP_IMAGES,
+  images,
+});
 
 export const uploadAdImages = (adId: string, images: ImagesProps[]) => ({
   type: constants.app.UPLOAD_AD_IMAGES,
@@ -25,5 +29,6 @@ export const appActions = {
   setAllAds,
   fetchAllAds,
   setLanguage,
+  setTempImages,
   uploadAdImages,
 };

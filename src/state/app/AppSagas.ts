@@ -4,19 +4,21 @@ import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UploadImageProps } from './AppInterfaces';
+import { api } from '../../api';
 
 function* handleFetchAllAds() {
   try {
     yield put(actions.ui.setOnSync('app', true));
     const allAds: unknown = yield call(firebaseDb.fetchAllAds);
-    const objectEntriesToArray = Object.entries(allAds);
-    yield put(actions.app.setAllAds(objectEntriesToArray));
+    const objectValuesToArray = Object.values(allAds);
+    yield put(actions.app.setAllAds(objectValuesToArray));
     yield put(actions.ui.setOnSync('app', false));
   } catch (e) {
     console.log('userinfoerror', e);
     yield put(actions.ui.setOnSync('app', false));
   }
 }
+
 function* handleUploadImages({ adId, images }: UploadImageProps) {
   try {
     yield call(firebaseDb.uploadImageToStorage, adId, images);

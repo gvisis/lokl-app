@@ -36,13 +36,8 @@ interface UserAd {
   price: string;
   dateAdded: string;
   dateRequired: string;
-  owner: {
-    id: string;
-    name: string;
-    email: string;
-    city: string;
-  };
 }
+
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
 }
@@ -50,19 +45,18 @@ interface AddAdViewProps {
 //! All this code here temporary.
 export const AddAdView: React.FC<AddAdViewProps> = () => {
   const dispatch = useDispatch();
-  const [tempImages, setTempImages] = useState([]);
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState<string>('date');
   const [show, setShow] = useState<boolean>(false);
 
   const [userAd, setUserAd] = useState<UserAd>(null);
-  const currentUser = useSelector((state: RootState) => state.user.userInfo);
+  const tempImages = useSelector((state: RootState) => state.app.tempImages);
   const navigation = useNavigation();
+
   useEffect(() => {
     setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
-    console.log('effect useradid', userAd);
   }, []);
-
+  console.log(tempImages);
   const handleAdSubmit = (
     price: string,
     title: string,
@@ -78,12 +72,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         subCategory: 'sausages',
         dateRequired: date.toString(),
         dateAdded: new Date().toString(),
-        owner: {
-          id: api.getUserInfo().uid,
-          name: currentUser.name,
-          email: currentUser.email,
-          city: currentUser.city,
-        },
       }),
     );
     dispatch(actions.app.uploadAdImages(userAd.id, tempImages));
@@ -119,7 +107,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         try {
           const imageUrl = assets[0].uri;
           const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
-          setTempImages([...tempImages, { url: imageUrl, id: imageId }]);
+          dispatch(actions.app.setTempImages({ url: imageUrl, id: imageId }));
           dispatch(actions.ui.setStatus('success', true, 'Image uploaded'));
         } catch (e) {
           dispatch(actions.ui.setStatus('error', true, e.message));
@@ -179,11 +167,11 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 placeholder={'Enter ad title'}
               />
               <AdHeader>
-                {tempImages.length !== 0 &&
+                {tempImages &&
                   tempImages.map(image => (
                     <AddedImage key={image.id} source={{ uri: image.url }} />
                   ))}
-                {tempImages.length != 3 && (
+                {(tempImages === null || tempImages.length != 3) && (
                   <AddImage onPress={handleImagePicker}>
                     <Icon name={'image-plus'} size={30} />
                   </AddImage>

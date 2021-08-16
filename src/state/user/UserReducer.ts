@@ -8,7 +8,7 @@ export interface UserReducerState {
     email: string;
     age: number;
     city: string;
-    ads: string[];
+    ads: any;
   };
 }
 
