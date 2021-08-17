@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -8,63 +8,54 @@ import { AirbnbRating } from 'react-native-ratings';
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
 import { Container } from '..';
+import { CompanyProps } from '../../state/app/AppInterfaces';
 
-type SingleCompanyProps = {
-  company: {
-    id: string;
-    title: string;
-    image?: string;
-    description?: string;
-    website?: string;
-    categories: string[];
-    rating: number;
-    address: { street: string; city: string; postCode: string };
-    phone: number;
-    email?: string;
-  };
+interface SingleCompanyProps {
+  companyItem: CompanyProps;
   navigation?: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
   route?: RouteProp<RootStackParamList, ROUTES.SingleCompany>;
   children?: React.ReactNode;
   showRating?: boolean;
+}
+
+export const SingleCompany: React.FC<SingleCompanyProps> = ({
+  companyItem,
+  children,
+  showRating,
+}) => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ title: companyItem.title });
+  }, [companyItem]);
+
+  const ratingCustomImage = require('../../assets/images/ratingfull.png');
+
+  return (
+    <Container>
+      <CompanyHeader>
+        <TitleWrap>
+          <CompanyImage source={{ uri: companyItem.image }} />
+          <CompanyTitleWrap>
+            <CompanyTitle>{companyItem.title} (info?) </CompanyTitle>
+          </CompanyTitleWrap>
+        </TitleWrap>
+        {showRating && (
+          <BottomHeader>
+            <ItemRating>Rating:</ItemRating>
+            <AirbnbRating
+              count={5}
+              showRating={false}
+              defaultRating={companyItem.rating}
+              size={25}
+              starImage={ratingCustomImage}
+            />
+          </BottomHeader>
+        )}
+      </CompanyHeader>
+      <CompanyMidSection>{children}</CompanyMidSection>
+    </Container>
+  );
 };
-
-// eslint-disable-next-line react/display-name
-export const SingleCompany: React.FC<SingleCompanyProps> = memo(
-  ({ company, children, showRating }) => {
-    const navigation = useNavigation();
-    useEffect(() => {
-      navigation.setOptions({ title: company.title });
-    }, [company]);
-
-    const ratingCustomImage = require('../../assets/images/ratingfull.png');
-
-    return (
-      <Container>
-        <CompanyHeader>
-          <TitleWrap>
-            <CompanyImage source={{ uri: company.image }} />
-            <CompanyTitleWrap>
-              <CompanyTitle>{company.title} (info?) </CompanyTitle>
-            </CompanyTitleWrap>
-          </TitleWrap>
-          {showRating && (
-            <BottomHeader>
-              <ItemRating>Rating:</ItemRating>
-              <AirbnbRating
-                count={5}
-                showRating={false}
-                defaultRating={company.rating}
-                size={25}
-                starImage={ratingCustomImage}
-              />
-            </BottomHeader>
-          )}
-        </CompanyHeader>
-        <CompanyMidSection>{children}</CompanyMidSection>
-      </Container>
-    );
-  },
-);
 
 const CompanyHeader = styled.View`
   flex: 1.5;

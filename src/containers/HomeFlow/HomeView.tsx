@@ -1,4 +1,5 @@
 import React from 'react';
+import database from '@react-native-firebase/database';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
@@ -17,7 +18,17 @@ import data from '../../assets/data';
 
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
-
+  const [companies, setCompanies] = React.useState([]);
+  React.useEffect(() => {
+    async function dat() {
+      const companies = await database()
+        .ref('companies')
+        .once('value')
+        .then(snap => snap.val());
+      setCompanies(Object.values(companies));
+    }
+    dat();
+  }, []);
   return (
     <Container>
       <HomeHeader title={t('home:title')} />
@@ -35,7 +46,9 @@ export const HomeView: React.FC = () => {
           <HomeRow title={t('home:row Company')}>
             <FlatList
               data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <Company width={325} company={item} />}
+              renderItem={({ item }) => (
+                <Company width={325} companyItem={item} />
+              )}
               keyExtractor={item => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}

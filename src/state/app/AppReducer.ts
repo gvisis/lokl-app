@@ -1,30 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import { AppReducerState } from './AppInterfaces';
 import { constants } from '../constants';
-
-interface AdsProps {
-  id: string;
-  title: string;
-  images?: string[];
-  category: string;
-  subcategory: string;
-  price: number;
-  description: string;
-  dateRequired: string;
-  dateAdded: string;
-}
-type TempImages = { url: string; id: string };
-
-export interface AppReducerState {
-  language: string;
-  allAppAds: AdsProps[];
-  tempImages?: TempImages[];
-}
 
 const INITIAL_STATE: AppReducerState = {
   language: 'en',
   allAppAds: [],
   tempImages: [],
+  tempCompany: null,
 };
 
 export const appReducer = createReducer(INITIAL_STATE, {
@@ -37,5 +20,8 @@ export const appReducer = createReducer(INITIAL_STATE, {
   },
   [constants.app.SET_TEMP_IMAGES]: (state, { images }) => {
     state.tempImages = [...state.tempImages, images];
+  },
+  [constants.app.SET_COMPANY_INFO]: (state, { categories }) => {
+    state.tempCompany = categories;
   },
 });

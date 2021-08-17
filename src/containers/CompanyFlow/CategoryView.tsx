@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
-import styled, { css } from 'styled-components/native';
-import { Dimensions, ScrollView } from 'react-native';
+import styled from 'styled-components/native';
+import { ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
@@ -16,52 +16,24 @@ type CompanyScreenProps = {
 // eslint-disable-next-line react/display-name
 export const CategoryView: React.FC<CompanyScreenProps> = memo(
   ({ navigation, route }) => {
-    const { category, company } = route.params;
+    const { category, companyItem } = route.params;
 
     useEffect(() => {
       navigation.setOptions({ title: category });
     }, [category]);
+    const emptyArray = new Array(8).fill(
+      <ItemCard
+        onPress={() => console.warn(category)}
+        title={category}
+        price={15}
+      />,
+    );
+    console.log(emptyArray);
 
     return (
-      <SingleCompany company={company} showRating={false}>
+      <SingleCompany companyItem={companyItem} showRating={false}>
         <ScrollView>
-          <CategorySection>
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-            <ItemCard
-              onPress={() => console.warn(category)}
-              title={category}
-              price={15}
-            />
-          </CategorySection>
+          <CategorySection>{emptyArray.map(item => item)}</CategorySection>
         </ScrollView>
       </SingleCompany>
     );

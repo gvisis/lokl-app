@@ -9,24 +9,10 @@ import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
+import { CompanyProps } from '../../state/app/AppInterfaces';
 
 export interface CompanyItemProps {
-  company: {
-    id: string;
-    title: string;
-    image?: string;
-    description?: string;
-    website?: string;
-    categories: string[];
-    rating: number;
-    address: {
-      street: string;
-      city: string;
-      postCode: string;
-    };
-    phone: number;
-    email?: string;
-  };
+  companyItem: CompanyProps;
   width?: number;
   height?: number;
   category?: string;
@@ -34,7 +20,7 @@ export interface CompanyItemProps {
 }
 
 export const Company: React.FC<CompanyItemProps> = ({
-  company,
+  companyItem,
   width,
   height,
 }) => {
@@ -43,8 +29,8 @@ export const Company: React.FC<CompanyItemProps> = ({
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleCompany, { company });
-  }, []); //! check later if working
+    navigation.navigate(ROUTES.SingleCompany, { companyItem });
+  }, []);
 
   if (Platform.OS === 'android') {
     return (
@@ -57,17 +43,20 @@ export const Company: React.FC<CompanyItemProps> = ({
         onPress={handleSingleProductNav}>
         <ProductWrap width={width} height={height}>
           <CompanyLeft>
-            <CompanyImage resizeMode="cover" source={{ uri: company.image }} />
+            <CompanyImage
+              resizeMode="cover"
+              source={{ uri: companyItem.image }}
+            />
           </CompanyLeft>
           <CompanyRight>
-            <CompanyName>{company.title}</CompanyName>
-            <CompanyDescription>{company.description}</CompanyDescription>
+            <CompanyName>{companyItem.title}</CompanyName>
+            <CompanyDescription>{companyItem.description}</CompanyDescription>
             <CompanyRating>
               <AirbnbRating
                 count={5}
                 showRating={false}
                 isDisabled={true}
-                defaultRating={company.rating}
+                defaultRating={companyItem.rating}
                 size={15}
                 selectedColor={theme.colors.red}
                 unSelectedColor={theme.colors.red1}

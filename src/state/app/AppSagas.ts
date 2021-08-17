@@ -58,7 +58,22 @@ function* handlePickImage() {
     console.log('pickimageerror', e);
   }
 }
+// const getCategories = async () => {
+// 	const companyRef = await database().ref(`/companies/${company.id}`);
+// 	const companies = await companyRef
+// 		.once('value')
+// 		.then(snapshot => snapshot.val());
 
+// 	const categoryRef = await database().ref(`/categories/`);
+// 	const allCategories = await categoryRef
+// 		.once('value')
+// 		.then(snap => snap.val());
+// 	setCategories(
+// 		allCategories.filter(category =>
+// 			companies.categories.includes(category.id),
+// 		),
+// 	);
+// };
 export function* appSaga() {
   yield takeLatest(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
   yield takeLatest(constants.app.PICK_IMAGE, handlePickImage);
