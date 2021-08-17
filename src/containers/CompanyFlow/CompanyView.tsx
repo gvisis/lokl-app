@@ -9,6 +9,7 @@ import { RootStackParamList } from '../../types/general';
 import { ROUTES } from '../../routes/RouteNames';
 import { SingleCompany } from '../../components';
 import { actions } from '../../state/actions';
+import { Category } from '../../state/app/AppInterfaces';
 
 type CompanyViewProps = {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
@@ -20,12 +21,20 @@ type CompanyViewProps = {
 export const CompanyView: React.FC<CompanyViewProps> = memo(
   ({ navigation, route }) => {
     const { companyItem } = route.params;
-    const dispatch = useDispatch();
-    const [categories, setCategories] = React.useState(null);
-    const handleCategoryNav = useCallback((category: string) => {
+    const allCategories = useSelector(state => state.app.categories);
+    const [CompCategories, setCompCategories] = React.useState([]);
+
+    const handleCategoryNav = useCallback(category => {
       navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });
     }, []);
-    console.log('item', companyItem.categories);
+
+    useEffect(() => {
+      setCompCategories(
+        allCategories.filter(category =>
+          companyItem.categories.includes(category.id),
+        ),
+      );
+    }, [allCategories]);
 
     return (
       <SingleCompany companyItem={companyItem}>
@@ -34,12 +43,12 @@ export const CompanyView: React.FC<CompanyViewProps> = memo(
             make it expandable with more text.. {companyItem.description}{' '}
             pictures for the categories?
           </CompanyDescription>
-          {companyItem.categories &&
-            companyItem.categories.map((category, index) => (
+          {CompCategories &&
+            CompCategories.map(category => (
               <CategoryCard
                 onPress={() => handleCategoryNav(category)}
-                key={index}>
-                <CategoryCardTitle>{category}</CategoryCardTitle>
+                key={category.id}>
+                <CategoryCardTitle>{category.title}</CategoryCardTitle>
               </CategoryCard>
             ))}
         </ScrollView>

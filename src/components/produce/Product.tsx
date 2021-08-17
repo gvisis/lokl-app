@@ -11,20 +11,10 @@ import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 export interface ProductScreenProps {
-  product?: {
-    id: string;
-    owner: string;
-    title: string;
-    image: string;
-    description?: string;
-    category: string;
-    price: number;
-    delivery: boolean;
-    available: boolean;
-    rating: number;
-  };
+  product?: CompanyProduct;
   width?: number;
   height?: number;
   onPress?: (event: GestureResponderEvent) => void;

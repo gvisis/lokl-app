@@ -1,17 +1,18 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UploadImageProps } from './AppInterfaces';
+import { sortAsc } from '../../utils/functions';
 
 function* handleFetchAllAds() {
   try {
     yield put(actions.ui.setOnSync('app', true));
     const allAds: unknown = yield call(firebaseDb.fetchAllAds);
-    const objectValuesToArray = Object.values(allAds);
-    yield put(actions.app.setAllAds(objectValuesToArray));
+    const adsArray = Object.values(allAds);
+    yield put(actions.app.setAllAds(adsArray));
     yield put(actions.ui.setOnSync('app', false));
   } catch (e) {
     console.log('userinfoerror', e);
@@ -74,10 +75,44 @@ function* handlePickImage() {
 // 		),
 // 	);
 // };
-export function* appSaga() {
-  yield takeLatest(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
-  yield takeLatest(constants.app.PICK_IMAGE, handlePickImage);
 
+function* handleFetchAllCompanies() {
+  try {
+    yield put(actions.ui.setOnSync('app', true));
+    const allCompanies: unknown = yield call(firebaseDb.fetchAllCompanies);
+    const companiesArray = Object.values(allCompanies).sort((a, b) =>
+      sortAsc(a.title, b.title),
+    );
+    yield put(actions.app.setAllCompanies(companiesArray));
+    yield put(actions.ui.setOnSync('app', false));
+  } catch (e) {
+    console.log('userinfoerror', e);
+    yield put(actions.ui.setOnSync('app', false));
+  }
+}
+
+function* handleFetchCategories() {
+  try {
+    yield put(actions.ui.setOnSync('app', true));
+    const categories: unknown = yield call(firebaseDb.fetchCategories);
+    const categoriesArray = Object.values(categories).sort((a, b) =>
+      sortAsc(a.title, b.title),
+    );
+    console.log(categoriesArray);
+    yield put(actions.app.setCategories(categoriesArray));
+    yield put(actions.ui.setOnSync('app', false));
+  } catch (e) {
+    console.log('userinfoerror', e);
+
+    yield put(actions.ui.setOnSync('app', false));
+  }
+}
+
+export function* appSaga() {
+  yield takeEvery(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
+  yield takeEvery(constants.app.PICK_IMAGE, handlePickImage);
+  yield takeEvery(constants.app.FETCH_ALL_COMPANIES, handleFetchAllCompanies);
+  yield takeEvery(constants.app.FETCH_CATEGORIES, handleFetchCategories);
   //! error: no overload matches this call?
-  yield takeLatest(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
+  yield takeEvery(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
 }

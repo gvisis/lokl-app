@@ -1,9 +1,9 @@
-import React from 'react';
-import database from '@react-native-firebase/database';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { sortAsc } from '../../utils/functions';
 import {
@@ -13,46 +13,54 @@ import {
   HomeRow,
   ProduceItem,
   Product,
+  ScreenLoader,
 } from '../../components';
 import data from '../../assets/data';
+import { actions } from '../../state/actions';
 
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
-  const [companies, setCompanies] = React.useState([]);
-  React.useEffect(() => {
-    async function dat() {
-      const companies = await database()
-        .ref('companies')
-        .once('value')
-        .then(snap => snap.val());
-      setCompanies(Object.values(companies));
-    }
-    dat();
+  const dispatch = useDispatch();
+  const allCompanies = useSelector(state => state.app.allCompanies);
+  const allCategories = useSelector(state => state.app.categories);
+
+  useEffect(() => {
+    dispatch(actions.app.fetchAllCompanies());
+    dispatch(actions.app.fetchCategories());
   }, []);
+
   return (
     <Container>
       <HomeHeader title={t('home:title')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeContent>
           <HomeRow title={t('home:row Produce')}>
-            <FlatList
-              data={data.produce.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => <ProduceItem item={item} />}
-              keyExtractor={item => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
+            {allCategories ? (
+              <FlatList
+                data={allCategories}
+                renderItem={({ item }) => <ProduceItem item={item} />}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : (
+              <ScreenLoader color={'red'} size={50} />
+            )}
           </HomeRow>
           <HomeRow title={t('home:row Company')}>
-            <FlatList
-              data={data.companies.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => (
-                <Company width={325} companyItem={item} />
-              )}
-              keyExtractor={item => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
+            {allCompanies ? (
+              <FlatList
+                data={allCompanies}
+                renderItem={({ item }) => (
+                  <Company width={325} companyItem={item} />
+                )}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : (
+              <ScreenLoader color={'red'} size={50} />
+            )}
           </HomeRow>
           <HomeRow title={t('home:row Products')}>
             <FlatList

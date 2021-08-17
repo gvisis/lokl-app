@@ -27,14 +27,30 @@ export const uploadAdImages = (adId: string, images: ImagesProps[]) => ({
 export const pickImage = () => ({
   type: constants.app.PICK_IMAGE,
 });
-export const setTempCategories = (categories: string[]) => ({
-  type: constants.app.SET_TEMP_CATEGORIES,
+
+export const fetchCategories = () => ({
+  type: constants.app.FETCH_CATEGORIES,
+});
+
+export const setCategories = (categories: string[]) => ({
+  type: constants.app.SET_CATEGORIES,
   categories,
 });
-export const getCompanyInfo = (companyId: string) => ({
-  type: constants.app.GET_COMPANY_INFO,
+
+export const fetchAllCompanies = () => ({
+  type: constants.app.FETCH_ALL_COMPANIES,
+});
+
+export const setAllCompanies = (companies: string[]) => ({
+  type: constants.app.SET_ALL_COMPANIES,
+  companies,
+});
+
+export const fetchCompanyInfo = (companyId: string) => ({
+  type: constants.app.FETCH_COMPANY_INFO,
   companyId,
 });
+
 export const setCompanyInfo = (companyInfo: any) => ({
   type: constants.app.SET_COMPANY_INFO,
   companyInfo,
@@ -46,8 +62,11 @@ export const appActions = {
   fetchAllAds,
   setLanguage,
   setTempImages,
-  getCompanyInfo,
+  setCategories,
   setCompanyInfo,
   uploadAdImages,
-  setTempCategories,
+  setAllCompanies,
+  fetchCategories,
+  fetchCompanyInfo,
+  fetchAllCompanies,
 };

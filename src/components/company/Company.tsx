@@ -9,13 +9,13 @@ import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { CompanyProps } from '../../state/app/AppInterfaces';
+import { Category, CompanyProps } from '../../state/app/AppInterfaces';
 
 export interface CompanyItemProps {
   companyItem: CompanyProps;
   width?: number;
   height?: number;
-  category?: string;
+  category?: Category;
   onPress?: (event: GestureResponderEvent) => void;
 }
 

@@ -19,16 +19,16 @@ export const CategoryView: React.FC<CompanyScreenProps> = memo(
     const { category, companyItem } = route.params;
 
     useEffect(() => {
-      navigation.setOptions({ title: category });
+      navigation.setOptions({ title: category.title });
     }, [category]);
+
     const emptyArray = new Array(8).fill(
       <ItemCard
-        onPress={() => console.warn(category)}
-        title={category}
+        onPress={() => console.warn(category.title)}
+        title={category.title}
         price={15}
       />,
     );
-    console.log(emptyArray);
 
     return (
       <SingleCompany companyItem={companyItem} showRating={false}>

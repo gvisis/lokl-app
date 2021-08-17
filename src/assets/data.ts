@@ -3,32 +3,37 @@ import * as faker from 'faker';
 const data = {
   produce: [
     {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Cakes & Cupcakes',
+      id: '3',
+      title: 'Bakery',
       image:
         'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d73',
+      id: '1',
       title: 'Vegetables',
       image:
         'https://images.unsplash.com/photo-1598030304671-5aa1d6f21128?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d74',
+      id: '0',
       title: 'Meat',
       image:
         'https://images.unsplash.com/photo-1448907503123-67254d59ca4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1049&q=80',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d75',
+      id: '4',
       title: 'Dairy',
       image:
         'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&dpr=2&h800&w=600',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29gs75',
-      title: 'Craft drinks',
+      id: '5',
+      title: 'Drinks',
+      image: 'https://i.imgur.com/vgJY0z3.jpg',
+    },
+    {
+      id: '6',
+      title: 'Fish',
       image: 'https://i.imgur.com/vgJY0z3.jpg',
     },
   ],

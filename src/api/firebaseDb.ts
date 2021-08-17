@@ -17,6 +17,18 @@ const createAd = async (userId, adInfo) => {
   return newAdRef.key;
 };
 
+const fetchCategories = async () => {
+  const categoriesRef = await database().ref('/categories/');
+  const categories = await categoriesRef.once('value').then(snap => snap.val());
+  return categories;
+};
+
+const fetchAllCompanies = async () => {
+  const companiesRef = await database().ref('/companies/');
+  const companies = await companiesRef.once('value').then(snap => snap.val());
+  return companies;
+};
+
 const uploadImageToStorage = (
   newAdKey: string,
   adId: string,
@@ -71,5 +83,7 @@ const uploadImageToStorage = (
 export const firebaseDb = {
   createAd,
   fetchAllAds,
+  fetchAllCompanies,
+  fetchCategories,
   uploadImageToStorage,
 };
