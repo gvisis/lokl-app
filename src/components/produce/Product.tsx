@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   GestureResponderEvent,
   Platform,
@@ -13,7 +13,7 @@ import { AirbnbRating } from 'react-native-ratings';
 import { ROUTES } from '../../routes/RouteNames';
 
 export interface ProductScreenProps {
-  product: {
+  product?: {
     id: string;
     owner: string;
     title: string;
@@ -35,7 +35,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   width,
   height,
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
   const handleSingleProductNav = useCallback(() => {

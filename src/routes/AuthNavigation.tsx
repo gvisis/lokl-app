@@ -8,7 +8,7 @@ import {
   RegisterView,
 } from '../containers/LoginFlow';
 import { LandingView } from '../containers/LandingFlow';
-import { RootStackParamList } from './RootStackParamList';
+import { RootStackParamList } from '../types/general';
 
 const AuthStack = createStackNavigator<RootStackParamList>();
 

@@ -1,8 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
 import { RouteProp } from '@react-navigation/core';
 
@@ -13,7 +10,7 @@ import {
   ProfileView,
   SettingsView,
 } from '../containers/ProfileFlow';
-import { RootStackParamList } from './RootStackParamList';
+import { RootStackParamList } from '../types/general';
 
 type ProfileNavRouteProps = RouteProp<RootStackParamList, ROUTES.Profile>;
 type ProfileNavProps = {

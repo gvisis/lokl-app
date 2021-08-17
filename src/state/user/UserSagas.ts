@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -6,6 +6,7 @@ import { actions } from '../actions';
 import { constants } from '../constants';
 import { api } from '../../api';
 import { AnyObject } from '../../types/general';
+import { firebaseDb } from '../../api/firebaseDb';
 
 interface UserAuthCredentials {
   email: string;
@@ -79,7 +80,7 @@ function* handleUpdateUserDb({ updatedInfo }: AnyObject) {
 
 function* handleCreateUserDb(email: string) {
   const userInfo = {
-    email: email,
+    email,
     name: '',
     city: '',
     age: 0,
@@ -92,6 +93,44 @@ function* handleCreateUserDb(email: string) {
     console.log('huserinfocreate', e);
   }
 }
+function* handleCreateNewAd({ newAd, images }) {
+  try {
+    yield put(actions.ui.setOnSync('app', true));
+    const currentUserId = api.getUserInfo().uid;
+    console.log('newadid', newAd.id);
+    console.log('images', images);
+
+    const newAdKey: string = yield call(
+      firebaseDb.createAd,
+      currentUserId,
+      newAd,
+    );
+    yield call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
+
+    // later updated with ad Watcher
+    const allAds = yield select(state => state.app.allAppAds);
+    yield put(actions.app.setAllAds([...allAds, newAd]));
+  } catch (e) {
+    console.log('newaderror', e);
+  } finally {
+    yield put(actions.ui.setOnSync('app', false));
+  }
+}
+
+function* handleGetUserAds() {
+  try {
+    yield put(actions.ui.setOnSync('button', true));
+    const currentUser: string = api.getUserInfo().uid;
+    database()
+      .ref(`/users/${currentUser}`)
+      .once('value')
+      .then(snap => console.log(snap.val().ads));
+  } catch (e) {
+    console.log('userinfoerror', e);
+  } finally {
+    yield put(actions.ui.setOnSync('button', false));
+  }
+}
 
 export function* userSaga() {
   yield takeEvery(constants.user.LOGIN, handleLogin);
@@ -99,4 +138,6 @@ export function* userSaga() {
   yield takeEvery(constants.user.SIGN_UP, handleSignup);
   yield takeEvery(constants.user.PASSWORD_RESET, handlePasswordReset);
   yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
+  yield takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
+  yield takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
 }

@@ -8,9 +8,10 @@ const LoaderContainer = styled.View`
   left: 0;
   bottom: 0;
   right: 0;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.lightGrey2};
   align-items: center;
   justify-content: center;
+  opacity: 0.7;
 `;
 
 export const ScreenLoader: React.FC<ActivityIndicatorProps> = props => (

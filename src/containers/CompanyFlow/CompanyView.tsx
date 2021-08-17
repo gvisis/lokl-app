@@ -2,9 +2,9 @@ import React, { memo, useCallback } from 'react';
 import styled from 'styled-components/native';
 import { GestureResponderEvent, ScrollView } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import { RootStackParamList } from '../../types/general';
 import { ROUTES } from '../../routes/RouteNames';
 import { SingleCompany } from '../../components';
 
@@ -71,10 +71,4 @@ const CategoryCardTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;
   color: ${({ theme }) => theme.colors.white};
-`;
-
-const ItemRating = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.family.bentonLight};
-  font-size: ${({ theme }) => theme.fonts.size.m}px;
-  margin-right: 10px;
 `;

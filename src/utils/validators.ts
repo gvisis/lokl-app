@@ -7,7 +7,8 @@ const pass = {
   min: 6,
   max: 50,
 };
-
+const min = 1;
+const max = 6;
 const loginValidatorSchema = Yup.object().shape({
   email: Yup.string()
     .required(t('yup:email-required'))
@@ -47,8 +48,31 @@ const signupValidatorSchema = Yup.object().shape({
     .trim(),
 });
 
+const adValidatorSchema = Yup.object().shape({
+  description: Yup.string()
+    .required('reikai desc')
+    .min(5, 'minimum ${min}')
+    .max(300, 'max ${max}')
+    .trim(),
+  price: Yup.number()
+    .required('Please enter the price')
+    .typeError('Digits only')
+    .positive('Positive number only'),
+  title: Yup.string()
+    .required('Please enter the title')
+    .min(5, 'At least ${min} characters')
+    .max(40, 'max ${max}')
+    .trim(),
+  // .test(
+  //   'maxDigits',
+  //   'No more than 6 digits',
+  //   number => String(number).length <= 6,
+  // ),
+});
+
 export const validator = {
   login: loginValidatorSchema,
   passwordReset: passwordResetValidatorSchema,
   signup: signupValidatorSchema,
+  ad: adValidatorSchema,
 };

@@ -11,6 +11,10 @@ export const updateUserInfo = (updatedInfo: AnyObject) => ({
   updatedInfo,
 });
 
+export const getUserAds = () => ({
+  type: constants.user.GET_USER_ADS,
+});
+
 export const login = (email: string, password: string) => ({
   type: constants.user.LOGIN,
   email,
@@ -35,13 +39,20 @@ export const passwordReset = (email: string) => ({
 export const clearUserState = () => ({
   type: constants.user.CLEAR_USER_STATE,
 });
+export const createNewAd = (newAd, images) => ({
+  type: constants.user.CREATE_NEW_AD,
+  newAd,
+  images,
+});
 
 export const userActions = {
-  setUserInfo,
   login,
   logout,
   signup,
+  getUserAds,
+  setUserInfo,
+  createNewAd,
   passwordReset,
-  clearUserState,
   updateUserInfo,
+  clearUserState,
 };

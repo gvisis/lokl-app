@@ -8,11 +8,15 @@ export enum ROUTES {
   // Product
   Product = 'product',
   SingleProduct = 'singleProduct',
-  Ads = 'ads',
 
   // Company
   SingleCompany = 'singleCompany',
   CompanyCategory = 'companyCategory',
+
+  // Ads
+  AdsTab = 'adsTab',
+  Ads = 'ads',
+  AddAd = 'addAd',
 
   // Tabs
   Profile = 'profile',

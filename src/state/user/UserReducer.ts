@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject } from '../../types/general';
 import { constants } from '../constants';
 
 export interface UserReducerState {
@@ -9,6 +8,7 @@ export interface UserReducerState {
     email: string;
     age: number;
     city: string;
+    ads: any;
   };
 }
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/native';
 
 import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
-import { RootState } from '../../state/reducers';
 import { Container, CustomBtn, HomeHeader } from '../../components';
 
 export const ProduceView: React.FC = () => {

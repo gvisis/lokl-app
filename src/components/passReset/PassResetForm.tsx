@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { CustomBtn, CustomInput } from '..';
 import { actions } from '../../state/actions';
-import { RootState } from '../../state/reducers';
 import { validator } from '../../utils/validators';
 
 const ResetSuccessBox = styled.View`
@@ -35,9 +34,7 @@ export const PassResetForm: React.FC = ({ navigation }) => {
   const theme = React.useContext(ThemeContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { onSync, passResetStatus } = useSelector(
-    (state: RootState) => state.ui,
-  );
+  const { onSync, passResetStatus } = useSelector(state => state.ui);
 
   const handlePassResetBack = useCallback((): void => {
     dispatch(actions.ui.clearPassResetStatus());
