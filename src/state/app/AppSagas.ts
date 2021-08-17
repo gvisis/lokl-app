@@ -1,10 +1,10 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UploadImageProps } from './AppInterfaces';
-import { api } from '../../api';
 
 function* handleFetchAllAds() {
   try {
@@ -28,8 +28,40 @@ function* handleUploadImages({ adId, images }: UploadImageProps) {
   }
 }
 
+function* handlePickImage() {
+  console.log('pick');
+  try {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+      maxWidth: 800,
+      maxHeight: 600,
+    };
+    const imageObject = launchImageLibrary(
+      options,
+      ({ errorMessage, assets }) => {
+        if (assets) {
+          const imageUrl = assets[0].uri;
+          const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
+          return { url: imageUrl, id: imageId };
+        }
+        if (errorMessage) {
+          throw new Error(errorMessage);
+        }
+      },
+    );
+    console.log('imageObject', imageObject);
+
+    yield put(actions.app.setTempImages(imageObject));
+  } catch (e) {
+    // yield put(actions.ui.setStatus('error', true, e.message));
+    console.log('pickimageerror', e);
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
+  yield takeLatest(constants.app.PICK_IMAGE, handlePickImage);
 
   //! error: no overload matches this call?
   yield takeLatest(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);

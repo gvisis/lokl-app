@@ -17,6 +17,7 @@ const createAd = async (userId, adInfo) => {
 };
 
 const uploadImageToStorage = (adId: string, images: ImagesProps[]) => {
+  const tempImageUrls: string[] = [];
   if (images.length != 0) {
     images.map(async tempImage => {
       const newImageName = `adImg_${tempImage.id}`;
@@ -24,7 +25,7 @@ const uploadImageToStorage = (adId: string, images: ImagesProps[]) => {
         'images/ads/' + adId + '/' + newImageName,
       );
       const storagePut = storageRef.putFile(tempImage.url);
-
+      tempImageUrls.push(await storageRef.getDownloadURL());
       // make it pretty later, with loading state
       storagePut.on('state_changed', taskSnapshot => {
         console.log(
@@ -36,6 +37,7 @@ const uploadImageToStorage = (adId: string, images: ImagesProps[]) => {
         console.log('Image uploaded to the bucket!');
       });
     });
+    return tempImageUrls;
   }
 };
 

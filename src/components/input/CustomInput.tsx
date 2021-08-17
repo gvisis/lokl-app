@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -27,7 +27,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
   iconColor,
   ...props
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
   return (
     <InputContainer>
       {error && touched && <ErrorMessage>{error}</ErrorMessage>}

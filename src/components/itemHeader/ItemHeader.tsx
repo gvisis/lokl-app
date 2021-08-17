@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import styled from 'styled-components/native';
 
 export const ItemHeader = ({ product, itemTop }) => (
-  <ItemHeader>
+  <ItemHeaderWrap>
     <TitleWrap>
       {itemTop && itemTop}
       {product && <ProductImage source={{ uri: product.image }} />}
@@ -18,10 +18,10 @@ export const ItemHeader = ({ product, itemTop }) => (
       <ProductCat>{product.category}</ProductCat>
       <Price>£ {product.price}</Price>
     </BottomHeader>
-  </ItemHeader>
+  </ItemHeaderWrap>
 );
 
-const ItemHeader = styled.View`
+const ItemHeaderWrap = styled.View`
   flex: 1.5;
   width: 100%;
   height: 100%;

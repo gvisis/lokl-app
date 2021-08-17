@@ -1,31 +1,11 @@
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-export const DatePicker = () => {
+export const CategoryPicker: React.FC = () => {
   const [subCategoryPicker, setSubCategoryPicker] = useState<string>(null);
   const [categoryPicker, setCategoryPicker] = useState<string>(null);
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState<string>('date');
-  const [show, setShow] = useState<boolean>(false);
 
-  // Date picker
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
-
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-  //-=================
   return (
     <>
       <RNPickerSelect

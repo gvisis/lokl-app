@@ -39,9 +39,10 @@ export const passwordReset = (email: string) => ({
 export const clearUserState = () => ({
   type: constants.user.CLEAR_USER_STATE,
 });
-export const createNewAd = newAd => ({
+export const createNewAd = (newAd, images) => ({
   type: constants.user.CREATE_NEW_AD,
   newAd,
+  images,
 });
 
 export const userActions = {

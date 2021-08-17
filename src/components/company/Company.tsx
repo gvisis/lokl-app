@@ -5,7 +5,6 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 

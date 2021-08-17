@@ -24,8 +24,12 @@ export const uploadAdImages = (adId: string, images: ImagesProps[]) => ({
   adId,
   images,
 });
+export const pickImage = () => ({
+  type: constants.app.PICK_IMAGE,
+});
 
 export const appActions = {
+  pickImage,
   setAllAds,
   fetchAllAds,
   setLanguage,

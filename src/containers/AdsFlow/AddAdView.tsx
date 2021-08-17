@@ -1,8 +1,8 @@
 //!
 //! Emuliatoriuj screen atrodo kitaip
-//!
+//! IMG STATE NESIUPDATINA NORMALIAI
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   GestureResponderEvent,
   Keyboard,
@@ -11,21 +11,20 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 import { Formik } from 'formik';
-import { launchImageLibrary } from 'react-native-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/core';
+import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
-import { Container, CustomBtn, DatePicker } from '../../components';
+import { CategoryPicker, Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
-import { pickImage } from '../../utils/functions';
-import { api } from '../../api';
-import { RootState } from '../../state/reducers';
 import { ROUTES } from '../../routes/RouteNames';
+import { getImageObject } from '../../utils/functions';
 
 interface UserAd {
   id: string;
@@ -47,21 +46,27 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const dispatch = useDispatch();
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState<string>('date');
+  const [tempImages, setTempImages] = useState([]);
   const [show, setShow] = useState<boolean>(false);
-
   const [userAd, setUserAd] = useState<UserAd>(null);
-  const tempImages = useSelector((state: RootState) => state.app.tempImages);
+
   const navigation = useNavigation();
 
   useEffect(() => {
     setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
   }, []);
-  console.log(tempImages);
-  const handleAdSubmit = (
-    price: string,
-    title: string,
-    description: string,
-  ) => {
+
+  // const uploadImage = async image => {
+  //   const newImageName = `adImg_${image.id}`;
+  //   const storageRef = await storage().ref(
+  //     'images/ads/' + userAd.id + '/' + newImageName,
+  //   );
+  //   await storageRef.putFile(image.url);
+  //   const imageFirebaseDbUrl = await storageRef.getDownloadURL();
+  //   setTempImages([...tempImages, { ...image, url: imageFirebaseDbUrl }]);
+  // };
+
+  const handleAdSubmit = async (price, title, description) => {
     dispatch(
       actions.user.createNewAd({
         ...userAd,
@@ -74,57 +79,34 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         dateAdded: new Date().toString(),
       }),
     );
-    dispatch(actions.app.uploadAdImages(userAd.id, tempImages));
-    navigation.navigate(ROUTES.Ads);
   };
+  // navigation.navigate(ROUTES.Ads);
   // ===== IMAGE PICKER =====
-  //! not working
-  // const handleImagePicker = () => {
-  //   try {
-  //     pickImage();
-  //   } catch (e) {
-  //     console.log(e);
-  //     dispatch(actions.ui.setStatus('error', true, e.message));
-  //   } finally {
-  //     console.log('pickimage final', pickImage());
-  //   }
-  // };
-
-  const handleImagePicker = () => {
+  const handleImagePicker = useCallback(() => {
     const options = {
       mediaType: 'photo',
       quality: 1,
       maxWidth: 800,
       maxHeight: 600,
     };
-    launchImageLibrary(options, ({ didCancel, errorMessage, assets }) => {
-      if (didCancel) {
-        dispatch(
-          actions.ui.setStatus('error', true, 'User cancelled image picker'),
-        );
-      }
+    launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
-        try {
-          const imageUrl = assets[0].uri;
-          const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
-          dispatch(actions.app.setTempImages({ url: imageUrl, id: imageId }));
-          dispatch(actions.ui.setStatus('success', true, 'Image uploaded'));
-        } catch (e) {
-          dispatch(actions.ui.setStatus('error', true, e.message));
-        }
+        console.log('getimg', getImageObject(assets));
+        // setTempImages([...tempImages, getImageObject(assets)]);
+        // console.log(tempImages);
       }
       if (errorMessage) {
         dispatch(actions.ui.setStatus('error', true, errorMessage));
       }
     });
-  };
+  }, []);
   // ===== END IMAGE PICKER =====
 
   // ======== DATE PICKER ========
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = (event, selectedDate) => {
+  const onChange = selectedDate => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
@@ -135,6 +117,9 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     setMode(currentMode);
   };
   // ===== END DATE PICKER =====
+  useEffect(() => {
+    console.log('effect temp', tempImages);
+  }, [tempImages]);
 
   return (
     <Container>
@@ -167,7 +152,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 placeholder={'Enter ad title'}
               />
               <AdHeader>
-                {tempImages &&
+                {tempImages.length != 0 &&
                   tempImages.map(image => (
                     <AddedImage key={image.id} source={{ uri: image.url }} />
                   ))}
@@ -179,7 +164,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
               </AdHeader>
               <AdHeaderBottom>
                 {/* Render later from available category/subcategory lists */}
-                <DatePicker />
+                <CategoryPicker />
               </AdHeaderBottom>
 
               <AdDescriptionWrap>
