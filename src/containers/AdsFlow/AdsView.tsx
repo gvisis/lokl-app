@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -15,7 +15,6 @@ import {
 } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
-import { RootState } from '../../state/reducers';
 import { useFunction } from '../../utils/hooks';
 
 type AdsViewProps = {
@@ -25,8 +24,8 @@ type AdsViewProps = {
 
 export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const adsFromState = useSelector((state: RootState) => state.app.allAppAds);
-  const { onSync } = useSelector((state: RootState) => state.ui);
+  const adsFromState = useSelector(state => state.app.allAppAds);
+  const { onSync } = useSelector(state => state.ui);
   const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
 
   const renderItem = ({ item }) => (

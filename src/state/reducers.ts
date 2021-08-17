@@ -16,5 +16,9 @@ const combinedReducer = combineReducers<CombinedState<RootState>>({
   app: appReducer,
 });
 
+export interface PersistedAppState extends RootState {
+  _persist: { version: number; rehydrated: boolean };
+}
+
 export const rootReducer = (state: RootState, action: AnyAction) =>
   combinedReducer(state, action);

@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { Text, View } from 'react-native';
 
 import { actions } from '../../state/actions';
 import { CustomBtn } from '../../components';
-import { RootState } from '../../state/reducers';
 
 export const ProfileEditView = () => {
-  const { userInfo } = useSelector((state: RootState) => state.user);
-  const { t } = useTranslation();
-  const { onSync } = useSelector((state: RootState) => state.ui);
+  const { userInfo } = useSelector(state => state.user);
+  const { onSync } = useSelector(state => state.ui);
 
   const dispatch = useDispatch();
 

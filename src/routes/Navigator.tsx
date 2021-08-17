@@ -11,15 +11,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, TabNavigation } from '.';
 import { actions } from '../state/actions';
-import { RootState } from '../state/reducers';
 import { RootStackParamList } from '../types/general';
 import { ROUTES } from './RouteNames';
 
 const Navigator: React.FC = () => {
   // Set an initializing state whilst Firebase connects
-  const loading = useSelector((state: RootState) => state.ui.onSync.user);
-  const { userInfo } = useSelector((state: RootState) => state.user);
-  const { theme } = useSelector((state: RootState) => state.ui);
+  const loading = useSelector(state => state.ui.onSync.user);
+  const { userInfo } = useSelector(state => state.user);
+  const { theme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
 
   //! Handle user state changes - TEMPORARY CODE!!!

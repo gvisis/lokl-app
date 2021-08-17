@@ -7,7 +7,6 @@ import { constants } from '../constants';
 import { api } from '../../api';
 import { AnyObject } from '../../types/general';
 import { firebaseDb } from '../../api/firebaseDb';
-import { RootState } from '../reducers';
 
 interface UserAuthCredentials {
   email: string;
@@ -109,7 +108,7 @@ function* handleCreateNewAd({ newAd, images }) {
     yield call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
 
     // later updated with ad Watcher
-    const allAds = yield select((state): RootState => state.app.allAppAds);
+    const allAds = yield select(state => state.app.allAppAds);
     yield put(actions.app.setAllAds([...allAds, newAd]));
   } catch (e) {
     console.log('newaderror', e);
