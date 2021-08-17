@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/core';
+import { RouteProp, useFocusEffect } from '@react-navigation/core';
 
 import { actions } from '../../state/actions';
 import {
@@ -34,9 +34,11 @@ export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
   );
 
   // Fetch all ads from server (create ads watcher later)
-  useEffect(() => {
-    dispatch(actions.app.fetchAllAds());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(actions.app.fetchAllAds());
+    }, []),
+  );
 
   return (
     <Container>

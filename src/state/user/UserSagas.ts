@@ -97,17 +97,17 @@ function* handleCreateUserDb(email: string) {
 function* handleCreateNewAd({ newAd, images }) {
   try {
     yield put(actions.ui.setOnSync('app', true));
-    const currentUser = api.getUserInfo().uid;
-    const imageUrlsFromDb = yield call(
-      firebaseDb.uploadImageToStorage,
-      newAd.id,
-      images,
-    );
+    const currentUserId = api.getUserInfo().uid;
+    console.log('newadid', newAd.id);
+    console.log('images', images);
 
-    yield call(firebaseDb.createAd, currentUser, {
-      ...newAd,
-      images: imageUrlsFromDb,
-    });
+    const newAdKey: string = yield call(
+      firebaseDb.createAd,
+      currentUserId,
+      newAd,
+    );
+    yield call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
+
     // later updated with ad Watcher
     const allAds = yield select((state): RootState => state.app.allAppAds);
     yield put(actions.app.setAllAds([...allAds, newAd]));

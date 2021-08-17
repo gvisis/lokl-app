@@ -61,6 +61,5 @@ declare module 'styled-components/native' {
       radius25: number;
       radius50: number;
     };
-    background: string;
   }
 }

@@ -18,7 +18,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/core';
 import { launchImageLibrary } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
 
 import { CategoryPicker, Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
@@ -68,19 +67,22 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
 
   const handleAdSubmit = async (price, title, description) => {
     dispatch(
-      actions.user.createNewAd({
-        ...userAd,
-        title,
-        category: 'meat',
-        price,
-        description,
-        subCategory: 'sausages',
-        dateRequired: date.toString(),
-        dateAdded: new Date().toString(),
-      }),
+      actions.user.createNewAd(
+        {
+          ...userAd,
+          title,
+          category: 'meat',
+          price,
+          description,
+          subCategory: 'sausages',
+          dateRequired: date.toString(),
+          dateAdded: new Date().toString(),
+        },
+        tempImages,
+      ),
     );
+    navigation.navigate(ROUTES.Ads);
   };
-  // navigation.navigate(ROUTES.Ads);
   // ===== IMAGE PICKER =====
   const handleImagePicker = useCallback(() => {
     const options = {
@@ -91,22 +93,20 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
-        console.log('getimg', getImageObject(assets));
-        // setTempImages([...tempImages, getImageObject(assets)]);
-        // console.log(tempImages);
+        setTempImages([...tempImages, getImageObject(assets)]);
       }
       if (errorMessage) {
         dispatch(actions.ui.setStatus('error', true, errorMessage));
       }
     });
-  }, []);
+  }, [tempImages]);
   // ===== END IMAGE PICKER =====
 
   // ======== DATE PICKER ========
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = selectedDate => {
+  const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
@@ -117,9 +117,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     setMode(currentMode);
   };
   // ===== END DATE PICKER =====
-  useEffect(() => {
-    console.log('effect temp', tempImages);
-  }, [tempImages]);
 
   return (
     <Container>
