@@ -1,15 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AppReducerState } from './AppInterfaces';
+import { AppReducer } from './AppInterfaces';
 import { constants } from '../constants';
 
-const INITIAL_STATE: AppReducerState = {
+const INITIAL_STATE: AppReducer = {
   language: 'en',
   allAppAds: [],
   tempImages: [],
   tempCompany: null,
   allCompanies: null,
   categories: null,
+  allProducts: null,
 };
 
 export const appReducer = createReducer(INITIAL_STATE, {
@@ -31,5 +32,8 @@ export const appReducer = createReducer(INITIAL_STATE, {
   },
   [constants.app.SET_CATEGORIES]: (state, { categories }) => {
     state.categories = categories;
+  },
+  [constants.app.SET_ALL_PRODUCTS]: (state, { products }) => {
+    state.allProducts = products;
   },
 });

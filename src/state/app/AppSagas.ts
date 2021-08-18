@@ -1,4 +1,11 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import {
+  call,
+  put,
+  select,
+  take,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
@@ -6,6 +13,7 @@ import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UploadImageProps } from './AppInterfaces';
 import { sortAsc } from '../../utils/functions';
+import { Company } from '../../components';
 
 function* handleFetchAllAds() {
   try {
@@ -59,52 +67,32 @@ function* handlePickImage() {
     console.log('pickimageerror', e);
   }
 }
-// const getCategories = async () => {
-// 	const companyRef = await database().ref(`/companies/${company.id}`);
-// 	const companies = await companyRef
-// 		.once('value')
-// 		.then(snapshot => snapshot.val());
-
-// 	const categoryRef = await database().ref(`/categories/`);
-// 	const allCategories = await categoryRef
-// 		.once('value')
-// 		.then(snap => snap.val());
-// 	setCategories(
-// 		allCategories.filter(category =>
-// 			companies.categories.includes(category.id),
-// 		),
-// 	);
-// };
-
 function* handleFetchAllCompanies() {
   try {
-    yield put(actions.ui.setOnSync('app', true));
     const allCompanies: unknown = yield call(firebaseDb.fetchAllCompanies);
     const companiesArray = Object.values(allCompanies).sort((a, b) =>
       sortAsc(a.title, b.title),
     );
     yield put(actions.app.setAllCompanies(companiesArray));
-    yield put(actions.ui.setOnSync('app', false));
+    const filteredComps = companiesArray
+      .filter(company => company.produce.length > 0)
+      .map(company => company.produce)
+      .reduce((firstValue, secondValue) => firstValue.concat(secondValue));
+    yield put(actions.app.setProducts(filteredComps));
   } catch (e) {
     console.log('userinfoerror', e);
-    yield put(actions.ui.setOnSync('app', false));
   }
 }
 
 function* handleFetchCategories() {
   try {
-    yield put(actions.ui.setOnSync('app', true));
     const categories: unknown = yield call(firebaseDb.fetchCategories);
     const categoriesArray = Object.values(categories).sort((a, b) =>
       sortAsc(a.title, b.title),
     );
-    console.log(categoriesArray);
     yield put(actions.app.setCategories(categoriesArray));
-    yield put(actions.ui.setOnSync('app', false));
   } catch (e) {
     console.log('userinfoerror', e);
-
-    yield put(actions.ui.setOnSync('app', false));
   }
 }
 

@@ -11,10 +11,11 @@ import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
 
 export interface ProductScreenProps {
   product?: CompanyProduct;
+  allCompanies?: CompanyProps[];
   width?: number;
   height?: number;
   onPress?: (event: GestureResponderEvent) => void;
@@ -22,15 +23,21 @@ export interface ProductScreenProps {
 
 export const Product: React.FC<ProductScreenProps> = ({
   product,
+  allCompanies,
   width,
   height,
 }) => {
   const theme = useContext(ThemeContext);
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
+
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { product });
-  }, [product]); //! check later if working
+    navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
+  }, [product]);
+
+  const productOwnerTitle = allCompanies
+    .filter(company => company.id === product.owner)
+    .map(company => company.title);
 
   if (Platform.OS === 'android') {
     return (
@@ -62,7 +69,7 @@ export const Product: React.FC<ProductScreenProps> = ({
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
             <ProductImage resizeMode="cover" source={{ uri: product.image }} />
-            <ProductOwner>{product.owner}</ProductOwner>
+            <ProductOwner>{productOwnerTitle}</ProductOwner>
           </ProductTop>
           <ProductBottom>
             <ProductName>{product.title}</ProductName>

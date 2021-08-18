@@ -4,13 +4,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
 
-export interface AppReducerState {
+export interface AppReducer {
   language: string;
   allAppAds: AdsProps[];
   tempImages?: TempImages[];
   tempCompany: CompanyProps;
   allCompanies: CompanyProps[];
   categories: Category[];
+  allProducts: CompanyProduct[];
 }
 
 export type TempImages = { url: string; id: string };

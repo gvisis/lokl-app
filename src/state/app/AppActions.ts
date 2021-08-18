@@ -46,19 +46,19 @@ export const setAllCompanies = (companies: string[]) => ({
   companies,
 });
 
-export const fetchCompanyInfo = (companyId: string) => ({
-  type: constants.app.FETCH_COMPANY_INFO,
-  companyId,
-});
-
 export const setCompanyInfo = (companyInfo: any) => ({
   type: constants.app.SET_COMPANY_INFO,
   companyInfo,
+});
+export const setProducts = (products: any) => ({
+  type: constants.app.SET_ALL_PRODUCTS,
+  products,
 });
 
 export const appActions = {
   pickImage,
   setAllAds,
+  setProducts,
   fetchAllAds,
   setLanguage,
   setTempImages,
@@ -67,6 +67,5 @@ export const appActions = {
   uploadAdImages,
   setAllCompanies,
   fetchCategories,
-  fetchCompanyInfo,
   fetchAllCompanies,
 };

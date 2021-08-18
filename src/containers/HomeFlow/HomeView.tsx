@@ -23,10 +23,12 @@ export const HomeView: React.FC = () => {
   const dispatch = useDispatch();
   const allCompanies = useSelector(state => state.app.allCompanies);
   const allCategories = useSelector(state => state.app.categories);
+  const allProducts = useSelector(state => state.app.allProducts);
 
   useEffect(() => {
     dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchCategories());
+    console.log(allProducts);
   }, []);
 
   return (
@@ -63,15 +65,24 @@ export const HomeView: React.FC = () => {
             )}
           </HomeRow>
           <HomeRow title={t('home:row Products')}>
-            <FlatList
-              data={data.products.sort((a, b) => sortAsc(a.title, b.title))}
-              renderItem={({ item }) => (
-                <Product width={325} product={item} height={200} />
-              )}
-              keyExtractor={item => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
+            {allProducts ? (
+              <FlatList
+                data={allProducts}
+                renderItem={({ item }) => (
+                  <Product
+                    width={325}
+                    allCompanies={allCompanies}
+                    product={item}
+                    height={200}
+                  />
+                )}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : (
+              <ScreenLoader color={'red'} size={50} />
+            )}
           </HomeRow>
           <HomeRow title={t('home:row Ads')}>
             <FlatList

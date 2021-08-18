@@ -28,7 +28,7 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
   ({ navigation, route }) => {
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
-    const { product } = route.params;
+    const { product, productOwnerTitle } = route.params;
 
     // =========== BottomSheet config =================
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -74,7 +74,7 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
           <TitleWrap>
             <ProductImage source={{ uri: product.image }} />
             <OwnerWrap>
-              <OwnerTitle>{product.owner}</OwnerTitle>
+              <OwnerTitle>{productOwnerTitle}</OwnerTitle>
               <CompanyLogo source={{ uri: product.image }} />
             </OwnerWrap>
           </TitleWrap>

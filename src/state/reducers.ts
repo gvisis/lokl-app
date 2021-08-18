@@ -2,12 +2,13 @@ import { AnyAction, CombinedState, combineReducers } from 'redux';
 
 import { uiReducer, UiReducerState } from './ui/UiReducer';
 import { userReducer, UserReducerState } from './user/UserReducer';
-import { appReducer, AppReducerState } from './app/AppReducer';
+import { appReducer } from './app/AppReducer';
+import { AppReducer } from './app/AppInterfaces';
 
 export interface RootState {
   user: UserReducerState;
   ui: UiReducerState;
-  app: AppReducerState;
+  app: AppReducer;
 }
 
 const combinedReducer = combineReducers<CombinedState<RootState>>({
