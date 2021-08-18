@@ -24,17 +24,7 @@ import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { ROUTES } from '../../routes/RouteNames';
 import { getImageObject } from '../../utils/functions';
-
-interface UserAd {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  subCategory: string;
-  price: string;
-  dateAdded: string;
-  dateRequired: string;
-}
+import { AdsProps } from '../../state/app/AppInterfaces';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -47,7 +37,8 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const [mode, setMode] = useState<string>('date');
   const [tempImages, setTempImages] = useState([]);
   const [show, setShow] = useState<boolean>(false);
-  const [userAd, setUserAd] = useState<UserAd>(null);
+  const [userAd, setUserAd] = useState<AdsProps>(null);
+  const [pickedCategory, setPickedCategory] = useState<string>(null);
 
   const navigation = useNavigation();
 
@@ -55,26 +46,15 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
   }, []);
 
-  // const uploadImage = async image => {
-  //   const newImageName = `adImg_${image.id}`;
-  //   const storageRef = await storage().ref(
-  //     'images/ads/' + userAd.id + '/' + newImageName,
-  //   );
-  //   await storageRef.putFile(image.url);
-  //   const imageFirebaseDbUrl = await storageRef.getDownloadURL();
-  //   setTempImages([...tempImages, { ...image, url: imageFirebaseDbUrl }]);
-  // };
-
   const handleAdSubmit = async (price, title, description) => {
     dispatch(
       actions.user.createNewAd(
         {
           ...userAd,
           title,
-          category: 'meat',
+          category: pickedCategory,
           price,
           description,
-          subCategory: 'sausages',
           dateRequired: date.toString(),
           dateAdded: new Date().toString(),
         },
@@ -160,8 +140,10 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 )}
               </AdHeader>
               <AdHeaderBottom>
-                {/* Render later from available category/subcategory lists */}
-                <CategoryPicker />
+                <CategoryPicker
+                  pickedCategory={pickedCategory}
+                  setPickedCategory={setPickedCategory}
+                />
               </AdHeaderBottom>
 
               <AdDescriptionWrap>
@@ -238,12 +220,11 @@ const AdTitle = styled.TextInput`
 `;
 
 const AdHeaderBottom = styled.View`
-  flex: 0.1;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   border-color: ${({ theme }) => theme.colors.lightGrey1};
   border-bottom-width: 1px;
 `;

@@ -40,7 +40,7 @@ const Navigator: React.FC = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <StatusBar hidden />
+        <StatusBar backgroundColor={theme.colors.secondary} />
         <Stack.Navigator headerMode="none">
           {userInfo ? (
             <Stack.Screen name={ROUTES.TabNav} component={TabNavigation} />

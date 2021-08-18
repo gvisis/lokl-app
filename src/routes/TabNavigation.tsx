@@ -10,6 +10,7 @@ import { getTabIconName, getTabLabel } from '../utils/functions';
 import { ROUTES } from './RouteNames';
 import { AdsNavigation, HomeNavigation, ProfileNavigation } from '.';
 import { RootStackParamList } from '../types/general';
+import { CartNavigation } from './CartNavigation';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 type TabNavProps = BottomTabNavigationProp<RootStackParamList, ROUTES.TabNav>;
@@ -33,6 +34,7 @@ export const TabNavigation: React.FC<TabNavProps> = () => {
       }}>
       <Tab.Screen name={ROUTES.HomeTab} component={HomeNavigation} />
       <Tab.Screen name={ROUTES.AdsTab} component={AdsNavigation} />
+      <Tab.Screen name={ROUTES.CartTab} component={CartNavigation} />
       <Tab.Screen name={ROUTES.Profile} component={ProfileNavigation} />
     </Tab.Navigator>
   );

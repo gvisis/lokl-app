@@ -22,6 +22,8 @@ export const getHeaderTitle = (route: Partial<Route<string, object>>) => {
       return 'Settings';
     case ROUTES.Home:
       return 'Home';
+    case ROUTES.Cart:
+      return 'Shopping Cart';
     default:
       return 'Home';
   }
@@ -35,6 +37,8 @@ export const getTabLabel = (routeName: string) => {
       return capitalizeFirst(ROUTES.Ads);
     case ROUTES.Profile:
       return capitalizeFirst(ROUTES.Profile);
+    case ROUTES.CartTab:
+      return capitalizeFirst(ROUTES.Cart);
     default:
       return capitalizeFirst(ROUTES.Home);
   }
@@ -48,10 +52,13 @@ export const getTabIconName = (routeName: string) => {
       return 'tag';
     case ROUTES.Profile:
       return 'user';
+    case ROUTES.CartTab:
+      return 'shopping-bag';
     default:
       return 'home';
   }
 };
+
 export const getImageObject = assets => {
   const imageUrl = assets[0].uri;
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];

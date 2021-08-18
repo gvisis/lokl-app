@@ -18,6 +18,12 @@ export enum ROUTES {
   Ads = 'ads',
   AddAd = 'addAd',
 
+  //Cart
+  CartTab = 'cartTab',
+  Cart = 'cart',
+  CartAddress = 'cartAddress',
+  CartPayment = 'cartPayment',
+
   // Tabs
   Profile = 'profile',
   ProfileEdit = 'profileEdit',
