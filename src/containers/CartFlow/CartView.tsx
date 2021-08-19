@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 import { Container, CustomBtn } from '../../components';
+import { ROUTES } from '../../routes/RouteNames';
 
-export const CartView = () => (
+export const CartView: React.FC = ({ navigation }) => (
   <Container>
     <CartHeader>
       <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
@@ -57,11 +58,12 @@ export const CartView = () => (
       </CartItem>
     </CartWrapTop>
     <CartFooter>
-      <TotalPrice>Order total: $135</TotalPrice>
+      <TotalItems>Items: 2</TotalItems>
+      <TotalPrice>Total price: $135</TotalPrice>
       <CustomBtn
         center
         secondary
-        onPress={() => console.warn('Button pressed')}
+        onPress={() => navigation.navigate(ROUTES.CartAddress)}
         label="Continue"
       />
     </CartFooter>
@@ -161,6 +163,13 @@ const TotalPrice = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;
 `;
+const TotalItems = styled.Text`
+  padding: 10px;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
+  letter-spacing: 1px;
+`;
 
 const CartFooter = styled.View`
   border-top-width: 1px;
@@ -168,4 +177,7 @@ const CartFooter = styled.View`
   justify-content: center;
   flex: 0.5;
   padding: 10px;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;

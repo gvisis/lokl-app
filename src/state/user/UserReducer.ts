@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
 
 export interface UserReducerState {
@@ -8,7 +9,7 @@ export interface UserReducerState {
     email: string;
     age: number;
     city: string;
-    ads: any;
+    ads: AdsProps[];
   };
 }
 

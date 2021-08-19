@@ -4,7 +4,7 @@ import { ThemeContext } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
 import { RootStackParamList } from '../types/general';
-import { CartView } from '../containers/CartFlow';
+import { CartAddressView, CartView } from '../containers/CartFlow';
 
 const CartStack = createStackNavigator<RootStackParamList>();
 
@@ -28,7 +28,14 @@ export const CartNavigation: React.FC = () => {
       <CartStack.Screen
         name={ROUTES.Cart}
         component={CartView}
-        options={{ headerTitle: 'Shopping cart' }}
+        options={{
+          headerTitle: 'Shopping cart',
+        }}
+      />
+      <CartStack.Screen
+        name={ROUTES.CartAddress}
+        component={CartAddressView}
+        options={{ headerTitle: 'Shipping address' }}
       />
     </CartStack.Navigator>
   );
