@@ -18,6 +18,7 @@ const INITIAL_STATE: UserReducerState = {
 };
 
 export const userReducer = createReducer(INITIAL_STATE, {
+  // [actions.user.setUserInfo.type]: (state, action) => {
   [constants.user.SET_USER_INFO]: (state, action) => {
     state.userInfo = action.payload;
   },

@@ -36,6 +36,7 @@ export const HomeView: React.FC = () => {
       <HomeHeader title={t('home:title')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeContent>
+          {/* CATEGORIES ROW ( RENAME NEEDED ) */}
           <HomeRow title={t('home:row Produce')}>
             {allCategories ? (
               <FlatList
@@ -49,6 +50,7 @@ export const HomeView: React.FC = () => {
               <ScreenLoader color={'red'} size={50} />
             )}
           </HomeRow>
+          {/* COMPANIES ROW */}
           <HomeRow title={t('home:row Company')}>
             {allCompanies ? (
               <FlatList
@@ -64,6 +66,7 @@ export const HomeView: React.FC = () => {
               <ScreenLoader color={'red'} size={50} />
             )}
           </HomeRow>
+          {/* PRODUCTS ROW */}
           <HomeRow title={t('home:row Products')}>
             {allProducts ? (
               <FlatList
@@ -84,6 +87,7 @@ export const HomeView: React.FC = () => {
               <ScreenLoader color={'red'} size={50} />
             )}
           </HomeRow>
+          {/* ADS ROW */}
           <HomeRow title={t('home:row Ads')}>
             <FlatList
               data={data.ads.sort((a, b) => sortAsc(a.title, b.title))}

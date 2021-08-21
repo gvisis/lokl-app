@@ -9,9 +9,11 @@ import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
+import { actions } from '../../state/actions';
 
 export interface ProductScreenProps {
   product?: CompanyProduct;
@@ -28,6 +30,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   height,
 }) => {
   const theme = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
@@ -35,9 +38,15 @@ export const Product: React.FC<ProductScreenProps> = ({
     navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
   }, [product]);
 
+  // Get title of the product owner
   const productOwnerTitle = allCompanies
     .filter(company => company.id === product.owner)
     .map(company => company.title);
+
+  // Add ONE item to cart
+  const handleAddToCart = useCallback(() => {
+    dispatch(actions.cart.updateCart(product, productOwnerTitle));
+  }, [dispatch]);
 
   if (Platform.OS === 'android') {
     return (
@@ -50,7 +59,7 @@ export const Product: React.FC<ProductScreenProps> = ({
         onPress={handleSingleProductNav}>
         <ProductWrap width={width} height={height}>
           <ProductTop>
-            <AddToCart>
+            <AddToCart onPress={handleAddToCart}>
               <LinearGradient
                 colors={[
                   theme.colors.secondary,
