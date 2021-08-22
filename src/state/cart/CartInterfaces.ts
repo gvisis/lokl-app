@@ -10,6 +10,6 @@ export interface CartReducer {
 export interface CartActions {
   cartAction: ActionType;
   product: CompanyProduct;
-  productOwner?: string;
+  selectedQuantity?: number;
   type?: string;
 }

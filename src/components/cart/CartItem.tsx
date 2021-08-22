@@ -1,14 +1,27 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 
+import { actions } from '../../state/actions';
 import { getProductOwnerTitle } from '../../utils/functions';
+import { useFunction } from '../../utils/hooks';
 
 export const CartItem: React.FC = ({ item }) => {
   const allCompanies = useSelector(state => state.app.allCompanies);
+  const dispatch = useDispatch();
   const { title, price, image, amount } = item;
+
+  const handleIncreaseAmount = useFunction(
+    dispatch,
+    actions.cart.checkCartActions('add', item),
+  );
+  const handleDecreaseAmount = useFunction(
+    dispatch,
+    actions.cart.checkCartActions('remove', item),
+  );
+
   return (
     <CartItemWrap>
       <CartItemLeft>
@@ -20,11 +33,11 @@ export const CartItem: React.FC = ({ item }) => {
         <ItemPrice>{price} €</ItemPrice>
       </CartItemMid>
       <CartItemRight>
-        <TouchableOpacity onPress={() => 'decrease'}>
+        <TouchableOpacity onPress={handleIncreaseAmount}>
           <IncDecButton name="plus-circle" size={25} />
         </TouchableOpacity>
         <QuantityValue>{amount}</QuantityValue>
-        <TouchableOpacity onPress={() => 'increase'}>
+        <TouchableOpacity onPress={handleDecreaseAmount}>
           <IncDecButton name="minus-circle" size={25} />
         </TouchableOpacity>
       </CartItemRight>

@@ -5,10 +5,12 @@ import { constants } from '../constants';
 const checkCartActions = (
   cartAction: ActionType,
   product: CompanyProduct,
+  selectedQuantity?: number,
 ): CartActions => ({
   type: constants.cart.CHECK_CART_ACTIONS,
   cartAction,
   product,
+  selectedQuantity,
 });
 
 const updateCart = newCart => ({

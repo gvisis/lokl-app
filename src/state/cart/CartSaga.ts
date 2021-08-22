@@ -5,7 +5,11 @@ import { CompanyProduct } from '../app/AppInterfaces';
 import { constants } from '../constants';
 import { CartActions, CartReducer } from './CartInterfaces';
 
-function* handleCartActions({ cartAction, product }: CartActions) {
+function* handleCartActions({
+  cartAction,
+  product,
+  selectedQuantity,
+}: CartActions) {
   try {
     const { cart } = yield select(state => state.cart);
     let tempCart;
@@ -14,7 +18,11 @@ function* handleCartActions({ cartAction, product }: CartActions) {
       !cart.some((item: CompanyProduct) => item.id === product.id) &&
       cartAction === 'add'
     ) {
-      const updatedAmountProduct = { ...product, amount: ++product.amount };
+      const updatedAmountProduct = {
+        ...product,
+        amount: ++product.amount,
+      };
+
       tempCart = [...cart, updatedAmountProduct];
       yield put(actions.cart.updateCart(tempCart));
     } else {
@@ -22,7 +30,12 @@ function* handleCartActions({ cartAction, product }: CartActions) {
         .map((item: CompanyProduct) => {
           if (item.id === product.id) {
             if (cartAction === 'add') {
-              item = { ...item, amount: ++item.amount };
+              item = {
+                ...item,
+                amount: selectedQuantity
+                  ? selectedQuantity + item.amount
+                  : ++item.amount,
+              };
             }
             if (cartAction === 'remove') {
               item = { ...item, amount: --item.amount };

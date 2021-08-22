@@ -14,9 +14,11 @@ import { ROUTES } from 'src/routes/RouteNames';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
 
 import { RootStackParamList } from '../../types/general';
 import { Container } from '../../components';
+import { actions } from '../../state/actions';
 
 type ProductScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleProduct>;
@@ -29,7 +31,7 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
     const { product, productOwnerTitle } = route.params;
-
+    const dispatch = useDispatch();
     // =========== BottomSheet config =================
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['0%', '40%'], []);
@@ -39,7 +41,12 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, []);
 
     const handleOpenSheet = () => bottomSheetRef.current.expand();
-    const handleCloseSheet = () => bottomSheetRef.current.close();
+
+    const handleCloseSheet = () => {
+      dispatch(actions.cart.checkCartActions('add', product, selectedQuantity));
+      bottomSheetRef.current.close();
+      dispatch(actions.ui.setStatus('success', true, 'Product added to cart'));
+    };
     //==================================================
 
     useEffect(() => {
@@ -67,7 +74,6 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, [product]);
 
     const ratingCustomImage = require('../../assets/images/ratingfull.png');
-
     return (
       <Container>
         <ItemHeader>
@@ -86,15 +92,9 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
         </ItemHeader>
         <ItemMidSection>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
+            {new Array(7)
+              .fill(<ItemDescription>{product.description}</ItemDescription>)
+              .map(item => item)}
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>

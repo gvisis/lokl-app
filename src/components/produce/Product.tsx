@@ -10,6 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
+import { StyledComponent } from 'styled-components';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
@@ -35,8 +36,10 @@ export const Product: React.FC<ProductScreenProps> = ({
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
+  const productOwnerTitle: string = getProductOwnerTitle(allCompanies, product);
+
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { product });
+    navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
   }, [product]);
 
   // Add ONE item to cart
@@ -75,9 +78,7 @@ export const Product: React.FC<ProductScreenProps> = ({
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
             <ProductImage resizeMode="cover" source={{ uri: product.image }} />
-            <ProductOwner>
-              {getProductOwnerTitle(allCompanies, product)}
-            </ProductOwner>
+            <ProductOwner>{productOwnerTitle}</ProductOwner>
           </ProductTop>
           <ProductBottom>
             <ProductName>{product.title}</ProductName>
@@ -101,7 +102,12 @@ export const Product: React.FC<ProductScreenProps> = ({
   }
 };
 
-const ProductWrap = styled.View`
+const ProductWrap: StyledComponent<
+  typeof View,
+  DefaultTheme,
+  ProductScreenProps,
+  never
+> = styled.View`
   margin: 10px;
   width: ${(props: ProductScreenProps) => props.width}px;
   height: ${(props: ProductScreenProps) => props.height}px;

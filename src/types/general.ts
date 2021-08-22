@@ -3,6 +3,7 @@ import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
 
 export type AnyObject = { [key: string]: any };
+export type ErrorType = 'error' | 'success' | null;
 
 export type TODO = any;
 
