@@ -1,22 +1,18 @@
 import React from 'react';
-import { Dimensions, GestureResponderEvent } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
+import { CompanyProduct } from '../../state/app/AppInterfaces';
+
 interface ItemCardProps {
-  title: string;
-  price: number;
-  onPress?: (event: GestureResponderEvent) => void;
+  item: CompanyProduct;
 }
 
-export const ItemCard: React.FC<ItemCardProps> = ({
-  onPress,
-  title,
-  price,
-}) => (
+export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item }) => (
   <ItemCardWrap onPress={onPress}>
     <ItemFooter>
-      <ItemCardTitle>{title}</ItemCardTitle>
-      <ItemPrice>{price}</ItemPrice>
+      <ItemCardTitle>{item.title}</ItemCardTitle>
+      <ItemPrice>{item.price}</ItemPrice>
     </ItemFooter>
   </ItemCardWrap>
 );

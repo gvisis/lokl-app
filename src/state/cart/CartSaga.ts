@@ -20,7 +20,9 @@ function* handleCartActions({
     ) {
       const updatedAmountProduct = {
         ...product,
-        amount: ++product.amount,
+        amount: selectedQuantity
+          ? selectedQuantity + product.amount
+          : ++product.amount,
       };
 
       tempCart = [...cart, updatedAmountProduct];
@@ -58,8 +60,6 @@ function* handleGetCartTotals() {
     const cart: CartReducer = yield select(state => state.cart);
     const { total, quantity } = cart.cart.reduce(
       (cartTotal, cartItem: CompanyProduct) => {
-        console.log('cartTotal', cartTotal);
-
         const itemTotal = cartItem.price * cartItem.amount;
         cartTotal.total += parseFloat(itemTotal.toFixed(2));
         cartTotal.quantity += cartItem.amount;

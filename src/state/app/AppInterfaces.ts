@@ -21,7 +21,7 @@ export interface ImagesProps {
   id: string;
 }
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   image?: string;
 }
@@ -35,7 +35,7 @@ export interface AdsProps {
   id: string;
   title: string;
   images?: string[];
-  category: string;
+  category: number;
   price: number;
   description: string;
   dateRequired: string;
@@ -47,7 +47,7 @@ export interface CompanyProduct {
   title: string;
   image: string;
   description?: string;
-  category: string;
+  category: number;
   price: number;
   delivery: boolean;
   available: boolean;
@@ -61,7 +61,7 @@ export interface CompanyProps {
   image?: string;
   description?: string;
   website?: string;
-  categories: string[];
+  categories: number[];
   rating: number;
   produce?: CompanyProduct[];
   address: {

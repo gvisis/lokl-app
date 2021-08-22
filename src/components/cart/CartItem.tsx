@@ -37,7 +37,11 @@ export const CartItem: React.FC = ({ item }) => {
           <IncDecButton name="plus-circle" size={25} />
         </TouchableOpacity>
         <QuantityValue>{amount}</QuantityValue>
-        <TouchableOpacity onPress={handleDecreaseAmount}>
+        <TouchableOpacity
+          onPress={handleDecreaseAmount}
+          onLongPress={() => {
+            console.log('onLongPress');
+          }}>
           <IncDecButton name="minus-circle" size={25} />
         </TouchableOpacity>
       </CartItemRight>
@@ -103,7 +107,7 @@ const IncDecButton = styled(Icon)`
   color: ${({ theme }) => theme.colors.primary};
 `;
 const QuantityValue = styled.Text`
-  margin: 5px;
+  margin: 5px 0;
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.secondary};

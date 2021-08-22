@@ -19,19 +19,23 @@ import { useDispatch } from 'react-redux';
 import { RootStackParamList } from '../../types/general';
 import { Container } from '../../components';
 import { actions } from '../../state/actions';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
 
-type ProductScreenProps = {
+interface ProductViewProps {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleProduct>;
   route: RouteProp<RootStackParamList, ROUTES.SingleProduct>;
-};
+  item?: CompanyProduct;
+}
 
 // eslint-disable-next-line react/display-name
-export const ProductView: React.FC<ProductScreenProps> = memo(
+export const ProductView: React.FC<ProductViewProps> = memo(
   ({ navigation, route }) => {
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
     const { product, productOwnerTitle } = route.params;
+
     const dispatch = useDispatch();
+
     // =========== BottomSheet config =================
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['0%', '40%'], []);
@@ -42,10 +46,16 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
 
     const handleOpenSheet = () => bottomSheetRef.current.expand();
 
-    const handleCloseSheet = () => {
-      dispatch(actions.cart.checkCartActions('add', product, selectedQuantity));
+    const handleAddToCart = () => {
+      if (selectedQuantity !== 0) {
+        dispatch(
+          actions.cart.checkCartActions('add', product, selectedQuantity),
+        );
+        dispatch(
+          actions.ui.setStatus('success', true, 'Product added to cart'),
+        );
+      }
       bottomSheetRef.current.close();
-      dispatch(actions.ui.setStatus('success', true, 'Product added to cart'));
     };
     //==================================================
 
@@ -54,19 +64,15 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, [selectedQuantity]);
 
     const handleIncreaseQuantity = useCallback(() => {
-      if (selectedQuantity >= 10) {
-        setSelectedQuantity(selectedQuantity);
-      } else {
-        setSelectedQuantity(selectedQuantity + 1);
-      }
+      selectedQuantity >= 100
+        ? setSelectedQuantity(selectedQuantity)
+        : setSelectedQuantity(selectedQuantity + 1);
     }, [selectedQuantity]);
 
     const handleDecreaseQuantity = useCallback(() => {
-      if (selectedQuantity <= 0) {
-        setSelectedQuantity(selectedQuantity);
-      } else {
-        setSelectedQuantity(selectedQuantity - 1);
-      }
+      selectedQuantity <= 0
+        ? setSelectedQuantity(selectedQuantity)
+        : setSelectedQuantity(selectedQuantity - 1);
     }, [selectedQuantity]);
 
     useEffect(() => {
@@ -134,7 +140,7 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
               <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
             </SelectWrap>
             <SheetFooter>
-              <AddWrap onPress={handleCloseSheet}>
+              <AddWrap onPress={handleAddToCart}>
                 <AddButton>Add to cart</AddButton>
               </AddWrap>
             </SheetFooter>

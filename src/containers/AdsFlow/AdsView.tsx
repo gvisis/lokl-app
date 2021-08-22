@@ -28,9 +28,7 @@ export const AdsView: React.FC<AdsViewProps> = ({ navigation }) => {
   const { onSync } = useSelector(state => state.ui);
   const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
 
-  const renderItem = ({ item }) => (
-    <ItemCard title={item.title} price={item.price} />
-  );
+  const renderItem = ({ item }) => <ItemCard item={item} />;
 
   // Fetch all ads from server (create ads watcher later)
   useFocusEffect(

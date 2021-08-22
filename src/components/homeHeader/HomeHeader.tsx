@@ -30,8 +30,8 @@ export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
           <SearchBar
             placeholder={t('home:search bar')}
             placeholderTextColor="#9c9c9c"
-            onFocus={() => handleFocus()}
-            onBlur={() => handleFocus()}
+            onFocus={handleFocus}
+            onBlur={handleFocus}
           />
           <IconWrap>
             <FilterSort name="menu-open" size={30} color={'green'} />

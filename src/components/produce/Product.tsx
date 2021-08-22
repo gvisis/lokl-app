@@ -22,6 +22,7 @@ export interface ProductScreenProps {
   allCompanies?: CompanyProps[];
   width?: number;
   height?: number;
+  productOwnerTitle?: string;
   onPress?: (event: GestureResponderEvent) => void;
 }
 
