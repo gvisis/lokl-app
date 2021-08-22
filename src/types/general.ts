@@ -19,8 +19,9 @@ export type RootStackParamList = {
   [ROUTES.Product]: undefined;
   [ROUTES.CartTab]: undefined;
   [ROUTES.Cart]: undefined;
-  [ROUTES.CartAddress]: undefined;
-  [ROUTES.CartPayment]: undefined;
+  [ROUTES.CartItemView]: undefined;
+  [ROUTES.CartAddressView]: undefined;
+  [ROUTES.CartPaymentView]: undefined;
   [ROUTES.SingleProduct]: ProductScreenProps | undefined;
   [ROUTES.SingleCompany]: CompanyItemProps | undefined;
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;

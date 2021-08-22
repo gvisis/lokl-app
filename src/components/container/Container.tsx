@@ -7,6 +7,6 @@ export const Container: React.FC = ({ children }) => (
 
 const AppContainer = styled.View`
   flex: 1;
-  justify-content: center;
-  background: ${({ theme }) => theme.colors.background}; ;
+  justify-content: flex-start;
+  background: ${({ theme }) => theme.colors.background};
 `;

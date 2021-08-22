@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 import { actions } from '../../state/actions';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
 import { getProductOwnerTitle } from '../../utils/functions';
 import { useFunction } from '../../utils/hooks';
 
-export const CartItem: React.FC = ({ item }) => {
+interface CartItem {
+  item: CompanyProduct;
+  shouldRemove: any;
+}
+
+export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
   const allCompanies = useSelector(state => state.app.allCompanies);
   const dispatch = useDispatch();
   const { title, price, image, amount } = item;
@@ -17,11 +23,16 @@ export const CartItem: React.FC = ({ item }) => {
     dispatch,
     actions.cart.checkCartActions('add', item),
   );
-  const handleDecreaseAmount = useFunction(
-    dispatch,
-    actions.cart.checkCartActions('remove', item),
-  );
 
+  const handleDecreaseAmount = useCallback(
+    (item: CompanyProduct) => {
+      item.amount === 1
+        ? shouldRemove.setValue(1)
+        : dispatch(actions.cart.checkCartActions('remove', item));
+    },
+    [item],
+  );
+  const t = 't';
   return (
     <CartItemWrap>
       <CartItemLeft>
@@ -37,18 +48,13 @@ export const CartItem: React.FC = ({ item }) => {
           <IncDecButton name="plus-circle" size={25} />
         </TouchableOpacity>
         <QuantityValue>{amount}</QuantityValue>
-        <TouchableOpacity
-          onPress={handleDecreaseAmount}
-          onLongPress={() => {
-            console.log('onLongPress');
-          }}>
+        <TouchableOpacity onPress={() => handleDecreaseAmount(item)}>
           <IncDecButton name="minus-circle" size={25} />
         </TouchableOpacity>
       </CartItemRight>
     </CartItemWrap>
   );
 };
-
 const centerItems = css`
   justify-content: center;
   align-items: center;
@@ -59,6 +65,8 @@ const CartItemWrap = styled.View`
   flex-direction: row;
   height: 120px;
   margin-bottom: 5px;
+  padding: 0 5px;
+  background-color: ${({ theme }) => theme.colors.background};
   border-color: ${({ theme }) => theme.colors.primary};
   border-bottom-width: 1px;
 `;

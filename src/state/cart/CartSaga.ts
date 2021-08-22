@@ -54,6 +54,19 @@ function* handleCartActions({
     yield put(actions.cart.getCartTotals());
   }
 }
+function* handleRemoveFromCart({ itemToRemove }) {
+  try {
+    const { cart } = yield select(state => state.cart);
+    const tempCart = cart.filter(
+      (item: CompanyProduct) => itemToRemove.id !== item.id,
+    );
+    yield put(actions.cart.updateCart(tempCart));
+  } catch (e) {
+    console.log('checkaction error', e);
+  } finally {
+    yield put(actions.cart.getCartTotals());
+  }
+}
 
 function* handleGetCartTotals() {
   try {
@@ -78,5 +91,6 @@ function* handleGetCartTotals() {
 
 export function* cartSaga() {
   yield takeEvery(constants.cart.GET_CART_TOTALS, handleGetCartTotals);
+  yield takeEvery(constants.cart.REMOVE_FROM_CART, handleRemoveFromCart);
   yield takeEvery(constants.cart.CHECK_CART_ACTIONS, handleCartActions);
 }

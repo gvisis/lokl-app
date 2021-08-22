@@ -27,10 +27,15 @@ const updateCartTotals = (total: number, quantity: number) => ({
   total,
   quantity,
 });
+const removeFromCart = (itemToRemove: CompanyProduct) => ({
+  type: constants.cart.REMOVE_FROM_CART,
+  itemToRemove,
+});
 
 export const cartActions = {
   updateCart,
   getCartTotals,
   updateCartTotals,
+  removeFromCart,
   checkCartActions,
 };

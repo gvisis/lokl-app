@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 
-import { CustomBtn } from '../../components';
+import { CustomBtn, RadioButton } from '../../components';
 
 export const CartAddressModal = ({ isVisible, setModalVisible }) => {
   const [isAddressDefault, setIsAddressDefault] = useState(false);
@@ -37,7 +37,7 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
 
 const SelectionRow: React.FC = ({ isDefault, setDefault, userInfo }) => {
   console.log(userInfo);
-
+  const [isSelected, setIsSelected] = useState(false);
   const icons = {
     phone: Platform.OS === 'android' ? 'cellphone-android' : 'cellphone-iphone',
     address: 'map-marker-outline',
@@ -46,7 +46,9 @@ const SelectionRow: React.FC = ({ isDefault, setDefault, userInfo }) => {
     sizeM: 35,
   };
   return (
-    <SelectionWrap activeOpacity={0.4} onPress={() => setDefault(!isDefault)}>
+    <SelectionWrap
+      activeOpacity={0.4}
+      onPress={() => setIsSelected(!isSelected)}>
       <WrapLeft>
         <FullName>{userInfo.name}</FullName>
         <RowWrap>
@@ -58,10 +60,10 @@ const SelectionRow: React.FC = ({ isDefault, setDefault, userInfo }) => {
           <RowLine>{userInfo.city}</RowLine>
         </RowWrap>
       </WrapLeft>
+      <RadioButton status={isSelected} />
       {isDefault && (
         <WrapRight>
           <DefaultSelection>Default</DefaultSelection>
-          <RowIcon name={icons.check} size={icons.sizeM} />
         </WrapRight>
       )}
     </SelectionWrap>
