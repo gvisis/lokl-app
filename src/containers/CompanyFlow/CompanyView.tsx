@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { GestureResponderEvent, ScrollView } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
@@ -22,7 +22,7 @@ export const CompanyView: React.FC<CompanyViewProps> = memo(
   ({ navigation, route }) => {
     const { companyItem } = route.params;
     const allCategories = useSelector(state => state.app.categories);
-    const [CompCategories, setCompCategories] = React.useState([]);
+    const [CompCategories, setCompCategories] = useState([]);
 
     const handleCategoryNav = useCallback(category => {
       navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });

@@ -9,9 +9,13 @@ import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
+import { StyledComponent } from 'styled-components';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
+import { actions } from '../../state/actions';
+import { getProductOwnerTitle } from '../../utils/functions';
 
 export interface ProductScreenProps {
   product?: CompanyProduct;
@@ -28,16 +32,21 @@ export const Product: React.FC<ProductScreenProps> = ({
   height,
 }) => {
   const theme = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
+
+  const productOwnerTitle: string = getProductOwnerTitle(allCompanies, product);
 
   const handleSingleProductNav = useCallback(() => {
     navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
   }, [product]);
 
-  const productOwnerTitle = allCompanies
-    .filter(company => company.id === product.owner)
-    .map(company => company.title);
+  // Add ONE item to cart
+  const handleAddToCart = useCallback(() => {
+    const cartProduct = { ...product };
+    dispatch(actions.cart.checkCartActions('add', cartProduct));
+  }, [dispatch]);
 
   if (Platform.OS === 'android') {
     return (
@@ -50,7 +59,7 @@ export const Product: React.FC<ProductScreenProps> = ({
         onPress={handleSingleProductNav}>
         <ProductWrap width={width} height={height}>
           <ProductTop>
-            <AddToCart>
+            <AddToCart onPress={handleAddToCart}>
               <LinearGradient
                 colors={[
                   theme.colors.secondary,
@@ -73,7 +82,7 @@ export const Product: React.FC<ProductScreenProps> = ({
           </ProductTop>
           <ProductBottom>
             <ProductName>{product.title}</ProductName>
-            <ProductPrice>${product.price}</ProductPrice>
+            <ProductPrice>{product.price}€</ProductPrice>
             <ProductRating>
               <AirbnbRating
                 count={5}
@@ -93,7 +102,12 @@ export const Product: React.FC<ProductScreenProps> = ({
   }
 };
 
-const ProductWrap = styled.View`
+const ProductWrap: StyledComponent<
+  typeof View,
+  DefaultTheme,
+  ProductScreenProps,
+  never
+> = styled.View`
   margin: 10px;
   width: ${(props: ProductScreenProps) => props.width}px;
   height: ${(props: ProductScreenProps) => props.height}px;

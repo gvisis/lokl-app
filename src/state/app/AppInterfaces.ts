@@ -36,7 +36,6 @@ export interface AdsProps {
   title: string;
   images?: string[];
   category: string;
-  subcategory: string;
   price: number;
   description: string;
   dateRequired: string;
@@ -53,6 +52,7 @@ export interface CompanyProduct {
   delivery: boolean;
   available: boolean;
   rating: number;
+  amount: number;
 }
 
 export interface CompanyProps {

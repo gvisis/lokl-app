@@ -3,6 +3,7 @@ import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
 
 export type AnyObject = { [key: string]: any };
+export type ErrorType = 'error' | 'success' | null;
 
 export type TODO = any;
 
@@ -18,6 +19,10 @@ export type RootStackParamList = {
   [ROUTES.AuthNav]: undefined;
   [ROUTES.Error]: undefined;
   [ROUTES.Product]: undefined;
+  [ROUTES.CartTab]: undefined;
+  [ROUTES.Cart]: undefined;
+  [ROUTES.CartAddress]: undefined;
+  [ROUTES.CartPayment]: undefined;
   [ROUTES.SingleProduct]: ProductScreenProps | undefined;
   [ROUTES.SingleCompany]: CompanyItemProps | undefined;
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;

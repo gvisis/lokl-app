@@ -10,25 +10,6 @@ interface StyledButtonProps {
   marginTop?: number;
   textTransform?: string;
 }
-
-const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
-  width: ${({ width }) => (width ? width : '90')}%;
-  border-radius: ${({ theme }) => theme.border.radius10}px;
-  background-color: ${({ secondary, theme }) =>
-    !secondary ? theme.colors.secondary : theme.colors.tertiary};
-  align-items: center;
-  padding: 10px;
-  align-self: ${({ center }) => (center ? 'center' : 'flex-start')};
-  margin-top: ${({ marginTop }) => (marginTop ? marginTop : '15')}px;
-`;
-const StyledButtonText = styled.Text<StyledButtonProps>`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme, fontSize }) =>
-    fontSize ? fontSize : theme.fonts.size.xl}px;
-  text-align: center;
-  text-transform: ${({ textTransform }) => textTransform};
-`;
-
 interface CustomBtnProps {
   label: string;
   onSync?: boolean;
@@ -55,6 +36,24 @@ export const CustomBtn: React.FC<CustomBtnProps> = ({
     </StyledButton>
   );
 };
+
+const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
+  width: ${({ width }) => (width ? width : '90')}%;
+  border-radius: ${({ theme }) => theme.border.radius10}px;
+  background-color: ${({ secondary, theme }) =>
+    !secondary ? theme.colors.secondary : theme.colors.tertiary};
+  align-items: center;
+  padding: 10px;
+  align-self: ${({ center }) => (center ? 'center' : 'flex-start')};
+  margin-top: ${({ marginTop }) => (marginTop ? marginTop : '15')}px;
+`;
+const StyledButtonText = styled.Text<StyledButtonProps>`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme, fontSize }) =>
+    fontSize ? fontSize : theme.fonts.size.xl}px;
+  text-align: center;
+  text-transform: ${({ textTransform }) => textTransform};
+`;
 
 StyledButtonText.defaultProps = {
   textTransform: 'none',
