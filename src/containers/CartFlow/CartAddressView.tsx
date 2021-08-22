@@ -1,31 +1,46 @@
 //! Cart address ui
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
+import { CartAddressModal } from './CartAddressModal';
 import { Container, CustomBtn } from '../../components';
 
-export const CartAddressView: React.FC = () => (
-  <Container>
-    <CartHeader>
-      <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
-    </CartHeader>
-    <CartWrapTop>
-      <CustomBtn label="Select shipping address" center />
-      <CustomBtn label="Add new address" center />
-    </CartWrapTop>
-    <CartFooter>
-      <TotalItems>Items: 2</TotalItems>
-      <TotalPrice>Total price: $135</TotalPrice>
-      <CustomBtn
-        center
-        secondary
-        onPress={() => console.warn('Button pressed')}
-        label="Continue"
-      />
-    </CartFooter>
-  </Container>
-);
+export const CartAddressView: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  return (
+    <Container>
+      {modalVisible && (
+        <CartAddressModal
+          setModalVisible={setModalVisible}
+          isVisible={modalVisible}
+        />
+      )}
+      <CartHeader>
+        <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
+      </CartHeader>
+      <CartWrapTop>
+        <CustomBtn
+          fontSize={15}
+          onPress={() => setModalVisible(!modalVisible)}
+          label="Select shipping address"
+          center
+        />
+        <CustomBtn secondary fontSize={15} label="Add new address" center />
+      </CartWrapTop>
+      <CartFooter>
+        <TotalItems>Items: 2</TotalItems>
+        <TotalPrice>Total price: $135</TotalPrice>
+        <CustomBtn
+          center
+          secondary
+          onPress={() => console.warn('Button pressed')}
+          label="Continue"
+        />
+      </CartFooter>
+    </Container>
+  );
+};
 const CartWrapTop = styled.View`
   flex: 3;
   align-items: flex-start;

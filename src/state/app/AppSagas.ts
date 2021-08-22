@@ -11,7 +11,9 @@ function* handleFetchAllAds() {
   try {
     yield put(actions.ui.setOnSync('app', true));
     const allAds: unknown = yield call(firebaseDb.fetchAllAds);
-    const adsArray = Object.values(allAds);
+    const adsArray = Object.values(allAds).sort((a, b) =>
+      sortAsc(a.title, b.title),
+    );
     yield put(actions.app.setAllAds(adsArray));
     yield put(actions.ui.setOnSync('app', false));
   } catch (e) {

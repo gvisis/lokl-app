@@ -6,10 +6,11 @@ import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 interface ItemCardProps {
   item: CompanyProduct;
+  ads?: boolean;
 }
 
-export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item }) => (
-  <ItemCardWrap onPress={onPress}>
+export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item, ads }) => (
+  <ItemCardWrap onPress={onPress} ads={ads}>
     <ItemFooter>
       <ItemCardTitle>{item.title}</ItemCardTitle>
       <ItemPrice>{item.price}</ItemPrice>
@@ -18,7 +19,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item }) => (
 );
 
 const ItemCardWrap = styled.TouchableOpacity`
-  width: ${Dimensions.get('window').width / 2.5}px;
+  width: ${({ ads }) => (ads && 45) || 80}%;
   height: ${Dimensions.get('window').height / 5}px;
   justify-content: flex-end;
   border-width: 1px;

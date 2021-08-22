@@ -3,10 +3,10 @@ import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
-import { CartFooter, CartItem, Container } from '../../components';
+import { CartFooter, CartItem, Container, EmptyView } from '../../components';
 import { actions } from '../../state/actions';
 
-export const CartView: React.FC = ({ navigation }) => {
+export const CartView: React.FC = () => {
   const { cart, quantity, total } = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
@@ -19,17 +19,18 @@ export const CartView: React.FC = ({ navigation }) => {
   return (
     <Container>
       <CartHeader>
-        <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
+        <CartHeaderText>Cart &gt; Address &gt; Payment</CartHeaderText>
       </CartHeader>
       <CartWrapTop>
-        {/* Mock view of items */}
-        {cart.length !== 0 && (
+        {cart.length !== 0 ? (
           <FlatList
             data={cart}
             renderItem={handleRenderCartItem}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
           />
+        ) : (
+          <EmptyView text="Your cart is empty" />
         )}
       </CartWrapTop>
       <CartFooter quantity={quantity} total={total} />

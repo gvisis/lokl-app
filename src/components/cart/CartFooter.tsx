@@ -5,15 +5,21 @@ import styled from 'styled-components/native';
 import { CustomBtn } from '..';
 import { ROUTES } from '../../routes/RouteNames';
 
-export const CartFooter: React.FC = ({ quantity, total }) => {
+interface CartFooter {
+  quantity: number;
+  total: number;
+}
+
+export const CartFooter: React.FC<CartFooter> = ({ quantity, total }) => {
   const navigation = useNavigation();
   return (
     <CartFooterWrap>
       <TotalItems>Items: {quantity}</TotalItems>
-      <TotalPrice>Total price: $ {total}</TotalPrice>
+      <TotalPrice>Total price: {total} €</TotalPrice>
       <CustomBtn
         center
         secondary
+        disabled={quantity === 0}
         onPress={() => navigation.navigate(ROUTES.CartAddress)}
         label="Continue"
       />

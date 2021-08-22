@@ -5,6 +5,7 @@ export * from './button/CustomBtn';
 export * from './input/CustomInput';
 export * from './itemCard/ItemCard';
 export * from './container/Container';
+export * from './emptyView/EmptyView';
 export * from './cart/CartItem';
 export * from './cart/CartFooter';
 export * from './produce/ProduceItem';

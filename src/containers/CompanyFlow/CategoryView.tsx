@@ -6,7 +6,12 @@ import { RouteProp } from '@react-navigation/native';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
-import { ItemCard, ScreenLoader, SingleCompany } from '../../components';
+import {
+  EmptyView,
+  ItemCard,
+  ScreenLoader,
+  SingleCompany,
+} from '../../components';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 type CompanyScreenProps = {
@@ -38,7 +43,9 @@ export const CategoryView: React.FC<CompanyScreenProps> = memo(
       <SingleCompany companyItem={companyItem} showRating={false}>
         <ScrollView>
           <CategorySection>
-            {categoryItems ? (
+            {categoryItems.length === 0 ? (
+              <EmptyView text="No items in this category" />
+            ) : (
               categoryItems.map(item => (
                 <ItemCard
                   key={item.id}
@@ -46,13 +53,6 @@ export const CategoryView: React.FC<CompanyScreenProps> = memo(
                   item={item}
                 />
               ))
-            ) : (
-              <ScreenLoader color={'red'} size={50} />
-            )}
-            {categoryItems.length === 0 && (
-              <NoItemsText>
-                No items in this category. Check out other categories!
-              </NoItemsText>
             )}
           </CategorySection>
         </ScrollView>

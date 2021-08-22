@@ -6,6 +6,7 @@ export interface CartReducer {
   cart: CompanyProduct[];
   total: number;
   quantity: number;
+  address: {};
 }
 export interface CartActions {
   cartAction: ActionType;
