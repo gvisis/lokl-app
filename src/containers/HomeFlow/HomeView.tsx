@@ -26,11 +26,10 @@ export const HomeView: React.FC = () => {
   const allProducts = useSelector(state => state.app.allProducts);
 
   useEffect(() => {
+    // later add functionality to fetch everything with only one dispatch
     dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchCategories());
-    console.log(allProducts);
   }, []);
-
   return (
     <Container>
       <HomeHeader title={t('home:title')} />

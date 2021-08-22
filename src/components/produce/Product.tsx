@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
 import { actions } from '../../state/actions';
+import { getProductOwnerTitle } from '../../utils/functions';
 
 export interface ProductScreenProps {
   product?: CompanyProduct;
@@ -35,17 +36,13 @@ export const Product: React.FC<ProductScreenProps> = ({
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
+    navigation.navigate(ROUTES.SingleProduct, { product });
   }, [product]);
-
-  // Get title of the product owner
-  const productOwnerTitle = allCompanies
-    .filter(company => company.id === product.owner)
-    .map(company => company.title);
 
   // Add ONE item to cart
   const handleAddToCart = useCallback(() => {
-    dispatch(actions.cart.updateCart(product, productOwnerTitle));
+    const cartProduct = { ...product };
+    dispatch(actions.cart.checkCartActions('add', cartProduct));
   }, [dispatch]);
 
   if (Platform.OS === 'android') {
@@ -78,11 +75,13 @@ export const Product: React.FC<ProductScreenProps> = ({
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
             <ProductImage resizeMode="cover" source={{ uri: product.image }} />
-            <ProductOwner>{productOwnerTitle}</ProductOwner>
+            <ProductOwner>
+              {getProductOwnerTitle(allCompanies, product)}
+            </ProductOwner>
           </ProductTop>
           <ProductBottom>
             <ProductName>{product.title}</ProductName>
-            <ProductPrice>${product.price}</ProductPrice>
+            <ProductPrice>{product.price}€</ProductPrice>
             <ProductRating>
               <AirbnbRating
                 count={5}

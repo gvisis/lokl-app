@@ -2,7 +2,8 @@ import { AnyAction, CombinedState, combineReducers } from 'redux';
 
 import { uiReducer, UiReducerState } from './ui/UiReducer';
 import { userReducer, UserReducerState } from './user/UserReducer';
-import { cartReducer, CartReducer } from './cart/CartReducer';
+import { cartReducer } from './cart/CartReducer';
+import { CartReducer } from './cart/CartInterfaces';
 import { appReducer } from './app/AppReducer';
 import { AppReducer } from './app/AppInterfaces';
 

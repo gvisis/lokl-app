@@ -1,12 +1,21 @@
 import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native';
 
 import { ROUTES } from '../routes/RouteNames';
+import { CompanyProduct, CompanyProps } from '../state/app/AppInterfaces';
 
 export const capitalizeFirst = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
 
 export const sortAsc = (a: string, b: string) => a.localeCompare(b);
 export const sortDesc = (a: string, b: string) => b.localeCompare(a);
+
+export const getProductOwnerTitle = (
+  allCompanies: CompanyProps[],
+  product: CompanyProduct,
+): string =>
+  allCompanies
+    .filter(company => company.id === product.owner)
+    .map(company => company.title)[0];
 
 export const getHeaderTitle = (route: Partial<Route<string, object>>) => {
   // If the focused route is not found, we need to assume it's the initial screen

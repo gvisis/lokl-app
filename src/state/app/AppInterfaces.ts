@@ -52,6 +52,7 @@ export interface CompanyProduct {
   delivery: boolean;
   available: boolean;
   rating: number;
+  amount: number;
 }
 
 export interface CompanyProps {

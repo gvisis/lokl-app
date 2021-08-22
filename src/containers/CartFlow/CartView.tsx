@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
 import { CartFooter, CartItem, Container } from '../../components';
+import { actions } from '../../state/actions';
 
-export const CartView: React.FC = ({ navigation }) => (
-  <Container>
-    <CartHeader>
-      <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
-    </CartHeader>
-    <CartWrapTop showsVerticalScrollIndicator={false}>
-      {/* Mock view of items */}
-      {new Array(6).fill(<CartItem />).map(item => item)}
-    </CartWrapTop>
-    <CartFooter />
-  </Container>
-);
+export const CartView: React.FC = ({ navigation }) => {
+  const { cart, quantity, total } = useSelector(state => state.cart);
+  const dispatch = useDispatch();
 
-const CartWrapTop = styled.ScrollView`
+  useEffect(() => {
+    dispatch(actions.cart.getCartTotals());
+  }, [cart, dispatch]);
+
+  const handleRenderCartItem = ({ item }) => <CartItem item={item} />;
+
+  return (
+    <Container>
+      <CartHeader>
+        <CartHeaderText>Products &gt; Address &gt; Payment</CartHeaderText>
+      </CartHeader>
+      <CartWrapTop>
+        {/* Mock view of items */}
+        {cart.length !== 0 && (
+          <FlatList
+            data={cart}
+            renderItem={handleRenderCartItem}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </CartWrapTop>
+      <CartFooter quantity={quantity} total={total} />
+    </Container>
+  );
+};
+
+const CartWrapTop = styled.View`
   flex: 3;
   padding: 0 10px;
 `;

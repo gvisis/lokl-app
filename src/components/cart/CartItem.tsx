@@ -1,32 +1,36 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 
-export const CartItem: React.FC = () => (
-  <CartItemWrap>
-    <CartItemLeft>
-      <ItemImage
-        resizeMode="contain"
-        source={{ uri: 'https://picsum.photos/200' }}
-      />
-    </CartItemLeft>
-    <CartItemMid>
-      <ItemName>Item name</ItemName>
-      <ItemSeller>Company</ItemSeller>
-      <ItemPrice>$ 233</ItemPrice>
-    </CartItemMid>
-    <CartItemRight>
-      <TouchableOpacity onPress={() => 'decrease'}>
-        <IncDecButton name="plus-circle" size={25} />
-      </TouchableOpacity>
-      <QuantityValue>0</QuantityValue>
-      <TouchableOpacity onPress={() => 'increase'}>
-        <IncDecButton name="minus-circle" size={25} />
-      </TouchableOpacity>
-    </CartItemRight>
-  </CartItemWrap>
-);
+import { getProductOwnerTitle } from '../../utils/functions';
+
+export const CartItem: React.FC = ({ item }) => {
+  const allCompanies = useSelector(state => state.app.allCompanies);
+  const { title, price, image, amount } = item;
+  return (
+    <CartItemWrap>
+      <CartItemLeft>
+        <ItemImage resizeMode="contain" source={{ uri: image }} />
+      </CartItemLeft>
+      <CartItemMid>
+        <ItemName>{title}</ItemName>
+        <ItemSeller>{getProductOwnerTitle(allCompanies, item)}</ItemSeller>
+        <ItemPrice>{price} €</ItemPrice>
+      </CartItemMid>
+      <CartItemRight>
+        <TouchableOpacity onPress={() => 'decrease'}>
+          <IncDecButton name="plus-circle" size={25} />
+        </TouchableOpacity>
+        <QuantityValue>{amount}</QuantityValue>
+        <TouchableOpacity onPress={() => 'increase'}>
+          <IncDecButton name="minus-circle" size={25} />
+        </TouchableOpacity>
+      </CartItemRight>
+    </CartItemWrap>
+  );
+};
 
 const centerItems = css`
   justify-content: center;

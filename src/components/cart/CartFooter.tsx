@@ -5,12 +5,12 @@ import styled from 'styled-components/native';
 import { CustomBtn } from '..';
 import { ROUTES } from '../../routes/RouteNames';
 
-export const CartFooter = () => {
+export const CartFooter: React.FC = ({ quantity, total }) => {
   const navigation = useNavigation();
   return (
     <CartFooterWrap>
-      <TotalItems>Items: 2</TotalItems>
-      <TotalPrice>Total price: $135</TotalPrice>
+      <TotalItems>Items: {quantity}</TotalItems>
+      <TotalPrice>Total price: $ {total}</TotalPrice>
       <CustomBtn
         center
         secondary
@@ -20,8 +20,6 @@ export const CartFooter = () => {
     </CartFooterWrap>
   );
 };
-
-export default CartFooter;
 
 const TotalPrice = styled.Text`
   padding: 10px;

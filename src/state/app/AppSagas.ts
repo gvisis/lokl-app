@@ -1,11 +1,4 @@
-import {
-  call,
-  put,
-  select,
-  take,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
@@ -13,7 +6,6 @@ import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UploadImageProps } from './AppInterfaces';
 import { sortAsc } from '../../utils/functions';
-import { Company } from '../../components';
 
 function* handleFetchAllAds() {
   try {

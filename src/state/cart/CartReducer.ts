@@ -1,12 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import { CartReducer } from './CartInterfaces';
 import { constants } from '../constants';
-
-export interface CartReducer {
-  cart: object[] | null;
-  total: number;
-  quantity: number;
-}
 
 const INITIAL_STATE: CartReducer = {
   cart: [],
@@ -15,11 +10,14 @@ const INITIAL_STATE: CartReducer = {
 };
 
 export const cartReducer = createReducer(INITIAL_STATE, {
-  [constants.cart.UPDATE_CART]: (state, action) => {
-    state.cart = [...state.cart, action.product];
-    state.total += parseFloat(action.product.price);
-    state.quantity++;
-    console.log('state', state);
+  [constants.cart.UPDATE_CART]: (state, { newCart }) => {
+    state.cart = newCart;
   },
+
+  [constants.cart.UPDATE_CART_TOTALS]: (state, { total, quantity }) => {
+    state.total = total;
+    state.quantity = quantity;
+  },
+
   [constants.cart.CLEAR_CART]: () => INITIAL_STATE,
 });
