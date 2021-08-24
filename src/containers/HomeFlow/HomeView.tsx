@@ -5,7 +5,6 @@ import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { sortAsc } from '../../utils/functions';
 import {
   Company,
   Container,
@@ -15,7 +14,6 @@ import {
   Product,
   ScreenLoader,
 } from '../../components';
-import data from '../../assets/data';
 import { actions } from '../../state/actions';
 
 export const HomeView: React.FC = () => {
@@ -24,12 +22,15 @@ export const HomeView: React.FC = () => {
   const allCompanies = useSelector(state => state.app.allCompanies);
   const allCategories = useSelector(state => state.app.categories);
   const allProducts = useSelector(state => state.app.allProducts);
+  const allAds = useSelector(state => state.app.allAppAds);
 
   useEffect(() => {
     // later add functionality to fetch everything with only one dispatch
     dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchCategories());
+    dispatch(actions.app.fetchAllAds());
   }, []);
+
   return (
     <Container>
       <HomeHeader title={t('home:title')} />
@@ -89,7 +90,7 @@ export const HomeView: React.FC = () => {
           {/* ADS ROW */}
           <HomeRow title={t('home:row Ads')}>
             <FlatList
-              data={data.ads.sort((a, b) => sortAsc(a.title, b.title))}
+              data={allAds}
               renderItem={({ item }) => <ProduceItem width={200} item={item} />}
               keyExtractor={item => item.id}
               horizontal

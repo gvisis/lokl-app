@@ -24,7 +24,10 @@ export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
         <TitleText size={40}>{title}</TitleText>
         <IconWrap>
           {cartQty !== 0 && <BasketQty>{cartQty}</BasketQty>}
-          <Basket name="basket-outline" size={30} />
+          <Basket
+            name={cartQty === 0 ? 'basket-outline' : 'basket'}
+            size={30}
+          />
         </IconWrap>
         <SearchRow focused={focused}>
           <SearchBar

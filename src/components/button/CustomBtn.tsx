@@ -15,23 +15,27 @@ interface CustomBtnProps {
   onSync?: boolean;
   center?: boolean;
   activeOpacity?: number;
+  disabled?: boolean;
   onPress?: () => void;
   width?: number;
+  fontSize?: number;
   secondary?: boolean;
 }
 
 export const CustomBtn: React.FC<CustomBtnProps> = ({
   onSync,
   label,
+  disabled,
+  fontSize,
   ...rest
 }) => {
   const theme = useContext(ThemeContext);
   return (
-    <StyledButton disabled={onSync} {...rest}>
+    <StyledButton disabled={onSync || disabled} {...rest}>
       {onSync ? (
         <ActivityIndicator size={theme.fonts.size.xxxl} color="#fff" />
       ) : (
-        <StyledButtonText>{label}</StyledButtonText>
+        <StyledButtonText fontSize={fontSize}>{label}</StyledButtonText>
       )}
     </StyledButton>
   );
@@ -44,14 +48,16 @@ const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
     !secondary ? theme.colors.secondary : theme.colors.tertiary};
   align-items: center;
   padding: 10px;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   align-self: ${({ center }) => (center ? 'center' : 'flex-start')};
   margin-top: ${({ marginTop }) => (marginTop ? marginTop : '15')}px;
 `;
 const StyledButtonText = styled.Text<StyledButtonProps>`
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme, fontSize }) =>
-    fontSize ? fontSize : theme.fonts.size.xl}px;
+    fontSize ? fontSize : theme.fonts.size.l}px;
   text-align: center;
+  font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   text-transform: ${({ textTransform }) => textTransform};
 `;
 

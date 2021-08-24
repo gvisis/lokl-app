@@ -62,7 +62,7 @@ export const getTabIconName = (routeName: string) => {
     case ROUTES.Profile:
       return 'user';
     case ROUTES.CartTab:
-      return 'shopping-bag';
+      return 'shopping-cart';
     default:
       return 'home';
   }

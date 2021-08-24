@@ -7,6 +7,7 @@ const INITIAL_STATE: CartReducer = {
   cart: [],
   total: 0,
   quantity: 0,
+  address: {},
 };
 
 export const cartReducer = createReducer(INITIAL_STATE, {
