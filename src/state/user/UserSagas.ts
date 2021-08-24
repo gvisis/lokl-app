@@ -5,7 +5,6 @@ import i18n from 'i18next';
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { api } from '../../api';
-import { AnyObject } from '../../types/general';
 import { firebaseDb } from '../../api/firebaseDb';
 
 interface UserAuthCredentials {
@@ -68,7 +67,7 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
   }
 }
 
-function* handleUpdateUserDb({ updatedInfo }: AnyObject) {
+function* handleUpdateUserDb({ updatedInfo }) {
   const userId: string = api.getUserInfo().uid;
   try {
     yield put(actions.ui.setOnSync('button', true));

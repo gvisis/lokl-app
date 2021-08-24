@@ -8,8 +8,11 @@ import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
 import { ROUTES } from '../../routes/RouteNames';
 import { Container, CustomBtn, ProfileRow } from '../../components';
+import { ComponentNavProps } from '../../types/general';
 
-export const ProfileView: React.FC = ({ navigation }) => {
+export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
+  navigation,
+}) => {
   const { userInfo } = useSelector(state => state.user);
 
   const { t } = useTranslation();

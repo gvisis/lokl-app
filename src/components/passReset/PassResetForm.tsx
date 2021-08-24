@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import { CustomBtn, CustomInput } from '..';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
+import { ROUTES } from '../../routes/RouteNames';
+import { ComponentNavProps } from '../../types/general';
 
 const ResetSuccessBox = styled.View`
   width: 90%;
@@ -30,70 +32,75 @@ const ContainerWrapper = styled.View`
   align-items: center;
 `;
 
-export const PassResetForm: React.FC = ({ navigation }) => {
-  const theme = React.useContext(ThemeContext);
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { onSync, passResetStatus } = useSelector(state => state.ui);
+export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
+  ({ navigation }) => {
+    const theme = React.useContext(ThemeContext);
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const { onSync, passResetStatus } = useSelector(state => state.ui);
 
-  const handlePassResetBack = useCallback((): void => {
-    dispatch(actions.ui.clearPassResetStatus());
-    navigation.goBack();
-  }, []);
+    const handlePassResetBack = useCallback((): void => {
+      dispatch(actions.ui.clearPassResetStatus());
+      navigation.goBack();
+    }, []);
 
-  const handlePassReset = useCallback((email: string): void => {
-    dispatch(actions.user.passwordReset(email));
-  }, []);
+    const handlePassReset = useCallback((email: string): void => {
+      dispatch(actions.user.passwordReset(email));
+    }, []);
 
-  return (
-    <ContainerWrapper>
-      {passResetStatus ? (
-        <ResetSuccessBox>
-          <Icon name="check-circle" size={40} color={theme.colors.tertiary1} />
-          <BoxMessage>{t('common:Password sent')}</BoxMessage>
-        </ResetSuccessBox>
-      ) : (
-        <Formik
-          initialValues={{ email: '' }}
-          validationSchema={validator.passwordReset}
-          onSubmit={({ email }) => handlePassReset(email)}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            errors,
-            values,
-            touched,
-          }) => (
-            <>
-              <CustomInput
-                placeholder={t('common:Enter email')}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                error={errors.email}
-                touched={touched.email}
-                iconName={'email'}
-              />
-              <CustomBtn
-                label={t('common:Reset')}
-                center
-                onSync={onSync.button}
-                activeOpacity={0.8}
-                onPress={handleSubmit}
-              />
-            </>
-          )}
-        </Formik>
-      )}
-      <CustomBtn
-        label={t('common:Go back')}
-        center
-        width={30}
-        secondary
-        activeOpacity={0.8}
-        onPress={handlePassResetBack}
-      />
-    </ContainerWrapper>
-  );
-};
+    return (
+      <ContainerWrapper>
+        {passResetStatus ? (
+          <ResetSuccessBox>
+            <Icon
+              name="check-circle"
+              size={40}
+              color={theme.colors.tertiary1}
+            />
+            <BoxMessage>{t('common:Password sent')}</BoxMessage>
+          </ResetSuccessBox>
+        ) : (
+          <Formik
+            initialValues={{ email: '' }}
+            validationSchema={validator.passwordReset}
+            onSubmit={({ email }) => handlePassReset(email)}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              errors,
+              values,
+              touched,
+            }) => (
+              <>
+                <CustomInput
+                  placeholder={t('common:Enter email')}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  error={errors.email}
+                  touched={touched.email}
+                  iconName={'email'}
+                />
+                <CustomBtn
+                  label={t('common:Reset')}
+                  center
+                  onSync={onSync.button}
+                  activeOpacity={0.8}
+                  onPress={handleSubmit}
+                />
+              </>
+            )}
+          </Formik>
+        )}
+        <CustomBtn
+          label={t('common:Go back')}
+          center
+          width={30}
+          secondary
+          activeOpacity={0.8}
+          onPress={handlePassResetBack}
+        />
+      </ContainerWrapper>
+    );
+  };
