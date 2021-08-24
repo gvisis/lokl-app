@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -9,24 +10,22 @@ interface CartFooter {
   total: number;
 }
 
-export const CartFooter: React.FC<CartFooter> = ({
-  navigation,
-  quantity,
-  total,
-}) => (
-  // const navigation = useNavigation();
-  <CartFooterWrap>
-    <TotalItems>Items: {quantity}</TotalItems>
-    <TotalPrice>Total price: {total} €</TotalPrice>
-    <CustomBtn
-      center
-      secondary
-      disabled={quantity === 0}
-      onPress={() => navigation.navigate(ROUTES.CartAddressView)}
-      label="Continue"
-    />
-  </CartFooterWrap>
-);
+export const CartFooter: React.FC<CartFooter> = ({ quantity, total }) => {
+  const navigation = useNavigation();
+  return (
+    <CartFooterWrap>
+      <TotalItems>Items: {quantity}</TotalItems>
+      <TotalPrice>Total price: {total} €</TotalPrice>
+      <CustomBtn
+        center
+        secondary
+        disabled={quantity === 0}
+        onPress={() => navigation.navigate(ROUTES.CartAddressView)}
+        label="Continue"
+      />
+    </CartFooterWrap>
+  );
+};
 
 const TotalPrice = styled.Text`
   padding: 10px;

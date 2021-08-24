@@ -32,7 +32,6 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
     },
     [item],
   );
-  const t = 't';
   return (
     <CartItemWrap>
       <CartItemLeft>

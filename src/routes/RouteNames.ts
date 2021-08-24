@@ -21,7 +21,7 @@ export enum ROUTES {
   //Cart
   CartTab = 'cartTab',
   Cart = 'cart',
-  CartItemView = 'cartItemView',
+  CartItemsView = 'cartItemView',
   CartAddressView = 'cartAddress',
   CartPaymentView = 'cartPayment',
 

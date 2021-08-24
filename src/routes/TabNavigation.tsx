@@ -17,10 +17,6 @@ type TabNavProps = BottomTabNavigationProp<RootStackParamList, ROUTES.TabNav>;
 
 export const TabNavigation: React.FC<TabNavProps> = ({ navigation, route }) => {
   const theme = useContext(ThemeContext);
-  React.useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle: 'lol' });
-  }, [navigation, route]);
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

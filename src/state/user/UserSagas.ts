@@ -75,6 +75,8 @@ function* handleUpdateUserDb({ updatedInfo }: AnyObject) {
     database().ref(`/users/${userId}`).update(updatedInfo);
   } catch (e) {
     console.log('huserinfoupdate', e);
+  } finally {
+    yield put(actions.ui.setOnSync('button', false));
   }
 }
 

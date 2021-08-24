@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
-import { CartAddressModal } from './CartAddressModal';
+import { CartAddressModal } from '.';
 import { CustomBtn } from '../../components';
 
 export const CartAddressView: React.FC = () => {
