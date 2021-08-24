@@ -1,12 +1,18 @@
-import React, { memo, useEffect } from 'react';
-import styled, { css } from 'styled-components/native';
-import { Dimensions, ScrollView } from 'react-native';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components/native';
+import { ScrollView, Text } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { ROUTES } from 'src/routes/RouteNames';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 
-import { SingleCompany } from '../../components';
+import { ROUTES } from '../../routes/RouteNames';
+import { RootStackParamList } from '../../types/general';
+import {
+  EmptyView,
+  ItemCard,
+  ScreenLoader,
+  SingleCompany,
+} from '../../components';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 type CompanyScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
@@ -16,58 +22,38 @@ type CompanyScreenProps = {
 // eslint-disable-next-line react/display-name
 export const CategoryView: React.FC<CompanyScreenProps> = memo(
   ({ navigation, route }) => {
-    const { category, company } = route.params;
+    const [categoryItems, setCategoryItems] = useState([]);
+    const { category, companyItem } = route.params;
+
+    const handleSingleProductNav = (product: CompanyProduct) => {
+      navigation.navigate(ROUTES.SingleProduct, {
+        product,
+        productOwnerTitle: companyItem.title,
+      });
+    };
 
     useEffect(() => {
-      navigation.setOptions({ title: category });
+      navigation.setOptions({ title: category.title });
+      setCategoryItems(
+        companyItem.produce.filter(item => item.category === category.id),
+      );
     }, [category]);
 
     return (
-      <SingleCompany company={company} showRating={false}>
+      <SingleCompany companyItem={companyItem} showRating={false}>
         <ScrollView>
           <CategorySection>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
-            <ItemCard onPress={() => console.warn(category)}>
-              <ItemFooter>
-                <ItemCardTitle>{category}</ItemCardTitle>
-                <ItemPrice>$15</ItemPrice>
-              </ItemFooter>
-            </ItemCard>
+            {categoryItems.length === 0 ? (
+              <EmptyView text="No items in this category" />
+            ) : (
+              categoryItems.map(item => (
+                <ItemCard
+                  key={item.id}
+                  onPress={() => handleSingleProductNav(item)}
+                  item={item}
+                />
+              ))
+            )}
           </CategorySection>
         </ScrollView>
       </SingleCompany>
@@ -81,29 +67,15 @@ const CategorySection = styled.View`
   justify-content: space-evenly;
 `;
 
-const ItemCard = styled.TouchableOpacity`
-  width: ${Dimensions.get('window').width / 2.5}px;
-  height: ${Dimensions.get('window').height / 5}px;
-  justify-content: flex-end;
+const NoItemsText = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.size.xl}px;
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  margin-top: 30px;
+  text-align: center;
+  padding: 30px;
+  width: 80%;
+  color: ${({ theme }) => theme.colors.lightGrey};
+  border-radius: ${({ theme }) => theme.border.radius25}px;
   border-width: 1px;
-  margin: 15px 10px;
   border-color: ${({ theme }) => theme.colors.secondary};
-`;
-const ItemFooter = styled.View`
-  flex-direction: row;
-  width: 100%;
-  background: ${({ theme }) => theme.colors.secondary};
-  justify-content: space-around;
-  padding: 5px;
-`;
-
-const itemTitleStyle = css`
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
-  color: ${({ theme }) => theme.colors.white};
-`;
-const ItemCardTitle = styled.Text`
-  ${itemTitleStyle}
-`;
-const ItemPrice = styled.Text`
-  ${itemTitleStyle}
 `;

@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { actions } from '../../state/actions';
 import { ToggleSwitcher } from '../../components';
-import { RootState } from '../../state/reducers';
 
 export const SettingsView: React.FC = () => (
   <HomeWrap>

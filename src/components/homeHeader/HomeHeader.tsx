@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 interface HeaderProps {
   title: string;
@@ -11,6 +12,7 @@ interface HeaderProps {
 export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
   const [focused, setFocused] = useState(false);
   const { t } = useTranslation();
+  const cartQty = useSelector(state => state.cart.quantity);
 
   const handleFocus = useCallback(() => {
     setFocused(!focused);
@@ -21,14 +23,18 @@ export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
       <HeaderContainer>
         <TitleText size={40}>{title}</TitleText>
         <IconWrap>
-          <Basket name="basket-outline" size={30} />
+          {cartQty !== 0 && <BasketQty>{cartQty}</BasketQty>}
+          <Basket
+            name={cartQty === 0 ? 'basket-outline' : 'basket'}
+            size={30}
+          />
         </IconWrap>
         <SearchRow focused={focused}>
           <SearchBar
             placeholder={t('home:search bar')}
             placeholderTextColor="#9c9c9c"
-            onFocus={() => handleFocus()}
-            onBlur={() => handleFocus()}
+            onFocus={handleFocus}
+            onBlur={handleFocus}
           />
           <IconWrap>
             <FilterSort name="menu-open" size={30} color={'green'} />
@@ -51,6 +57,23 @@ const Basket = styled(Icon)`
   border-radius: ${({ theme }) => theme.border.radius30}px;
   background-color: ${({ theme }) => theme.colors.red1};
   color: ${({ theme }) => theme.colors.tertiary2};
+`;
+
+const BasketQty = styled.Text`
+  position: absolute;
+  bottom: -10px;
+  min-width: 40%;
+  max-width: 100%;
+  height: 20px;
+  z-index: 1;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.tertiary2 + 'B3'};
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
+  border-color: ${({ theme }) => theme.colors.red1};
+  border-width: 1px;
+  border-radius: ${({ theme }) => theme.border.radius50}px;
+  padding: 0 5px;
 `;
 
 const HeaderContainer = styled.View<{ height?: number }>`

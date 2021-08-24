@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   GestureResponderEvent,
   Platform,
@@ -9,38 +9,45 @@ import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
+import { StyledComponent } from 'styled-components';
 
 import { ROUTES } from '../../routes/RouteNames';
+import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
+import { actions } from '../../state/actions';
+import { getProductOwnerTitle } from '../../utils/functions';
 
 export interface ProductScreenProps {
-  product: {
-    id: string;
-    owner: string;
-    title: string;
-    image: string;
-    description?: string;
-    category: string;
-    price: number;
-    delivery: boolean;
-    available: boolean;
-    rating: number;
-  };
+  product?: CompanyProduct;
+  allCompanies?: CompanyProps[];
   width?: number;
   height?: number;
+  productOwnerTitle?: string;
   onPress?: (event: GestureResponderEvent) => void;
 }
 
 export const Product: React.FC<ProductScreenProps> = ({
   product,
+  allCompanies,
   width,
   height,
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
+
+  const productOwnerTitle: string = getProductOwnerTitle(allCompanies, product);
+
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { product });
-  }, [product]); //! check later if working
+    navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
+  }, [product]);
+
+  // Add ONE item to cart
+  const handleAddToCart = useCallback(() => {
+    const cartProduct = { ...product };
+    dispatch(actions.cart.checkCartActions('add', cartProduct));
+  }, [dispatch]);
 
   if (Platform.OS === 'android') {
     return (
@@ -53,7 +60,7 @@ export const Product: React.FC<ProductScreenProps> = ({
         onPress={handleSingleProductNav}>
         <ProductWrap width={width} height={height}>
           <ProductTop>
-            <AddToCart>
+            <AddToCart onPress={handleAddToCart}>
               <LinearGradient
                 colors={[
                   theme.colors.secondary,
@@ -72,11 +79,11 @@ export const Product: React.FC<ProductScreenProps> = ({
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
             <ProductImage resizeMode="cover" source={{ uri: product.image }} />
-            <ProductOwner>{product.owner}</ProductOwner>
+            <ProductOwner>{productOwnerTitle}</ProductOwner>
           </ProductTop>
           <ProductBottom>
             <ProductName>{product.title}</ProductName>
-            <ProductPrice>${product.price}</ProductPrice>
+            <ProductPrice>{product.price}€</ProductPrice>
             <ProductRating>
               <AirbnbRating
                 count={5}
@@ -96,7 +103,12 @@ export const Product: React.FC<ProductScreenProps> = ({
   }
 };
 
-const ProductWrap = styled.View`
+const ProductWrap: StyledComponent<
+  typeof View,
+  DefaultTheme,
+  ProductScreenProps,
+  never
+> = styled.View`
   margin: 10px;
   width: ${(props: ProductScreenProps) => props.width}px;
   height: ${(props: ProductScreenProps) => props.height}px;

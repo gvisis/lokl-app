@@ -1,3 +1,4 @@
+import { ErrorType } from '../../types/general';
 import { constants } from '../constants';
 
 const setOnSync = (key: string, bool: boolean) => ({
@@ -6,7 +7,7 @@ const setOnSync = (key: string, bool: boolean) => ({
   bool,
 });
 
-const setStatus = (key: string, bool: boolean, message: string) => ({
+const setStatus = (key: ErrorType, bool: boolean, message: string) => ({
   type: constants.ui.SET_STATUS,
   key,
   bool,

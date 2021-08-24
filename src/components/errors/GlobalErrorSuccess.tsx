@@ -3,14 +3,10 @@ import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { actions } from '../../state/actions';
-import { RootState } from '../../state/reducers';
-
-type ErrorType = 'error' | 'success' | null;
+import { ErrorType } from '../../types/general';
 
 export const GlobalErrorSuccess: React.FC = () => {
-  const { error, success, message } = useSelector(
-    (state: RootState) => state.ui.status,
-  );
+  const { error, success, message } = useSelector(state => state.ui.status);
 
   let errorType: ErrorType = null;
 

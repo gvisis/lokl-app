@@ -1,9 +1,11 @@
 import { appActions } from './app/AppActions';
 import { uiActions } from './ui/UiActions';
 import { userActions } from './user/UserActions';
+import { cartActions } from './cart/CartActions';
 
 export const actions = {
-	app: appActions,
-	ui: uiActions,
-	user: userActions,
+  ui: uiActions,
+  app: appActions,
+  cart: cartActions,
+  user: userActions,
 };

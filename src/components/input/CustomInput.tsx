@@ -1,7 +1,54 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+
+interface CustomInputProps {
+  placeholder?: string;
+  value?: string;
+  onChangeText?: (value: string) => void;
+  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  error?: string;
+  touched: boolean;
+  iconName?: string;
+  iconSize?: number;
+  iconColor?: string;
+  secureTextEntry?: boolean;
+}
+
+export const CustomInput: React.FC<CustomInputProps> = ({
+  placeholder,
+  value,
+  onChangeText,
+  error,
+  touched,
+  iconName,
+  iconSize,
+  iconColor,
+  ...props
+}) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <InputContainer>
+      {error && touched && <ErrorMessage>{error}</ErrorMessage>}
+      <InputWrapper>
+        <IconWrapper>
+          <Icon
+            name={iconName}
+            size={iconSize || 20}
+            color={iconColor || theme.colors.tertiary2}
+          />
+        </IconWrapper>
+        <StyledInput
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          value={value}
+          {...props}
+        />
+      </InputWrapper>
+    </InputContainer>
+  );
+};
 
 const InputContainer = styled.View`
   width: 100%;
@@ -38,50 +85,3 @@ const StyledInput = styled.TextInput`
   border-top-right-radius: 10px;
   border-left-width: 0;
 `;
-
-interface CustomInputProps {
-  placeholder?: string;
-  value?: string;
-  onChangeText?: (value: string) => void;
-  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
-  error?: string;
-  touched: boolean;
-  iconName?: string;
-  iconSize?: number;
-  iconColor?: string;
-  secureTextEntry?: boolean;
-}
-
-export const CustomInput: React.FC<CustomInputProps> = ({
-  placeholder,
-  value,
-  onChangeText,
-  error,
-  touched,
-  iconName,
-  iconSize,
-  iconColor,
-  ...props
-}) => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <InputContainer>
-      {error && touched && <ErrorMessage>{error}</ErrorMessage>}
-      <InputWrapper>
-        <IconWrapper>
-          <Icon
-            name={iconName}
-            size={iconSize || 20}
-            color={iconColor || theme.colors.tertiary2}
-          />
-        </IconWrapper>
-        <StyledInput
-          placeholder={placeholder}
-          onChangeText={onChangeText}
-          value={value}
-          {...props}
-        />
-      </InputWrapper>
-    </InputContainer>
-  );
-};

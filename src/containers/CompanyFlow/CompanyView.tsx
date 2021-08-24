@@ -1,12 +1,15 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { GestureResponderEvent, ScrollView } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootStackParamList } from '../../types/general';
 import { ROUTES } from '../../routes/RouteNames';
 import { SingleCompany } from '../../components';
+import { actions } from '../../state/actions';
+import { Category } from '../../state/app/AppInterfaces';
 
 type CompanyViewProps = {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
@@ -17,28 +20,37 @@ type CompanyViewProps = {
 // eslint-disable-next-line react/display-name
 export const CompanyView: React.FC<CompanyViewProps> = memo(
   ({ navigation, route }) => {
-    const { company } = route.params;
-    console.log(company);
+    const { companyItem } = route.params;
+    const allCategories = useSelector(state => state.app.categories);
+    const [CompCategories, setCompCategories] = useState([]);
 
-    const handleCategoryNav = useCallback((category: string) => {
-      navigation.navigate(ROUTES.CompanyCategory, { category, company });
+    const handleCategoryNav = useCallback(category => {
+      navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });
     }, []);
 
+    useEffect(() => {
+      setCompCategories(
+        allCategories.filter(category =>
+          companyItem.categories.includes(category.id),
+        ),
+      );
+    }, [allCategories]);
+
     return (
-      <SingleCompany company={company}>
+      <SingleCompany companyItem={companyItem}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CompanyDescription>
-            make it expandable with more text.. {company.description} pictures
-            for the categories?
+            make it expandable with more text.. {companyItem.description}{' '}
+            pictures for the categories?
           </CompanyDescription>
-          {company.categories.map((category, index) => (
-            //! do not use index as a key!, it will be fixed later
-            <CategoryCard
-              onPress={() => handleCategoryNav(category)}
-              key={index}>
-              <CategoryCardTitle>{category}</CategoryCardTitle>
-            </CategoryCard>
-          ))}
+          {CompCategories &&
+            CompCategories.map(category => (
+              <CategoryCard
+                onPress={() => handleCategoryNav(category)}
+                key={category.id}>
+                <CategoryCardTitle>{category.title}</CategoryCardTitle>
+              </CategoryCard>
+            ))}
         </ScrollView>
       </SingleCompany>
     );
@@ -71,10 +83,4 @@ const CategoryCardTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;
   color: ${({ theme }) => theme.colors.white};
-`;
-
-const ItemRating = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.family.bentonLight};
-  font-size: ${({ theme }) => theme.fonts.size.m}px;
-  margin-right: 10px;
 `;

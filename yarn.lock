@@ -1186,6 +1186,13 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/datetimepicker@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
+  integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-config/-/eslint-config-2.0.0.tgz#35dcc529a274803fc4e0a6b3d6c274551fb91774"
@@ -1234,6 +1241,16 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-12.4.0.tgz#8ae41937004b2a77efdd98c460dfb66c348c249f"
   integrity sha512-PAniLXwVwSjiWovy8kzqczAL4zqfJEZmTACtYqKo68vufYkGH3XG9bXa2HrZlD4uZGYddYIMyshMOLYcCt0rAw==
 
+"@react-native-firebase/storage@^12.4.0":
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-12.4.0.tgz#7a25f72446b82bd54335f5fa91709e5f75d673fa"
+  integrity sha512-jcNj3Og6gM7eQfwXJMVFVl5p5IR61PDeS5BWSgpvvsKhP8mOVQUcjMPmuzcPJwdpOu9BBxcv+8DEmzTXq+YKCQ==
+
+"@react-native-picker/picker@^1.16.5", "@react-native-picker/picker@^1.8.3":
+  version "1.16.5"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.5.tgz#f55f22bb8fcaec412170e8a1ac1c7b11818919e5"
+  integrity sha512-IYfMXdUsfQe4RBLJPZq6GoPkr2otOTZqej/gU93x+oIjrR+UCcCb0fsqmXHT8qX29E+0cEQZd/4bWnzbICHNrg==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -1267,6 +1284,14 @@
     nanoid "^3.1.15"
     query-string "^6.13.6"
     react-is "^16.13.0"
+
+"@react-navigation/material-top-tabs@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/material-top-tabs/-/material-top-tabs-6.0.2.tgz#c2036ab53345a634f12f66cf04896c3fc059a423"
+  integrity sha512-Al//AEYGB0e1fHn+gqb/mW7MFrYv15MT+NvDHWfl02SldmQIaUfR/LSZytvYTZL1sUApN4XkmD1XZhLKhmGoRA==
+  dependencies:
+    color "^3.1.3"
+    warn-once "^0.1.0"
 
 "@react-navigation/native@^5.9.4":
   version "5.9.6"
@@ -6798,7 +6823,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6900,6 +6925,13 @@ react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-animatable@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-codegen@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.6.tgz#b3173faa879cf71bfade8d030f9c4698388f6909"
@@ -6930,6 +6962,11 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-picker@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
+  integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
+
 react-native-iphone-x-helper@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
@@ -6944,6 +6981,27 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-modal@^12.1.0:
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-12.1.0.tgz#5949c9c7d4de4e99df83cc777ad26b84ad7002a0"
+  integrity sha512-9myTNZ75gz6MPg1Cngm01x59JbaVkTeWoZvmChmW//PbSAdfbP/dFPnzbidL9IDrRh6Ftuuq8WSuM0aoS5m2lg==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
+
+react-native-pager-view@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.0.tgz#8e30a391a68da26e59f4ae724341b9208924b2ee"
+  integrity sha512-pYy3I8p5s6cPaymT1GibuDRHmicY3JdHHZyTH+Fra1S0wupaJhoZy33f2prrMJqQfk9kaqwCsb3pVmj4GuJTjA==
+
+react-native-picker-select@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz#3f7f1f42df69b06e7d2c10338288332a6c40fd10"
+  integrity sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg==
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    lodash.isequal "^4.5.0"
 
 react-native-ratings@^8.1.0:
   version "8.1.0"
@@ -6966,6 +7024,15 @@ react-native-redash@^16.0.10:
   version "16.1.1"
   resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.1.1.tgz#784cdf55672043aab9f15ae8c965dcbae8b119ba"
   integrity sha512-pD3GMNqRz/5bUnX0ni4MMOBlVwH2dJnd7u6M80VqYGI87IfcuP6Sn1z171r0nUUeYvJ7blJQs0OKKmTsJIbWew==
+  dependencies:
+    abs-svg-path "^0.1.1"
+    normalize-svg-path "^1.0.1"
+    parse-svg-path "^0.1.2"
+
+react-native-redash@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.2.0.tgz#72204bdcdc5c48ccd8bd630e3a954ae5174809b3"
+  integrity sha512-4xRWT6sUTjTM7i7Yd6fEiuylzIPmjYl9XlhL7Tz/NJOPBs+ib6ku7ptF5PRgQIshbQ6kIFwXJWoQ9H71zOMwvA==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
@@ -7005,6 +7072,18 @@ react-native-svg@^12.1.1:
   dependencies:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
+
+react-native-swiper@^1.6.0-rc.3:
+  version "1.6.0-rc.3"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0-rc.3.tgz#ece82906d908c6a78a0b75fa41982ffc2cd2fb20"
+  integrity sha512-aZk6M7WsFdxlfHfS6OKb7gsaS3q7Z4Oqm8iTyJO7duE28EUK9kzfA2Cp5S6FdZkGXoWCXoUFGlzaO0lnhW/jtw==
+  dependencies:
+    prop-types "^15.5.10"
+
+react-native-tab-view@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
+  integrity sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw==
 
 react-native-toast-message@^1.4.9:
   version "1.4.9"

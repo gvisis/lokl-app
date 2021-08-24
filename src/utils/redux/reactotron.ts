@@ -7,14 +7,11 @@ export const initReactotron = () => {
   const scriptURL = NativeModules.SourceCode.scriptURL;
   const scriptHostname = scriptURL.split('://')[1].split(':')[0];
 
-  Reactotron.configure({
-    host: scriptHostname,
-  })
-    .useReactNative()
+  Reactotron.configure({ host: '192.168.1.7' })
+    .useReactNative({ errors: false })
     .use(reactotronRedux())
-    .use(sagaPlugin({ except: [''] }))
+    .use(sagaPlugin({}))
     .connect()
     .clear();
-
   return Reactotron;
 };

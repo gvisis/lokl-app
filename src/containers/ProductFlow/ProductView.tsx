@@ -6,31 +6,35 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
-import { RootStackParamList } from 'src/routes/RootStackParamList';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { AirbnbRating, Rating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
 
+import { RootStackParamList } from '../../types/general';
 import { Container } from '../../components';
+import { actions } from '../../state/actions';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
 
-type ProductScreenProps = {
+interface ProductViewProps {
   navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleProduct>;
   route: RouteProp<RootStackParamList, ROUTES.SingleProduct>;
-};
+  item?: CompanyProduct;
+}
 
 // eslint-disable-next-line react/display-name
-export const ProductView: React.FC<ProductScreenProps> = memo(
+export const ProductView: React.FC<ProductViewProps> = memo(
   ({ navigation, route }) => {
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
-    const { t } = useTranslation();
-    const { product } = route.params;
+    const { product, productOwnerTitle } = route.params;
+
+    const dispatch = useDispatch();
 
     // =========== BottomSheet config =================
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -41,7 +45,18 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, []);
 
     const handleOpenSheet = () => bottomSheetRef.current.expand();
-    const handleCloseSheet = () => bottomSheetRef.current.close();
+
+    const handleAddToCart = () => {
+      if (selectedQuantity !== 0) {
+        dispatch(
+          actions.cart.checkCartActions('add', product, selectedQuantity),
+        );
+        dispatch(
+          actions.ui.setStatus('success', true, 'Product added to cart'),
+        );
+      }
+      bottomSheetRef.current.close();
+    };
     //==================================================
 
     useEffect(() => {
@@ -49,19 +64,15 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, [selectedQuantity]);
 
     const handleIncreaseQuantity = useCallback(() => {
-      if (selectedQuantity >= 10) {
-        setSelectedQuantity(selectedQuantity);
-      } else {
-        setSelectedQuantity(selectedQuantity + 1);
-      }
+      selectedQuantity >= 100
+        ? setSelectedQuantity(selectedQuantity)
+        : setSelectedQuantity(selectedQuantity + 1);
     }, [selectedQuantity]);
 
     const handleDecreaseQuantity = useCallback(() => {
-      if (selectedQuantity <= 0) {
-        setSelectedQuantity(selectedQuantity);
-      } else {
-        setSelectedQuantity(selectedQuantity - 1);
-      }
+      selectedQuantity <= 0
+        ? setSelectedQuantity(selectedQuantity)
+        : setSelectedQuantity(selectedQuantity - 1);
     }, [selectedQuantity]);
 
     useEffect(() => {
@@ -69,14 +80,13 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
     }, [product]);
 
     const ratingCustomImage = require('../../assets/images/ratingfull.png');
-
     return (
       <Container>
         <ItemHeader>
           <TitleWrap>
             <ProductImage source={{ uri: product.image }} />
             <OwnerWrap>
-              <OwnerTitle>{product.owner}</OwnerTitle>
+              <OwnerTitle>{productOwnerTitle}</OwnerTitle>
               <CompanyLogo source={{ uri: product.image }} />
             </OwnerWrap>
           </TitleWrap>
@@ -88,15 +98,9 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
         </ItemHeader>
         <ItemMidSection>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
-            <ItemDescription>{product.description}</ItemDescription>
+            {new Array(7)
+              .fill(<ItemDescription>{product.description}</ItemDescription>)
+              .map(item => item)}
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>
@@ -136,7 +140,7 @@ export const ProductView: React.FC<ProductScreenProps> = memo(
               <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
             </SelectWrap>
             <SheetFooter>
-              <AddWrap onPress={handleCloseSheet}>
+              <AddWrap onPress={handleAddToCart}>
                 <AddButton>Add to cart</AddButton>
               </AddWrap>
             </SheetFooter>

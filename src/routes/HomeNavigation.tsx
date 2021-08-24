@@ -6,7 +6,7 @@ import { ROUTES } from './RouteNames';
 import { ProductView } from '../containers/ProductFlow';
 import { CategoryView, CompanyView } from '../containers/CompanyFlow';
 import { HomeView } from '../containers/HomeFlow';
-import { RootStackParamList } from './RootStackParamList';
+import { RootStackParamList } from '../types/general';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 

@@ -23,7 +23,8 @@
             "shadow-offset",
             "shadow-opacity",
             "shadow-radius",
-            "tint-color"
+            "tint-color",
+            "text-align-vertical"
           ]
         }
       }
@@ -37,7 +38,10 @@
     "allowJs": true,
     "checkJs": false
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "node_modules/react-native-redash/lib/typescript/v1/index.d.ts"
+  ],
   "exclude": ["node_modules"],
   "types": ["styled-components-react-native", "webpack-env"]
 }

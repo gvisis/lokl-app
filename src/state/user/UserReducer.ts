@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject } from '../../types/general';
+import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
 
 export interface UserReducerState {
@@ -9,6 +9,7 @@ export interface UserReducerState {
     email: string;
     age: number;
     city: string;
+    ads: AdsProps[];
   };
 }
 
@@ -17,6 +18,7 @@ const INITIAL_STATE: UserReducerState = {
 };
 
 export const userReducer = createReducer(INITIAL_STATE, {
+  // [actions.user.setUserInfo.type]: (state, action) => {
   [constants.user.SET_USER_INFO]: (state, action) => {
     state.userInfo = action.payload;
   },
