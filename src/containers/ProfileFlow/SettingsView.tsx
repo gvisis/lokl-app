@@ -2,75 +2,25 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { ToggleSwitcher } from '../../components';
+import { Container, ProfileRow, ToggleSwitcher } from '../../components';
 
 export const SettingsView: React.FC = () => (
-  <HomeWrap>
+  <Container>
     {/* make as a list later on */}
-    <SettingsFullRow
-      iconName="paint-brush"
-      rowTitle="Change theme:"
-      toggle="themeSwitch"
+    <ProfileRow
+      text="Change theme"
+      rowLeft={<StyledIcon name={'paint-brush'} />}
+      rowRight={<ToggleSwitcher toggle="themeSwitch" />}
     />
-    <SettingsFullRow
-      iconName="language"
-      rowTitle="Change language:"
-      toggle="langSwitch"
+    <ProfileRow
+      text="Change language"
+      rowLeft={<StyledIcon name={'language'} />}
+      rowRight={<ToggleSwitcher toggle="langSwitch" />}
     />
-  </HomeWrap>
+  </Container>
 );
 
-interface SettingsRowProps {
-  iconName: string;
-  rowTitle: string;
-  toggle?: string;
-}
-
-const SettingsFullRow = ({ iconName, rowTitle, toggle }: SettingsRowProps) => (
-  <RowWrap>
-    <IconWrap>
-      <StyledIcon name={iconName} />
-    </IconWrap>
-    <RowTitle>{rowTitle}</RowTitle>
-    <SwitchWrap>
-      <ToggleSwitcher toggle={toggle} />
-    </SwitchWrap>
-  </RowWrap>
-);
-
-const HomeWrap = styled.View`
-  flex: 1;
-  width: 100%;
-  margin-top: 5px;
-`;
-
-const RowWrap = styled.View`
-  padding: 5px;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
-`;
-const RowTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.size.xl}px;
-  color: ${({ theme }) => theme.colors.black};
-  margin: 0 10px;
-  flex: 4;
-`;
-
-const SwitchWrap = styled.View`
-  flex: 1.5;
-`;
-
-const IconWrap = styled.View`
-  margin: 0 10px;
-  padding: 10px;
-  flex: 0.5;
-  justify-content: center;
-  align-items: center;
-`;
 const StyledIcon = styled(Icon)`
-  color: ${({ theme }) => theme.colors.secondaryBtn};
-  font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
+  color: ${({ theme }) => theme.colors.tertiary2};
+  font-size: ${({ theme }) => theme.fonts.size.l}px;
 `;

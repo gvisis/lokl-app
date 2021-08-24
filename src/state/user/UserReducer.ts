@@ -3,14 +3,15 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
 
+export interface UserProps {
+  name: string;
+  email: string;
+  age: number;
+  city: string;
+  ads: AdsProps[];
+}
 export interface UserReducerState {
-  userInfo: {
-    name: string;
-    email: string;
-    age: number;
-    city: string;
-    ads: AdsProps[];
-  };
+  userInfo: UserProps;
 }
 
 const INITIAL_STATE: UserReducerState = {

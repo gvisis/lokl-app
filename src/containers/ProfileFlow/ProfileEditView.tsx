@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
-import { Text, View } from 'react-native';
 
 import { actions } from '../../state/actions';
-import { CustomBtn } from '../../components';
+import { Container, CustomBtn, ProfileRow } from '../../components';
 
 export const ProfileEditView = () => {
   const { userInfo } = useSelector(state => state.user);
@@ -24,14 +23,12 @@ export const ProfileEditView = () => {
   }, [userInfo.age]);
 
   return (
-    <HomeWrap>
-      <WelcomeTitle>Profile EDIT view!</WelcomeTitle>
-      <View>
-        <Text>Name: {userInfo.name}</Text>
-        <Text>Age: {userInfo.age}</Text>
-        <Text>City: {userInfo.city}</Text>
-        <Text>Email: {userInfo.email}</Text>
-      </View>
+    <Container>
+      <EditWrap>
+        <ProfileRow label={'Full name'} editable text={userInfo.name} />
+        <ProfileRow label={'City'} editable text={userInfo.city} />
+        <ProfileRow label={'Email'} editable text={userInfo.email} />
+      </EditWrap>
 
       <CustomBtn
         label={'Update info'}
@@ -40,18 +37,10 @@ export const ProfileEditView = () => {
         onPress={updateUserInfo}
         onSync={onSync.button}
       />
-    </HomeWrap>
+    </Container>
   );
 };
-
-const HomeWrap = styled.View`
-  flex: 1;
-`;
-
-const WelcomeTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fonts.size.xl}px;
-  text-align: center;
-  padding: 10px;
-  flex: 4;
+const EditWrap = styled.View`
+  margin-top: 20px;
+  padding: 0 10px;
 `;

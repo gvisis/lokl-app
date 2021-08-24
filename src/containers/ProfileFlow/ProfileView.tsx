@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,20 +7,21 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
 import { ROUTES } from '../../routes/RouteNames';
-import { Container, CustomBtn } from '../../components';
+import { Container, CustomBtn, ProfileRow } from '../../components';
 
 export const ProfileView: React.FC = ({ navigation }) => {
   const { userInfo } = useSelector(state => state.user);
 
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
   const handleProfileEditNav = useFunction(
     navigation.navigate,
     ROUTES.ProfileEdit,
   );
   const handleSettingsNav = useFunction(navigation.navigate, ROUTES.Settings);
-  const dispatch = useDispatch();
-
   const handleLogout = useFunction(dispatch, actions.user.logout());
+
   return (
     <Container>
       <ProfileHeader>
@@ -32,23 +32,26 @@ export const ProfileView: React.FC = ({ navigation }) => {
         <ProfileEmail>{userInfo.email}</ProfileEmail>
       </ProfileHeader>
       <ProfileSection>
-        <SingleRow onPress={handleProfileEditNav}>
-          <RowText>Edit profile</RowText>
-          <Icon name="chevron-right" size={30} color={'orange'} />
-        </SingleRow>
-        <SingleRow>
-          <RowText>Payments</RowText>
-          <Icon name="chevron-right" size={30} color={'orange'} />
-        </SingleRow>
-        <SingleRow>
-          <RowText>Addresses</RowText>
-          <Icon name="chevron-right" size={30} color={'orange'} />
-        </SingleRow>
-        <SingleRow onPress={handleSettingsNav}>
-          <RowText>Settings</RowText>
-          <Icon name="chevron-right" size={30} color={'orange'} />
-        </SingleRow>
-
+        <ProfileRow
+          onPress={handleSettingsNav}
+          text="Settings"
+          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+        />
+        <ProfileRow
+          onPress={handleSettingsNav}
+          text="Payments"
+          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+        />
+        <ProfileRow
+          onPress={handleProfileEditNav}
+          text="Edit Profile"
+          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+        />
+        <ProfileRow
+          onPress={handleSettingsNav}
+          text="Edit Addresses"
+          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+        />
         <CustomBtn
           label={t('common:Logout')}
           onPress={handleLogout}
@@ -72,24 +75,6 @@ const ProfileSection = styled.View`
   border-top-left-radius: 35px;
   border-top-right-radius: 35px;
   padding: 20px 20px;
-`;
-const SingleRow = styled.TouchableOpacity`
-  width: 100%;
-  height: 50px;
-  padding: 10px 0;
-  background-color: transparent;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.primary};
-`;
-
-const RowText = styled.Text`
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fonts.size.m}px;
-  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
-  letter-spacing: 1px;
 `;
 const ProfileImage = styled.Image`
   width: 120px;

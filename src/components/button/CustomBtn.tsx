@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/native';
-import { ActivityIndicator } from 'react-native';
+import {
+  ActivityIndicator,
+  GestureResponderEvent,
+  StyleProp,
+} from 'react-native';
 
 interface StyledButtonProps {
   width?: number;
@@ -8,6 +12,7 @@ interface StyledButtonProps {
   center?: boolean;
   fontSize?: number;
   marginTop?: number;
+
   textTransform?: string;
 }
 interface CustomBtnProps {
@@ -16,10 +21,11 @@ interface CustomBtnProps {
   center?: boolean;
   activeOpacity?: number;
   disabled?: boolean;
-  onPress?: () => void;
+  onPress?: (e: GestureResponderEvent) => void;
   width?: number;
   fontSize?: number;
   secondary?: boolean;
+  style?: StyleProp<any>;
 }
 
 export const CustomBtn: React.FC<CustomBtnProps> = ({

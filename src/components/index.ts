@@ -9,6 +9,7 @@ export * from './emptyView/EmptyView';
 export * from './radioButton/RadioButton';
 export * from './cart/RemoveAction';
 export * from './cart/CartItemLayout';
+export * from './profileRow/ProfileRow';
 export * from './cart/CartFooter';
 export * from './produce/ProduceItem';
 export * from './homeHeader/HomeHeader';

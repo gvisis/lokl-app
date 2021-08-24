@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
 import {
   getFocusedRouteNameFromRoute,
@@ -25,30 +28,24 @@ const Profile = createStackNavigator<RootStackParamList>();
 export const ProfileNavigation: React.FC<ProfileNavProps> = ({ route }) => {
   const theme = useContext(ThemeContext);
 
-  const profileOptions = {
-    headerStyle: {
-      backgroundColor: theme.colors.secondary,
-    },
-    headerTintColor: theme.colors.white,
-    headerTitle: getHeaderTitle(getFocusedRouteNameFromRoute(route)),
-  };
   return (
-    <Profile.Navigator>
-      <Profile.Screen
-        name={ROUTES.Profile}
-        component={ProfileView}
-        options={profileOptions}
-      />
-      <Profile.Screen
-        name={ROUTES.ProfileEdit}
-        component={ProfileEditView}
-        options={profileOptions}
-      />
-      <Profile.Screen
-        name={ROUTES.Settings}
-        component={SettingsView}
-        options={profileOptions}
-      />
+    <Profile.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.secondary,
+        },
+        headerTintColor: theme.colors.white,
+        headerTitle: getFocusedRouteNameFromRoute(route),
+        headerTitleStyle: {
+          fontFamily: theme.fonts.family.bentonBook,
+          textTransform: 'capitalize',
+        },
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}>
+      <Profile.Screen name={ROUTES.Profile} component={ProfileView} />
+      <Profile.Screen name={ROUTES.ProfileEdit} component={ProfileEditView} />
+      <Profile.Screen name={ROUTES.Settings} component={SettingsView} />
     </Profile.Navigator>
   );
 };
