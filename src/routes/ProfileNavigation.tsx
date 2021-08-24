@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
-import { RouteProp } from '@react-navigation/core';
+import {
+  getFocusedRouteNameFromRoute,
+  RouteProp,
+} from '@react-navigation/core';
 
 import { getHeaderTitle } from '../utils/functions';
 import { ROUTES } from './RouteNames';
@@ -24,12 +27,11 @@ export const ProfileNavigation: React.FC<ProfileNavProps> = ({ route }) => {
 
   const profileOptions = {
     headerStyle: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.secondary,
     },
-    headerTintColor: theme.colors.secondary1,
-    headerTitle: getHeaderTitle(route),
+    headerTintColor: theme.colors.white,
+    headerTitle: getHeaderTitle(getFocusedRouteNameFromRoute(route)),
   };
-
   return (
     <Profile.Navigator>
       <Profile.Screen

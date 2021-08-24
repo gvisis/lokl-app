@@ -17,11 +17,10 @@ export const getProductOwnerTitle = (
     .filter(company => company.id === product.owner)
     .map(company => company.title)[0];
 
-export const getHeaderTitle = (route: Partial<Route<string, object>>) => {
+export const getHeaderTitle = routeName => {
   // If the focused route is not found, we need to assume it's the initial screen
   // This can happen during if there hasn't been any navigation inside the screen
   // In our case, it's "Home" as that's the first screen inside the navigator
-  const routeName = getFocusedRouteNameFromRoute(route);
   switch (routeName) {
     case ROUTES.Profile:
       return 'Profile';
