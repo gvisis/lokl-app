@@ -1,7 +1,11 @@
 import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native';
 
 import { ROUTES } from '../routes/RouteNames';
-import { CompanyProduct, CompanyProps } from '../state/app/AppInterfaces';
+import {
+  CompanyProduct,
+  CompanyProps,
+  RatingData,
+} from '../state/app/AppInterfaces';
 
 export const capitalizeFirst = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
@@ -36,6 +40,9 @@ export const getProductOwnerTitle = (
   allCompanies
     .filter(company => company.id === product.owner)
     .map(company => company.title)[0];
+
+export const calcRatingAverage = (ratings: RatingData[]) =>
+  ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length;
 
 export const getHeaderTitle = routeName => {
   // If the focused route is not found, we need to assume it's the initial screen

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Company,
   Container,
+  EmptyView,
   HomeHeader,
   HomeRow,
   ProduceItem,
@@ -30,6 +31,11 @@ export const HomeView: React.FC = () => {
     dispatch(actions.app.fetchCategories());
     dispatch(actions.app.fetchAllAds());
   }, []);
+
+  const renderAllAds = useCallback(
+    ({ item }) => <ProduceItem width={200} item={item} />,
+    [allAds],
+  );
 
   return (
     <Container>
@@ -89,13 +95,18 @@ export const HomeView: React.FC = () => {
           </HomeRow>
           {/* ADS ROW */}
           <HomeRow title={t('home:row Ads')}>
-            <FlatList
-              data={allAds}
-              renderItem={({ item }) => <ProduceItem width={200} item={item} />}
-              keyExtractor={item => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
+            {allAds ? (
+              <FlatList
+                data={allAds}
+                renderItem={renderAllAds}
+                keyExtractor={item => item.id}
+                horizontal
+                ListEmptyComponent={<EmptyView text={'No ads available'} />}
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : (
+              <ScreenLoader color={'red'} size={50} />
+            )}
           </HomeRow>
         </HomeContent>
       </ScrollView>

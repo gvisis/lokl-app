@@ -6,9 +6,7 @@ interface EmptyViewProps {
 }
 
 export const EmptyView: React.FC<EmptyViewProps> = ({ text }) => (
-  <>
-    <NoItemsText>{text}</NoItemsText>
-  </>
+  <NoItemsText>{text}</NoItemsText>
 );
 
 const NoItemsText = styled.Text`

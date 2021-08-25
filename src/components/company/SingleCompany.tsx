@@ -4,11 +4,15 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
+import { useDispatch } from 'react-redux';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
 import { Container } from '..';
 import { CompanyProps } from '../../state/app/AppInterfaces';
+import { api } from '../../api';
+import { actions } from '../../state/actions';
+import { calcRatingAverage } from '../../utils/functions';
 
 interface SingleCompanyProps {
   companyItem: CompanyProps;
@@ -24,12 +28,18 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
   showRating,
 }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     navigation.setOptions({ title: companyItem.title });
   }, [companyItem]);
-
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
+  const handleRating = (userRating: number) => {
+    const currentUserId = api.getUserInfo().uid;
+    const newRatingObject = { id: currentUserId, rating: userRating };
+    dispatch(actions.app.setCompanyRating(companyItem.id, newRatingObject));
+  };
   return (
     <Container>
       <CompanyHeader>
@@ -45,7 +55,8 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
             <AirbnbRating
               count={5}
               showRating={false}
-              defaultRating={companyItem.rating}
+              defaultRating={calcRatingAverage(companyItem.ratings)}
+              onFinishRating={handleRating}
               size={25}
               starImage={ratingCustomImage}
             />
