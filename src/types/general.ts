@@ -35,6 +35,9 @@ export type RootStackParamList = {
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
   [ROUTES.AddAd]: undefined;
+  [ROUTES.Address]: undefined;
+  [ROUTES.AddAddress]: undefined;
+  [ROUTES.EditAddress]: undefined;
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;

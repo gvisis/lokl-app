@@ -3,11 +3,15 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
 
-interface UserAddress {
+export interface UserAddress {
   id: string;
+  name: string;
+  phone: string;
   street: string;
   city: string;
   country: string;
+  postcode: string;
+  default: boolean;
 }
 
 export interface UserProps {
@@ -17,6 +21,7 @@ export interface UserProps {
   phone?: string;
   address?: UserAddress[];
   ads?: AdsProps[];
+  shippingAddress?: UserAddress;
 }
 
 export interface UserReducerState {
@@ -31,6 +36,9 @@ export const userReducer = createReducer(INITIAL_STATE, {
   // [actions.user.setUserInfo.type]: (state, action) => {
   [constants.user.SET_USER_INFO]: (state, action) => {
     state.userInfo = action.payload;
+  },
+  [constants.user.SET_SHIPPING_ADDRESS]: (state, { shippingAddress }) => {
+    state.userInfo.shippingAddress = shippingAddress;
   },
   [constants.user.CLEAR_USER_STATE]: () => INITIAL_STATE,
 });

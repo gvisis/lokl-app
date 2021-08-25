@@ -39,7 +39,7 @@ export const CustomBtn: React.FC<CustomBtnProps> = ({
   return (
     <StyledButton disabled={onSync || disabled} {...rest}>
       {onSync ? (
-        <ActivityIndicator size={theme.fonts.size.xxxl} color="#fff" />
+        <ActivityIndicator size={theme.fonts.size.l} color="#fff" />
       ) : (
         <StyledButtonText fontSize={fontSize}>{label}</StyledButtonText>
       )}

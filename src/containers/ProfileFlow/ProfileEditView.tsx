@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Formik } from 'formik';
@@ -9,7 +9,7 @@ import { ROUTES } from '../../routes/RouteNames';
 import { ComponentNavProps } from '../../types/general';
 
 export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
-  () => {
+  ({ navigation }) => {
     const { userInfo } = useSelector(state => state.user);
     const { onSync } = useSelector(state => state.ui);
 
@@ -18,6 +18,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
     const handleUserUpdate = useCallback(
       updatedInfo => {
         dispatch(actions.user.updateUserInfo(updatedInfo));
+        navigation.goBack();
       },
       [dispatch],
     );
@@ -42,7 +43,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 onBlur={handleBlur}
                 onChangeText={handleChange('username')}
                 placeholder={'Choose your username'}
-                value={values.username}
+                text={values.username}
               />
               <ProfileRow
                 onBlur={handleBlur}
@@ -50,7 +51,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 label={'Full name'}
                 onChangeText={handleChange('name')}
                 placeholder={'Enter your name'}
-                value={values.name}
+                text={values.name}
               />
               <ProfileRow
                 onBlur={handleBlur}
@@ -58,7 +59,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 label={'Email'}
                 onChangeText={handleChange('email')}
                 placeholder={'Enter your email'}
-                value={values.email}
+                text={values.email}
               />
               <ProfileRow
                 onBlur={handleBlur}
@@ -66,7 +67,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 editable
                 onChangeText={handleChange('phone')}
                 placeholder="(xxx) xxx-xxxx"
-                value={values.phone}
+                text={values.phone}
               />
               <CustomBtn
                 label={'Save'}

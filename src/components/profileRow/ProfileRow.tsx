@@ -7,10 +7,10 @@ interface ProfileRowProps {
   rowLeft?: React.ReactElement<any>;
   rowRight?: React.ReactElement<any>;
   text?: string;
-  value?: string | number;
   label?: string;
   editable?: boolean;
   placeholder?: string;
+  onChangeText?: (text: string) => void;
 }
 
 export const ProfileRow: React.FC<ProfileRowProps> = ({
@@ -18,7 +18,6 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
   rowLeft,
   rowRight,
   text,
-  value,
   editable,
   label,
   placeholder,
@@ -33,10 +32,10 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
         placeholderTextColor="#e9e9e9"
         editable={editable}
         onChangeText={onChangeText}>
-        {text || value}
+        {text}
       </EditableInput>
     ) : (
-      <RowText>{text || value}</RowText>
+      <RowText>{text}</RowText>
     )}
     {rowRight && <RowRight>{rowRight}</RowRight>}
   </RowWrap>

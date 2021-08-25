@@ -1,5 +1,6 @@
 import { constants } from '../constants';
 import { AnyObject } from '../../types/general';
+import { UserAddress } from './UserReducer';
 
 export const setUserInfo = (payload: AnyObject) => ({
   type: constants.user.SET_USER_INFO,
@@ -9,6 +10,15 @@ export const setUserInfo = (payload: AnyObject) => ({
 export const updateUserInfo = (updatedInfo: AnyObject) => ({
   type: constants.user.UPDATE_USER_INFO,
   updatedInfo,
+});
+export const addAddress = (newAddressData: UserAddress) => ({
+  type: constants.user.ADD_ADDRESS,
+  newAddressData,
+});
+
+export const setShippingAddress = (shippingAddress: UserAddress) => ({
+  type: constants.user.SET_SHIPPING_ADDRESS,
+  shippingAddress,
 });
 
 export const getUserAds = () => ({
@@ -49,10 +59,12 @@ export const userActions = {
   login,
   logout,
   signup,
+  addAddress,
   getUserAds,
   setUserInfo,
   createNewAd,
   passwordReset,
   updateUserInfo,
   clearUserState,
+  setShippingAddress,
 };

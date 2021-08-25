@@ -8,6 +8,8 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
 
 import { ROUTES } from './RouteNames';
 import {
+  AddEditAddressView,
+  AddressView,
   ProfileEditView,
   ProfileView,
   SettingsView,
@@ -39,6 +41,8 @@ export const ProfileNavigation: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
       }}>
       <Profile.Screen name={ROUTES.Profile} component={ProfileView} />
       <Profile.Screen name={ROUTES.ProfileEdit} component={ProfileEditView} />
+      <Profile.Screen name={ROUTES.Address} component={AddressView} />
+      <Profile.Screen name={ROUTES.AddAddress} component={AddEditAddressView} />
       <Profile.Screen name={ROUTES.Settings} component={SettingsView} />
     </Profile.Navigator>
   );

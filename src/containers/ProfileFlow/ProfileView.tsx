@@ -23,6 +23,7 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
     ROUTES.ProfileEdit,
   );
   const handleSettingsNav = useFunction(navigation.navigate, ROUTES.Settings);
+  const handleAddressNav = useFunction(navigation.navigate, ROUTES.Address);
   const handleLogout = useFunction(dispatch, actions.user.logout());
 
   return (
@@ -51,8 +52,8 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
-          onPress={handleSettingsNav}
-          text="Edit Addresses"
+          onPress={handleAddressNav}
+          text="Addresses"
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <CustomBtn

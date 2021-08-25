@@ -11,6 +11,8 @@ export * from './cart/RemoveAction';
 export * from './cart/CartItemLayout';
 export * from './profileRow/ProfileRow';
 export * from './cart/CartFooter';
+export * from './addressSelect/AddNewAddress';
+export * from './addressSelect/AddressSelect';
 export * from './produce/ProduceItem';
 export * from './homeHeader/HomeHeader';
 export * from './company/SingleCompany';

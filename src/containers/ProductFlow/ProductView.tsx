@@ -94,9 +94,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
         </ItemHeader>
         <ItemMidSection>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {new Array(7)
-              .fill(<ItemDescription>{product.description}</ItemDescription>)
-              .map(item => item)}
+            <ItemDescription>{product.description}</ItemDescription>
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>

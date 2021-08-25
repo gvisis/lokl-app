@@ -19,7 +19,7 @@ import { CategoryPicker, Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { ROUTES } from '../../routes/RouteNames';
-import { getImageObject } from '../../utils/functions';
+import { getImageObject, guidGenerator } from '../../utils/functions';
 import { AdsProps } from '../../state/app/AppInterfaces';
 
 interface AddAdViewProps {
@@ -37,7 +37,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
+    setUserAd({ ...userAd, id: guidGenerator() });
   }, []);
 
   const handleAdSubmit = async (

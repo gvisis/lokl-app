@@ -1,6 +1,6 @@
 export enum ROUTES {
+  // Misc
   Home = 'home',
-  HomeTab = 'homeTab',
   Error = 'error',
   TabNav = 'tabNav',
   AuthNav = 'authNav',
@@ -14,12 +14,10 @@ export enum ROUTES {
   CompanyCategory = 'companyCategory',
 
   // Ads
-  AdsTab = 'adsTab',
   Ads = 'ads',
   AddAd = 'addAd',
 
   //Cart
-  CartTab = 'cartTab',
   Cart = 'cart',
   CartItemsView = 'cartItemView',
   CartAddressView = 'cartAddress',
@@ -27,12 +25,20 @@ export enum ROUTES {
 
   // Tabs
   Profile = 'profile',
-  ProfileEdit = 'profileEdit',
-  Settings = 'settings',
+  CartTab = 'cartTab',
+  AdsTab = 'adsTab',
+  HomeTab = 'homeTab',
 
   // Login flow
   Landing = 'landing',
   Login = 'login',
   ForgotPassword = 'forgotPassword',
   Signup = 'signup',
+
+  // Profile Flow
+  ProfileEdit = 'profileEdit',
+  Address = 'address',
+  AddAddress = 'addAddress',
+  EditAddress = 'editAddress',
+  Settings = 'settings',
 }

@@ -9,6 +9,26 @@ export const capitalizeFirst = (text: string) =>
 export const sortAsc = (a: string, b: string) => a.localeCompare(b);
 export const sortDesc = (a: string, b: string) => b.localeCompare(a);
 
+export const guidGenerator = () => {
+  const S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return (
+    S4() +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    S4() +
+    S4()
+  );
+};
+
 export const getProductOwnerTitle = (
   allCompanies: CompanyProps[],
   product: CompanyProduct,
@@ -25,13 +45,17 @@ export const getHeaderTitle = routeName => {
     case ROUTES.Profile:
       return 'Profile';
     case ROUTES.ProfileEdit:
-      return 'Profile edit';
+      return 'Edit Profile';
     case ROUTES.Settings:
       return 'Settings';
     case ROUTES.Home:
       return 'Home';
     case ROUTES.Cart:
       return 'Shopping Cart';
+    case ROUTES.Address:
+      return 'Addresses';
+    case ROUTES.AddAddress:
+      return 'Add new address';
     default:
       return 'Home';
   }

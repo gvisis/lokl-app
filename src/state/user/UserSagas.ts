@@ -5,7 +5,9 @@ import i18n from 'i18next';
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { api } from '../../api';
+import { guidGenerator } from '../../utils/functions';
 import { firebaseDb } from '../../api/firebaseDb';
+import { UserAddress, UserProps } from './UserReducer';
 
 interface UserAuthCredentials {
   email: string;
@@ -79,12 +81,52 @@ function* handleUpdateUserDb({ updatedInfo }) {
   }
 }
 
+function* handleAddNewAddress({ newAddressData }) {
+  const { street, city, name, phone, country, postcode } = newAddressData;
+  const userInfo: UserProps = yield select(state => state.user.userInfo);
+  const addressId = guidGenerator();
+  let updatedUserData;
+  const newAddressObject: UserAddress = {
+    id: addressId,
+    name,
+    phone,
+    street,
+    city,
+    country,
+    postcode,
+    default: userInfo.address ? false : true,
+  };
+
+  try {
+    if (userInfo.address) {
+      updatedUserData = {
+        ...userInfo,
+        address: [...userInfo.address, newAddressObject],
+      };
+    } else {
+      updatedUserData = {
+        ...userInfo,
+        address: [newAddressObject],
+      };
+    }
+    yield put(actions.ui.setOnSync('button', true));
+    yield put(actions.user.updateUserInfo(updatedUserData));
+    yield put(actions.ui.setStatus('success', true, 'New address added'));
+  } catch (e) {
+    yield put(actions.ui.setStatus('error', true, 'There was an error'));
+  } finally {
+    yield put(actions.ui.setOnSync('button', false));
+  }
+}
+
 function* handleCreateUserDb(email: string) {
-  const userInfo = {
-    email,
+  const userInfo: UserProps = {
+    username: '',
     name: '',
-    city: '',
-    age: 0,
+    email,
+    phone: '',
+    address: [],
+    ads: [],
   };
   try {
     const newUserId: string = api.getUserInfo().uid;
@@ -98,9 +140,6 @@ function* handleCreateNewAd({ newAd, images }) {
   try {
     yield put(actions.ui.setOnSync('app', true));
     const currentUserId = api.getUserInfo().uid;
-    console.log('newadid', newAd.id);
-    console.log('images', images);
-
     const newAdKey: string = yield call(
       firebaseDb.createAd,
       currentUserId,
@@ -141,4 +180,5 @@ export function* userSaga() {
   yield takeEvery(constants.user.UPDATE_USER_INFO, handleUpdateUserDb);
   yield takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
   yield takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
+  yield takeEvery(constants.user.ADD_ADDRESS, handleAddNewAddress);
 }
