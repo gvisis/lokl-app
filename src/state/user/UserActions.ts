@@ -16,11 +16,6 @@ export const addAddress = (newAddressData: UserAddress) => ({
   newAddressData,
 });
 
-export const setShippingAddress = (shippingAddress: UserAddress) => ({
-  type: constants.user.SET_SHIPPING_ADDRESS,
-  shippingAddress,
-});
-
 export const getUserAds = () => ({
   type: constants.user.GET_USER_ADS,
 });
@@ -66,5 +61,4 @@ export const userActions = {
   passwordReset,
   updateUserInfo,
   clearUserState,
-  setShippingAddress,
 };

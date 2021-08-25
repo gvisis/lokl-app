@@ -8,9 +8,8 @@ import { UserAddress } from '../../state/user/UserReducer';
 import { actions } from '../../state/actions';
 
 export const CartAddressModal = ({ isVisible, setModalVisible }) => {
-  const { address, shippingAddress } = useSelector(
-    state => state.user.userInfo,
-  );
+  const { address } = useSelector(state => state.user.userInfo);
+  const { shippingAddress } = useSelector(state => state.cart);
   const [selectedId, setSelectedId] = useState(null);
   const dispatch = useDispatch();
 
@@ -36,7 +35,7 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
     const selectedAddress = address.filter(
       address => address.id === selectedId,
     )[0];
-    dispatch(actions.user.setShippingAddress(selectedAddress));
+    dispatch(actions.cart.setShippingAddress(selectedAddress));
     toggleModal();
   };
 
