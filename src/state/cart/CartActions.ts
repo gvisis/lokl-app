@@ -1,6 +1,7 @@
 import { CompanyProduct } from '../app/AppInterfaces';
 import { ActionType, CartActions } from './CartInterfaces';
 import { constants } from '../constants';
+import { UserAddress } from '../user/UserReducer';
 
 const checkCartActions = (
   cartAction: ActionType,
@@ -31,6 +32,10 @@ const removeFromCart = (itemToRemove: CompanyProduct) => ({
   type: constants.cart.REMOVE_FROM_CART,
   itemToRemove,
 });
+export const setShippingAddress = (shippingAddress: UserAddress) => ({
+  type: constants.cart.SET_SHIPPING_ADDRESS,
+  shippingAddress,
+});
 
 export const cartActions = {
   updateCart,
@@ -38,4 +43,5 @@ export const cartActions = {
   updateCartTotals,
   removeFromCart,
   checkCartActions,
+  setShippingAddress,
 };

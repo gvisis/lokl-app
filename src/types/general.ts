@@ -1,3 +1,6 @@
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/core';
+
 import { ProductScreenProps } from '../components/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
@@ -8,6 +11,11 @@ export type ErrorType = 'error' | 'success' | null;
 export interface PayloadAction<T> {
   payload: T;
   type: string;
+}
+
+export interface ComponentNavProps<T = string> {
+  navigation?: StackNavigationProp<RootStackParamList, T>;
+  route?: RouteProp<RootStackParamList, T>;
 }
 
 export type RootStackParamList = {
@@ -27,6 +35,9 @@ export type RootStackParamList = {
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
   [ROUTES.AddAd]: undefined;
+  [ROUTES.Address]: undefined;
+  [ROUTES.AddAddress]: undefined;
+  [ROUTES.EditAddress]: undefined;
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;

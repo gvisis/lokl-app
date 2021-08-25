@@ -4,7 +4,7 @@ const data = {
   produce: [
     {
       id: '3',
-      title: 'Bakery',
+      title: 'Baked goods',
       image:
         'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
     },

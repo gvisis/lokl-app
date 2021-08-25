@@ -1,7 +1,3 @@
-//!
-//! Emuliatoriuj screen atrodo kitaip
-//! IMG STATE NESIUPDATINA NORMALIAI
-
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   GestureResponderEvent,
@@ -23,14 +19,12 @@ import { CategoryPicker, Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { ROUTES } from '../../routes/RouteNames';
-import { getImageObject } from '../../utils/functions';
+import { getImageObject, guidGenerator } from '../../utils/functions';
 import { AdsProps } from '../../state/app/AppInterfaces';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
 }
-
-//! All this code here temporary.
 export const AddAdView: React.FC<AddAdViewProps> = () => {
   const dispatch = useDispatch();
   const [date, setDate] = useState(new Date(1598051730000));
@@ -43,10 +37,14 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setUserAd({ ...userAd, id: Math.floor(Math.random() * 999999).toString() });
+    setUserAd({ ...userAd, id: guidGenerator() });
   }, []);
 
-  const handleAdSubmit = async (price, title, description) => {
+  const handleAdSubmit = async (
+    price: number,
+    title: string,
+    description: string,
+  ): Promise<void> => {
     dispatch(
       actions.user.createNewAd(
         {

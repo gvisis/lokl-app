@@ -6,12 +6,15 @@ import styled from 'styled-components/native';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
-import { AuthContainer, Container } from '.';
+import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
+import { ComponentNavProps } from '../../types/general';
 
-export const RegisterView: React.FC<Container> = ({ navigation }) => {
+export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
+  navigation,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);

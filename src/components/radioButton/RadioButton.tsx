@@ -21,7 +21,7 @@ const RadioWrap = styled.TouchableOpacity`
   border-color: ${({ theme }) => theme.colors.secondary};
 `;
 
-const RadioInside = styled.View`
+const RadioInside = styled.View<RadioButtonProps>`
   width: 12px;
   height: 12px;
   border-radius: 8px;

@@ -8,22 +8,18 @@ import React, {
 } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 import { ROUTES } from 'src/routes/RouteNames';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 
-import { RootStackParamList } from '../../types/general';
+import { ComponentNavProps } from '../../types/general';
 import { Container } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 
-interface ProductViewProps {
-  navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleProduct>;
-  route: RouteProp<RootStackParamList, ROUTES.SingleProduct>;
+interface ProductViewProps extends ComponentNavProps<ROUTES.SingleProduct> {
   item?: CompanyProduct;
 }
 
@@ -98,9 +94,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
         </ItemHeader>
         <ItemMidSection>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {new Array(7)
-              .fill(<ItemDescription>{product.description}</ItemDescription>)
-              .map(item => item)}
+            <ItemDescription>{product.description}</ItemDescription>
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>
