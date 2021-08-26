@@ -8,6 +8,7 @@ import { actions } from '../../state/actions';
 import {
   Container,
   CustomBtn,
+  EmptyView,
   HomeHeader,
   ItemCard,
   ScreenLoader,
@@ -37,7 +38,7 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
     <Container>
       <HomeHeader title={'Ads View'} />
       <AdContainer>
-        {adsFromState && (
+        {adsFromState.length !== 0 ? (
           <FlatList
             numColumns={2}
             keyExtractor={item => item.id}
@@ -45,6 +46,8 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
+        ) : (
+          <EmptyView text="No ads available" />
         )}
         {onSync.app && <ScreenLoader size={100} color={'red'} />}
       </AdContainer>

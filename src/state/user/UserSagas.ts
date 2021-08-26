@@ -164,9 +164,9 @@ function* handleGetUserAds() {
     database()
       .ref(`/users/${currentUser}`)
       .once('value')
-      .then(snap => console.log(snap.val().ads));
+      .then(snap => snap.val().ads);
   } catch (e) {
-    console.log('userinfoerror', e);
+    console.log('get user ads error', e);
   } finally {
     yield put(actions.ui.setOnSync('button', false));
   }

@@ -9,9 +9,14 @@ export interface CartReducer {
   quantity: number;
   shippingAddress: UserAddress;
 }
+
+// CartSagas
 export interface CartActions {
   cartAction: ActionType;
   product: CompanyProduct;
   selectedQuantity?: number;
   type?: string;
+}
+export interface CartRemove {
+  itemToRemove: CompanyProduct;
 }

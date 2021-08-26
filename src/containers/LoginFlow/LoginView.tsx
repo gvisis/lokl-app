@@ -31,7 +31,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
   return (
     <AuthContainer headerTitle={t('login:title')}>
       <Formik
-        initialValues={{ email: 'email@example.com', password: 'password123' }}
+        initialValues={{ email: '', password: '' }}
         validationSchema={validator.login}
         onSubmit={({ email, password }) => handleLoginSubmit(email, password)}>
         {({

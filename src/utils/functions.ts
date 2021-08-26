@@ -1,7 +1,13 @@
-import { getFocusedRouteNameFromRoute, Route } from '@react-navigation/native';
+import { number } from 'prop-types';
 
+import { Company } from '../components';
 import { ROUTES } from '../routes/RouteNames';
-import { CompanyProduct, CompanyProps } from '../state/app/AppInterfaces';
+import {
+  CompanyProduct,
+  CompanyProps,
+  RatingData,
+} from '../state/app/AppInterfaces';
+import { AnyObject } from '../types/general';
 
 export const capitalizeFirst = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
@@ -36,6 +42,43 @@ export const getProductOwnerTitle = (
   allCompanies
     .filter(company => company.id === product.owner)
     .map(company => company.title)[0];
+
+export const calcRatingAverage = (ratings: RatingData[]) =>
+  ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length;
+
+export const checkForRatings = (
+  ratedItem: AnyObject,
+  ratingData: RatingData,
+) => {
+  const { id, rating } = ratingData;
+  let updatedData;
+
+  // Check if rating from that user already exist
+  const isRatingExist = ratedItem.ratings.find(item => item.id === id);
+
+  if (ratedItem.ratings && ratedItem.ratings.length !== 0) {
+    // If rating exist, update rating
+    if (isRatingExist) {
+      updatedData = ratedItem.ratings.map(item => {
+        if (item.id === id) {
+          item.rating = rating;
+        }
+        return ratedItem;
+      })[0];
+      // If rating doesn't exist, add rating
+    } else {
+      updatedData = {
+        ...ratedItem,
+        ratings: [...ratedItem.ratings, ratingData],
+      };
+    }
+    // If no ratinga exist, add first rating
+  } else {
+    console.log('updated data false', updatedData);
+    updatedData = { ...ratedItem, ratings: [ratingData] };
+  }
+  return updatedData;
+};
 
 export const getHeaderTitle = routeName => {
   // If the focused route is not found, we need to assume it's the initial screen

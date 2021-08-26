@@ -1,7 +1,6 @@
 //! Cart address ui
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
@@ -22,16 +21,13 @@ export const CartAddressView: React.FC<ComponentNavProps<ROUTES.Address>> = ({
   // When opened, find the default address and set it redux
   useEffect(() => {
     const selectedAddress =
-      address && address.filter(address => address.default)[0];
-    console.log('selected', selectedAddress);
+      address.length !== 0 && address.filter(address => address.default)[0];
     dispatch(actions.cart.setShippingAddress(selectedAddress));
   }, []);
 
   const handleNewAddressNavigate = useCallback(() => {
     navigation.navigate(ROUTES.AddAddress);
   }, [navigation]);
-
-  console.log('shipping', shippingAddress);
 
   return (
     <CartWrapTop>
