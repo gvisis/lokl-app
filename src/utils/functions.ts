@@ -74,7 +74,6 @@ export const checkForRatings = (
     }
     // If no ratinga exist, add first rating
   } else {
-    console.log('updated data false', updatedData);
     updatedData = { ...ratedItem, ratings: [ratingData] };
   }
   return updatedData;

@@ -40,9 +40,9 @@ const updateCompany = async (companyData: CompanyProps) => {
 
 const updateProduct = async (productData: CompanyProduct) => {
   const productRef = await database().ref(
-    `/companies/${productData.owner}/produce/${productData.id}`,
+    `/companies/${productData.owner}/produce/`,
   );
-  await productRef.update(productData);
+  await productRef.set([productData]);
 };
 
 const uploadImageToStorage = (

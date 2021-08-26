@@ -109,7 +109,6 @@ function* handleSetProductRating({ product, ratingData }: ProductSagaProps) {
       product,
       ratingData,
     );
-    console.log('updated product', updatedProduct);
     yield call(firebaseDb.updateProduct, updatedProduct);
   } catch (e) {
     console.log('set product rating error', e);

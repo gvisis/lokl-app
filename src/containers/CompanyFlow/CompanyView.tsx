@@ -14,9 +14,12 @@ export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
     const allCategories = useSelector(state => state.app.categories);
     const [CompCategories, setCompCategories] = useState([]);
 
-    const handleCategoryNav = useCallback(category => {
-      navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });
-    }, []);
+    const handleCategoryNav = useCallback(
+      category => {
+        navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });
+      },
+      [navigation, companyItem],
+    );
 
     useEffect(() => {
       setCompCategories(

@@ -80,8 +80,6 @@ export const ProductView: React.FC<ProductViewProps> = memo(
     const handleRating = (userRating: number) => {
       const currentUserId = api.getUserInfo().uid;
       const newRatingObject = { id: currentUserId, rating: userRating };
-      console.log(newRatingObject);
-
       dispatch(actions.app.setProductRating(product, newRatingObject));
     };
 

@@ -1,17 +1,12 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
-import {
-  EmptyView,
-  ItemCard,
-  ScreenLoader,
-  SingleCompany,
-} from '../../components';
+import { EmptyView, ItemCard, SingleCompany } from '../../components';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 type CompanyScreenProps = {
@@ -37,7 +32,7 @@ export const CategoryView: React.FC<CompanyScreenProps> = memo(
       setCategoryItems(
         companyItem.produce.filter(item => item.category === category.id),
       );
-    }, [category]);
+    }, [category, companyItem]);
 
     return (
       <SingleCompany companyItem={companyItem} showRating={false}>
