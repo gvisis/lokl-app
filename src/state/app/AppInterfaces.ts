@@ -1,14 +1,7 @@
-import { RouteProp } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
-
-import { ROUTES } from '../../routes/RouteNames';
-import { RootStackParamList } from '../../types/general';
-
 export interface AppReducer {
   language: string;
   allAppAds: AdsProps[];
   tempImages?: TempImages[];
-  tempCompany: CompanyProps;
   allCompanies: CompanyProps[];
   categories: Category[];
   allProducts: CompanyProduct[];
@@ -24,6 +17,11 @@ export interface Category {
   id: number;
   title: string;
   image?: string;
+}
+
+export interface RatingData {
+  rating: number;
+  id: string;
 }
 
 export interface UploadImageProps {
@@ -51,7 +49,7 @@ export interface CompanyProduct {
   price: number;
   delivery: boolean;
   available: boolean;
-  rating: number;
+  ratings: RatingData[];
   amount: number;
 }
 
@@ -62,7 +60,7 @@ export interface CompanyProps {
   description?: string;
   website?: string;
   categories: number[];
-  rating: number;
+  ratings: RatingData[];
   produce?: CompanyProduct[];
   address: {
     street: string;
@@ -72,14 +70,13 @@ export interface CompanyProps {
   phone: number;
   email?: string;
 }
-
-//? How to make it custom for each component with a custom ROUTES name ? like...
-//! export interface NavigationProps<CUSTOM_NAME> {
-//! navigation: StackNavigationProp<RootStackParamList, CUSTOM_NAME>;
-//! route: RouteProp<RootStackParamList, CUSTOM_NAME>;
-//! }
-
-export interface NavigationProps {
-  navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
-  route: RouteProp<RootStackParamList, ROUTES.SingleCompany>;
+// Sagas interfaces
+export interface CompanySagaProps {
+  company?: CompanyProps;
+  companyData?: CompanyProps;
+  ratingData?: RatingData;
+}
+export interface ProductSagaProps {
+  product?: CompanyProduct;
+  ratingData?: RatingData;
 }

@@ -10,6 +10,7 @@ import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { Category, CompanyProps } from '../../state/app/AppInterfaces';
+import { calcRatingAverage } from '../../utils/functions';
 
 export interface CompanyItemProps {
   companyItem: CompanyProps;
@@ -56,7 +57,7 @@ export const Company: React.FC<CompanyItemProps> = ({
                 count={5}
                 showRating={false}
                 isDisabled={true}
-                defaultRating={companyItem.rating}
+                defaultRating={calcRatingAverage(companyItem.ratings)}
                 size={15}
                 selectedColor={theme.colors.red}
                 unSelectedColor={theme.colors.red1}

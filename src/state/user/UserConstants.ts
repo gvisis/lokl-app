@@ -5,8 +5,10 @@ export const userConstants = {
   PASSWORD_RESET: 'user/PASSWORD_RESET',
 
   SET_USER_INFO: 'user/SET_USER_INFO',
+
   GET_USER_ADS: 'user/GET_USER_ADS',
   UPDATE_USER_INFO: 'user/UPDATE_USER_INFO',
   CLEAR_USER_STATE: 'user/CLEAR_USER_STATE',
+  ADD_ADDRESS: 'user/ADD_ADDRESS',
   CREATE_NEW_AD: 'user/CREATE_NEW_AD',
 };

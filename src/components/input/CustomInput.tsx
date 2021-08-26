@@ -32,13 +32,15 @@ export const CustomInput: React.FC<CustomInputProps> = ({
     <InputContainer>
       {error && touched && <ErrorMessage>{error}</ErrorMessage>}
       <InputWrapper>
-        <IconWrapper>
-          <Icon
-            name={iconName}
-            size={iconSize || 20}
-            color={iconColor || theme.colors.tertiary2}
-          />
-        </IconWrapper>
+        {iconName && (
+          <IconWrapper>
+            <Icon
+              name={iconName}
+              size={iconSize || 20}
+              color={iconColor || theme.colors.tertiary2}
+            />
+          </IconWrapper>
+        )}
         <StyledInput
           placeholder={placeholder}
           onChangeText={onChangeText}

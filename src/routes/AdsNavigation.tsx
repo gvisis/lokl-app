@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
@@ -21,6 +24,8 @@ export const AdsNavigation: React.FC = () => {
           fontFamily: theme.fonts.family.bentonBook,
           textTransform: 'capitalize',
         },
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <AdsStack.Screen
         name={ROUTES.Ads}

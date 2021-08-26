@@ -1,25 +1,15 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { GestureResponderEvent, ScrollView } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useDispatch, useSelector } from 'react-redux';
+import { ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 
-import { RootStackParamList } from '../../types/general';
+import { ComponentNavProps } from '../../types/general';
 import { ROUTES } from '../../routes/RouteNames';
 import { SingleCompany } from '../../components';
-import { actions } from '../../state/actions';
-import { Category } from '../../state/app/AppInterfaces';
 
-type CompanyViewProps = {
-  navigation: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
-  route: RouteProp<RootStackParamList, ROUTES.SingleCompany>;
-  onPress?: (event: GestureResponderEvent) => void;
-};
-
-// eslint-disable-next-line react/display-name
-export const CompanyView: React.FC<CompanyViewProps> = memo(
-  ({ navigation, route }) => {
+export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
+  // eslint-disable-next-line react/display-name
+  memo(({ navigation, route }) => {
     const { companyItem } = route.params;
     const allCategories = useSelector(state => state.app.categories);
     const [CompCategories, setCompCategories] = useState([]);
@@ -54,8 +44,7 @@ export const CompanyView: React.FC<CompanyViewProps> = memo(
         </ScrollView>
       </SingleCompany>
     );
-  },
-);
+  });
 
 const CompanyDescription = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.l}px;

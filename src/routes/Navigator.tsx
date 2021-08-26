@@ -21,6 +21,7 @@ const Navigator: React.FC = () => {
   const { theme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
 
+  const Stack = createStackNavigator<RootStackParamList>();
   //! Handle user state changes - TEMPORARY CODE!!!
   const onAuthStateChanged = (user): void => {
     if (user) {
@@ -36,7 +37,14 @@ const Navigator: React.FC = () => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  const Stack = createStackNavigator<RootStackParamList>();
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <ScreenLoader size={100} color={theme.colors.secondaryBtn} />
+      </ThemeProvider>
+    );
+  }
+
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
@@ -48,9 +56,6 @@ const Navigator: React.FC = () => {
             <Stack.Screen name={ROUTES.AuthNav} component={AuthNavigation} />
           )}
         </Stack.Navigator>
-        {loading && (
-          <ScreenLoader size={100} color={theme.colors.secondaryBtn} />
-        )}
         <GlobalErrorSuccess />
       </ThemeProvider>
     </NavigationContainer>

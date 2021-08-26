@@ -1,5 +1,8 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import { ROUTES } from './RouteNames';
 import {
@@ -13,7 +16,12 @@ import { RootStackParamList } from '../types/general';
 const AuthStack = createStackNavigator<RootStackParamList>();
 
 export const AuthNavigation: React.FC = () => (
-  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+  <AuthStack.Navigator
+    screenOptions={{
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+    }}>
     <AuthStack.Screen name={ROUTES.Signup} component={RegisterView} />
     <AuthStack.Screen name={ROUTES.Login} component={LoginView} />
     <AuthStack.Screen name={ROUTES.Landing} component={LandingView} />
