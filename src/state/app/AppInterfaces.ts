@@ -7,11 +7,11 @@ export interface AppReducer {
   allProducts: CompanyProduct[];
 }
 
-export type TempImages = { url: string; id: string };
+export type TempImages = { url: string; adId: string };
 
 export interface ImagesProps {
   url: string;
-  id: string;
+  adId: string;
 }
 export interface Category {
   id: number;
@@ -32,7 +32,7 @@ export interface UploadImageProps {
 export interface AdsProps {
   id: string;
   title: string;
-  images?: string[];
+  images?: UploadImageProps;
   category: number;
   price: number;
   description: string;

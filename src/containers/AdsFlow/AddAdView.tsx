@@ -31,14 +31,9 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const [mode, setMode] = useState<string>('date');
   const [tempImages, setTempImages] = useState([]);
   const [show, setShow] = useState<boolean>(false);
-  const [userAd, setUserAd] = useState<AdsProps>(null);
   const [pickedCategory, setPickedCategory] = useState<string>(null);
 
   const navigation = useNavigation();
-
-  useEffect(() => {
-    setUserAd({ ...userAd, id: guidGenerator() });
-  }, []);
 
   const handleAdSubmit = async (
     price: number,
@@ -48,7 +43,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     dispatch(
       actions.user.createNewAd(
         {
-          ...userAd,
+          id: guidGenerator(),
           title,
           category: pickedCategory,
           price,
@@ -59,7 +54,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         tempImages,
       ),
     );
-    navigation.navigate(ROUTES.Ads);
+    navigation.goBack();
   };
   // ===== IMAGE PICKER =====
   const handleImagePicker = useCallback(() => {

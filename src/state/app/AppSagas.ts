@@ -53,7 +53,7 @@ function* handlePickImage() {
         if (assets) {
           const imageUrl = assets[0].uri;
           const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
-          return { url: imageUrl, id: imageId };
+          return { url: imageUrl, adId: imageId };
         }
         if (errorMessage) {
           throw new Error(errorMessage);
@@ -65,6 +65,7 @@ function* handlePickImage() {
     yield put(actions.ui.setStatus('error', true, e.message));
   }
 }
+
 function* handleFetchAllCompanies() {
   try {
     const allCompanies: unknown = yield call(firebaseDb.fetchAllCompanies);

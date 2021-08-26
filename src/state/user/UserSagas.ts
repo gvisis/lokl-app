@@ -146,10 +146,6 @@ function* handleCreateNewAd({ newAd, images }) {
       newAd,
     );
     yield call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
-
-    // later updated with ad Watcher
-    const allAds = yield select(state => state.app.allAppAds);
-    yield put(actions.app.setAllAds([...allAds, newAd]));
   } catch (e) {
     console.log('newaderror', e);
   } finally {

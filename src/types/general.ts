@@ -41,6 +41,7 @@ export type RootStackParamList = {
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;
+  [ROUTES.Search]: undefined;
   [ROUTES.Settings]: undefined;
   [ROUTES.Landing]: undefined;
   [ROUTES.Login]: undefined;

@@ -80,18 +80,18 @@ export const setProducts = (products: any) => ({
 });
 
 export const appActions = {
-  pickImage,
   setAllAds,
   setProducts,
-  fetchAllAds,
-  setLanguage,
+  setAllCompanies,
   setTempImages,
   setCategories,
   setCompanyData,
   setCompanyRating,
   setProductRating,
-  uploadAdImages,
-  setAllCompanies,
+  setLanguage,
+  fetchAllAds,
   fetchCategories,
   fetchAllCompanies,
+  pickImage,
+  uploadAdImages,
 };

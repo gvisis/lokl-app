@@ -27,7 +27,7 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
 
   const renderItem = ({ item }) => <ItemCard ads item={item} />;
 
-  // Fetch all ads from server (create ads watcher later)
+  // Fetch all ads from server
   useFocusEffect(
     useCallback(() => {
       dispatch(actions.app.fetchAllAds());
