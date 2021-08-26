@@ -1,6 +1,3 @@
-import { number } from 'prop-types';
-
-import { Company } from '../components';
 import { ROUTES } from '../routes/RouteNames';
 import {
   CompanyProduct,
@@ -136,5 +133,5 @@ export const getTabIconName = (routeName: string) => {
 export const getImageObject = assets => {
   const imageUrl = assets[0].uri;
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
-  return { url: imageUrl, id: imageId };
+  return { url: imageUrl, adId: imageId };
 };

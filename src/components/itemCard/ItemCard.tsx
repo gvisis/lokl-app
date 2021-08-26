@@ -1,16 +1,24 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, ImageBackground } from 'react-native';
+import { GestureResponderEvent } from 'react-native-modal';
 import styled, { css } from 'styled-components/native';
 
-import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { AdsProps } from '../../state/app/AppInterfaces';
 
 interface ItemCardProps {
-  item: CompanyProduct;
+  item: AdsProps;
   ads?: boolean;
+  onPress?: (e: GestureResponderEvent) => void;
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item, ads }) => (
   <ItemCardWrap onPress={onPress} ads={ads}>
+    {item.images && (
+      <ImageBackground
+        source={{ uri: item.images.url }}
+        style={{ position: 'absolute', width: '100%', height: '100%' }}
+      />
+    )}
     <ItemFooter>
       <ItemCardTitle>{item.title}</ItemCardTitle>
       <ItemPrice>{item.price}</ItemPrice>
