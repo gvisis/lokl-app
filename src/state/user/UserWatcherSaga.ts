@@ -1,4 +1,4 @@
-import { call, put, take } from 'redux-saga/effects';
+import { call, put, take } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import { EventChannel, eventChannel } from 'redux-saga';
 
@@ -18,11 +18,11 @@ async function usersChannel(uid: string) {
 export function* watchUser() {
   const uid: string = api.getUserInfo() && api.getUserInfo().uid;
   if (uid) {
-    const channel: EventChannel<unknown> = yield call(usersChannel, uid);
+    const channel: EventChannel<unknown> = yield* call(usersChannel, uid);
     try {
       while (true) {
-        const { user } = yield take(channel);
-        yield put(actions.user.setUserInfo(user));
+        const { user } = yield* take(channel);
+        yield* put(actions.user.setUserInfo(user));
       }
     } catch (e) {
       console.log(e);

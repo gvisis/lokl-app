@@ -66,7 +66,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
-        setTempImages([...tempImages, getImageObject(assets)]);
+        setTempImages(tempImages => [...tempImages, getImageObject(assets)]);
       }
       if (errorMessage) {
         dispatch(actions.ui.setStatus('error', true, errorMessage));

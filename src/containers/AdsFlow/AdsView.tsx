@@ -31,7 +31,7 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
   useFocusEffect(
     useCallback(() => {
       dispatch(actions.app.fetchAllAds());
-    }, []),
+    }, [dispatch]),
   );
 
   return (

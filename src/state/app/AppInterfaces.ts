@@ -11,7 +11,7 @@ export type TempImages = { url: string; adId: string };
 
 export interface ImagesProps {
   url: string;
-  adId: string;
+  id: string;
 }
 export interface Category {
   id: number;

@@ -59,9 +59,7 @@ const RowWrap = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom-width: 2px;
   padding: 0 10px;
-  border-bottom-color: ${({ theme }) => theme.colors.primary};
 `;
 
 const RowText = styled.TextInput`

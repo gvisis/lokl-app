@@ -38,14 +38,14 @@ export const CartAddressView: React.FC = () => {
         setModalVisible={setModalVisible}
         isVisible={modalVisible}
       />
-      <NewAddressModal
+      <Modal
         onBackdropPress={toggleNewAddressModal}
         isVisible={newAddressModalVisible}
         swipeDirection={['left', 'right']}
         animationIn="slideInDown"
         onBackButtonPress={toggleNewAddressModal}>
         <AddEditAddressView />
-      </NewAddressModal>
+      </Modal>
       <CustomBtn
         fontSize={15}
         onPress={toggleAddressmodal}
@@ -68,8 +68,4 @@ export const CartAddressView: React.FC = () => {
 const CartWrapTop = styled.View`
   flex: 1;
   padding: 0 10px;
-`;
-
-const NewAddressModal = styled(Modal)`
-  padding: 110px 0;
 `;

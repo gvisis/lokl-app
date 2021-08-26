@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'typed-redux-saga';
 
 import { actions } from '../actions';
 import { CompanyProduct } from '../app/AppInterfaces';
@@ -11,7 +11,7 @@ function* handleCartActions({
   selectedQuantity,
 }: CartActions) {
   try {
-    const { cart } = yield select(state => state.cart);
+    const { cart } = yield* select(state => state.cart);
     let tempCart;
     // if it's not first item in the cart
     if (
@@ -26,7 +26,7 @@ function* handleCartActions({
       };
 
       tempCart = [...cart, updatedAmountProduct];
-      yield put(actions.cart.updateCart(tempCart));
+      yield* put(actions.cart.updateCart(tempCart));
     } else {
       tempCart = cart
         .map((item: CompanyProduct) => {
@@ -47,30 +47,30 @@ function* handleCartActions({
         })
         .filter((item: CompanyProduct) => item.amount !== 0);
     }
-    yield put(actions.cart.updateCart(tempCart));
+    yield* put(actions.cart.updateCart(tempCart));
   } catch (e) {
     console.log('checkaction error', e);
   } finally {
-    yield put(actions.cart.getCartTotals());
+    yield* put(actions.cart.getCartTotals());
   }
 }
 function* handleRemoveFromCart({ itemToRemove }: CartRemove) {
   try {
-    const { cart } = yield select(state => state.cart);
+    const { cart } = yield* select(state => state.cart);
     const tempCart = cart.filter(
       (item: CompanyProduct) => itemToRemove.id !== item.id,
     );
-    yield put(actions.cart.updateCart(tempCart));
+    yield* put(actions.cart.updateCart(tempCart));
   } catch (e) {
     console.log('checkaction error', e);
   } finally {
-    yield put(actions.cart.getCartTotals());
+    yield* put(actions.cart.getCartTotals());
   }
 }
 
 function* handleGetCartTotals() {
   try {
-    const cart: CartReducer = yield select(state => state.cart);
+    const cart: CartReducer = yield* select(state => state.cart);
     const { total, quantity } = cart.cart.reduce(
       (cartTotal, cartItem: CompanyProduct) => {
         const itemTotal = cartItem.price * cartItem.amount;
@@ -83,14 +83,14 @@ function* handleGetCartTotals() {
         quantity: 0,
       },
     );
-    yield put(actions.cart.updateCartTotals(total, quantity));
+    yield* put(actions.cart.updateCartTotals(total, quantity));
   } catch (e) {
     console.log('update cart error', e);
   }
 }
 
 export function* cartSaga() {
-  yield takeEvery(constants.cart.GET_CART_TOTALS, handleGetCartTotals);
-  yield takeEvery(constants.cart.REMOVE_FROM_CART, handleRemoveFromCart);
-  yield takeEvery(constants.cart.CHECK_CART_ACTIONS, handleCartActions);
+  yield* takeEvery(constants.cart.GET_CART_TOTALS, handleGetCartTotals);
+  yield* takeEvery(constants.cart.REMOVE_FROM_CART, handleRemoveFromCart);
+  yield* takeEvery(constants.cart.CHECK_CART_ACTIONS, handleCartActions);
 }
