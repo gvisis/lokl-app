@@ -2,7 +2,11 @@ import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 
 import { api } from '.';
-import { CompanyProps, ImagesProps } from '../state/app/AppInterfaces';
+import {
+  CompanyProduct,
+  CompanyProps,
+  ImagesProps,
+} from '../state/app/AppInterfaces';
 
 const fetchAllAds = async () => {
   const currentUser = api.getUserInfo().uid;
@@ -28,9 +32,17 @@ const fetchAllCompanies = async () => {
   const companies = await companiesRef.once('value').then(snap => snap.val());
   return companies;
 };
+
 const updateCompany = async (companyData: CompanyProps) => {
   const companyRef = await database().ref(`/companies/${companyData.id}`);
   await companyRef.update(companyData);
+};
+
+const updateProduct = async (productData: CompanyProduct) => {
+  const productRef = await database().ref(
+    `/companies/${productData.owner}/produce/${productData.id}`,
+  );
+  await productRef.update(productData);
 };
 
 const uploadImageToStorage = (
@@ -86,6 +98,7 @@ export const firebaseDb = {
   createAd,
   fetchAllAds,
   updateCompany,
+  updateProduct,
   fetchAllCompanies,
   fetchCategories,
   uploadImageToStorage,

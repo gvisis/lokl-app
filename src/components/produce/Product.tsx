@@ -15,7 +15,7 @@ import { StyledComponent } from 'styled-components';
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
 import { actions } from '../../state/actions';
-import { getProductOwnerTitle } from '../../utils/functions';
+import { calcRatingAverage, getProductOwnerTitle } from '../../utils/functions';
 
 export interface ProductScreenProps {
   product?: CompanyProduct;
@@ -89,7 +89,7 @@ export const Product: React.FC<ProductScreenProps> = ({
                 count={5}
                 showRating={false}
                 isDisabled={true}
-                defaultRating={product.rating}
+                defaultRating={calcRatingAverage(product.ratings)}
                 size={15}
                 selectedColor={theme.colors.red}
                 unSelectedColor={theme.colors.red1}

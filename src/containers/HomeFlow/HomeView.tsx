@@ -27,14 +27,14 @@ export const HomeView: React.FC = () => {
 
   useEffect(() => {
     // later add functionality to fetch everything with only one dispatch
-    dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchCategories());
+    dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchAllAds());
   }, []);
 
   const renderAllAds = useCallback(
     ({ item }) => <ProduceItem width={200} item={item} />,
-    [allAds],
+    [],
   );
 
   return (

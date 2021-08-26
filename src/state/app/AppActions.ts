@@ -1,5 +1,10 @@
 import { constants } from '../constants';
-import { ImagesProps, RatingData } from './AppInterfaces';
+import {
+  CompanyProduct,
+  CompanyProps,
+  ImagesProps,
+  RatingData,
+} from './AppInterfaces';
 
 export const setLanguage = (payload: string) => ({
   type: constants.app.SET_LANGUAGE,
@@ -52,11 +57,20 @@ export const setCompanyData = (companyData: any) => ({
 });
 
 export const setCompanyRating = (
-  companyId: string,
+  company: CompanyProps,
   ratingData: RatingData,
 ) => ({
   type: constants.app.SET_COMPANY_RATING,
-  companyId,
+  company,
+  ratingData,
+});
+
+export const setProductRating = (
+  product: CompanyProduct,
+  ratingData: RatingData,
+) => ({
+  type: constants.app.SET_PRODUCT_RATING,
+  product,
   ratingData,
 });
 
@@ -75,6 +89,7 @@ export const appActions = {
   setCategories,
   setCompanyData,
   setCompanyRating,
+  setProductRating,
   uploadAdImages,
   setAllCompanies,
   fetchCategories,

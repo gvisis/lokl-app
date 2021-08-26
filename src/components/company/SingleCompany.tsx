@@ -38,8 +38,9 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
   const handleRating = (userRating: number) => {
     const currentUserId = api.getUserInfo().uid;
     const newRatingObject = { id: currentUserId, rating: userRating };
-    dispatch(actions.app.setCompanyRating(companyItem.id, newRatingObject));
+    dispatch(actions.app.setCompanyRating(companyItem, newRatingObject));
   };
+
   return (
     <Container>
       <CompanyHeader>

@@ -18,6 +18,8 @@ import { ComponentNavProps } from '../../types/general';
 import { Container } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { calcRatingAverage } from '../../utils/functions';
+import { api } from '../../api';
 
 interface ProductViewProps extends ComponentNavProps<ROUTES.SingleProduct> {
   item?: CompanyProduct;
@@ -75,6 +77,14 @@ export const ProductView: React.FC<ProductViewProps> = memo(
       navigation.setOptions({ title: product.title });
     }, [product]);
 
+    const handleRating = (userRating: number) => {
+      const currentUserId = api.getUserInfo().uid;
+      const newRatingObject = { id: currentUserId, rating: userRating };
+      console.log(newRatingObject);
+
+      dispatch(actions.app.setProductRating(product, newRatingObject));
+    };
+
     const ratingCustomImage = require('../../assets/images/ratingfull.png');
     return (
       <Container>
@@ -102,7 +112,8 @@ export const ProductView: React.FC<ProductViewProps> = memo(
           <AirbnbRating
             count={5}
             showRating={false}
-            defaultRating={product.rating}
+            defaultRating={calcRatingAverage(product.ratings)}
+            onFinishRating={handleRating}
             size={25}
             starImage={ratingCustomImage}
           />

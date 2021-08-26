@@ -3,7 +3,7 @@ import { put, select, takeEvery } from 'redux-saga/effects';
 import { actions } from '../actions';
 import { CompanyProduct } from '../app/AppInterfaces';
 import { constants } from '../constants';
-import { CartActions, CartReducer } from './CartInterfaces';
+import { CartActions, CartReducer, CartRemove } from './CartInterfaces';
 
 function* handleCartActions({
   cartAction,
@@ -54,7 +54,7 @@ function* handleCartActions({
     yield put(actions.cart.getCartTotals());
   }
 }
-function* handleRemoveFromCart({ itemToRemove }) {
+function* handleRemoveFromCart({ itemToRemove }: CartRemove) {
   try {
     const { cart } = yield select(state => state.cart);
     const tempCart = cart.filter(

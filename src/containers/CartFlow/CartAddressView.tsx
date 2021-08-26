@@ -21,7 +21,7 @@ export const CartAddressView: React.FC<ComponentNavProps<ROUTES.Address>> = ({
   // When opened, find the default address and set it redux
   useEffect(() => {
     const selectedAddress =
-      address && address.filter(address => address.default)[0];
+      address.length !== 0 && address.filter(address => address.default)[0];
     dispatch(actions.cart.setShippingAddress(selectedAddress));
   }, []);
 

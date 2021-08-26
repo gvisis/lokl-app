@@ -49,7 +49,7 @@ export interface CompanyProduct {
   price: number;
   delivery: boolean;
   available: boolean;
-  rating: number;
+  ratings: RatingData[];
   amount: number;
 }
 
@@ -69,4 +69,14 @@ export interface CompanyProps {
   };
   phone: number;
   email?: string;
+}
+// Sagas interfaces
+export interface CompanySagaProps {
+  company?: CompanyProps;
+  companyData?: CompanyProps;
+  ratingData?: RatingData;
+}
+export interface ProductSagaProps {
+  product?: CompanyProduct;
+  ratingData?: RatingData;
 }

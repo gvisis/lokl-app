@@ -1,11 +1,17 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
-import { CompanyProps, RatingData, UploadImageProps } from './AppInterfaces';
-import { sortAsc } from '../../utils/functions';
+import {
+  CompanyProduct,
+  CompanyProps,
+  CompanySagaProps,
+  ProductSagaProps,
+  UploadImageProps,
+} from './AppInterfaces';
+import { checkForRatings, sortAsc } from '../../utils/functions';
 
 //! FIX NEEDED AS ITS  NOT FETCHING ALL ADS, ONLY OF CURRENT USER
 function* handleFetchAllAds() {
@@ -75,45 +81,38 @@ function* handleFetchAllCompanies() {
     console.log('fetch all companies error', e);
   }
 }
-function* handleSetCompanyData({ companyData }) {
+function* handleSetCompanyData({ companyData }: CompanySagaProps) {
   try {
     yield call(firebaseDb.updateCompany, companyData);
   } catch (e) {
     console.log('set company data error', e);
   }
 }
-function* handleSetCompanyRating({ companyId, ratingData }) {
-  const { id, rating } = ratingData;
 
+function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
   try {
-    let updatedCompany;
-    const allCompanies: CompanyProps[] = yield select(
-      state => state.app.allCompanies,
+    const updatedCompany: CompanyProps = yield call(
+      checkForRatings,
+      company,
+      ratingData,
     );
-    const ratedCompany: CompanyProps = allCompanies.find(
-      company => company.id === companyId,
-    );
-
-    // If ratings of the user are already present, update them
-    if (ratedCompany.ratings && ratedCompany.ratings.length !== 0) {
-      updatedCompany = ratedCompany.ratings.map(singleRating =>
-        singleRating.id === id
-          ? {
-              ...ratedCompany,
-              ratings: { ...singleRating, rating },
-            }
-          : {
-              ...ratedCompany,
-              ratings: [...ratedCompany.ratings, ratingData],
-            },
-      )[0];
-      // Else add new rating
-    } else {
-      updatedCompany = { ...ratedCompany, ratings: [ratingData] };
-    }
-    yield put(actions.app.setCompanyData(updatedCompany));
+    yield call(firebaseDb.updateCompany, updatedCompany);
   } catch (e) {
     console.log('set company rating error', e);
+  }
+}
+
+function* handleSetProductRating({ product, ratingData }: ProductSagaProps) {
+  try {
+    const updatedProduct: CompanyProduct = yield call(
+      checkForRatings,
+      product,
+      ratingData,
+    );
+    console.log('updated product', updatedProduct);
+    yield call(firebaseDb.updateProduct, updatedProduct);
+  } catch (e) {
+    console.log('set product rating error', e);
   }
 }
 
@@ -130,12 +129,13 @@ function* handleFetchCategories() {
 }
 
 export function* appSaga() {
-  yield takeLatest(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
-  yield takeLatest(constants.app.PICK_IMAGE, handlePickImage);
-  yield takeLatest(constants.app.SET_COMPANY_DATA, handleSetCompanyData);
-  yield takeLatest(constants.app.SET_COMPANY_RATING, handleSetCompanyRating);
-  yield takeLatest(constants.app.FETCH_ALL_COMPANIES, handleFetchAllCompanies);
-  yield takeLatest(constants.app.FETCH_CATEGORIES, handleFetchCategories);
+  yield takeEvery(constants.app.PICK_IMAGE, handlePickImage);
+  yield takeEvery(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
   //! error: no overload matches this call?
-  yield takeLatest(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
+  yield takeEvery(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
+  yield takeEvery(constants.app.SET_COMPANY_DATA, handleSetCompanyData);
+  yield takeEvery(constants.app.FETCH_CATEGORIES, handleFetchCategories);
+  yield takeEvery(constants.app.SET_PRODUCT_RATING, handleSetProductRating);
+  yield takeEvery(constants.app.SET_COMPANY_RATING, handleSetCompanyRating);
+  yield takeEvery(constants.app.FETCH_ALL_COMPANIES, handleFetchAllCompanies);
 }
