@@ -5,18 +5,19 @@ import { ProductScreenProps } from '../components/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
 
+// Variables
+export enum CART_ACTION {
+  ADD = 'add',
+  REMOVE = 'remove',
+  CLEAR = 'clear',
+  INC = 'inc',
+  DEC = 'dec',
+}
+
+// Types
 export type AnyObject = { [key: string]: any };
 export type ErrorType = 'error' | 'success' | null;
-
-export interface PayloadAction<T> {
-  payload: T;
-  type: string;
-}
-
-export interface ComponentNavProps<T = string> {
-  navigation?: StackNavigationProp<RootStackParamList, T>;
-  route?: RouteProp<RootStackParamList, T>;
-}
+export type ProductAddAction = CART_ACTION.INC | CART_ACTION.DEC;
 
 export type RootStackParamList = {
   [ROUTES.Home]: undefined;
@@ -48,3 +49,13 @@ export type RootStackParamList = {
   [ROUTES.ForgotPassword]: undefined;
   [ROUTES.Signup]: undefined;
 };
+
+// Interfaces
+export interface PayloadAction<T> {
+  payload: T;
+  type: string;
+}
+export interface ComponentNavProps<T = string> {
+  navigation?: StackNavigationProp<RootStackParamList, T>;
+  route?: RouteProp<RootStackParamList, T>;
+}

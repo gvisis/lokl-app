@@ -43,8 +43,6 @@ const TotalItems = styled.Text`
 `;
 
 const CartFooterWrap = styled.View`
-  border-top-width: 1px;
-  border-color: ${({ theme }) => theme.colors.secondary1};
   justify-content: center;
   flex: 0.15;
   padding: 10px;

@@ -30,6 +30,11 @@ export const TabNavigation: React.FC<TabNavProps> = ({ navigation, route }) => {
       tabBarOptions={{
         activeTintColor: theme.colors.secondaryBtn,
         inactiveTintColor: theme.colors.lightGrey,
+        style: {
+          backgroundColor: theme.colors.background,
+          elevation: 0,
+          borderTopWidth: 0,
+        },
       }}>
       <Tab.Screen name={ROUTES.HomeTab} component={HomeNavigation} />
       <Tab.Screen name={ROUTES.AdsTab} component={AdsNavigation} />

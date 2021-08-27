@@ -50,8 +50,8 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
           <EmptyView text="No ads available" />
         )}
         {onSync.app && <ScreenLoader size={100} color={'red'} />}
+        <CustomBtn label="Create new ad" center onPress={handleCreateAd} />
       </AdContainer>
-      <CustomBtn label="Create new ad" center onPress={handleCreateAd} />
     </Container>
   );
 };
@@ -59,4 +59,5 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
 const AdContainer = styled.View`
   flex: 1;
   align-items: center;
+  padding-bottom: 25px;
 `;

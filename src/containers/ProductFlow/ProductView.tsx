@@ -14,8 +14,12 @@ import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 
-import { ComponentNavProps } from '../../types/general';
-import { Container } from '../../components';
+import {
+  CART_ACTION,
+  ComponentNavProps,
+  ProductAddAction,
+} from '../../types/general';
+import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
@@ -57,20 +61,20 @@ export const ProductView: React.FC<ProductViewProps> = memo(
     };
     //==================================================
 
+    const handleQuantityChange = useCallback(
+      (actions: ProductAddAction) => {
+        if (actions === 'inc' && selectedQuantity < 10) {
+          setSelectedQuantity(selectedQuantity + 1);
+        }
+        if (actions === 'dec' && selectedQuantity > 0) {
+          setSelectedQuantity(selectedQuantity - 1);
+        }
+      },
+      [selectedQuantity],
+    );
+
     useEffect(() => {
       setProductTotalPrice(product.price * selectedQuantity);
-    }, [selectedQuantity]);
-
-    const handleIncreaseQuantity = useCallback(() => {
-      selectedQuantity >= 100
-        ? setSelectedQuantity(selectedQuantity)
-        : setSelectedQuantity(selectedQuantity + 1);
-    }, [selectedQuantity]);
-
-    const handleDecreaseQuantity = useCallback(() => {
-      selectedQuantity <= 0
-        ? setSelectedQuantity(selectedQuantity)
-        : setSelectedQuantity(selectedQuantity - 1);
     }, [selectedQuantity]);
 
     useEffect(() => {
@@ -116,8 +120,13 @@ export const ProductView: React.FC<ProductViewProps> = memo(
             starImage={ratingCustomImage}
           />
         </ItemFooter>
-        <AddWrap onPress={handleOpenSheet}>
-          <AddButton>Add to cart</AddButton>
+        <AddWrap>
+          <CustomBtn
+            onPress={handleOpenSheet}
+            center
+            secondary
+            label="Add to cart"
+          />
         </AddWrap>
 
         <BottomSheet
@@ -132,20 +141,25 @@ export const ProductView: React.FC<ProductViewProps> = memo(
             <SelectWrap>
               <SelectTitle>How many?</SelectTitle>
               <SelectOptionWrap>
-                <TouchableOpacity onPress={handleDecreaseQuantity}>
+                <TouchableOpacity
+                  onPress={() => handleQuantityChange(CART_ACTION.DEC)}>
                   <IncDecButton name="minus-circle" size={50} />
                 </TouchableOpacity>
                 <QuantityValue>{selectedQuantity}</QuantityValue>
-                <TouchableOpacity onPress={handleIncreaseQuantity}>
+                <TouchableOpacity
+                  onPress={() => handleQuantityChange(CART_ACTION.INC)}>
                   <IncDecButton name="plus-circle" size={50} />
                 </TouchableOpacity>
               </SelectOptionWrap>
               <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
             </SelectWrap>
             <SheetFooter>
-              <AddWrap onPress={handleAddToCart}>
-                <AddButton>Add to cart</AddButton>
-              </AddWrap>
+              <CustomBtn
+                onPress={handleAddToCart}
+                center
+                secondary
+                label="Add items"
+              />
             </SheetFooter>
           </SheetWrap>
         </BottomSheet>
@@ -249,9 +263,7 @@ const ItemFooter = styled.View`
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
-  border-bottom-width: 1px;
-  border-top-width: 1px;
-  border-color: ${({ theme }) => theme.colors.lightGrey1};
+  background-color: ${({ theme }) => theme.colors.lightGrey2};
 `;
 
 const ItemRating = styled.Text`
@@ -261,21 +273,9 @@ const ItemRating = styled.Text`
 `;
 
 const AddWrap = styled.TouchableOpacity`
-  width: 90%;
+  background: ${({ theme }) => theme.colors.lightGrey2};
   padding: 10px;
   margin: 10px;
-  background: ${({ theme }) => theme.colors.tertiary1};
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.border.radius10}px;
-`;
-
-const AddButton = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
-  font-size: ${({ theme }) => theme.fonts.size.xl}px;
-  color: ${({ theme }) => theme.colors.white};
-  letter-spacing: 1px;
 `;
 
 const SheetWrap = styled.View`
@@ -326,5 +326,5 @@ const QuantityValue = styled.Text`
 `;
 
 const SheetFooter = styled.View`
-  flex: 0.7;
+  flex: 0.5;
 `;
