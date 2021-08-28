@@ -138,6 +138,8 @@ const AdFooterWrap = styled.View`
   background-color: ${({ theme }) => theme.colors.primary};
   padding: 10px 0;
   elevation: 1;
+  margin: 0 10px;
+  border-radius: ${({ theme }) => theme.border.radius5}px;
 `;
 
 const MessageToOwner = styled.View`

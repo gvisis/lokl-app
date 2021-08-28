@@ -24,7 +24,6 @@ export const AddressView: React.FC<ComponentNavProps<ROUTES.Address>> = () => {
   );
 };
 
-const AddressesWrap = styled.ScrollView`
-  flex: 1;
-  padding: 10px;
+const AddressesWrap = styled.ScrollView.attrs({ flex: 1 })`
+  padding: 0 10px;
 `;

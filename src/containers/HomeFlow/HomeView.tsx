@@ -36,6 +36,13 @@ export const HomeView: React.FC = () => {
     ({ item }) => <ProduceItem width={200} item={item} />,
     [],
   );
+  const renderAllCategories = ({ item }) => <ProduceItem item={item} />;
+  const renderAllCompanies = ({ item }) => (
+    <Company width={325} companyItem={item} />
+  );
+  const renderAllProducts = ({ item }) => (
+    <Product width={325} allCompanies={allCompanies} item={item} height={200} />
+  );
 
   return (
     <Container>
@@ -47,9 +54,12 @@ export const HomeView: React.FC = () => {
             {allCategories ? (
               <FlatList
                 data={allCategories}
-                renderItem={({ item }) => <ProduceItem item={item} />}
+                renderItem={renderAllCategories}
                 keyExtractor={item => item.id}
                 horizontal
+                ListEmptyComponent={
+                  <EmptyView text={'No categories created'} />
+                }
                 showsHorizontalScrollIndicator={false}
               />
             ) : (
@@ -61,11 +71,10 @@ export const HomeView: React.FC = () => {
             {allCompanies ? (
               <FlatList
                 data={allCompanies}
-                renderItem={({ item }) => (
-                  <Company width={325} companyItem={item} />
-                )}
+                renderItem={renderAllCompanies}
                 keyExtractor={item => item.id}
                 horizontal
+                ListEmptyComponent={<EmptyView text={'No companies selling'} />}
                 showsHorizontalScrollIndicator={false}
               />
             ) : (
@@ -77,14 +86,10 @@ export const HomeView: React.FC = () => {
             {allProducts ? (
               <FlatList
                 data={allProducts}
-                renderItem={({ item }) => (
-                  <Product
-                    width={325}
-                    allCompanies={allCompanies}
-                    item={item}
-                    height={200}
-                  />
-                )}
+                renderItem={renderAllProducts}
+                ListEmptyComponent={
+                  <EmptyView text={'No products available'} />
+                }
                 keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}

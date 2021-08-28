@@ -57,7 +57,7 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <CustomBtn
-          label={t('common:Logout')}
+          label={t('login:logout')}
           onPress={handleLogout}
           center
           style={{ position: 'absolute', bottom: 25 }}

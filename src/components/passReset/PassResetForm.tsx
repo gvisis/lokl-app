@@ -57,7 +57,7 @@ export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
               size={40}
               color={theme.colors.tertiary1}
             />
-            <BoxMessage>{t('common:Password sent')}</BoxMessage>
+            <BoxMessage>{t('common:passSent')}</BoxMessage>
           </ResetSuccessBox>
         ) : (
           <Formik
@@ -74,7 +74,7 @@ export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
             }) => (
               <>
                 <CustomInput
-                  placeholder={t('common:Enter email')}
+                  placeholder={t('common:enterEmail')}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
@@ -83,7 +83,7 @@ export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
                   iconName={'email'}
                 />
                 <CustomBtn
-                  label={t('common:Reset')}
+                  label={t('common:reset')}
                   center
                   onSync={onSync.button}
                   activeOpacity={0.8}
@@ -94,7 +94,7 @@ export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
           </Formik>
         )}
         <CustomBtn
-          label={t('common:Go back')}
+          label={t('common:goBack')}
           center
           width={30}
           secondary

@@ -69,7 +69,6 @@ const RowWrap = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
 `;
 
 const RowText = styled.TextInput`
@@ -87,7 +86,7 @@ const RowLabel = styled.Text`
   letter-spacing: 1px;
   position: absolute;
   top: 0;
-  left: 0px;
+  left: 0;
   z-index: 1;
 `;
 

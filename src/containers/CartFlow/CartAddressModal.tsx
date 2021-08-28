@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
+import { ScrollView } from 'react-native';
 
 import { AddNewAddress, AddressSelect, CustomBtn } from '../../components';
 import { UserAddress } from '../../state/user/UserReducer';
@@ -49,29 +50,34 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
       onSwipeComplete={toggleModal}
       isVisible={isVisible}>
       <ContentWrap>
-        {address ? (
-          address.map((addressData: UserAddress) => (
-            <AddressSelect
-              modal
-              selectedId={selectedId}
-              onPress={() => handleSelectAddress(addressData.id)}
-              key={addressData.id}
-              address={addressData}
-            />
-          ))
-        ) : (
-          <AddNewAddress text={'No addresses available. Add new?'} />
-        )}
-        <CustomBtn center label="Select address" onPress={handleSelection} />
+        <ScrollViewWrap showsVerticalScrollIndicator={false}>
+          {address ? (
+            address.map((addressData: UserAddress) => (
+              <AddressSelect
+                modal
+                selectedId={selectedId}
+                onPress={() => handleSelectAddress(addressData.id)}
+                key={addressData.id}
+                address={addressData}
+              />
+            ))
+          ) : (
+            <AddNewAddress text={'No addresses available. Add new?'} />
+          )}
+          <CustomBtn center label="Select address" onPress={handleSelection} />
+        </ScrollViewWrap>
       </ContentWrap>
     </Modal>
   );
 };
+const ScrollViewWrap = styled.ScrollView.attrs({ flex: 1 })``;
 
 const ContentWrap = styled.View`
+	flex: 0.7
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 15px;
+  padding: 10px 15px;
   border-radius: ${({ theme }) => theme.border.radius10}px;
   border-width: 5px;
   border-color: ${({ theme }) => theme.colors.primary};
+  overflow: hidden;
 `;

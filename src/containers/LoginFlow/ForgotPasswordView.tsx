@@ -12,7 +12,7 @@ export const ForgotPasswordView: React.FC<
   const { t } = useTranslation();
 
   return (
-    <AuthContainer headerTitle={t('common:Password reset')}>
+    <AuthContainer headerTitle={t('common:passReset')}>
       <PassResetForm navigation={navigation} />
     </AuthContainer>
   );

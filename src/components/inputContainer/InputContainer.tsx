@@ -3,8 +3,7 @@ import { StyleProp } from 'react-native';
 import styled from 'styled-components/native';
 
 const StyledContainer = styled.View`
-  width: 100%;
-  justify-content: center;
+  flex: 1;
   align-items: center;
 `;
 

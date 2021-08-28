@@ -66,7 +66,7 @@ const SelectionWrap = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 10px 0;
   padding: 5px;
   border-width: 1px;
   border-radius: 10px;

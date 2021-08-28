@@ -20,7 +20,7 @@ export const CartNavigation: React.FC = () => {
         <TopBar.Screen
           name={ROUTES.CartItemsView}
           component={CartItemsView}
-          options={{ tabBarLabel: 'Shopping cart' }}
+          options={{ tabBarLabel: 'Cart' }}
         />
         <TopBar.Screen
           name={ROUTES.CartAddressView}
