@@ -16,6 +16,7 @@ export enum ROUTES {
   // Ads
   Ads = 'ads',
   AddAd = 'addAd',
+  SingleAdView = 'singleAdView',
 
   //Cart
   Cart = 'cart',
@@ -41,4 +42,9 @@ export enum ROUTES {
   AddAddress = 'addAddress',
   EditAddress = 'editAddress',
   Settings = 'settings',
+
+  // Search flow
+  Search = 'search',
+  SearchModal = 'searchModal',
+  SearchResults = 'searchResults',
 }

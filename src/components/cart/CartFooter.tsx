@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -43,8 +43,6 @@ const TotalItems = styled.Text`
 `;
 
 const CartFooterWrap = styled.View`
-  border-top-width: 1px;
-  border-color: ${({ theme }) => theme.colors.secondary1};
   justify-content: center;
   flex: 0.15;
   padding: 10px;

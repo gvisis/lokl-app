@@ -1,31 +1,37 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-export const ItemHeader = ({ product, itemTop }) => (
+import { CompanyProduct } from '../../state/app/AppInterfaces';
+
+export const ItemHeader = ({
+  item,
+  productOwnerTitle,
+}: {
+  item: CompanyProduct;
+  productOwnerTitle: string;
+}) => (
   <ItemHeaderWrap>
     <TitleWrap>
-      {itemTop && itemTop}
-      {product && <ProductImage source={{ uri: product.image }} />}
-      {product && (
+      {item && <ProductImage source={{ uri: item.image }} />}
+      {item && (
         <OwnerWrap>
-          <OwnerTitle>{product.owner}</OwnerTitle>
-          <CompanyLogo source={{ uri: product.image }} />
+          <OwnerTitle>{productOwnerTitle}</OwnerTitle>
+          <CompanyLogo source={{ uri: item.image }} />
         </OwnerWrap>
       )}
     </TitleWrap>
     <BottomHeader>
-      <ProductTitle>{product.title}</ProductTitle>
-      <ProductCat>{product.category}</ProductCat>
-      <Price>£ {product.price}</Price>
+      <ProductTitle>{item.title}</ProductTitle>
+      <ProductCat>{item.category}</ProductCat>
+      <Price>£ {item.price}</Price>
     </BottomHeader>
   </ItemHeaderWrap>
 );
 
 const ItemHeaderWrap = styled.View`
   flex: 1.5;
-  width: 100%;
-  height: 100%;
 `;
+
 const ProductImage = styled.ImageBackground`
   position: absolute;
   width: 100%;
@@ -69,9 +75,8 @@ const BottomHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-color: ${({ theme }) => theme.colors.lightGrey1};
-  border-bottom-width: 1px;
-  border-top-width: 1px;
+  background-color: ${({ theme }) => theme.colors.lightGrey2};
+  elevation: 1;
 `;
 
 const ProductTitle = styled.Text`

@@ -1,5 +1,3 @@
-//! Cart address ui
-
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
@@ -10,8 +8,9 @@ import { actions } from '../../state/actions';
 
 export const CartItemsView: React.FC = () => {
   const { cart } = useSelector(state => state.cart);
-  const handleRenderCartItem = ({ item }) => <CartItemLayout item={item} />;
   const dispatch = useDispatch();
+
+  const handleRenderCartItem = ({ item }) => <CartItemLayout item={item} />;
 
   useEffect(() => {
     dispatch(actions.cart.getCartTotals());

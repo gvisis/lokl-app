@@ -1,13 +1,11 @@
 export interface AppReducer {
   language: string;
   allAppAds: AdsProps[];
-  tempImages?: TempImages[];
+  tempImages?: ImagesProps[];
   allCompanies: CompanyProps[];
   categories: Category[];
   allProducts: CompanyProduct[];
 }
-
-export type TempImages = { url: string; id: string };
 
 export interface ImagesProps {
   url: string;
@@ -29,28 +27,28 @@ export interface UploadImageProps {
   images: ImagesProps[];
 }
 
-export interface AdsProps {
+export interface Product {
   id: string;
   title: string;
-  images?: string[];
-  category: number;
-  price: number;
-  description: string;
-  dateRequired: string;
-  dateAdded: string;
-}
-export interface CompanyProduct {
-  id: string;
-  owner: string;
-  title: string;
-  image: string;
   description?: string;
   category: number;
   price: number;
+  image: string;
+  images?: UploadImageProps;
+}
+
+export interface CompanyProduct extends Product {
+  owner: string;
   delivery: boolean;
   available: boolean;
   ratings: RatingData[];
   amount: number;
+}
+
+export interface AdsProps extends Product {
+  dateRequired: string;
+  ownerId: string;
+  dateAdded: string;
 }
 
 export interface CompanyProps {

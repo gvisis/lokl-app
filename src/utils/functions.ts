@@ -1,6 +1,5 @@
-import { number } from 'prop-types';
+import storage from '@react-native-firebase/storage';
 
-import { Company } from '../components';
 import { ROUTES } from '../routes/RouteNames';
 import {
   CompanyProduct,
@@ -37,10 +36,10 @@ export const guidGenerator = () => {
 
 export const getProductOwnerTitle = (
   allCompanies: CompanyProps[],
-  product: CompanyProduct,
+  item: CompanyProduct,
 ): string =>
   allCompanies
-    .filter(company => company.id === product.owner)
+    .filter(company => company.id === item.owner)
     .map(company => company.title)[0];
 
 export const calcRatingAverage = (ratings: RatingData[]) =>
@@ -74,7 +73,6 @@ export const checkForRatings = (
     }
     // If no ratinga exist, add first rating
   } else {
-    console.log('updated data false', updatedData);
     updatedData = { ...ratedItem, ratings: [ratingData] };
   }
   return updatedData;
@@ -138,4 +136,10 @@ export const getImageObject = assets => {
   const imageUrl = assets[0].uri;
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
   return { url: imageUrl, id: imageId };
+};
+
+export const getDateFromString = (date: string) => {
+  const parsedDate = Date.parse(date);
+  const dateISO = new Date(parsedDate);
+  return dateISO.toLocaleDateString();
 };

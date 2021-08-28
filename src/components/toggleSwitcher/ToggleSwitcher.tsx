@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ThemeContext } from 'styled-components/native';
+import React, { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components/native';
 import ToggleSwitch from 'rn-toggle-switch';
 import { useDispatch } from 'react-redux';
 
@@ -14,7 +14,7 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
   const [switcherBool, setSwitchBool] = useState(true);
   const dispatch = useDispatch();
   const [toggleText, setToggleText] = useState({ onText: '', offText: '' });
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const handleSwitch = () => {
     if (toggle === 'themeSwitch') {

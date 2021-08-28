@@ -30,7 +30,7 @@ export const HomeView: React.FC = () => {
     dispatch(actions.app.fetchCategories());
     dispatch(actions.app.fetchAllCompanies());
     dispatch(actions.app.fetchAllAds());
-  }, []);
+  }, [dispatch]);
 
   const renderAllAds = useCallback(
     ({ item }) => <ProduceItem width={200} item={item} />,
@@ -81,7 +81,7 @@ export const HomeView: React.FC = () => {
                   <Product
                     width={325}
                     allCompanies={allCompanies}
-                    product={item}
+                    item={item}
                     height={200}
                   />
                 )}
