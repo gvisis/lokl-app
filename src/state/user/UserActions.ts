@@ -1,16 +1,18 @@
+import { createAction } from '@reduxjs/toolkit';
+
 import { constants } from '../constants';
 import { AnyObject } from '../../types/general';
 import { UserAddress } from './UserReducer';
 
-export const setUserInfo = (payload: AnyObject) => ({
-  type: constants.user.SET_USER_INFO,
-  payload,
-});
+export const setUserInfo = createAction<AnyObject>(
+  constants.user.SET_USER_INFO,
+);
 
 export const updateUserInfo = (updatedInfo: AnyObject) => ({
   type: constants.user.UPDATE_USER_INFO,
   updatedInfo,
 });
+
 export const addAddress = (newAddressData: UserAddress) => ({
   type: constants.user.ADD_ADDRESS,
   newAddressData,

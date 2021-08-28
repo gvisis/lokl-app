@@ -1,45 +1,45 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   GestureResponderEvent,
   Keyboard,
   Platform,
-  Text,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import styled, { css } from 'styled-components/native';
+import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { CategoryPicker, Container, CustomBtn } from '../../components';
+import {
+  CategoryPicker,
+  Container,
+  CustomBtn,
+  ProfileRow,
+} from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
-import { ROUTES } from '../../routes/RouteNames';
 import { getImageObject, guidGenerator } from '../../utils/functions';
-import { AdsProps } from '../../state/app/AppInterfaces';
+import { api } from '../../api';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
 }
 export const AddAdView: React.FC<AddAdViewProps> = () => {
-  const dispatch = useDispatch();
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState<string>('date');
   const [tempImages, setTempImages] = useState([]);
-  const [show, setShow] = useState<boolean>(false);
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [pickedCategory, setPickedCategory] = useState<string>(null);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const theme = useTheme();
 
-  const handleAdSubmit = async (
-    price: number,
-    title: string,
-    description: string,
-  ): Promise<void> => {
+  const handleAdSubmit = values => {
+    const { title, description, price } = values;
     dispatch(
       actions.user.createNewAd(
         {
@@ -48,7 +48,8 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           category: pickedCategory,
           price,
           description,
-          dateRequired: date.toString(),
+          ownerId: api.getUserInfo().uid,
+          dateRequired: date.toLocaleDateString(),
           dateAdded: new Date().toString(),
         },
         tempImages,
@@ -61,8 +62,8 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     const options = {
       mediaType: 'photo',
       quality: 1,
-      maxWidth: 800,
-      maxHeight: 600,
+      maxWidth: 1920,
+      maxHeight: 1080,
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
@@ -81,12 +82,12 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   };
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShowDatePicker(Platform.OS === 'ios');
     setDate(currentDate);
   };
 
   const showMode = (currentMode: string) => {
-    setShow(true);
+    setShowDatePicker(true);
     setMode(currentMode);
   };
   // ===== END DATE PICKER =====
@@ -102,25 +103,19 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           }}
           enableReinitialize
           validationSchema={validator.ad}
-          onSubmit={({
-            price,
-            title,
-            description,
-          }: {
-            price: string;
-            title: string;
-            description: string;
-          }) => handleAdSubmit(price, title, description)}>
+          onSubmit={values => handleAdSubmit(values)}>
           {({ errors, values, handleChange, handleSubmit, touched }) => (
             <AdContainer>
-              {errors.title && touched && (
+              {errors.title && touched.title && (
                 <ErrorMessage>{errors.title}</ErrorMessage>
               )}
-              <AdTitle
+              <ProfileRow
                 onChangeText={handleChange('title')}
-                value={values.title}
-                placeholder={'Enter ad title'}
+                text={values.title}
+                editable
+                placeholder={'What are you looking for?'}
               />
+              {/* TITLE */}
               <AdHeader>
                 {tempImages.length != 0 &&
                   tempImages.map(image => (
@@ -128,59 +123,77 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   ))}
                 {(tempImages === null || tempImages.length != 3) && (
                   <AddImage onPress={handleImagePicker}>
-                    <Icon name={'image-plus'} size={30} />
+                    <AddImageText>Select example image</AddImageText>
+                    <Icon name={'image-plus'} size={25} />
                   </AddImage>
                 )}
               </AdHeader>
-              <AdHeaderBottom>
+              {/* TITLE END */}
+              {/* ERRORS TOP*/}
+              {errors.price && (
+                <AdRowWrap errorText>
+                  {errors.category && touched.category && (
+                    <ErrorMessage>Please select a category</ErrorMessage>
+                  )}
+                  {errors.price && touched.price && (
+                    <ErrorMessage>{errors.price}</ErrorMessage>
+                  )}
+                </AdRowWrap>
+              )}
+              {/* ERRORS TOP END */}
+              {/* CATEGORY PICKER */}
+              <AdRowWrap>
                 <CategoryPicker
-                  pickedCategory={pickedCategory}
-                  setPickedCategory={setPickedCategory}
+                  value={pickedCategory}
+                  onValueChange={setPickedCategory}
                 />
-              </AdHeaderBottom>
-
-              <AdDescriptionWrap>
-                {errors.description && touched && (
-                  <ErrorMessage>{errors.description}</ErrorMessage>
-                )}
-                <AdDescription
-                  placeholder="Describe what are you looking for.."
-                  placeholderTextColor="green"
-                  onChangeText={handleChange('description')}
-                  multiline
-                  value={values.description}
-                />
-                {errors.price && touched && (
-                  <ErrorMessage>{errors.price}</ErrorMessage>
-                )}
                 <PriceInput
-                  placeholderTextColor="green"
+                  placeholderTextColor={theme.colors.lightGrey1}
                   keyboardType="numeric"
                   onChangeText={handleChange('price')}
-                  placeholder="Enter maximum price you willing to pay"
+                  placeholder={'Enter max price'}
                   value={values.price}
                 />
-                <View>
-                  <CustomBtn
-                    center
-                    onPress={showDatepicker}
-                    label="Select date"
-                  />
-                </View>
-                {show && (
+              </AdRowWrap>
+              {/* CATEGORY PICKER END */}
+              {/* DESCRIPTION */}
+              <AdDescriptionWrap>
+                {errors.description && touched.description && (
+                  <ErrorMessage>{errors.description}</ErrorMessage>
+                )}
+                <ProfileRow
+                  onChangeText={handleChange('description')}
+                  text={values.description}
+                  editable
+                  placeholder="Describe what are you looking for.."
+                  multiline
+                />
+              </AdDescriptionWrap>
+              {/* DESCRIPTION END */}
+              {/* DATE PICKER  */}
+              <AdRowWrap>
+                <ProfileRow
+                  rowLeft={<CalendarIcon name={'calendar-outline'} />}
+                  rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
+                  onPress={showDatepicker}
+                  text={'I need it by (select): '}
+                />
+                {showDatePicker && (
                   <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
+                    minimumDate={new Date()}
+                    maximumDate={new Date(2030, 11, 31)}
                     is24Hour={true}
                     format="DD-MM-YYYY"
                     display="calendar"
                     onChange={onChange}
                   />
                 )}
-                <Text>{date.toString()}</Text>
-                <CustomBtn center label={'Create add'} onPress={handleSubmit} />
-              </AdDescriptionWrap>
+              </AdRowWrap>
+              {/* DATE PICKER END */}
+              <CustomBtn center label={'Create'} onPress={handleSubmit} />
             </AdContainer>
           )}
         </Formik>
@@ -195,42 +208,66 @@ const AdContainer = styled.View`
 const ErrorMessage = styled.Text`
   color: ${({ theme }) => theme.colors.red};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
-  margin-bottom: 5px;
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  margin: 0 10px;
+  padding: 5px;
+  align-self: center;
 `;
 const AdHeader = styled.View`
-  /* padding: 10px; */
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   border-bottom-width: 1px;
+  border-color: ${({ theme }) => theme.colors.lightGrey1}; ;
 `;
 
-const AdTitle = styled.TextInput`
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
-  width: 100%;
-  border-bottom-width: 1px;
-`;
-
-const AdHeaderBottom = styled.View`
+const AdRowWrap = styled.View`
   width: 100%;
   flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ errorText }) =>
+    errorText ? 'space-between' : 'center'};
   border-color: ${({ theme }) => theme.colors.lightGrey1};
   border-bottom-width: 1px;
+  background-color: ${({ theme, errorText }) =>
+    !errorText ? theme.colors.lightGrey2 : 'transparent'};
 `;
 
+const CalendarIcon = styled(Icon)`
+  font-size: ${({ theme }) => theme.fonts.size.xxl}px;
+  color: ${({ theme }) => theme.colors.secondary};
+`;
+const DateText = styled.Text`
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 10px 5px;
+  border-radius: ${({ theme }) => theme.border.radius5}px;
+  color: ${({ theme }) => theme.colors.primary3};
+  font-family: ${({ theme }) => theme.fonts.family.benton};
+  elevation: 1;
+`;
+const PriceInput = styled.TextInput`
+  flex: 0.3;
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
+  color: ${({ theme }) => theme.colors.secondary};
+  border-left-width: 1px;
+  border-color: ${({ theme }) => theme.colors.lightGrey1};
+  padding: 5px;
+  text-align: center;
+`;
+const AdDescriptionWrap = styled.View`
+  flex: 0.5;
+  margin: 10px;
+`;
+// IMAGE PICKER
 const addImageStyle = css`
   width: 100px;
   height: 100px;
   margin: 10px;
   align-items: center;
   justify-content: center;
-  border-width: 1px;
   background: ${({ theme }) => theme.colors.lightGrey2};
-  border-color: ${({ theme }) => theme.colors.lightGrey1};
+  border-radius: 5px;
 `;
 
 const AddedImage = styled.Image`
@@ -238,22 +275,14 @@ const AddedImage = styled.Image`
 `;
 const AddImage = styled.TouchableOpacity`
   ${addImageStyle}
+  elevation: 2;
+  justify-content: space-evenly;
 `;
 
-const AdDescriptionWrap = styled.View`
-  flex: 1;
-  border-bottom-width: 1px;
+const AddImageText = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  color: ${({ theme }) => theme.colors.lightGrey};
+  text-align: center;
 `;
-
-const AdDescription = styled.TextInput`
-  min-height: 100px;
-  max-height: 200px;
-  color: black;
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
-  border-bottom-width: 1px;
-  text-align-vertical: top;
-`;
-
-const PriceInput = styled.TextInput`
-  color: black;
-`;
+// IMAGE PICKER END

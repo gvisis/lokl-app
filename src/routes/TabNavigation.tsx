@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { ThemeContext } from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 
 import { getTabIconName, getTabLabel } from '../utils/functions';
 import { ROUTES } from './RouteNames';
@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator<RootStackParamList>();
 type TabNavProps = BottomTabNavigationProp<RootStackParamList, ROUTES.TabNav>;
 
 export const TabNavigation: React.FC<TabNavProps> = ({ navigation, route }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

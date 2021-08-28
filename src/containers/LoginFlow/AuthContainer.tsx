@@ -1,8 +1,8 @@
 import React from 'react';
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { ThemeContext } from 'styled-components';
+import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/images/logo.svg';
 import { InputContainer } from '../../components';
@@ -17,7 +17,7 @@ export const AuthContainer: React.FC<Container> = ({
   children,
   headerTitle,
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <KeyboardAvoidsView behavior="height">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

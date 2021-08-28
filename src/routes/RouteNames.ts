@@ -16,6 +16,7 @@ export enum ROUTES {
   // Ads
   Ads = 'ads',
   AddAd = 'addAd',
+  SingleAdView = 'singleAdView',
 
   //Cart
   Cart = 'cart',

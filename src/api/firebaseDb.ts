@@ -1,33 +1,44 @@
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 
-import { api } from '.';
 import {
+  AdsProps,
+  Category,
   CompanyProduct,
   CompanyProps,
   ImagesProps,
 } from '../state/app/AppInterfaces';
+import { api } from '.';
 
-const fetchAllAds = async () => {
+const fetchAllAds = async (): Promise<AdsProps> => {
   const currentUser = api.getUserInfo().uid;
   const adsRef = await database().ref(`/users/${currentUser}/ads/`);
   const ads = await adsRef.once('value').then(snap => snap.val());
   return ads;
 };
 
-const createAd = async (userId, adInfo) => {
+const createAd = async (userId: string, adInfo: AdsProps): Promise<string> => {
+  console.log('adInfo', adInfo);
+
   const newAdRef = await database().ref(`/users/${userId}/ads/`).push();
-  await newAdRef.set(adInfo);
+  await newAdRef.update(adInfo);
   return newAdRef.key;
 };
 
-const fetchCategories = async () => {
+const fetchDefaultImage = async (): Promise<string> => {
+  const defaultImageRef = await storage()
+    .ref(`/images/ads/default.png`)
+    .getDownloadURL();
+  return defaultImageRef;
+};
+
+const fetchCategories = async (): Promise<Category> => {
   const categoriesRef = await database().ref('/categories/');
   const categories = await categoriesRef.once('value').then(snap => snap.val());
   return categories;
 };
 
-const fetchAllCompanies = async () => {
+const fetchAllCompanies = async (): Promise<CompanyProps[]> => {
   const companiesRef = await database().ref('/companies/');
   const companies = await companiesRef.once('value').then(snap => snap.val());
   return companies;
@@ -96,6 +107,7 @@ export const firebaseDb = {
   updateCompany,
   updateProduct,
   fetchAllCompanies,
+  fetchDefaultImage,
   fetchCategories,
   uploadImageToStorage,
 };

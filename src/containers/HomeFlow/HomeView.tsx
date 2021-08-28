@@ -81,7 +81,7 @@ export const HomeView: React.FC = () => {
                   <Product
                     width={325}
                     allCompanies={allCompanies}
-                    product={item}
+                    item={item}
                     height={200}
                   />
                 )}

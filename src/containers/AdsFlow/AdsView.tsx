@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
-import { useFocusEffect } from '@react-navigation/core';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { actions } from '../../state/actions';
 import {
@@ -15,23 +15,23 @@ import {
 } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { useFunction } from '../../utils/hooks';
-import { ComponentNavProps } from '../../types/general';
 
-export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
-  navigation,
-}) => {
+export const AdsView: React.FC = () => {
   const dispatch = useDispatch();
   const adsFromState = useSelector(state => state.app.allAppAds);
   const { onSync } = useSelector(state => state.ui);
-  const handleCreateAd = useFunction(navigation.navigate, ROUTES.AddAd);
+  const { navigate } = useNavigation();
+  const handleCreateAd = useFunction(navigate, ROUTES.AddAd);
 
-  const renderItem = ({ item }) => <ItemCard ads item={item} />;
+  const renderItem = ({ item }) => (
+    <ItemCard ads onPress={ROUTES.SingleAdView} item={item} />
+  );
 
   // Fetch all ads from server
   useFocusEffect(
     useCallback(() => {
       dispatch(actions.app.fetchAllAds());
-    }, [dispatch]),
+    }, []),
   );
 
   return (
@@ -58,6 +58,5 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
 
 const AdContainer = styled.View`
   flex: 1;
-  align-items: center;
   padding-bottom: 25px;
 `;

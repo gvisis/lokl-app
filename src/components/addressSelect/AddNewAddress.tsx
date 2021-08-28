@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 import { useFunction } from '../../utils/hooks';
 import { ROUTES } from '../../routes/RouteNames';

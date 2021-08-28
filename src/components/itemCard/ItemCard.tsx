@@ -1,39 +1,56 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Dimensions, ImageBackground } from 'react-native';
-import { GestureResponderEvent } from 'react-native-modal';
+import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
-import { AdsProps } from '../../state/app/AppInterfaces';
+import { ItemCardProps } from '../../types/general';
+import { useFunction } from '../../utils/hooks';
 
-interface ItemCardProps {
-  item: AdsProps;
-  ads?: boolean;
-  onPress?: (e: GestureResponderEvent) => void;
-}
+export const ItemCard: React.FC<ItemCardProps> = ({
+  onPress,
+  productOwnerTitle,
+  item,
+  ads,
+}) => {
+  const adImage = item.images && Object.values(item.images)[0];
+  const productImage = item.image;
+  const { navigate } = useNavigation();
 
-export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item, ads }) => (
-  <ItemCardWrap onPress={onPress} ads={ads}>
-    {item.images && (
-      <ImageBackground
-        source={{ uri: item.images.url }}
-        style={{ position: 'absolute', width: '100%', height: '100%' }}
-      />
-    )}
-    <ItemFooter>
-      <ItemCardTitle>{item.title}</ItemCardTitle>
-      <ItemPrice>{item.price}</ItemPrice>
-    </ItemFooter>
-  </ItemCardWrap>
-);
+  const handlePress = useFunction(navigate, onPress, {
+    item,
+    productOwnerTitle,
+  });
+
+  return (
+    <ItemCardWrap onPress={handlePress} ads={ads}>
+      {(productImage || adImage) && (
+        <ImageBackgrounds source={{ uri: productImage || adImage }} />
+      )}
+      <ItemFooter>
+        <ItemCardTitle>{item.title}</ItemCardTitle>
+        <ItemPrice>{item.price}</ItemPrice>
+      </ItemFooter>
+    </ItemCardWrap>
+  );
+};
 
 const ItemCardWrap = styled.TouchableOpacity`
-  width: ${({ ads }) => (ads && 45) || 80}%;
+  width: ${({ ads }) => (ads ? 45 : 80)}%;
   height: ${Dimensions.get('window').height / 5}px;
   justify-content: flex-end;
-  border-width: 1px;
   margin: 15px 10px;
   border-color: ${({ theme }) => theme.colors.secondary};
+  border-radius: ${({ theme }) => theme.border.radius5}px;
+  overflow: hidden;
+  elevation: 1;
 `;
+
+const ImageBackgrounds = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
 const ItemFooter = styled.View`
   flex-direction: row;
   width: 100%;

@@ -1,5 +1,4 @@
 import { call, put, takeEvery } from 'typed-redux-saga';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
@@ -39,33 +38,6 @@ function* handleUploadImages({ adId, images }: UploadImageProps) {
   }
 }
 
-function* handlePickImage() {
-  try {
-    const options = {
-      mediaType: 'photo',
-      quality: 1,
-      maxWidth: 800,
-      maxHeight: 600,
-    };
-    const imageObject = launchImageLibrary(
-      options,
-      ({ errorMessage, assets }) => {
-        if (assets) {
-          const imageUrl = assets[0].uri;
-          const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
-          return { url: imageUrl, adId: imageId };
-        }
-        if (errorMessage) {
-          throw new Error(errorMessage);
-        }
-      },
-    );
-    yield* put(actions.app.setTempImages(imageObject));
-  } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, e.message));
-  }
-}
-
 function* handleFetchAllCompanies() {
   try {
     const allCompanies: unknown = yield* call(firebaseDb.fetchAllCompanies);
@@ -92,11 +64,13 @@ function* handleSetCompanyData({ companyData }: CompanySagaProps) {
 
 function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
   try {
+    // receives an nested object, typescript doesnt like it
     const updatedCompany: CompanyProps = yield* call(
       checkForRatings,
       company,
       ratingData,
     );
+    console.log('updcomp', updatedCompany.id);
     yield* call(firebaseDb.updateCompany, updatedCompany);
   } catch (e) {
     console.log('set company rating error', e);
@@ -105,6 +79,7 @@ function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
 
 function* handleSetProductRating({ product, ratingData }: ProductSagaProps) {
   try {
+    // receives an nested object, typescript doesnt like it
     const updatedProduct: CompanyProduct = yield* call(
       checkForRatings,
       product,
@@ -129,7 +104,6 @@ function* handleFetchCategories() {
 }
 
 export function* appSaga() {
-  yield* takeEvery(constants.app.PICK_IMAGE, handlePickImage);
   yield* takeEvery(constants.app.FETCH_ALL_ADS, handleFetchAllAds);
   //! error: no overload matches this call?
   yield* takeEvery(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);

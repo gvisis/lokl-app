@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery } from 'typed-redux-saga';
+import { call, put, select, take, takeEvery } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -39,6 +39,7 @@ function* handleLogout() {
     yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
   } finally {
     yield* put(actions.user.clearUserState());
+    yield* put(actions.cart.clearCart());
     yield* put(actions.ui.setOnSync('user', false));
   }
 }
@@ -137,7 +138,13 @@ function* handleCreateUserDb(email: string) {
   }
 }
 function* handleCreateNewAd({ newAd, images }) {
+  console.log('newAd', newAd);
+
   try {
+    if (images.length === 0) {
+      const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
+      newAd.image = defaultAdImage;
+    }
     yield* put(actions.ui.setOnSync('app', true));
     const currentUserId = api.getUserInfo().uid;
     const newAdKey: string = yield* call(
