@@ -10,7 +10,7 @@ import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import {

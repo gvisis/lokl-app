@@ -6,7 +6,7 @@ import {
 import { useTheme } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
-import { AddAdView, AdsView } from '../containers/AdsFlow';
+import { AddAdView, AdsView, SingleAdView } from '../containers/AdsFlow';
 import { RootStackParamList } from '../types/general';
 
 const AdsStack = createStackNavigator<RootStackParamList>();
@@ -37,6 +37,7 @@ export const AdsNavigation: React.FC = () => {
         component={AddAdView}
         options={{ headerTitle: 'Create an ad' }}
       />
+      <AdsStack.Screen name={ROUTES.SingleAdView} component={SingleAdView} />
     </AdsStack.Navigator>
   );
 };

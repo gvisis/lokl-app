@@ -1,9 +1,10 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/core';
+import { RouteProp } from '@react-navigation/native';
 
 import { ProductScreenProps } from '../components/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
+import { AdsProps, CompanyProduct } from '../state/app/AppInterfaces';
 
 // Variables
 export enum CART_ACTION {
@@ -18,6 +19,7 @@ export enum CART_ACTION {
 export type AnyObject = { [key: string]: any };
 export type ErrorType = 'error' | 'success' | null;
 export type ProductAddAction = CART_ACTION.INC | CART_ACTION.DEC;
+export type ItemProps = AdsProps | CompanyProduct;
 
 export type RootStackParamList = {
   [ROUTES.Home]: undefined;
@@ -36,6 +38,7 @@ export type RootStackParamList = {
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
   [ROUTES.AddAd]: undefined;
+  [ROUTES.SingleAdView]: undefined;
   [ROUTES.Address]: undefined;
   [ROUTES.AddAddress]: undefined;
   [ROUTES.EditAddress]: undefined;
@@ -58,4 +61,11 @@ export interface PayloadAction<T> {
 export interface ComponentNavProps<T = string> {
   navigation?: StackNavigationProp<RootStackParamList, T>;
   route?: RouteProp<RootStackParamList, T>;
+}
+
+export interface ItemCardProps {
+  item: ItemProps;
+  ads?: boolean;
+  onPress?: string;
+  productOwnerTitle?: string;
 }

@@ -5,7 +5,7 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ROUTES } from '../../routes/RouteNames';

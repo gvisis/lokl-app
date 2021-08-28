@@ -36,9 +36,13 @@ export const setShippingAddress = (shippingAddress: UserAddress) => ({
   type: constants.cart.SET_SHIPPING_ADDRESS,
   shippingAddress,
 });
+export const clearCart = () => ({
+  type: constants.cart.CLEAR_CART,
+});
 
 export const cartActions = {
   updateCart,
+  clearCart,
   getCartTotals,
   updateCartTotals,
   removeFromCart,

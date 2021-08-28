@@ -1,3 +1,5 @@
+import storage from '@react-native-firebase/storage';
+
 import { ROUTES } from '../routes/RouteNames';
 import {
   CompanyProduct,
@@ -34,10 +36,10 @@ export const guidGenerator = () => {
 
 export const getProductOwnerTitle = (
   allCompanies: CompanyProps[],
-  product: CompanyProduct,
+  item: CompanyProduct,
 ): string =>
   allCompanies
-    .filter(company => company.id === product.owner)
+    .filter(company => company.id === item.owner)
     .map(company => company.title)[0];
 
 export const calcRatingAverage = (ratings: RatingData[]) =>

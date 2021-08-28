@@ -4,7 +4,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import { useTheme } from 'styled-components/native';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { ROUTES } from './RouteNames';
 import {

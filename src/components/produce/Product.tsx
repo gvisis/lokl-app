@@ -7,7 +7,7 @@ import {
 import styled, { useTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 import { StyledComponent } from 'styled-components';
@@ -18,7 +18,7 @@ import { actions } from '../../state/actions';
 import { calcRatingAverage, getProductOwnerTitle } from '../../utils/functions';
 
 export interface ProductScreenProps {
-  product?: CompanyProduct;
+  item?: CompanyProduct;
   allCompanies?: CompanyProps[];
   width?: number;
   height?: number;
@@ -27,7 +27,7 @@ export interface ProductScreenProps {
 }
 
 export const Product: React.FC<ProductScreenProps> = ({
-  product,
+  item,
   allCompanies,
   width,
   height,
@@ -37,15 +37,21 @@ export const Product: React.FC<ProductScreenProps> = ({
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
-  const productOwnerTitle: string = getProductOwnerTitle(allCompanies, product);
+  const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 
+  // const handleSingleProductNav = useFunction(
+  //   navigation.navigate,
+  //   ROUTES.SingleProduct,
+  //   item,
+  //   productOwnerTitle,
+  // );
   const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { product, productOwnerTitle });
-  }, [product]);
+    navigation.navigate(ROUTES.SingleProduct, { item, productOwnerTitle });
+  }, [item]);
 
   // Add ONE item to cart
   const handleAddToCart = useCallback(() => {
-    const cartProduct = { ...product };
+    const cartProduct = { ...item };
     dispatch(actions.cart.checkCartActions('add', cartProduct));
   }, [dispatch]);
 
@@ -75,21 +81,21 @@ export const Product: React.FC<ProductScreenProps> = ({
                 <CartIcon name={'basket-fill'} size={25} />
               </LinearGradient>
             </AddToCart>
-            {product.delivery && (
+            {item.delivery && (
               <ProductDelivery>Delivery available</ProductDelivery>
             )}
-            <ProductImage resizeMode="cover" source={{ uri: product.image }} />
+            <ProductImage resizeMode="cover" source={{ uri: item.image }} />
             <ProductOwner>{productOwnerTitle}</ProductOwner>
           </ProductTop>
           <ProductBottom>
-            <ProductName>{product.title}</ProductName>
-            <ProductPrice>{product.price}€</ProductPrice>
+            <ProductName>{item.title}</ProductName>
+            <ProductPrice>{item.price}€</ProductPrice>
             <ProductRating>
               <AirbnbRating
                 count={5}
                 showRating={false}
                 isDisabled={true}
-                defaultRating={calcRatingAverage(product.ratings)}
+                defaultRating={calcRatingAverage(item.ratings)}
                 size={15}
                 selectedColor={theme.colors.red}
                 unSelectedColor={theme.colors.red1}

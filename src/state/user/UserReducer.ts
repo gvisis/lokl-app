@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import { actions } from '../actions';
 import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
 
@@ -32,8 +33,7 @@ const INITIAL_STATE: UserReducerState = {
 };
 
 export const userReducer = createReducer(INITIAL_STATE, {
-  // [actions.user.setUserInfo.type]: (state, action) => {
-  [constants.user.SET_USER_INFO]: (state, action) => {
+  [actions.user.setUserInfo.type]: (state, action) => {
     state.userInfo = action.payload;
   },
   [constants.user.CLEAR_USER_STATE]: () => INITIAL_STATE,

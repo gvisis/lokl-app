@@ -1,21 +1,28 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Dimensions, ImageBackground } from 'react-native';
-import { GestureResponderEvent } from 'react-native-modal';
+import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
-import { AdsProps, CompanyProduct } from '../../state/app/AppInterfaces';
+import { ItemCardProps } from '../../types/general';
+import { useFunction } from '../../utils/hooks';
 
-interface ItemCardProps {
-  item: AdsProps | CompanyProduct;
-  ads?: boolean;
-  onPress?: (e: GestureResponderEvent) => void;
-}
-
-export const ItemCard: React.FC<ItemCardProps> = ({ onPress, item, ads }) => {
+export const ItemCard: React.FC<ItemCardProps> = ({
+  onPress,
+  productOwnerTitle,
+  item,
+  ads,
+}) => {
   const adImage = item.images && Object.values(item.images)[0];
   const productImage = item.image;
+  const { navigate } = useNavigation();
+
+  const handlePress = useFunction(navigate, onPress, {
+    item,
+    productOwnerTitle,
+  });
+
   return (
-    <ItemCardWrap onPress={onPress} ads={ads}>
+    <ItemCardWrap onPress={handlePress} ads={ads}>
       {(productImage || adImage) && (
         <ImageBackgrounds source={{ uri: productImage || adImage }} />
       )}
@@ -35,8 +42,9 @@ const ItemCardWrap = styled.TouchableOpacity`
   border-color: ${({ theme }) => theme.colors.secondary};
   border-radius: ${({ theme }) => theme.border.radius5}px;
   overflow: hidden;
-  elevation: 3;
+  elevation: 1;
 `;
+
 const ImageBackgrounds = styled.ImageBackground`
   width: 100%;
   height: 100%;
