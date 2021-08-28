@@ -1,10 +1,10 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import {
   GestureResponderEvent,
   Platform,
   TouchableNativeFeedback,
 } from 'react-native';
-import styled, { ThemeContext } from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/core';
@@ -32,7 +32,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   width,
   height,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');

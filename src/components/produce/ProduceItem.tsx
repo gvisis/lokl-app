@@ -4,7 +4,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
-import styled, { ThemeContext } from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 
 import { ProductWrap } from './Product';
 import { AnyObject } from '../../types/general';
@@ -19,7 +19,7 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
   width,
   height,
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useTheme();
   if (Platform.OS === 'android') {
     return (
       <TouchableNativeFeedback

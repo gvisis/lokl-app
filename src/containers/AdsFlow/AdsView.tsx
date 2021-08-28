@@ -58,6 +58,6 @@ export const AdsView: React.FC<ComponentNavProps<ROUTES.SingleProduct>> = ({
 
 const AdContainer = styled.View`
   flex: 1;
-  align-items: center;
+  /* align-items: center; */
   padding-bottom: 25px;
 `;

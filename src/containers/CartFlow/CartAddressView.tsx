@@ -41,7 +41,8 @@ export const CartAddressView: React.FC = () => {
       <Modal
         onBackdropPress={toggleNewAddressModal}
         isVisible={newAddressModalVisible}
-        swipeDirection={['left', 'right']}
+        swipeDirection={['up', 'down']}
+        onSwipeComplete={toggleNewAddressModal}
         animationIn="slideInDown"
         onBackButtonPress={toggleNewAddressModal}>
         <AddEditAddressView />

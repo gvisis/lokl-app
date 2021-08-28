@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import styled, { ThemeContext } from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
@@ -34,7 +34,7 @@ const ContainerWrapper = styled.View`
 
 export const PassResetForm: React.FC<ComponentNavProps<ROUTES.ForgotPassword>> =
   ({ navigation }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { onSync, passResetStatus } = useSelector(state => state.ui);

@@ -4,7 +4,7 @@ import {
   Platform,
   TouchableNativeFeedback,
 } from 'react-native';
-import styled, { ThemeContext } from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/core';
 import { AirbnbRating } from 'react-native-ratings';
 
@@ -25,7 +25,7 @@ export const Company: React.FC<CompanyItemProps> = ({
   width,
   height,
 }) => {
-  const theme = React.useContext(ThemeContext);
+  const theme = useTheme();
   const navigation = useNavigation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 

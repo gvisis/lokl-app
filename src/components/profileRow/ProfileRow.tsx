@@ -7,9 +7,12 @@ interface ProfileRowProps {
   rowLeft?: React.ReactElement<any>;
   rowRight?: React.ReactElement<any>;
   text?: string;
+  value?: string;
   label?: string;
   editable?: boolean;
+  multiline?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
   onChangeText?: (text: string) => void;
 }
 
@@ -21,15 +24,21 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
   editable,
   label,
   placeholder,
+  multiline,
   onChangeText,
+  placeholderTextColor,
 }) => (
   <RowWrap label={label} onPress={onPress}>
     {rowLeft && <RowLeft>{rowLeft}</RowLeft>}
     {label && editable && <RowLabel>{label}</RowLabel>}
     {editable ? (
       <EditableInput
+        multiline={multiline}
         placeholder={placeholder}
-        placeholderTextColor="#e9e9e9"
+        placeholderTextColor={
+          placeholderTextColor ? placeholderTextColor : '#cecdcd'
+        }
+        label={label}
         editable={editable}
         onChangeText={onChangeText}>
         {text}
@@ -55,7 +64,6 @@ const RowRight = styled.View`
 const RowWrap = styled.TouchableOpacity`
   width: 100%;
   min-height: 50px;
-  max-height: 100px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -82,9 +90,12 @@ const RowLabel = styled.Text`
 `;
 
 const EditableInput = styled(RowText)`
-  margin: 20px 20px 5px;
+  margin: ${({ label }) => (label ? '20px 20px 5px' : '5px')};
   background-color: ${({ theme }) => theme.colors.white};
   flex: 1;
+  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  height: ${({ multiline }) => (multiline ? '180px' : 'auto')};
+  text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};
   border-radius: ${({ theme }) => theme.border.radius5}px;
   elevation: 1;
 `;

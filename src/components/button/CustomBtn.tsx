@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/native';
+import React from 'react';
+import styled, { useTheme } from 'styled-components/native';
 import {
   ActivityIndicator,
   GestureResponderEvent,
@@ -35,7 +35,7 @@ export const CustomBtn: React.FC<CustomBtnProps> = ({
   fontSize,
   ...rest
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <StyledButton disabled={onSync || disabled} {...rest}>
       {onSync ? (

@@ -34,7 +34,7 @@ export const AddEditAddressView: React.FC<
       <Formik
         initialValues={initialFormikValues}
         onSubmit={values => handleAddNewAddress(values)}>
-        {({ values, handleChange, handleSubmit, handleBlur }) => (
+        {({ values, handleChange, handleSubmit }) => (
           <RowWraps>
             <ProfileRow
               editable

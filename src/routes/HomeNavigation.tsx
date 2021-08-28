@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
-import { ThemeContext } from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
 import { ProductView } from '../containers/ProductFlow';
@@ -15,7 +15,7 @@ import { SearchView } from '../containers/SearchFlow';
 const HomeStack = createStackNavigator<RootStackParamList>();
 
 export const HomeNavigation: React.FC = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <HomeStack.Navigator
       screenOptions={{

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
-import { ThemeContext } from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
 import { AddAdView, AdsView } from '../containers/AdsFlow';
@@ -12,7 +12,7 @@ import { RootStackParamList } from '../types/general';
 const AdsStack = createStackNavigator<RootStackParamList>();
 
 export const AdsNavigation: React.FC = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <AdsStack.Navigator
       screenOptions={{
@@ -22,9 +22,9 @@ export const AdsNavigation: React.FC = () => {
         headerTintColor: theme.colors.white,
         headerTitleStyle: {
           fontFamily: theme.fonts.family.bentonBook,
-          textTransform: 'capitalize',
         },
         gestureDirection: 'horizontal',
+
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <AdsStack.Screen
@@ -32,7 +32,11 @@ export const AdsNavigation: React.FC = () => {
         component={AdsView}
         options={{ headerShown: false }}
       />
-      <AdsStack.Screen name={ROUTES.AddAd} component={AddAdView} />
+      <AdsStack.Screen
+        name={ROUTES.AddAd}
+        component={AddAdView}
+        options={{ headerTitle: 'Create an ad' }}
+      />
     </AdsStack.Navigator>
   );
 };
