@@ -47,6 +47,7 @@ export interface CompanyProduct extends Product {
 
 export interface AdsProps extends Product {
   dateRequired: string;
+  ownerId: string;
   dateAdded: string;
 }
 

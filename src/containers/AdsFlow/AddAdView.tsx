@@ -22,6 +22,7 @@ import {
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
+import { api } from '../../api';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -47,8 +48,9 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           category: pickedCategory,
           price,
           description,
-          dateRequired: date,
-          dateAdded: new Date(),
+          ownerId: api.getUserInfo().uid,
+          dateRequired: date.toLocaleDateString(),
+          dateAdded: new Date().toString(),
         },
         tempImages,
       ),
@@ -60,8 +62,8 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     const options = {
       mediaType: 'photo',
       quality: 1,
-      maxWidth: 800,
-      maxHeight: 600,
+      maxWidth: 1920,
+      maxHeight: 1080,
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
@@ -236,16 +238,16 @@ const CalendarIcon = styled(Icon)`
   color: ${({ theme }) => theme.colors.secondary};
 `;
 const DateText = styled.Text`
-	background-color: ${({ theme }) => theme.colors.primary}
-	padding: 10px 5px;
-	border-radius: ${({ theme }) => theme.border.radius5}px;
-	color: ${({ theme }) => theme.colors.primary3};
-	font-family: ${({ theme }) => theme.fonts.family.benton};
-	elevation: 1;
-	`;
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 10px 5px;
+  border-radius: ${({ theme }) => theme.border.radius5}px;
+  color: ${({ theme }) => theme.colors.primary3};
+  font-family: ${({ theme }) => theme.fonts.family.benton};
+  elevation: 1;
+`;
 const PriceInput = styled.TextInput`
   flex: 0.3;
-  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
   color: ${({ theme }) => theme.colors.secondary};
   border-left-width: 1px;

@@ -138,6 +138,8 @@ function* handleCreateUserDb(email: string) {
   }
 }
 function* handleCreateNewAd({ newAd, images }) {
+  console.log('newAd', newAd);
+
   try {
     if (images.length === 0) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);

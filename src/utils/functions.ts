@@ -137,3 +137,9 @@ export const getImageObject = assets => {
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
   return { url: imageUrl, id: imageId };
 };
+
+export const getDateFromString = (date: string) => {
+  const parsedDate = Date.parse(date);
+  const dateISO = new Date(parsedDate);
+  return dateISO.toLocaleDateString();
+};

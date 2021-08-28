@@ -10,9 +10,9 @@ import { CompanyProduct } from '../../state/app/AppInterfaces';
 // eslint-disable-next-line react/display-name
 export const CategoryView: React.FC = memo(() => {
   const [categoryItems, setCategoryItems] = useState([]);
-  const route = useRoute();
+  const { params } = useRoute();
   const navigation = useNavigation();
-  const { category, companyItem } = route.params;
+  const { category, companyItem } = params;
 
   useEffect(() => {
     navigation.setOptions({ title: category.title });

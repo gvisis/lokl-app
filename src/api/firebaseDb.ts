@@ -18,8 +18,10 @@ const fetchAllAds = async (): Promise<AdsProps> => {
 };
 
 const createAd = async (userId: string, adInfo: AdsProps): Promise<string> => {
+  console.log('adInfo', adInfo);
+
   const newAdRef = await database().ref(`/users/${userId}/ads/`).push();
-  await newAdRef.set(adInfo);
+  await newAdRef.update(adInfo);
   return newAdRef.key;
 };
 

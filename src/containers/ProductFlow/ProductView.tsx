@@ -36,7 +36,6 @@ export const ProductView: React.FC<ProductViewProps> = memo(
     const [selectedQuantity, setSelectedQuantity] = useState(0);
     const [productTotalPrice, setProductTotalPrice] = useState(0);
     const { item, productOwnerTitle } = route.params;
-    console.log('route params', route.params);
 
     const dispatch = useDispatch();
 

@@ -16,6 +16,7 @@ import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
 import { actions } from '../../state/actions';
 import { calcRatingAverage, getProductOwnerTitle } from '../../utils/functions';
+import { useFunction } from '../../utils/hooks';
 
 export interface ProductScreenProps {
   item?: CompanyProduct;
@@ -39,16 +40,11 @@ export const Product: React.FC<ProductScreenProps> = ({
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 
-  // const handleSingleProductNav = useFunction(
-  //   navigation.navigate,
-  //   ROUTES.SingleProduct,
-  //   item,
-  //   productOwnerTitle,
-  // );
-  const handleSingleProductNav = useCallback(() => {
-    navigation.navigate(ROUTES.SingleProduct, { item, productOwnerTitle });
-  }, [item]);
-
+  const handleSingleProductNav = useFunction(
+    navigation.navigate,
+    ROUTES.SingleProduct,
+    { item, productOwnerTitle },
+  );
   // Add ONE item to cart
   const handleAddToCart = useCallback(() => {
     const cartProduct = { ...item };
