@@ -19,6 +19,16 @@ const updateCart = newCart => ({
   newCart,
 });
 
+const setCartStage = (cartStage: string) => ({
+  type: constants.cart.SET_CART_STAGE,
+  cartStage,
+});
+
+const navigateCart = (cartStage: string) => ({
+  type: constants.cart.NAVIGATE_CART,
+  cartStage,
+});
+
 const getCartTotals = () => ({
   type: constants.cart.GET_CART_TOTALS,
 });
@@ -47,5 +57,7 @@ export const cartActions = {
   updateCartTotals,
   removeFromCart,
   checkCartActions,
+  setCartStage,
+  navigateCart,
   setShippingAddress,
 };

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
-import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { CartAddressModal } from '.';
@@ -23,7 +22,7 @@ export const CartAddressView: React.FC = () => {
     const selectedAddress =
       address && address.filter(address => address.default)[0];
     dispatch(actions.cart.setShippingAddress(selectedAddress));
-  }, []);
+  }, [address]);
 
   const toggleNewAddressModal = useCallback(() => {
     setNewAddressModalVisible(!newAddressModalVisible);
@@ -64,7 +63,11 @@ export const CartAddressView: React.FC = () => {
           onPress={toggleNewAddressModal}
         />
         {shippingAddress && (
-          <AddressSelect style={{ marginTop: 30 }} address={shippingAddress} />
+          <AddressSelect
+            selectedId={shippingAddress.id}
+            modal
+            address={shippingAddress}
+          />
         )}
       </CartWrapTop>
     </Container>

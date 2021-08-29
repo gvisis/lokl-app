@@ -24,7 +24,6 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
 }) => {
   const theme = useTheme();
   const adsImage = ads && getImagesFromObject(item)[0].url;
-  console.log(adsImage);
 
   if (Platform.OS === 'android') {
     return (

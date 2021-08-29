@@ -8,6 +8,7 @@ export interface CartReducer {
   total: number;
   quantity: number;
   shippingAddress: UserAddress;
+  stage: string;
 }
 
 // CartSagas
