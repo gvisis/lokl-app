@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Container, CustomBtn } from '../../components';
-import { ProfileRow } from '../../components/profileRow/ProfileRow';
+import { ProfileRow } from '../../components/rows/ProfileRow';
 import { actions } from '../../state/actions';
 import { ROUTES } from '../../routes/RouteNames';
 

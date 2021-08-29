@@ -1,7 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import { ProductScreenProps } from '../components/produce/Product';
+import { ProductScreenProps } from '../components/other/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
 import { AdsProps, CompanyProduct } from '../state/app/AppInterfaces';

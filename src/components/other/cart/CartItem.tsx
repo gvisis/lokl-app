@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-import { actions } from '../../state/actions';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
-import { getProductOwnerTitle } from '../../utils/functions';
-import { useFunction } from '../../utils/hooks';
+import { actions } from '../../../state/actions';
+import { CompanyProduct } from '../../../state/app/AppInterfaces';
+import { getProductOwnerTitle } from '../../../utils/functions';
+import { useFunction } from '../../../utils/hooks';
 
 interface CartItem {
   item: CompanyProduct;

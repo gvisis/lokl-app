@@ -70,7 +70,6 @@ function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
       company,
       ratingData,
     );
-    console.log('updcomp', updatedCompany.id);
     yield* call(firebaseDb.updateCompany, updatedCompany);
   } catch (e) {
     console.log('set company rating error', e);

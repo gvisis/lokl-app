@@ -7,8 +7,8 @@ import {
 import styled, { useTheme } from 'styled-components/native';
 
 import { ProductWrap } from './Product';
-import { AnyObject } from '../../types/general';
-import { getImagesFromObject } from '../../utils/functions';
+import { AnyObject } from '../../../types/general';
+import { getImagesFromObject } from '../../../utils/functions';
 
 interface ProduceItemProps {
   item: AnyObject; //! Change after item propertires are known

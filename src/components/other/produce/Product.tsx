@@ -1,23 +1,21 @@
 import React, { useCallback } from 'react';
-import {
-  GestureResponderEvent,
-  Platform,
-  TouchableNativeFeedback,
-} from 'react-native';
+import { GestureResponderEvent, TouchableNativeFeedback } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
-import { StyledComponent } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ROUTES } from '../../routes/RouteNames';
-import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
-import { actions } from '../../state/actions';
-import { calcRatingAverage, getProductOwnerTitle } from '../../utils/functions';
-import { useFunction } from '../../utils/hooks';
+import { ROUTES } from '../../../routes/RouteNames';
+import { CompanyProduct, CompanyProps } from '../../../state/app/AppInterfaces';
+import { actions } from '../../../state/actions';
+import {
+  calcRatingAverage,
+  getProductOwnerTitle,
+} from '../../../utils/functions';
+import { useFunction } from '../../../utils/hooks';
 
 export interface ProductScreenProps {
   item?: CompanyProduct;
@@ -38,7 +36,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const ratingCustomImage = require('../../assets/images/ratingfull.png');
+  const ratingCustomImage = require('../../../assets/images/ratingfull.png');
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 

@@ -3,7 +3,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
-  View,
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, {
@@ -28,11 +27,11 @@ import {
 } from 'react-native-redash/lib/module/v1';
 import styled from 'styled-components/native';
 
-import { actions } from '../../state/actions';
-import { useFunction } from '../../utils/hooks';
-import { RemoveAction } from '..';
+import { actions } from '../../../state/actions';
+import { useFunction } from '../../../utils/hooks';
+import { RemoveAction } from '../..';
 import { CartItem } from './CartItem';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { CompanyProduct } from '../../../state/app/AppInterfaces';
 
 interface CartItemLayout {
   item: CompanyProduct;

@@ -26,7 +26,7 @@ import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
 import { api } from '../../api';
-import { ItemHeader } from '../../components/itemHeader/ItemHeader';
+import { ItemHeader } from '../../components/headers/ItemHeader';
 
 interface ProductViewProps extends ComponentNavProps<ROUTES.SingleProduct> {
   item?: CompanyProduct;

@@ -1,6 +1,5 @@
 import {
   getFocusedRouteNameFromRoute,
-  useFocusEffect,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
@@ -9,10 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
-import { CustomBtn } from '..';
-import { ROUTES } from '../../routes/RouteNames';
-import { actions } from '../../state/actions';
-import { useFunction } from '../../utils/hooks';
+import { CustomBtn } from '../..';
+import { ROUTES } from '../../../routes/RouteNames';
+import { actions } from '../../../state/actions';
 
 interface CartFooter {
   quantity: number;
@@ -26,6 +24,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const { t } = useTranslation();
   const { stage, finishPurchase } = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  let currentScreen;
 
   const handleNavigation = useCallback(() => {
     if (stage === ROUTES.CartItemsView) {
@@ -38,9 +37,8 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   }, [stage]);
 
   useEffect(() => {
-    const currentScreen = getFocusedRouteNameFromRoute(route);
+    currentScreen = getFocusedRouteNameFromRoute(route);
     dispatch(actions.cart.navigateCart(currentScreen));
-    console.log(currentScreen);
   }, [navigate, route, stage]);
 
   return (
@@ -52,10 +50,10 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
         {t('cart:total')}
         {total}
       </TotalPrice>
-      {getFocusedRouteNameFromRoute(route) !== ROUTES.CartPaymentView ? (
+      {currentScreen !== ROUTES.CartPaymentView ? (
         <CustomBtn
           center
-          disabled={quantity === 0}
+          disabled={quantity === 0 || finishPurchase}
           onPress={handleNavigation}
           label={t('common:continue')}
         />
