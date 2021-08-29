@@ -13,10 +13,12 @@ import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   CART_ACTION,
   ComponentNavProps,
+  ERROR_TYPE,
   ProductAddAction,
 } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
@@ -37,6 +39,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
     const [productTotalPrice, setProductTotalPrice] = useState(0);
     const { item, productOwnerTitle } = route.params;
 
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     // =========== BottomSheet config =================
@@ -53,7 +56,11 @@ export const ProductView: React.FC<ProductViewProps> = memo(
       if (selectedQuantity !== 0) {
         dispatch(actions.cart.checkCartActions('add', item, selectedQuantity));
         dispatch(
-          actions.ui.setStatus('success', true, 'Product added to cart'),
+          actions.ui.setStatus(
+            ERROR_TYPE.SUCCESS,
+            true,
+            t('cart:productAdded'),
+          ),
         );
       }
       bottomSheetRef.current.close();
@@ -62,10 +69,10 @@ export const ProductView: React.FC<ProductViewProps> = memo(
 
     const handleQuantityChange = useCallback(
       (actions: ProductAddAction) => {
-        if (actions === 'inc' && selectedQuantity < 10) {
+        if (actions === CART_ACTION.INC && selectedQuantity < 10) {
           setSelectedQuantity(selectedQuantity + 1);
         }
-        if (actions === 'dec' && selectedQuantity > 0) {
+        if (actions === CART_ACTION.DEC && selectedQuantity > 0) {
           setSelectedQuantity(selectedQuantity - 1);
         }
       },
@@ -96,7 +103,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
           </ScrollView>
         </ItemMidSection>
         <ItemFooter>
-          <ItemRating>Rate:</ItemRating>
+          <ItemRating>{t('common:rating')}</ItemRating>
           <AirbnbRating
             count={5}
             showRating={false}
@@ -111,7 +118,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
             onPress={handleOpenSheet}
             center
             secondary
-            label="Add to cart"
+            label={t('cart:addToCart')}
           />
         </AddWrap>
 
@@ -125,7 +132,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
           <SheetWrap>
             <SheetTitle>{item.title}</SheetTitle>
             <SelectWrap>
-              <SelectTitle>How many?</SelectTitle>
+              <SelectTitle>{t('cart:howMany')}</SelectTitle>
               <SelectOptionWrap>
                 <TouchableOpacity
                   onPress={() => handleQuantityChange(CART_ACTION.DEC)}>
@@ -137,14 +144,17 @@ export const ProductView: React.FC<ProductViewProps> = memo(
                   <IncDecButton name="plus-circle" size={50} />
                 </TouchableOpacity>
               </SelectOptionWrap>
-              <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
+              <SelectTitle>
+                {t('cart:total')}
+                {productTotalPrice}
+              </SelectTitle>
             </SelectWrap>
             <SheetFooter>
               <CustomBtn
                 onPress={handleAddToCart}
                 center
                 secondary
-                label="Add items"
+                label={t('cart:addToCart')}
               />
             </SheetFooter>
           </SheetWrap>

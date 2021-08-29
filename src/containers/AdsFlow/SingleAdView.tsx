@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
+import { useTranslation } from 'react-i18next';
 
 import { Container, ProfileRow } from '../../components';
 import { getDateFromString } from '../../utils/functions';
@@ -11,6 +12,7 @@ import { useFunction } from '../../utils/hooks';
 export const SingleAdView: React.FC = () => {
   const [messageSent, setMessageSent] = useState(false);
   const { params } = useRoute();
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { item } = params;
@@ -68,14 +70,14 @@ export const SingleAdView: React.FC = () => {
               <ProfileRow
                 multiline
                 editable
-                placeholder={'Send "owner" a message about this ad'}
+                placeholder={t('ads:sendMessage')}
               />
               <SendButton onPress={handleSend}>
-                <StyledText>Send</StyledText>
+                <StyledText>{t('common:send')}</StyledText>
               </SendButton>
             </MessageToOwner>
           ) : (
-            <SentMessageBox>Message successfully sent to owner!</SentMessageBox>
+            <SentMessageBox>{t('ads:messageSuccess')}</SentMessageBox>
           )}
         </AdFooterWrap>
       </AdMidWrap>

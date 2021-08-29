@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
@@ -14,6 +15,7 @@ export const CategoryPicker: React.FC<CategoryPicker> = ({
   onValueChange,
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const categories = useSelector(state => state.app.categories);
 
   const categoryItems = categories.map(category => ({
@@ -35,7 +37,7 @@ export const CategoryPicker: React.FC<CategoryPicker> = ({
   return (
     <RNPickerSelect
       placeholder={{
-        label: 'Select Category',
+        label: t('categoryPicker.placeholder'),
         value: null,
       }}
       items={categoryItems}

@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 import { StyledComponent } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { CompanyProduct, CompanyProps } from '../../state/app/AppInterfaces';
@@ -36,6 +37,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
@@ -78,7 +80,7 @@ export const Product: React.FC<ProductScreenProps> = ({
               </LinearGradient>
             </AddToCart>
             {item.delivery && (
-              <ProductDelivery>Delivery available</ProductDelivery>
+              <ProductDelivery>{t('company:delivery')}</ProductDelivery>
             )}
             <ProductImage resizeMode="cover" source={{ uri: item.image }} />
             <ProductOwner>{productOwnerTitle}</ProductOwner>
@@ -105,12 +107,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   }
 };
 
-const ProductWrap: StyledComponent<
-  typeof View,
-  DefaultTheme,
-  ProductScreenProps,
-  never
-> = styled.View`
+const ProductWrap = styled.View`
   margin: 10px;
   width: ${(props: ProductScreenProps) => props.width}px;
   height: ${(props: ProductScreenProps) => props.height}px;

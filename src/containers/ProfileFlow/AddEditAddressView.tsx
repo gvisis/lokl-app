@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/core';
 import { ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Container, CustomBtn } from '../../components';
 import { ProfileRow } from '../../components/profileRow/ProfileRow';
@@ -14,6 +15,7 @@ export const AddEditAddressView: React.FC = () => {
   const { userInfo } = useSelector(state => state.user);
   const { onSync } = useSelector(state => state.ui);
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const initialFormikValues = {
@@ -39,14 +41,14 @@ export const AddEditAddressView: React.FC = () => {
             <RowWraps>
               <ProfileRow
                 editable
-                label="Full name"
+                label={t('profile:fullName')}
                 onChangeText={handleChange('name')}
-                placeholder={'Your full name'}
+                placeholder={t('profile:namePlaceholder')}
                 text={values.name}
               />
               <ProfileRow
                 editable
-                label="Phone number"
+                label={t('profile:phone')}
                 onChangeText={handleChange('phone')}
                 placeholder={'+370'}
                 text={values.phone}
@@ -55,27 +57,31 @@ export const AddEditAddressView: React.FC = () => {
                 editable
                 label="Street"
                 onChangeText={handleChange('street')}
-                placeholder={'(include house/flat number)'}
+                placeholder={t('profile:addressPlaceholder')}
                 text={values.street}
               />
               <ProfileRow
                 editable
-                label="City"
+                label={t('profile:city')}
                 text={values.city}
                 onChangeText={handleChange('city')}
               />
               <ProfileRow
                 editable
-                label="Post code"
+                label={t('profile:postCode')}
                 text={values.postcode}
                 onChangeText={handleChange('postcode')}
               />
-              <ProfileRow editable label="Country" text={values.country} />
+              <ProfileRow
+                editable
+                label={t('profile:country')}
+                text={values.country}
+              />
               <CustomBtn
                 center
                 secondary
                 onSync={onSync.button}
-                label="Add new address"
+                label={t('common:addNewAddress')}
                 onPress={handleSubmit}
               />
             </RowWraps>

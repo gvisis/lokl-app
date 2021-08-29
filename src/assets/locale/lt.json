@@ -37,7 +37,11 @@
     "registerSucc": "Sėkmingai užsiregistravote!",
     "loginSucc": "Sėkmingai prisijungėte!",
     "logoutSucc": "Atsijungėte. Iki kito karto!",
-    "passSent": "Naujas slaptažodis išsiųstas nurodytu adresu"
+    "passSent": "Naujas slaptažodis išsiųstas nurodytu adresu",
+    "default": "Nuolatinis"
+  },
+  "company": {
+    "delivery": "Pristatymas"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",

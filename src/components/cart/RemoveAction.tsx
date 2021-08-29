@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import Animated, {
   add,
@@ -16,6 +17,8 @@ interface ActionProps {
   deleteOpacity: Animated.Node<number>;
 }
 export const RemoveAction = ({ x, deleteOpacity }: ActionProps) => {
+  const { t } = useTranslation();
+
   const size = cond(lessThan(x, 10), x, add(x, sub(x, 10)));
   const translateX = cond(lessThan(x, 10), 0, divide(sub(x, 10), 2));
   const textOpacity = interpolateNode(size, {
@@ -39,7 +42,7 @@ export const RemoveAction = ({ x, deleteOpacity }: ActionProps) => {
           alignItems: 'center',
           opacity: multiply(textOpacity, deleteOpacity),
         }}>
-        <RemoveText>Remove</RemoveText>
+        <RemoveText>{t('cart:remove')}</RemoveText>
       </Animated.View>
     </Animated.View>
   );

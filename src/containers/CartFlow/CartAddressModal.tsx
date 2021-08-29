@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { AddNewAddress, AddressSelect, CustomBtn } from '../../components';
 import { UserAddress } from '../../state/user/UserReducer';
@@ -12,6 +12,7 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
   const { address } = useSelector(state => state.user.userInfo);
   const { shippingAddress } = useSelector(state => state.cart);
   const [selectedId, setSelectedId] = useState(null);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,9 +63,13 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
               />
             ))
           ) : (
-            <AddNewAddress text={'No addresses available. Add new?'} />
+            <AddNewAddress text={t('cart:noAddress')} />
           )}
-          <CustomBtn center label="Select address" onPress={handleSelection} />
+          <CustomBtn
+            center
+            label={t('cart:selectAddress')}
+            onPress={handleSelection}
+          />
         </ScrollViewWrap>
       </ContentWrap>
     </Modal>

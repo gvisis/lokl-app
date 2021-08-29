@@ -14,10 +14,19 @@ export enum CART_ACTION {
   INC = 'inc',
   DEC = 'dec',
 }
+export enum ERROR_TYPE {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+export enum CART {
+  ADD = 'add',
+  REMOVE = 'remove',
+  CLEAR = 'clear',
+}
 
 // Types
 export type AnyObject = { [key: string]: any };
-export type ErrorType = 'error' | 'success' | null;
+export type ErrorType = ERROR_TYPE.ERROR | ERROR_TYPE.SUCCESS | null;
 export type ProductAddAction = CART_ACTION.INC | CART_ACTION.DEC;
 export type ItemProps = AdsProps | CompanyProduct;
 

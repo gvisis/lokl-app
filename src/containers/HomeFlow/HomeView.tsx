@@ -50,16 +50,14 @@ export const HomeView: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeContent>
           {/* CATEGORIES ROW ( RENAME NEEDED ) */}
-          <HomeRow title={t('home:row Produce')}>
+          <HomeRow title={t('home:rowProduce')}>
             {allCategories ? (
               <FlatList
                 data={allCategories}
                 renderItem={renderAllCategories}
                 keyExtractor={item => item.id}
                 horizontal
-                ListEmptyComponent={
-                  <EmptyView text={'No categories created'} />
-                }
+                ListEmptyComponent={<EmptyView />}
                 showsHorizontalScrollIndicator={false}
               />
             ) : (
@@ -67,14 +65,14 @@ export const HomeView: React.FC = () => {
             )}
           </HomeRow>
           {/* COMPANIES ROW */}
-          <HomeRow title={t('home:row Company')}>
+          <HomeRow title={t('home:rowCompany')}>
             {allCompanies ? (
               <FlatList
                 data={allCompanies}
                 renderItem={renderAllCompanies}
                 keyExtractor={item => item.id}
                 horizontal
-                ListEmptyComponent={<EmptyView text={'No companies selling'} />}
+                ListEmptyComponent={<EmptyView />}
                 showsHorizontalScrollIndicator={false}
               />
             ) : (
@@ -82,14 +80,12 @@ export const HomeView: React.FC = () => {
             )}
           </HomeRow>
           {/* PRODUCTS ROW */}
-          <HomeRow title={t('home:row Products')}>
+          <HomeRow title={t('home:rowProducts')}>
             {allProducts ? (
               <FlatList
                 data={allProducts}
                 renderItem={renderAllProducts}
-                ListEmptyComponent={
-                  <EmptyView text={'No products available'} />
-                }
+                ListEmptyComponent={<EmptyView />}
                 keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -99,14 +95,14 @@ export const HomeView: React.FC = () => {
             )}
           </HomeRow>
           {/* ADS ROW */}
-          <HomeRow title={t('home:row Ads')}>
+          <HomeRow title={t('home:rowAds')}>
             {allAds ? (
               <FlatList
                 data={allAds}
                 renderItem={renderAllAds}
                 keyExtractor={item => item.id}
                 horizontal
-                ListEmptyComponent={<EmptyView text={'No ads available'} />}
+                ListEmptyComponent={<EmptyView />}
                 showsHorizontalScrollIndicator={false}
               />
             ) : (

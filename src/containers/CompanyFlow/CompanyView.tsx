@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
   // eslint-disable-next-line react/display-name
   memo(({ navigation, route }) => {
     const { companyItem } = route.params;
+    const { t } = useTranslation();
     const allCategories = useSelector(state => state.app.categories);
     const [CompCategories, setCompCategories] = useState([]);
 
@@ -32,10 +34,7 @@ export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
     return (
       <SingleCompany companyItem={companyItem}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CompanyDescription>
-            make it expandable with more text.. {companyItem.description}{' '}
-            pictures for the categories?
-          </CompanyDescription>
+          <CompanyDescription>{companyItem.description}</CompanyDescription>
           {CompCategories &&
             CompCategories.map(category => (
               <CategoryCard

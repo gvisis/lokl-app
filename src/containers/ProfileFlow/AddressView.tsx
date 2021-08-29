@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
@@ -8,6 +9,7 @@ import { ComponentNavProps } from '../../types/general';
 
 export const AddressView: React.FC<ComponentNavProps<ROUTES.Address>> = () => {
   const { address } = useSelector(state => state.user.userInfo);
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -18,7 +20,7 @@ export const AddressView: React.FC<ComponentNavProps<ROUTES.Address>> = () => {
           address.map(addressData => (
             <AddressSelect key={addressData.id} address={addressData} />
           ))}
-        <AddNewAddress text={'Add new address'} />
+        <AddNewAddress text={t('common:addNewAddress')} />
       </AddressesWrap>
     </Container>
   );

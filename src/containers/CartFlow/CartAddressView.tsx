@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import { ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { CartAddressModal } from '.';
 import { AddressSelect, Container, CustomBtn } from '../../components';
@@ -15,6 +16,7 @@ export const CartAddressView: React.FC = () => {
   const { address } = useSelector(state => state.user.userInfo);
   const { shippingAddress } = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   // When opened, find the default address and set it redux
   useEffect(() => {
@@ -51,13 +53,13 @@ export const CartAddressView: React.FC = () => {
         <CustomBtn
           fontSize={15}
           onPress={toggleAddressmodal}
-          label="Select shipping address"
+          label={t('cart:selectShippingAddress')}
           center
         />
         <CustomBtn
           secondary
           fontSize={15}
-          label="Add new address"
+          label={t('common:addNewAddress')}
           center
           onPress={toggleNewAddressModal}
         />

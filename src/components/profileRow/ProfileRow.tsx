@@ -1,6 +1,6 @@
 import React from 'react';
 import { GestureResponderEvent } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 
 interface ProfileRowProps {
   onPress?: (e: GestureResponderEvent) => void;
@@ -29,28 +29,31 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
   multiline,
   onChangeText,
   placeholderTextColor,
-}) => (
-  <RowWrap label={label} disabled={touchable} onPress={onPress}>
-    {rowLeft && <RowLeft>{rowLeft}</RowLeft>}
-    {label && editable && <RowLabel>{label}</RowLabel>}
-    {editable ? (
-      <EditableInput
-        multiline={multiline}
-        placeholder={placeholder}
-        placeholderTextColor={
-          placeholderTextColor ? placeholderTextColor : '#cecdcd'
-        }
-        label={label}
-        editable={editable}
-        onChangeText={onChangeText}>
-        {text}
-      </EditableInput>
-    ) : (
-      <RowText>{text}</RowText>
-    )}
-    {rowRight && <RowRight>{rowRight}</RowRight>}
-  </RowWrap>
-);
+}) => {
+  const theme = useTheme();
+  return (
+    <RowWrap label={label} disabled={touchable} onPress={onPress}>
+      {rowLeft && <RowLeft>{rowLeft}</RowLeft>}
+      {label && editable && <RowLabel>{label}</RowLabel>}
+      {editable ? (
+        <EditableInput
+          multiline={multiline}
+          placeholder={placeholder}
+          placeholderTextColor={
+            placeholderTextColor ? placeholderTextColor : theme.colors.lightGrey
+          }
+          label={label}
+          editable={editable}
+          onChangeText={onChangeText}>
+          {text}
+        </EditableInput>
+      ) : (
+        <RowText>{text}</RowText>
+      )}
+      {rowRight && <RowRight>{rowRight}</RowRight>}
+    </RowWrap>
+  );
+};
 
 const RowLeft = styled.View`
   flex: 0.2;

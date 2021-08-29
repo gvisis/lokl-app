@@ -15,7 +15,7 @@ export const HomeRow: React.FC<RowProps> = ({ title, children }) => {
       <TitleWrap>
         <RowTitle>{title}</RowTitle>
         <TouchableOpacity onPress={() => console.warn(title)}>
-          <MoreText>{t('home:view more')}</MoreText>
+          <MoreText>{t('home:viewMore')}</MoreText>
         </TouchableOpacity>
       </TitleWrap>
       <RowWrap>{children}</RowWrap>

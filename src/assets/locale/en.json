@@ -4,12 +4,12 @@
   },
   "home": {
     "title": "Find your produce",
-    "row Produce": "Produce",
-    "row Company": "Companies",
-    "row Products": "Products",
-    "row Ads": "Ads",
-    "search bar": "Search for...",
-    "view more": "View more"
+    "rowProduce": "Produce",
+    "rowCompany": "Companies",
+    "rowProducts": "Products",
+    "rowAds": "Ads",
+    "searchBar": "Search for...",
+    "viewMore": "View more"
   },
   "login": {
     "title": "Login",
@@ -22,6 +22,67 @@
   },
   "signup": {
     "title": "Sign up"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "items": "Items:",
+    "checkout": "Checkout",
+    "total": "Total price: €",
+    "remove": "Remove",
+    "noAddress": "No addresses available. Add new?",
+    "selectAddress": "Select address",
+    "selectShippingAddress": "Select shipping address",
+    "addToCart": "Add to cart",
+    "productAdded": "Product added to cart",
+    "howMany": "How many?"
+  },
+  "category": {
+    "title": "Category",
+    "empty": "No products available"
+  },
+  "company": {
+    "delivery": "Delivery available"
+  },
+  "profile": {
+    "title": "Profile",
+    "namePlaceholder": "Your full name",
+    "emailPlaceholder": "Enter your email",
+    "addressPlaceholder": "(include house/flat number)",
+    "usernamePlaceholder": "Choose your username",
+    "username": "Username",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "postCode": "Post code",
+    "city": "City",
+    "country": "Country",
+    "address": "Address",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "password": "Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "changePassword": "Change password",
+    "changePasswordSuccess": "Password changed successfully",
+    "changePasswordError": "Password change failed",
+    "settings": "Settings",
+    "payments": "Payments",
+    "editProfile": "Edit profile",
+    "addresses": "Addresses",
+    "changeTheme": "Change theme",
+    "changeLang": "Change language"
+  },
+  "ads": {
+    "title": "All ads",
+    "titlePlaceholder": "What are you looking for?",
+    "descriptionPlaceholder": "Describe what are you looking for...",
+    "pricePlaceholder": "Enter max price",
+    "exampleImg": "Select example image",
+    "needBy": "I need it by: ",
+    "createNew": "Create new ad",
+    "sendMessage": "Send ad owner a message about this ad",
+    "messageSuccess": "Message successfully sent to the owner"
   },
   "common": {
     "Forgot password": "Forgot password?",
@@ -38,7 +99,16 @@
     "registerSucc": "Succesfuly registered!",
     "loginSucc": "Succesfuly logged in!",
     "logoutSucc": "You signed out. See you!",
-    "passSent": "New password was sent to your email."
+    "passSent": "New password was sent to your email.",
+    "default": "Default",
+    "continue": "Continue",
+    "rating": "Rating",
+    "noItems": "No items to display",
+    "send": "Send",
+    "addNewAddress": "Add new address"
+  },
+  "categoryPicker": {
+    "placeholder": "Select category"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Account already exists",
@@ -65,6 +135,7 @@
     "pass-confirm": "Confirm your password",
     "pass-match": "Password does not match",
     "pass-size-min": "Password must be at least {{min}} characters long",
-    "pass-size-max": "Password must be at most {{max}} characters long"
+    "pass-size-max": "Password must be at most {{max}} characters long",
+    "ads-categoryErr": "Category is required"
   }
 }

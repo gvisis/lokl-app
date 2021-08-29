@@ -2,6 +2,7 @@ import React from 'react';
 import { GestureResponderEvent, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
 
 import { RadioButton } from '..';
 import { UserAddress } from '../../state/user/UserReducer';
@@ -28,7 +29,7 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
     sizeSm: 20,
     sizeM: 35,
   };
-
+  const { t } = useTranslation();
   const isSelected = address.id === selectedId;
 
   return (
@@ -54,7 +55,7 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
       </WrapLeft>
       {address.default && (
         <WrapRight>
-          <DefaultSelection>Default</DefaultSelection>
+          <DefaultSelection>{t('common:default')}</DefaultSelection>
         </WrapRight>
       )}
       {modal && <RadioButton status={isSelected ? true : false} />}

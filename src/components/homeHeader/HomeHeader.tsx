@@ -31,7 +31,7 @@ export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
         </IconWrap>
         <SearchRow focused={focused}>
           <SearchBar
-            placeholder={t('home:search bar')}
+            placeholder={t('home:searchBar')}
             placeholderTextColor="#9c9c9c"
             onFocus={handleFocus}
             onBlur={handleFocus}

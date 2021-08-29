@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 
 import { CustomBtn } from '..';
@@ -12,16 +13,23 @@ interface CartFooter {
 
 export const CartFooter: React.FC<CartFooter> = ({ quantity, total }) => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
+
   return (
     <CartFooterWrap>
-      <TotalItems>Items: {quantity}</TotalItems>
-      <TotalPrice>Total price: {total} €</TotalPrice>
+      <TotalItems>
+        {t('cart:items')} {quantity}
+      </TotalItems>
+      <TotalPrice>
+        {t('cart:total')}
+        {total} €
+      </TotalPrice>
       <CustomBtn
         center
         secondary
         disabled={quantity === 0}
         onPress={() => navigation.navigate(ROUTES.CartAddressView)}
-        label="Continue"
+        label={t('common:continue')}
       />
     </CartFooterWrap>
   );

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { RootStackParamList } from '../../types/general';
@@ -29,6 +29,7 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     navigation.setOptions({ title: companyItem.title });
@@ -52,7 +53,7 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
         </TitleWrap>
         {showRating && (
           <BottomHeader>
-            <ItemRating>Rating:</ItemRating>
+            <ItemRating>{t('common:rating')}</ItemRating>
             <AirbnbRating
               count={5}
               showRating={false}

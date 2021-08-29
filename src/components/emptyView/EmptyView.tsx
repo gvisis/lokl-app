@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 interface EmptyViewProps {
-  text: string;
+  text?: string;
 }
 
 export const EmptyView: React.FC<EmptyViewProps> = ({ text }) => (
@@ -22,3 +22,7 @@ const NoItemsText = styled.Text`
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.secondary};
 `;
+
+EmptyView.defaultProps = {
+  text: 'No items to display',
+};
