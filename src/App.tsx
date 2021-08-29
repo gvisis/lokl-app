@@ -1,11 +1,14 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import styled from 'styled-components/native';
 
 import Navigator from './routes/Navigator';
-import { store } from './state/store';
+import { configStore } from './state/store';
+
+const { store, persistor } = configStore();
 
 function App() {
   useEffect(() => {
@@ -13,9 +16,11 @@ function App() {
   }, []);
   return (
     <Provider store={store}>
-      <SafeArea>
-        <Navigator />
-      </SafeArea>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeArea>
+          <Navigator />
+        </SafeArea>
+      </PersistGate>
     </Provider>
   );
 }
