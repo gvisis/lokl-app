@@ -4,7 +4,9 @@ import styled from 'styled-components/native';
 
 export const Container: React.FC = ({ children }) => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <AppContainer behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <AppContainer
+      onStartShouldSetResponder={() => true}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       {children}
     </AppContainer>
   </TouchableWithoutFeedback>

@@ -53,58 +53,53 @@ export const Product: React.FC<ProductScreenProps> = ({
     dispatch(actions.cart.checkCartActions('add', cartProduct));
   }, [dispatch]);
 
-  if (Platform.OS === 'android') {
-    return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple(
-          theme.colors.primary3,
-          false,
-        )}
-        useForeground={true}
-        onPress={handleSingleProductNav}>
-        <ProductWrap width={width} height={height}>
-          <ProductTop>
-            <AddToCart onPress={handleAddToCart}>
-              <LinearGradient
-                colors={[
-                  theme.colors.secondary,
-                  theme.colors.primary,
-                  theme.colors.primary2,
-                  'rgba(0, 0, 0, 0)',
-                ]}
-                locations={[0, 0.3, 0.5, 1]}
-                style={{
-                  flex: 1,
-                }}>
-                <CartIcon name={'basket-fill'} size={25} />
-              </LinearGradient>
-            </AddToCart>
-            {item.delivery && (
-              <ProductDelivery>{t('company:delivery')}</ProductDelivery>
-            )}
-            <ProductImage resizeMode="cover" source={{ uri: item.image }} />
-            <ProductOwner>{productOwnerTitle}</ProductOwner>
-          </ProductTop>
-          <ProductBottom>
-            <ProductName>{item.title}</ProductName>
-            <ProductPrice>{item.price}€</ProductPrice>
-            <ProductRating>
-              <AirbnbRating
-                count={5}
-                showRating={false}
-                isDisabled={true}
-                defaultRating={calcRatingAverage(item.ratings)}
-                size={15}
-                selectedColor={theme.colors.red}
-                unSelectedColor={theme.colors.red1}
-                starImage={ratingCustomImage}
-              />
-            </ProductRating>
-          </ProductBottom>
-        </ProductWrap>
-      </TouchableNativeFeedback>
-    );
-  }
+  return (
+    <TouchableNativeFeedback
+      background={TouchableNativeFeedback.Ripple(theme.colors.primary3, false)}
+      useForeground={true}
+      onPress={handleSingleProductNav}>
+      <ProductWrap width={width} height={height}>
+        <ProductTop>
+          <AddToCart onPress={handleAddToCart}>
+            <LinearGradient
+              colors={[
+                theme.colors.secondary,
+                theme.colors.primary,
+                theme.colors.primary2,
+                'rgba(0, 0, 0, 0)',
+              ]}
+              locations={[0, 0.3, 0.5, 1]}
+              style={{
+                flex: 1,
+              }}>
+              <CartIcon name={'basket-fill'} size={25} />
+            </LinearGradient>
+          </AddToCart>
+          {item.delivery && (
+            <ProductDelivery>{t('company:delivery')}</ProductDelivery>
+          )}
+          <ProductImage resizeMode="cover" source={{ uri: item.image }} />
+          <ProductOwner>{productOwnerTitle}</ProductOwner>
+        </ProductTop>
+        <ProductBottom>
+          <ProductName>{item.title}</ProductName>
+          <ProductPrice>{item.price}€</ProductPrice>
+          <ProductRating>
+            <AirbnbRating
+              count={5}
+              showRating={false}
+              isDisabled={true}
+              defaultRating={calcRatingAverage(item.ratings)}
+              size={15}
+              selectedColor={theme.colors.red}
+              unSelectedColor={theme.colors.red1}
+              starImage={ratingCustomImage}
+            />
+          </ProductRating>
+        </ProductBottom>
+      </ProductWrap>
+    </TouchableNativeFeedback>
+  );
 };
 
 const ProductWrap = styled.View`

@@ -8,18 +8,24 @@ import styled, { useTheme } from 'styled-components/native';
 
 import { ProductWrap } from './Product';
 import { AnyObject } from '../../types/general';
+import { getImagesFromObject } from '../../utils/functions';
 
 interface ProduceItemProps {
   item: AnyObject; //! Change after item propertires are known
   width?: number;
   height?: number;
+  ads?: boolean;
 }
 export const ProduceItem: React.FC<ProduceItemProps> = ({
   item,
   width,
   height,
+  ads,
 }) => {
   const theme = useTheme();
+  const adsImage = ads && getImagesFromObject(item)[0].url;
+  console.log(adsImage);
+
   if (Platform.OS === 'android') {
     return (
       <TouchableNativeFeedback
@@ -30,7 +36,12 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
         useForeground={true}>
         <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
-          <ItemImage resizeMode="cover" source={{ uri: item.image }} />
+          <ItemImage
+            resizeMode="cover"
+            source={{
+              uri: !ads ? item.image : adsImage,
+            }}
+          />
         </ProductWrap>
       </TouchableNativeFeedback>
     );

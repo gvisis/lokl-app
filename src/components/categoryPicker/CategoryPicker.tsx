@@ -37,7 +37,7 @@ export const CategoryPicker: React.FC<CategoryPicker> = ({
   return (
     <RNPickerSelect
       placeholder={{
-        label: t('categoryPicker.placeholder'),
+        label: t('categoryPicker:placeholder'),
         value: null,
       }}
       items={categoryItems}

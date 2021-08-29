@@ -6,7 +6,7 @@ import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
 
 import { Container, ProfileRow } from '../../components';
-import { getDateFromString } from '../../utils/functions';
+import { getDateFromString, getImagesFromObject } from '../../utils/functions';
 import { useFunction } from '../../utils/hooks';
 
 export const SingleAdView: React.FC = () => {
@@ -21,14 +21,7 @@ export const SingleAdView: React.FC = () => {
     navigation.setOptions({ title: item.title });
   }, [item.title]);
 
-  const getImageObject = images => {
-    const imgArray = [];
-    for (const key in images) {
-      imgArray.push({ id: key, url: images[key] });
-    }
-    return imgArray;
-  };
-  const images = item.images && getImageObject(item.images);
+  const images = item.images && getImagesFromObject(item);
   const handleSend = useFunction(setMessageSent, true);
 
   return (
@@ -53,13 +46,13 @@ export const SingleAdView: React.FC = () => {
           <DateAdded>Added: {getDateFromString(item.dateAdded)}</DateAdded>
         </TitleWrap>
         <ProfileRow
-          text={'I can pay up to:'}
+          text={t('ads:payUpTo')}
           touchable
           rowRight={<AdPrice>€ {item.price}</AdPrice>}
         />
 
         <ProfileRow
-          text={'Need it by:'}
+          text={t('ads:needBy')}
           touchable
           rowRight={<AdPrice>{item.dateRequired}</AdPrice>}
         />
@@ -85,6 +78,7 @@ export const SingleAdView: React.FC = () => {
   );
 };
 
+const padding10 = { padding: '10px 0' };
 const AdHeader = styled(Swiper).attrs({
   containerStyle: {
     flex: 0.5,
@@ -95,6 +89,7 @@ const AdHeader = styled(Swiper).attrs({
 
 const AdMidWrap = styled.ScrollView`
   flex: 1;
+  padding: 0 10px;
 `;
 
 // AD TITLE AND DATE START
@@ -109,7 +104,7 @@ const TitleWrap = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px 5px;
+  ${padding10};
 `;
 
 const DateAdded = styled.Text`
@@ -122,7 +117,6 @@ const DateAdded = styled.Text`
 const AdPrice = styled(AdStyledText)`
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   font-family: ${({ theme }) => theme.fonts.family.nexaLight};
-  padding: 0px 10px 5px;
 `;
 
 const AdDescription = styled.Text`
@@ -132,13 +126,13 @@ const AdDescription = styled.Text`
   margin: 0 10px;
   border-top-width: 1px;
   border-color: ${({ theme }) => theme.colors.lightGrey1};
-  padding: 15px;
+  ${padding10}
 `;
 
 // AD FOOTER START
 const AdFooterWrap = styled.View`
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: 10px 0;
+  ${padding10}
   elevation: 1;
   margin: 0 10px;
   border-radius: ${({ theme }) => theme.border.radius5}px;
@@ -170,8 +164,8 @@ const SentMessageBox = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   color: ${({ theme }) => theme.colors.primary3};
   font-family: ${({ theme }) => theme.fonts.family.nexaBold};
-  padding: 10px;
   margin: 15px;
+  ${padding10}
 `;
 
 // AD FOOTER END

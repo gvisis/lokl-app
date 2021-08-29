@@ -71,7 +71,8 @@
     "editProfile": "Edit profile",
     "addresses": "Addresses",
     "changeTheme": "Change theme",
-    "changeLang": "Change language"
+    "changeLang": "Change language",
+    "newAddressAdded": "New address added"
   },
   "ads": {
     "title": "All ads",
@@ -80,6 +81,7 @@
     "pricePlaceholder": "Enter max price",
     "exampleImg": "Select example image",
     "needBy": "I need it by: ",
+    "payUpTo": "I can pay up to: ",
     "createNew": "Create new ad",
     "sendMessage": "Send ad owner a message about this ad",
     "messageSuccess": "Message successfully sent to the owner"
@@ -95,6 +97,7 @@
     "enterPass": "Enter your password",
     "confirmPass": "Confirm password",
     "createAcc": "Create account",
+    "getStarted": "Get started",
     "alreadyAcc": "Already have an account?",
     "registerSucc": "Succesfuly registered!",
     "loginSucc": "Succesfuly logged in!",
@@ -126,7 +129,8 @@
     "auth/network-request-failed": "Network request failed",
     "auth/too-many-requests": "Too many requests",
     "auth/unknown": "Unknown error",
-    "auth/fill-all-fields": "Please fill all fields"
+    "auth/fill-all-fields": "Please fill all fields",
+    "thereWasError": "There was an error"
   },
   "yup": {
     "email-required": "Email is required",

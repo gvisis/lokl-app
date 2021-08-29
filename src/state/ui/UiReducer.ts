@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject } from '../../types/general';
+import { AnyObject, ERROR_TYPE } from '../../types/general';
 import { themes } from '../../styles';
 import { constants } from '../constants';
 
@@ -46,10 +46,10 @@ export const uiReducer = createReducer(INITIAL_STATE, {
   },
 
   [constants.ui.SET_STATUS]: (state, { key, bool, message }: UiStateSetter) => {
-    if (key === 'success') {
+    if (key === ERROR_TYPE.SUCCESS) {
       state.status.error = false;
     }
-    if (key === 'error') {
+    if (key === ERROR_TYPE.ERROR) {
       state.status.success = false;
     }
     state.status[key] = bool;
