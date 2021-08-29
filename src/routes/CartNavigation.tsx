@@ -44,7 +44,7 @@ export const CartNavigation: React.FC = () => {
         <TopBar.Screen
           name={ROUTES.CartPaymentView}
           component={CartPaymentView}
-          options={{ tabBarLabel: t('cart:checkout') }}
+          options={{ tabBarLabel: t('cart:payment') }}
         />
       </TopBar.Navigator>
       <CartFooter quantity={quantity} total={total} />

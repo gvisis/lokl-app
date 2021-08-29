@@ -100,7 +100,7 @@ function* handleCartNavigation({ cartStage }: string) {
       yield* put(actions.cart.setCartStage(ROUTES.CartPaymentView));
     }
     if (cartStage === ROUTES.CartPaymentView) {
-      console.log('payment');
+      yield* put(actions.cart.setCartStage('payFinish'));
     }
   } catch (e) {
     yield;

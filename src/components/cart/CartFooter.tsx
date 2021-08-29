@@ -24,20 +24,24 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const { navigate } = useNavigation();
   const route = useRoute();
   const { t } = useTranslation();
-  const cartStage = useSelector(state => state.cart.stage);
+  const { stage, finishPurchase } = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
-  const handleNavigation = () => {
-    if (cartStage === ROUTES.CartItemsView) {
+  const handleNavigation = useCallback(() => {
+    if (stage === ROUTES.CartItemsView) {
       navigate(ROUTES.CartAddressView);
+    } else if (stage === 'payFinish') {
+      dispatch(actions.cart.cartFinishPurchase(true));
     } else {
-      navigate(cartStage);
+      navigate(stage);
     }
-  };
+  }, [stage]);
+
   useEffect(() => {
     const currentScreen = getFocusedRouteNameFromRoute(route);
     dispatch(actions.cart.navigateCart(currentScreen));
-  }, [navigate, route, cartStage]);
+    console.log(currentScreen);
+  }, [navigate, route, stage]);
 
   return (
     <CartFooterWrap>
@@ -59,9 +63,9 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
         <CustomBtn
           center
           secondary
-          disabled={quantity === 0}
+          disabled={quantity === 0 || finishPurchase}
           onPress={handleNavigation}
-          label={'Checkout'}
+          label={t('cart:pay')}
         />
       )}
     </CartFooterWrap>

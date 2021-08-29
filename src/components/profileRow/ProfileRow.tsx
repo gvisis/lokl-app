@@ -1,5 +1,5 @@
 import React from 'react';
-import { GestureResponderEvent } from 'react-native';
+import { GestureResponderEvent, TextInputProps } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 
 interface ProfileRowProps {
@@ -14,6 +14,7 @@ interface ProfileRowProps {
   touchable?: boolean;
   placeholder?: string;
   placeholderTextColor?: string;
+  keyboardType?: TextInputProps['keyboardType'];
   onChangeText?: (text: string) => void;
 }
 
@@ -29,6 +30,7 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
   multiline,
   onChangeText,
   placeholderTextColor,
+  ...props
 }) => {
   const theme = useTheme();
   return (
@@ -37,6 +39,7 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
       {label && editable && <RowLabel>{label}</RowLabel>}
       {editable ? (
         <EditableInput
+          {...props}
           multiline={multiline}
           placeholder={placeholder}
           placeholderTextColor={
@@ -89,7 +92,6 @@ const RowLabel = styled.Text`
   letter-spacing: 1px;
   position: absolute;
   top: 0;
-  left: 0;
   z-index: 1;
 `;
 

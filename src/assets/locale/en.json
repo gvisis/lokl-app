@@ -28,14 +28,19 @@
     "empty": "Your cart is empty",
     "items": "Items:",
     "checkout": "Checkout",
+    "payment": "Payment",
     "total": "Total price: €",
     "remove": "Remove",
+    "cardDetails": "Card details",
+    "cardDetailsPlaceholder": "Enter your card details",
     "noAddress": "No addresses available. Add new?",
     "selectAddress": "Select address",
     "selectShippingAddress": "Select shipping address",
+    "shippingAddress": "Shipping address",
     "addToCart": "Add to cart",
     "productAdded": "Product added to cart",
-    "howMany": "How many?"
+    "howMany": "How many?",
+    "pay": "Pay"
   },
   "category": {
     "title": "Category",

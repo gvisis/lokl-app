@@ -9,6 +9,7 @@ const INITIAL_STATE: CartReducer = {
   quantity: 0,
   shippingAddress: null,
   stage: null,
+  finishPurchase: false,
 };
 
 export const cartReducer = createReducer(INITIAL_STATE, {
@@ -21,6 +22,9 @@ export const cartReducer = createReducer(INITIAL_STATE, {
   [constants.cart.UPDATE_CART_TOTALS]: (state, { total, quantity }) => {
     state.total = total;
     state.quantity = quantity;
+  },
+  [constants.cart.CART_FINISH_PURCHASE]: (state, { finishPurchase }) => {
+    state.finishPurchase = finishPurchase;
   },
   [constants.cart.SET_SHIPPING_ADDRESS]: (state, { shippingAddress }) => {
     state.shippingAddress = shippingAddress;

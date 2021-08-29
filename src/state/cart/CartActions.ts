@@ -32,6 +32,10 @@ const navigateCart = (cartStage: string) => ({
 const getCartTotals = () => ({
   type: constants.cart.GET_CART_TOTALS,
 });
+const cartFinishPurchase = (finishPurchase: boolean) => ({
+  type: constants.cart.CART_FINISH_PURCHASE,
+  finishPurchase,
+});
 
 const updateCartTotals = (total: number, quantity: number) => ({
   type: constants.cart.UPDATE_CART_TOTALS,
@@ -60,4 +64,5 @@ export const cartActions = {
   setCartStage,
   navigateCart,
   setShippingAddress,
+  cartFinishPurchase,
 };

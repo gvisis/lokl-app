@@ -9,6 +9,7 @@ export interface CartReducer {
   quantity: number;
   shippingAddress: UserAddress;
   stage: string;
+  finishPurchase: boolean;
 }
 
 // CartSagas
