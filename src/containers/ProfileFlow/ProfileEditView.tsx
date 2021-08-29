@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { actions } from '../../state/actions';
 import { Container, CustomBtn, ProfileRow } from '../../components';
@@ -14,6 +15,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
     const { onSync } = useSelector(state => state.ui);
 
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const handleUserUpdate = useCallback(
       updatedInfo => {
@@ -38,39 +40,39 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
           {({ values, handleChange, handleSubmit, handleBlur }) => (
             <EditWrap>
               <ProfileRow
-                label={'Username'}
+                label={t('profile:username')}
                 editable
                 onBlur={handleBlur}
                 onChangeText={handleChange('username')}
-                placeholder={'Choose your username'}
+                placeholder={t('profile:usernamePlaceholder')}
                 text={values.username}
               />
               <ProfileRow
                 onBlur={handleBlur}
                 editable
-                label={'Full name'}
+                label={t('profile:fullName')}
                 onChangeText={handleChange('name')}
-                placeholder={'Enter your name'}
+                placeholder={t('profile:namePlaceholder')}
                 text={values.name}
               />
               <ProfileRow
                 onBlur={handleBlur}
                 editable
-                label={'Email'}
+                label={t('common:email')}
                 onChangeText={handleChange('email')}
-                placeholder={'Enter your email'}
+                placeholder={t('profile:emailPlaceholder')}
                 text={values.email}
               />
               <ProfileRow
                 onBlur={handleBlur}
-                label={'Phone number'}
+                label={t('profile:phone')}
                 editable
                 onChangeText={handleChange('phone')}
-                placeholder="(xxx) xxx-xxxx"
+                placeholder={'+370'}
                 text={values.phone}
               />
               <CustomBtn
-                label={'Save'}
+                label={t('profile:save')}
                 center
                 secondary
                 onPress={handleSubmit}

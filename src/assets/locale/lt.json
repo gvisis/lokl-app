@@ -12,31 +12,36 @@
     "view more": "Daugiau"
   },
   "login": {
-    "title": "Prisijungimas"
+    "title": "Prisijungimas",
+    "login": "Prisijungti",
+    "logout": "Atsijungti",
+    "signup": "Susikurti naują",
+    "noAccount": "Dar neturite paskyros?",
+    "forgotPass": "Pamiršote slaptažodį?",
+    "password": "Slaptažodis"
   },
   "signup": {
     "title": "Nauja registracija"
   },
   "common": {
-    "Login": "Prisijungti",
-    "Logout": "Atsijungti",
-    "Login to": "Prisijungti prie paskyros",
-    "Forgot password": "Pamiršote slaptažodį?",
-    "Password": "Slaptažodis",
-    "Password reset": "Slaptažodžio atstatymas",
-    "Email": "El.paštas",
-    "Reset": "Atstatyti",
-    "Go back": "Grįžti",
-    "Register": "Registruotis",
-    "Enter email": "Įveskite el.paštą",
-    "Enter pass": "Įveskite slaptažodė",
-    "Confirm pass": "Patvirtinkite slaptažodį",
-    "Create account": "Sukurti nauja paskyra",
-    "Already account": "Jau turite paskyrą?",
-    "Register success": "Sėkmingai užsiregistravote!",
-    "Login success": "Sėkmingai prisijungėte!",
-    "Logout success": "Atsijungėte. Iki kito karto!",
-    "Password sent": "Naujas slaptažodis išsiųstas nurodytu adresu"
+    "passReset": "Slaptažodžio atstatymas",
+    "email": "El.paštas",
+    "reset": "Atstatyti",
+    "goBack": "Grįžti",
+    "register": "Registruotis",
+    "enterEmail": "Įveskite el.paštą",
+    "enterPass": "Įveskite slaptažodė",
+    "confirmPass": "Patvirtinkite slaptažodį",
+    "createAcc": "Sukurti nauja paskyra",
+    "alreadyAcc": "Jau turite paskyrą?",
+    "registerSucc": "Sėkmingai užsiregistravote!",
+    "loginSucc": "Sėkmingai prisijungėte!",
+    "logoutSucc": "Atsijungėte. Iki kito karto!",
+    "passSent": "Naujas slaptažodis išsiųstas nurodytu adresu",
+    "default": "Nuolatinis"
+  },
+  "company": {
+    "delivery": "Pristatymas"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",

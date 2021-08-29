@@ -23,7 +23,7 @@ export const ProduceView: React.FC = () => {
 
       <ButtonWrap>
         <CustomBtn
-          label={t('common:Logout')}
+          label={t('login:logout')}
           secondary
           center
           activeOpacity={0.5}

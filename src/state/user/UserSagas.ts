@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from 'typed-redux-saga';
+import { call, put, select, takeEvery } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -8,6 +8,7 @@ import { api } from '../../api';
 import { guidGenerator } from '../../utils/functions';
 import { firebaseDb } from '../../api/firebaseDb';
 import { UserAddress, UserProps } from './UserReducer';
+import { ERROR_TYPE } from '../../types/general';
 
 interface UserAuthCredentials {
   email: string;
@@ -19,10 +20,16 @@ function* handleLogin({ email, password }: UserAuthCredentials) {
     yield* put(actions.ui.setOnSync('user', true));
     yield* call(api.login, email, password);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Login success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:loginSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
     yield* put(actions.ui.setOnSync('user', false));
   }
@@ -33,10 +40,16 @@ function* handleLogout() {
     yield* put(actions.ui.setOnSync('user', true));
     yield* call(api.logout);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Logout success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:logoutSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
     yield* put(actions.user.clearUserState());
     yield* put(actions.cart.clearCart());
@@ -49,10 +62,16 @@ function* handleSignup({ email, password }: UserAuthCredentials) {
     yield* call(api.signup, email, password);
     yield* call(handleCreateUserDb, email);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Register success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:registerSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
     yield* put(actions.ui.setOnSync('user', false));
   }
@@ -64,7 +83,9 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
     yield* call(api.passworReset, email);
     yield* put(actions.ui.passResetSuccess(true));
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
     yield* put(actions.ui.setOnSync('button', false));
   }
@@ -112,9 +133,21 @@ function* handleAddNewAddress({ newAddressData }) {
     }
     yield* put(actions.ui.setOnSync('button', true));
     yield* put(actions.user.updateUserInfo(updatedUserData));
-    yield* put(actions.ui.setStatus('success', true, 'New address added'));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('profile:newAddressAdded'),
+      ),
+    );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, 'There was an error'));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
   } finally {
     yield* put(actions.ui.setOnSync('button', false));
   }
@@ -138,8 +171,6 @@ function* handleCreateUserDb(email: string) {
   }
 }
 function* handleCreateNewAd({ newAd, images }) {
-  console.log('newAd', newAd);
-
   try {
     if (images.length === 0) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
