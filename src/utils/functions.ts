@@ -34,6 +34,14 @@ export const guidGenerator = () => {
   );
 };
 
+export const getImagesFromObject = item => {
+  const imgArray = [];
+  for (const key in item.images) {
+    imgArray.push({ id: key, url: item.images[key] });
+  }
+  return imgArray;
+};
+
 export const getProductOwnerTitle = (
   allCompanies: CompanyProps[],
   item: CompanyProduct,

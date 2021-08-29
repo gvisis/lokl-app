@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { EmptyView, ItemCard, SingleCompany } from '../../components';
@@ -12,6 +13,7 @@ export const CategoryView: React.FC = memo(() => {
   const [categoryItems, setCategoryItems] = useState([]);
   const { params } = useRoute();
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const { category, companyItem } = params;
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export const CategoryView: React.FC = memo(() => {
       <ScrollView>
         <CategorySection>
           {categoryItems.length === 0 ? (
-            <EmptyView text="No items in this category" />
+            <EmptyView text={t('category:empty')} />
           ) : (
             categoryItems.map(item => (
               <ItemCard

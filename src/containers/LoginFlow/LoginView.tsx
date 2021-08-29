@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
-import { AuthContainer, Container } from '.';
+import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
@@ -44,7 +44,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
         }) => (
           <>
             <CustomInput
-              placeholder={t('common:Email')}
+              placeholder={t('common:email')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
@@ -53,7 +53,7 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               iconName={'account'}
             />
             <CustomInput
-              placeholder={t('common:Password')}
+              placeholder={t('login:password')}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
@@ -62,8 +62,11 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
               iconName={'key-variant'}
               secureTextEntry
             />
+            <StyledText onPress={navigateToForgotPassword}>
+              {t('login:forgotPass')}
+            </StyledText>
             <CustomBtn
-              label={t('common:Login')}
+              label={t('login:login')}
               center
               activeOpacity={0.8}
               onPress={handleSubmit}
@@ -71,30 +74,36 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
           </>
         )}
       </Formik>
-      <SecondaryContainer>
-        <StyledText onPress={navigateToSignup}>
-          {t('common:Create account')}
-        </StyledText>
-        <StyledText onPress={navigateToForgotPassword}>
-          {t('common:Forgot password')}
-        </StyledText>
-      </SecondaryContainer>
+      <LoginFooter>
+        <StyledTextSecondary>{t('login:noAccount')}</StyledTextSecondary>
+        <StyledText onPress={navigateToSignup}>{t('login:signup')}</StyledText>
+      </LoginFooter>
     </AuthContainer>
   );
 };
 
-const SecondaryContainer = styled.View`
-  width: 90%;
-  background-color: ${({ theme }) => theme.colors.primary1};
+const LoginFooter = styled.View`
+  position: absolute;
+  width: 100%;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  background-color: ${({ theme }) => theme.colors.lightGrey2};
   padding: 10px;
-  margin-top: 25px;
+  margin-top: 10px;
+  bottom: 0;
+  justify-content: center;
 `;
 
 const StyledText = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fonts.size.m}px;
+  font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   text-decoration: underline;
+  margin: 10px 20px;
+  align-self: flex-start;
+`;
+
+const StyledTextSecondary = styled(StyledText)`
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
+  margin: 10px 0;
 `;

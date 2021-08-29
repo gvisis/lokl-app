@@ -38,26 +38,26 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
       <ProfileSection>
         <ProfileRow
           onPress={handleSettingsNav}
-          text="Settings"
+          text={t('profile:settings')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
           onPress={handleSettingsNav}
-          text="Payments"
+          text={t('profile:payments')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
           onPress={handleProfileEditNav}
-          text="Edit Profile"
+          text={t('profile:editProfile')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
           onPress={handleAddressNav}
-          text="Addresses"
+          text={t('profile:address')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <CustomBtn
-          label={t('common:Logout')}
+          label={t('login:logout')}
           onPress={handleLogout}
           center
           style={{ position: 'absolute', bottom: 25 }}

@@ -4,39 +4,119 @@
   },
   "home": {
     "title": "Find your produce",
-    "row Produce": "Produce",
-    "row Company": "Companies",
-    "row Products": "Products",
-    "row Ads": "Ads",
-    "search bar": "Search for...",
-    "view more": "View more"
+    "rowProduce": "Produce",
+    "rowCompany": "Companies",
+    "rowProducts": "Products",
+    "rowAds": "Ads",
+    "searchBar": "Search for...",
+    "viewMore": "View more"
   },
   "login": {
-    "title": "Login"
+    "title": "Login",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign up",
+    "noAccount": "Don't have an account?",
+    "forgotPass": "Forgot password?",
+    "password": "Password"
   },
   "signup": {
     "title": "Sign up"
   },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "items": "Items:",
+    "checkout": "Checkout",
+    "payment": "Payment",
+    "total": "Total price: €",
+    "remove": "Remove",
+    "cardDetails": "Card details",
+    "cardDetailsPlaceholder": "Enter your card details",
+    "noAddress": "No addresses available. Add new?",
+    "selectAddress": "Select address",
+    "selectShippingAddress": "Select shipping address",
+    "shippingAddress": "Shipping address",
+    "addToCart": "Add to cart",
+    "productAdded": "Product added to cart",
+    "howMany": "How many?",
+    "pay": "Pay"
+  },
+  "category": {
+    "title": "Category",
+    "empty": "No products available"
+  },
+  "company": {
+    "delivery": "Delivery available"
+  },
+  "profile": {
+    "title": "Profile",
+    "namePlaceholder": "Your full name",
+    "emailPlaceholder": "Enter your email",
+    "addressPlaceholder": "(include house/flat number)",
+    "usernamePlaceholder": "Choose your username",
+    "username": "Username",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "postCode": "Post code",
+    "city": "City",
+    "country": "Country",
+    "address": "Address",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "password": "Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "changePassword": "Change password",
+    "changePasswordSuccess": "Password changed successfully",
+    "changePasswordError": "Password change failed",
+    "settings": "Settings",
+    "payments": "Payments",
+    "editProfile": "Edit profile",
+    "addresses": "Addresses",
+    "changeTheme": "Change theme",
+    "changeLang": "Change language",
+    "newAddressAdded": "New address added"
+  },
+  "ads": {
+    "title": "All ads",
+    "titlePlaceholder": "What are you looking for?",
+    "descriptionPlaceholder": "Describe what are you looking for...",
+    "pricePlaceholder": "Enter max price",
+    "exampleImg": "Select example image",
+    "needBy": "I need it by: ",
+    "payUpTo": "I can pay up to: ",
+    "createNew": "Create new ad",
+    "sendMessage": "Send ad owner a message about this ad",
+    "messageSuccess": "Message successfully sent to the owner"
+  },
   "common": {
-    "Login": "Login",
-    "Logout": "Logout",
-    "Login to": "Login to your account",
     "Forgot password": "Forgot password?",
-    "Password": "Password",
-    "Password reset": "Password reset",
-    "Email": "Email",
-    "Reset": "Reset",
-    "Go back": "Go back",
-    "Register": "Register",
-    "Enter email": "Enter your email",
-    "Enter pass": "Enter your password",
-    "Confirm pass": "Confirm password",
-    "Create account": "Create account",
-    "Already account": "Already have an account?",
-    "Register success": "Succesfuly registered!",
-    "Login success": "Succesfuly logged in!",
-    "Logout success": "You signed out. See you!",
-    "Password sent": "New password was sent to your email."
+    "passReset": "Password reset",
+    "email": "Email",
+    "reset": "Reset",
+    "goBack": "Go back",
+    "register": "Register",
+    "enterEmail": "Enter your email",
+    "enterPass": "Enter your password",
+    "confirmPass": "Confirm password",
+    "createAcc": "Create account",
+    "getStarted": "Get started",
+    "alreadyAcc": "Already have an account?",
+    "registerSucc": "Succesfuly registered!",
+    "loginSucc": "Succesfuly logged in!",
+    "logoutSucc": "You signed out. See you!",
+    "passSent": "New password was sent to your email.",
+    "default": "Default",
+    "continue": "Continue",
+    "rating": "Rating",
+    "noItems": "No items to display",
+    "send": "Send",
+    "addNewAddress": "Add new address"
+  },
+  "categoryPicker": {
+    "placeholder": "Select category"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Account already exists",
@@ -54,7 +134,8 @@
     "auth/network-request-failed": "Network request failed",
     "auth/too-many-requests": "Too many requests",
     "auth/unknown": "Unknown error",
-    "auth/fill-all-fields": "Please fill all fields"
+    "auth/fill-all-fields": "Please fill all fields",
+    "thereWasError": "There was an error"
   },
   "yup": {
     "email-required": "Email is required",
@@ -63,6 +144,7 @@
     "pass-confirm": "Confirm your password",
     "pass-match": "Password does not match",
     "pass-size-min": "Password must be at least {{min}} characters long",
-    "pass-size-max": "Password must be at most {{max}} characters long"
+    "pass-size-max": "Password must be at most {{max}} characters long",
+    "ads-categoryErr": "Category is required"
   }
 }

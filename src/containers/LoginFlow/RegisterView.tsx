@@ -40,7 +40,7 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
         }) => (
           <Wrapper>
             <CustomInput
-              placeholder={t('common:Enter email')}
+              placeholder={t('common:enterEmail')}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
@@ -50,7 +50,7 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
             />
             <CustomInput
               secureTextEntry
-              placeholder={t('common:Enter pass')}
+              placeholder={t('common:enterPass')}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
@@ -60,7 +60,7 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
             />
             <CustomInput
               secureTextEntry
-              placeholder={t('common:Confirm pass')}
+              placeholder={t('common:confirmPass')}
               onChangeText={handleChange('confirmPassword')}
               onBlur={handleBlur('confirmPassword')}
               value={values.confirmPassword}
@@ -69,7 +69,7 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
               iconName={'key-variant'}
             />
             <CustomBtn
-              label={t('common:Create account')}
+              label={t('common:createAcc')}
               center
               secondary
               activeOpacity={0.8}
@@ -77,7 +77,7 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
               width={50}
             />
             <StyledText onPress={navigateToLogin}>
-              {t('common:Already account')}
+              {t('common:alreadyAcc')}
             </StyledText>
           </Wrapper>
         )}

@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/images/logo.svg';
-import { InputContainer } from '../../components';
+import { Container, InputContainer } from '../../components';
 
 export interface Container {
   headerTitle: string;
@@ -18,32 +18,31 @@ export const AuthContainer: React.FC<Container> = ({
   headerTitle,
 }) => {
   const theme = useTheme();
+  const coverImage =
+    'https://images.unsplash.com/photo-1524053821891-fadb2cc83d52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80';
+
   return (
-    <KeyboardAvoidsView behavior="height">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <>
-          <HeaderContainer>
-            <LinearGradient
-              colors={[
-                theme.colors.background5,
-                theme.colors.background10,
-                theme.colors.background,
-              ]}
-              locations={[0.3, 0.6, 0.85]}>
-              <HeaderImage
-                resizeMode="cover"
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1524053821891-fadb2cc83d52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80',
-                }}
-              />
-              <AppLogo width={120} height={160} fill={'red'} />
-              <HeaderTitle>{headerTitle}</HeaderTitle>
-            </LinearGradient>
-          </HeaderContainer>
-          <InputContainer>{children}</InputContainer>
-        </>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidsView>
+    <Container>
+      <HeaderContainer>
+        <LinearGradient
+          colors={[
+            theme.colors.background5,
+            theme.colors.background10,
+            theme.colors.background,
+          ]}
+          locations={[0.3, 0.6, 0.85]}>
+          <HeaderImage
+            resizeMode="cover"
+            source={{
+              uri: coverImage,
+            }}
+          />
+          <AppLogo width={120} height={160} fill={'red'} />
+          <HeaderTitle>{headerTitle}</HeaderTitle>
+        </LinearGradient>
+      </HeaderContainer>
+      <InputContainer>{children}</InputContainer>
+    </Container>
   );
 };
 
@@ -51,11 +50,6 @@ const HeaderContainer = styled.View`
   justify-content: center;
   border-bottom-width: 3px;
   border-bottom-color: ${props => props.theme.colors.lightGrey2};
-`;
-
-const KeyboardAvoidsView = styled.KeyboardAvoidingView`
-  background-color: ${({ theme }) => theme.colors.background};
-  flex: 1;
 `;
 
 const AppLogo = styled(Logo)`

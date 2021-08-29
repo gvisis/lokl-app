@@ -12,6 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useTranslation } from 'react-i18next';
 
 import {
   CategoryPicker,
@@ -23,6 +24,7 @@ import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
+import { ERROR_TYPE } from '../../types/general';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -34,10 +36,12 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [pickedCategory, setPickedCategory] = useState<string>(null);
 
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useTheme();
 
+  //! MOVE VALUES TO SAGA, SAVE SPACE. SAVE THE PLANET
   const handleAdSubmit = values => {
     const { title, description, price } = values;
     dispatch(
@@ -70,7 +74,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         setTempImages(tempImages => [...tempImages, getImageObject(assets)]);
       }
       if (errorMessage) {
-        dispatch(actions.ui.setStatus('error', true, errorMessage));
+        dispatch(actions.ui.setStatus(ERROR_TYPE.ERROR, true, errorMessage));
       }
     });
   }, [tempImages]);
@@ -113,7 +117,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 onChangeText={handleChange('title')}
                 text={values.title}
                 editable
-                placeholder={'What are you looking for?'}
+                placeholder={t('ads:titlePlaceholder')}
               />
               {/* TITLE */}
               <AdHeader>
@@ -123,7 +127,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   ))}
                 {(tempImages === null || tempImages.length != 3) && (
                   <AddImage onPress={handleImagePicker}>
-                    <AddImageText>Select example image</AddImageText>
+                    <AddImageText>{t('ads:exampleImg')}</AddImageText>
                     <Icon name={'image-plus'} size={25} />
                   </AddImage>
                 )}
@@ -133,7 +137,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
               {errors.price && (
                 <AdRowWrap errorText>
                   {errors.category && touched.category && (
-                    <ErrorMessage>Please select a category</ErrorMessage>
+                    <ErrorMessage>{t('yup:ads-categoryErr')}</ErrorMessage>
                   )}
                   {errors.price && touched.price && (
                     <ErrorMessage>{errors.price}</ErrorMessage>
@@ -151,7 +155,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   placeholderTextColor={theme.colors.lightGrey1}
                   keyboardType="numeric"
                   onChangeText={handleChange('price')}
-                  placeholder={'Enter max price'}
+                  placeholder={t('ads:pricePlaceholder')}
                   value={values.price}
                 />
               </AdRowWrap>
@@ -165,7 +169,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   onChangeText={handleChange('description')}
                   text={values.description}
                   editable
-                  placeholder="Describe what are you looking for.."
+                  placeholder={t('ads:descriptionPlaceholder')}
                   multiline
                 />
               </AdDescriptionWrap>
@@ -176,7 +180,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   rowLeft={<CalendarIcon name={'calendar-outline'} />}
                   rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
                   onPress={showDatepicker}
-                  text={'I need it by (select): '}
+                  text={t('ads:needBy')}
                 />
                 {showDatePicker && (
                   <DateTimePicker

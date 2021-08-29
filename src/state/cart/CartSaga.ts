@@ -1,5 +1,8 @@
+import i18next from 'i18next';
 import { put, select, takeEvery } from 'typed-redux-saga';
 
+import { ROUTES } from '../../routes/RouteNames';
+import { ERROR_TYPE } from '../../types/general';
 import { actions } from '../actions';
 import { CompanyProduct } from '../app/AppInterfaces';
 import { constants } from '../constants';
@@ -88,9 +91,32 @@ function* handleGetCartTotals() {
     console.log('update cart error', e);
   }
 }
+function* handleCartNavigation({ cartStage }: string) {
+  try {
+    if (cartStage === ROUTES.CartItemsView) {
+      yield* put(actions.cart.setCartStage(ROUTES.CartAddressView));
+    }
+    if (cartStage === ROUTES.CartAddressView) {
+      yield* put(actions.cart.setCartStage(ROUTES.CartPaymentView));
+    }
+    if (cartStage === ROUTES.CartPaymentView) {
+      yield* put(actions.cart.setCartStage('payFinish'));
+    }
+  } catch (e) {
+    yield;
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18next.t('errors:thereWasError'),
+      ),
+    );
+  }
+}
 
 export function* cartSaga() {
   yield* takeEvery(constants.cart.GET_CART_TOTALS, handleGetCartTotals);
   yield* takeEvery(constants.cart.REMOVE_FROM_CART, handleRemoveFromCart);
   yield* takeEvery(constants.cart.CHECK_CART_ACTIONS, handleCartActions);
+  yield* takeEvery(constants.cart.NAVIGATE_CART, handleCartNavigation);
 }
