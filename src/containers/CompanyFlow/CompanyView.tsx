@@ -14,7 +14,7 @@ export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
     const { companyItem } = route.params;
     const { t } = useTranslation();
     const allCategories = useSelector(state => state.app.categories);
-    const [CompCategories, setCompCategories] = useState([]);
+    const [compCategories, setCompCategories] = useState([]);
 
     const handleCategoryNav = useCallback(
       category => {
@@ -35,8 +35,8 @@ export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
       <SingleCompany companyItem={companyItem}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CompanyDescription>{companyItem.description}</CompanyDescription>
-          {CompCategories &&
-            CompCategories.map(category => (
+          {compCategories &&
+            compCategories.map(category => (
               <CategoryCard
                 onPress={() => handleCategoryNav(category)}
                 key={category.id}>

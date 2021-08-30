@@ -4,6 +4,7 @@ export enum ROUTES {
   Error = 'error',
   TabNav = 'tabNav',
   AuthNav = 'authNav',
+  SingleCategory = 'singleCategory',
 
   // Product
   Product = 'product',

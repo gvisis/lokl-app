@@ -48,7 +48,7 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
         <TitleWrap>
           <CompanyImage source={{ uri: companyItem.image }} />
           <CompanyTitleWrap>
-            <CompanyTitle>{companyItem.title} (info?) </CompanyTitle>
+            <CompanyTitle>{companyItem.title}</CompanyTitle>
           </CompanyTitleWrap>
         </TitleWrap>
         {showRating && (
