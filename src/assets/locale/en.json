@@ -42,7 +42,8 @@
     "addToCart": "Add to cart",
     "productAdded": "Product added to cart",
     "howMany": "How many?",
-    "pay": "Pay"
+    "pay": "Pay",
+    "addShippingAddress": "No address selected"
   },
   "category": {
     "title": "Category",

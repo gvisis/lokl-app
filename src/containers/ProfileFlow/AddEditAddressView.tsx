@@ -14,7 +14,7 @@ import { ROUTES } from '../../routes/RouteNames';
 export const AddEditAddressView: React.FC = () => {
   const { userInfo } = useSelector(state => state.user);
   const { onSync } = useSelector(state => state.ui);
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -28,9 +28,8 @@ export const AddEditAddressView: React.FC = () => {
   };
   const handleAddNewAddress = useCallback(values => {
     dispatch(actions.user.addAddress(values));
-    navigate(ROUTES.Address);
+    navigation.navigate(ROUTES.Address);
   }, []);
-
   return (
     <Container>
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
