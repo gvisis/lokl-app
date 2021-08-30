@@ -16,6 +16,7 @@ import {
   getProductOwnerTitle,
 } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
+import { CART_ACTION } from '../../../types/general';
 
 export interface ProductScreenProps {
   item?: CompanyProduct;
@@ -47,7 +48,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   // Add ONE item to cart
   const handleAddToCart = useCallback(() => {
     const cartProduct = { ...item };
-    dispatch(actions.cart.checkCartActions('add', cartProduct));
+    dispatch(actions.cart.checkCartActions(CART_ACTION.ADD, cartProduct));
   }, [dispatch]);
 
   return (

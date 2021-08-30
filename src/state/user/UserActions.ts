@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 
 import { constants } from '../constants';
 import { AnyObject } from '../../types/general';
-import { UserAddress } from './UserReducer';
+import { UserAddress } from './UserInterfaces';
 
 export const setUserInfo = createAction<AnyObject>(
   constants.user.SET_USER_INFO,

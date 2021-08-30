@@ -18,12 +18,6 @@ export enum ERROR_TYPE {
   SUCCESS = 'success',
   ERROR = 'error',
 }
-export enum CART {
-  ADD = 'add',
-  REMOVE = 'remove',
-  CLEAR = 'clear',
-}
-
 // Types
 export type AnyObject = { [key: string]: any };
 export type ErrorType = ERROR_TYPE.ERROR | ERROR_TYPE.SUCCESS | null;

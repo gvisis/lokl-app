@@ -28,9 +28,9 @@ export const CartPaymentView: React.FC = () => {
       ) : (
         <Container>
           <PaymentHeaderWrap>
-            <PaymentTitle>Payment details</PaymentTitle>
+            <PaymentTitle>{t('cart:paymentDetails')}</PaymentTitle>
             <PaymentSubtitle>
-              Complete your purchase by providing payment details
+              {t('cart:completePaymentSubtitle')}
             </PaymentSubtitle>
           </PaymentHeaderWrap>
           <PaymentMidSection>

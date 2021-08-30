@@ -7,7 +7,7 @@ import { constants } from '../constants';
 import { api } from '../../api';
 import { guidGenerator } from '../../utils/functions';
 import { firebaseDb } from '../../api/firebaseDb';
-import { UserAddress, UserProps } from './UserReducer';
+import { UserAddress, UserProps } from './UserInterfaces';
 import { ERROR_TYPE } from '../../types/general';
 
 interface UserAuthCredentials {

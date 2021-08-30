@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { call, put, select, takeEvery } from 'typed-redux-saga';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { ERROR_TYPE } from '../../types/general';
+import { CART_ACTION, ERROR_TYPE } from '../../types/general';
 import { actions } from '../actions';
 import { CompanyProduct } from '../app/AppInterfaces';
 import { constants } from '../constants';
@@ -34,7 +34,7 @@ function* handleCartActions({
       tempCart = cart
         .map((item: CompanyProduct) => {
           if (item.id === product.id) {
-            if (cartAction === 'add') {
+            if (cartAction === CART_ACTION.ADD) {
               item = {
                 ...item,
                 amount: selectedQuantity
@@ -42,7 +42,7 @@ function* handleCartActions({
                   : ++item.amount,
               };
             }
-            if (cartAction === 'remove') {
+            if (cartAction === CART_ACTION.REMOVE) {
               item = { ...item, amount: --item.amount };
             }
           }
@@ -92,6 +92,7 @@ function* handleGetCartTotals() {
   }
 }
 function* handleFinishPurchase({ finishPurchase }: boolean) {
+  // Fake delay to show loading while "payment processing"
   const delay = (time: number) =>
     new Promise(resolve => setTimeout(resolve, time));
   try {

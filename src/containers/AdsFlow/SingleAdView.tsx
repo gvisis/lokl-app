@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ export const SingleAdView: React.FC = () => {
   const handleSend = useFunction(setMessageSent, true);
 
   return (
-    <Container>
+    <View style={{ flex: 1 }}>
       <AdHeader
         dot={<InactiveDot />}
         activeDot={<ActiveDot />}
@@ -54,7 +54,7 @@ export const SingleAdView: React.FC = () => {
         <ProfileRow
           text={t('ads:needBy')}
           touchable
-          rowRight={<AdPrice>{item.dateRequired}</AdPrice>}
+          rowRight={<AdPrice>{getDateFromString(item.dateRequired)}</AdPrice>}
         />
         <AdDescription>{item.description}</AdDescription>
         <AdFooterWrap>
@@ -74,7 +74,7 @@ export const SingleAdView: React.FC = () => {
           )}
         </AdFooterWrap>
       </AdMidWrap>
-    </Container>
+    </View>
   );
 };
 

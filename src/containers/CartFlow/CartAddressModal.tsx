@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { AddNewAddress, AddressSelect, CustomBtn } from '../../components';
-import { UserAddress } from '../../state/user/UserReducer';
+import { UserAddress } from '../../state/user/UserInterfaces';
 import { actions } from '../../state/actions';
 
 export const CartAddressModal = ({ isVisible, setModalVisible }) => {

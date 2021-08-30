@@ -13,9 +13,8 @@ import { RootStackParamList } from '../types/general';
 import { CartNavigation } from './CartNavigation';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-type TabNavProps = BottomTabNavigationProp<RootStackParamList, ROUTES.TabNav>;
 
-export const TabNavigation: React.FC<TabNavProps> = ({ navigation, route }) => {
+export const TabNavigation: React.FC = () => {
   const theme = useTheme();
   return (
     <Tab.Navigator

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 
 import { RadioButton } from '../..';
-import { UserAddress } from '../../../state/user/UserReducer';
+import { UserAddress } from '../../../state/user/UserInterfaces';
 
 interface AddressSelectProps {
   address: UserAddress;

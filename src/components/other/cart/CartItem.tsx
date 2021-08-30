@@ -8,6 +8,7 @@ import { actions } from '../../../state/actions';
 import { CompanyProduct } from '../../../state/app/AppInterfaces';
 import { getProductOwnerTitle } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
+import { CART_ACTION } from '../../../types/general';
 
 interface CartItem {
   item: CompanyProduct;
@@ -21,14 +22,14 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
 
   const handleIncreaseAmount = useFunction(
     dispatch,
-    actions.cart.checkCartActions('add', item),
+    actions.cart.checkCartActions(CART_ACTION.ADD, item),
   );
 
   const handleDecreaseAmount = useCallback(
     (item: CompanyProduct) => {
       item.amount === 1
         ? shouldRemove.setValue(1)
-        : dispatch(actions.cart.checkCartActions('remove', item));
+        : dispatch(actions.cart.checkCartActions(CART_ACTION.REMOVE, item));
     },
     [item],
   );

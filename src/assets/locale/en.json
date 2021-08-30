@@ -31,6 +31,8 @@
     "payment": "Payment",
     "total": "Total price: €",
     "remove": "Remove",
+    "paymentDetails": "Payment details",
+    "completePaymentSubtitle": "Complete your purchase by providing payment details",
     "cardDetails": "Card details",
     "cardDetailsPlaceholder": "Enter your card details",
     "noAddress": "No addresses available. Add new?",

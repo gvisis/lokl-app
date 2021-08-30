@@ -1,7 +1,7 @@
 import { CompanyProduct } from '../app/AppInterfaces';
 import { ActionType, CartActions } from './CartInterfaces';
 import { constants } from '../constants';
-import { UserAddress } from '../user/UserReducer';
+import { UserAddress } from '../user/UserInterfaces';
 
 const checkCartActions = (
   cartAction: ActionType,

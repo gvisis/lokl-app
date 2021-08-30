@@ -1,7 +1,8 @@
+import { CART_ACTION } from '../../types/general';
 import { CompanyProduct } from '../app/AppInterfaces';
-import { UserAddress } from '../user/UserReducer';
+import { UserAddress } from '../user/UserInterfaces';
 
-export type ActionType = 'add' | 'remove';
+export type ActionType = CART_ACTION.ADD | CART_ACTION.REMOVE;
 
 export interface CartReducer {
   cart: CompanyProduct[];

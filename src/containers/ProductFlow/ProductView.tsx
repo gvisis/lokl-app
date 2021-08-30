@@ -54,7 +54,13 @@ export const ProductView: React.FC<ProductViewProps> = memo(
 
     const handleAddToCart = () => {
       if (selectedQuantity !== 0) {
-        dispatch(actions.cart.checkCartActions('add', item, selectedQuantity));
+        dispatch(
+          actions.cart.checkCartActions(
+            CART_ACTION.ADD,
+            item,
+            selectedQuantity,
+          ),
+        );
         dispatch(
           actions.ui.setStatus(
             ERROR_TYPE.SUCCESS,
