@@ -9,7 +9,7 @@ import { EmptyView, ItemCard, SingleCompany } from '../../components';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 
 // eslint-disable-next-line react/display-name
-export const CategoryView: React.FC = memo(() => {
+export const CompCategoryView: React.FC = memo(() => {
   const [categoryItems, setCategoryItems] = useState([]);
   const { params } = useRoute();
   const navigation = useNavigation();

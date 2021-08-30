@@ -1,29 +1,37 @@
 import React from 'react';
 import {
+  GestureResponderEvent,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
+import { useNavigation } from '@react-navigation/core';
 
 import { ProductWrap } from './Product';
 import { AnyObject } from '../../../types/general';
 import { getImagesFromObject } from '../../../utils/functions';
+import { useFunction } from '../../../utils/hooks';
 
 interface ProduceItemProps {
-  item: AnyObject; //! Change after item propertires are known
+  item: AnyObject;
   width?: number;
   height?: number;
   ads?: boolean;
+  onPress?: (e: GestureResponderEvent) => void;
 }
 export const ProduceItem: React.FC<ProduceItemProps> = ({
   item,
   width,
   height,
   ads,
+  onPress,
 }) => {
+  const { navigate } = useNavigation();
   const theme = useTheme();
   const adsImage = ads && getImagesFromObject(item)[0].url;
+
+  const handlePress = useFunction(navigate, onPress, { item });
 
   if (Platform.OS === 'android') {
     return (
@@ -32,7 +40,8 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
           theme.colors.primary3,
           false,
         )}
-        useForeground={true}>
+        useForeground={true}
+        onPress={handlePress}>
         <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
           <ItemImage
@@ -46,10 +55,15 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
     );
   } else {
     return (
-      <TouchableOpacity activeOpacity={0.8}>
+      <TouchableOpacity activeOpacity={0.8} onPress={handlePress}>
         <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
-          <ItemImage resizeMode="cover" source={{ uri: item.image }} />
+          <ItemImage
+            resizeMode="cover"
+            source={{
+              uri: !ads ? item.image : adsImage,
+            }}
+          />
         </ProductWrap>
       </TouchableOpacity>
     );

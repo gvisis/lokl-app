@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { useTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -8,36 +8,18 @@ import {
   Container,
   EmptyView,
   ProfileRow,
-  ScreenLoader,
 } from '../../components';
 import { actions } from '../../state/actions';
 
 export const CartPaymentView: React.FC = () => {
-  const { cart, shippingAddress, finishPurchase } = useSelector(
-    state => state.cart,
-  );
+  const { cart, shippingAddress } = useSelector(state => state.cart);
   const { name, email } = useSelector(state => state.user.userInfo);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const theme = useTheme();
 
   useEffect(() => {
     dispatch(actions.cart.getCartTotals());
-  }, [cart, dispatch, finishPurchase]);
-
-  // FAKE LOADING WHEN PURCHASE IS FINISHED
-  if (finishPurchase) {
-    setTimeout(() => {
-      dispatch(actions.cart.cartFinishPurchase(false));
-    }, 3000);
-
-    return (
-      <>
-        <EmptyView text={'Finishing your purchase... Thank you for waiting'} />
-        <ScreenLoader size={50} color={theme.colors.secondary} />
-      </>
-    );
-  }
+  }, [cart, dispatch]);
 
   return (
     <Container>

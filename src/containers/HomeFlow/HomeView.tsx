@@ -2,12 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Company,
-  Container,
   EmptyView,
   HomeHeader,
   HomeRow,
@@ -16,14 +14,14 @@ import {
   ScreenLoader,
 } from '../../components';
 import { actions } from '../../state/actions';
+import { ROUTES } from '../../routes/RouteNames';
 
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const allCompanies = useSelector(state => state.app.allCompanies);
-  const allCategories = useSelector(state => state.app.categories);
-  const allProducts = useSelector(state => state.app.allProducts);
-  const allAds = useSelector(state => state.app.allAppAds);
+  const { allCompanies, categories, allProducts, allAppAds } = useSelector(
+    state => state.app,
+  );
 
   useEffect(() => {
     // later add functionality to fetch everything with only one dispatch
@@ -33,10 +31,12 @@ export const HomeView: React.FC = () => {
   }, [dispatch]);
 
   const renderAllAds = useCallback(
-    ({ item }) => <ProduceItem width={200} item={item} ads />,
+    ({ item }) => <ProduceItem width={200} item={item} ads={true} />,
     [],
   );
-  const renderAllCategories = ({ item }) => <ProduceItem item={item} />;
+  const renderAllCategories = ({ item }) => (
+    <ProduceItem onPress={ROUTES.SingleCategory} item={item} />
+  );
   const renderAllCompanies = ({ item }) => (
     <Company width={325} companyItem={item} />
   );
@@ -49,10 +49,10 @@ export const HomeView: React.FC = () => {
       <HomeHeader title={t('home:title')} />
       {/* CATEGORIES ROW ( RENAME NEEDED ) */}
       <HomeRow title={t('home:rowProduce')}>
-        {allCategories ? (
+        {categories ? (
           <FlatList
             nestedScrollEnabled
-            data={allCategories}
+            data={categories}
             renderItem={renderAllCategories}
             keyExtractor={item => item.id}
             horizontal
@@ -95,9 +95,9 @@ export const HomeView: React.FC = () => {
       </HomeRow>
       {/* ADS ROW */}
       <HomeRow title={t('home:rowAds')}>
-        {allAds ? (
+        {allAppAds ? (
           <FlatList
-            data={allAds}
+            data={allAppAds}
             renderItem={renderAllAds}
             keyExtractor={item => item.id}
             horizontal

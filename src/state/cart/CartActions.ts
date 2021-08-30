@@ -24,9 +24,9 @@ const setCartStage = (cartStage: string) => ({
   cartStage,
 });
 
-const navigateCart = (cartStage: string) => ({
+const navigateCart = (currentScreen: string) => ({
   type: constants.cart.NAVIGATE_CART,
-  cartStage,
+  currentScreen,
 });
 
 const getCartTotals = () => ({

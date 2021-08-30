@@ -34,6 +34,15 @@ export const guidGenerator = () => {
   );
 };
 
+export const getCategoryItemsFromIds = (
+  companies: CompanyProps[],
+  categoryId: number,
+) =>
+  companies
+    .map(company => company['produce'])
+    .flat()
+    .filter(product => product.category === categoryId);
+
 export const getImagesFromObject = item => {
   const imgArray = [];
   for (const key in item.images) {
@@ -87,9 +96,6 @@ export const checkForRatings = (
 };
 
 export const getHeaderTitle = routeName => {
-  // If the focused route is not found, we need to assume it's the initial screen
-  // This can happen during if there hasn't been any navigation inside the screen
-  // In our case, it's "Home" as that's the first screen inside the navigator
   switch (routeName) {
     case ROUTES.Profile:
       return 'Profile';

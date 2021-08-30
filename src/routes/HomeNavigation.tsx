@@ -7,8 +7,8 @@ import { useTheme } from 'styled-components/native';
 
 import { ROUTES } from './RouteNames';
 import { ProductView } from '../containers/ProductFlow';
-import { CategoryView, CompanyView } from '../containers/CompanyFlow';
-import { HomeView } from '../containers/HomeFlow';
+import { CompanyView, CompCategoryView } from '../containers/CompanyFlow';
+import { CategoriesView, HomeView } from '../containers/HomeFlow';
 import { RootStackParamList } from '../types/general';
 import { SearchView } from '../containers/SearchFlow';
 
@@ -38,8 +38,12 @@ export const HomeNavigation: React.FC = () => {
       <HomeStack.Screen name={ROUTES.SingleProduct} component={ProductView} />
       <HomeStack.Screen name={ROUTES.SingleCompany} component={CompanyView} />
       <HomeStack.Screen
+        name={ROUTES.SingleCategory}
+        component={CategoriesView}
+      />
+      <HomeStack.Screen
         name={ROUTES.CompanyCategory}
-        component={CategoryView}
+        component={CompCategoryView}
       />
       <HomeStack.Screen name={ROUTES.Search} component={SearchView} />
     </HomeStack.Navigator>

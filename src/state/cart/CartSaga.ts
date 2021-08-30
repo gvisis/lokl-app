@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { put, select, takeEvery } from 'typed-redux-saga';
+import { call, put, select, takeEvery } from 'typed-redux-saga';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { ERROR_TYPE } from '../../types/general';
@@ -91,19 +91,40 @@ function* handleGetCartTotals() {
     console.log('update cart error', e);
   }
 }
-function* handleCartNavigation({ cartStage }: string) {
+function* handleFinishPurchase({ finishPurchase }: boolean) {
+  const delay = (time: number) =>
+    new Promise(resolve => setTimeout(resolve, time));
   try {
-    if (cartStage === ROUTES.CartItemsView) {
-      yield* put(actions.cart.setCartStage(ROUTES.CartAddressView));
-    }
-    if (cartStage === ROUTES.CartAddressView) {
-      yield* put(actions.cart.setCartStage(ROUTES.CartPaymentView));
-    }
-    if (cartStage === ROUTES.CartPaymentView) {
-      yield* put(actions.cart.setCartStage('payFinish'));
+    if (finishPurchase) {
+      yield* call(delay, 3000);
+      yield* put(actions.cart.clearCart());
+      yield* put(actions.cart.cartFinishPurchase(false));
+      yield* put(
+        actions.ui.setStatus(ERROR_TYPE.SUCCESS, true, 'Purchase Successful'),
+      );
     }
   } catch (e) {
-    yield;
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18next.t('errors:thereWasError'),
+      ),
+    );
+  }
+}
+
+function* handleCartNavigation({ currentScreen }: string) {
+  const possibleScreens = [
+    ROUTES.CartItemsView,
+    ROUTES.CartAddressView,
+    ROUTES.CartPaymentView,
+  ];
+  try {
+    if (possibleScreens.includes(currentScreen)) {
+      yield* put(actions.cart.setCartStage(currentScreen));
+    }
+  } catch (e) {
     yield* put(
       actions.ui.setStatus(
         ERROR_TYPE.ERROR,
@@ -119,4 +140,5 @@ export function* cartSaga() {
   yield* takeEvery(constants.cart.REMOVE_FROM_CART, handleRemoveFromCart);
   yield* takeEvery(constants.cart.CHECK_CART_ACTIONS, handleCartActions);
   yield* takeEvery(constants.cart.NAVIGATE_CART, handleCartNavigation);
+  yield* takeEvery(constants.cart.CART_FINISH_PURCHASE, handleFinishPurchase);
 }

@@ -34,17 +34,16 @@ export const Product: React.FC<ProductScreenProps> = ({
 }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
   const ratingCustomImage = require('../../../assets/images/ratingfull.png');
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 
-  const handleSingleProductNav = useFunction(
-    navigation.navigate,
-    ROUTES.SingleProduct,
-    { item, productOwnerTitle },
-  );
+  const handleSingleProductNav = useFunction(navigate, ROUTES.SingleProduct, {
+    item,
+    productOwnerTitle,
+  });
   // Add ONE item to cart
   const handleAddToCart = useCallback(() => {
     const cartProduct = { ...item };
