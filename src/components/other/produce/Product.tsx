@@ -16,7 +16,7 @@ import {
   getProductOwnerTitle,
 } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
-import { CART_ACTION } from '../../../types/general';
+import { CART_ACTION } from '../../../utils/variables';
 
 export interface ProductScreenProps {
   item?: CompanyProduct;
@@ -84,7 +84,7 @@ export const Product: React.FC<ProductScreenProps> = ({
         </ProductTop>
         <ProductBottom>
           <ProductName>{item.title}</ProductName>
-          <ProductPrice>{item.price}€</ProductPrice>
+          <ProductPrice>€ {item.price}</ProductPrice>
           <ProductRating>
             <AirbnbRating
               count={5}

@@ -1,6 +1,6 @@
-import { CART_ACTION } from '../../types/general';
 import { CompanyProduct } from '../app/AppInterfaces';
 import { UserAddress } from '../user/UserInterfaces';
+import { CART_ACTION } from '../../utils/variables';
 
 export type ActionType = CART_ACTION.ADD | CART_ACTION.REMOVE;
 

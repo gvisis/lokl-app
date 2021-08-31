@@ -54,7 +54,6 @@ declare module 'styled-components/native' {
         bentonBook: string;
       };
     };
-    width: number;
     border: {
       radius5: number;
       radius10: number;

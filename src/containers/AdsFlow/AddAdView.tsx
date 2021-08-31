@@ -21,7 +21,7 @@ import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
-import { ERROR_TYPE } from '../../types/general';
+import { ERROR_TYPE } from '../../utils/variables';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;

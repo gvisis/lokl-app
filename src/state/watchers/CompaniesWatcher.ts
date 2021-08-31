@@ -4,7 +4,7 @@ import { EventChannel, eventChannel } from 'redux-saga';
 import i18next from 'i18next';
 
 import { actions } from '../actions';
-import { ERROR_TYPE } from '../../types/general';
+import { ERROR_TYPE } from '../../utils/variables';
 import { sortAsc } from '../../utils/functions';
 import { CompanyProps } from '../app/AppInterfaces';
 

@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Formik } from 'formik';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -10,32 +10,71 @@ import { Container, CustomBtn } from '../../components';
 import { ProfileRow } from '../../components/rows/ProfileRow';
 import { actions } from '../../state/actions';
 import { ROUTES } from '../../routes/RouteNames';
+import { COUNTRY } from '../../utils/variables';
+import { UserAddress } from '../../state/user/UserInterfaces';
+
+interface EditView {
+  params?: {
+    addressId?: string;
+  };
+}
 
 export const AddEditAddressView: React.FC = () => {
   const { userInfo } = useSelector(state => state.user);
   const { onSync } = useSelector(state => state.ui);
-  const navigation = useNavigation();
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  const initialFormikValues = {
+  const [initialFormikValues, setInitialFormikValues] = useState<UserAddress>({
     name: userInfo.name,
     phone: userInfo.phone,
     street: '',
     city: '',
     postcode: '',
-    country: 'Lithuania',
-  };
-  const handleAddNewAddress = useCallback(values => {
-    dispatch(actions.user.addAddress(values));
-    navigation.navigate(ROUTES.Address);
-  }, []);
+    country: COUNTRY.LITHUANIA,
+  });
+
+  const route: EditView = useRoute();
+  const navigation = useNavigation();
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  let addressId: string | undefined;
+
+  if (route.params) {
+    addressId = route.params.addressId;
+  }
+
+  useEffect(() => {
+    if (addressId) {
+      setInitialFormikValues({
+        ...userInfo.address.find(
+          singleAddress => singleAddress.id === addressId,
+        ),
+      });
+      navigation.setOptions({ headerTitle: t('profile:editAddress') });
+    }
+  }, [addressId]);
+
+  const handleAddressAction = useCallback(
+    values => {
+      if (addressId) {
+        console.log('sitas', values);
+        dispatch(actions.user.editAddress(addressId, values));
+      } else {
+        console.log('anas', values);
+        dispatch(actions.user.addAddress(values));
+      }
+      navigation.navigate(ROUTES.Address);
+    },
+    [initialFormikValues],
+  );
+
   return (
     <Container>
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+      <ContainerScroll>
         <Formik
           initialValues={initialFormikValues}
-          onSubmit={values => handleAddNewAddress(values)}>
+          enableReinitialize={true}
+          onSubmit={values => handleAddressAction(values)}
+        >
           {({ values, handleChange, handleSubmit }) => (
             <RowWraps>
               <ProfileRow
@@ -75,18 +114,21 @@ export const AddEditAddressView: React.FC = () => {
                 editable
                 label={t('profile:country')}
                 text={values.country}
+                onChangeText={handleChange('country')}
               />
               <CustomBtn
                 center
                 secondary
                 onSync={onSync.button}
-                label={t('common:addNewAddress')}
+                label={
+                  !addressId ? t('common:addNewAddress') : t('profile:save')
+                }
                 onPress={handleSubmit}
               />
             </RowWraps>
           )}
         </Formik>
-      </ScrollView>
+      </ContainerScroll>
     </Container>
   );
 };
@@ -96,3 +138,8 @@ const RowWraps = styled.View`
   margin-top: 10px;
   padding: 10px;
 `;
+
+const ContainerScroll = styled(ScrollView).attrs({
+  flex: 1,
+  showsVerticalScrollIndicator: false,
+})``;

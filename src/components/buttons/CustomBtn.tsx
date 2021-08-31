@@ -25,7 +25,6 @@ interface CustomBtnProps {
   width?: number;
   fontSize?: number;
   secondary?: boolean;
-  style?: StyleProp<any>;
 }
 
 export const CustomBtn: React.FC<CustomBtnProps> = ({

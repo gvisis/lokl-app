@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import { actions } from '../actions';
 import { UserProps } from '../user/UserInterfaces';
-import { ERROR_TYPE } from '../../types/general';
+import { ERROR_TYPE } from '../../utils/variables';
 
 function allUsersChannel() {
   const dbAllusersRef = database().ref(`/users/`);

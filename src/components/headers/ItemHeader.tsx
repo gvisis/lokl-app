@@ -23,7 +23,7 @@ export const ItemHeader = ({
     <BottomHeader>
       <ProductTitle>{item.title}</ProductTitle>
       <ProductCat>{item.category}</ProductCat>
-      <Price>£ {item.price}</Price>
+      <Price>€ {item.price}</Price>
     </BottomHeader>
   </ItemHeaderWrap>
 );

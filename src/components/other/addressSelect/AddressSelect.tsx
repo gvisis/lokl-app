@@ -1,12 +1,15 @@
 import React from 'react';
-import { GestureResponderEvent, Platform } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import { UserAddress } from '../../../state/user/UserInterfaces';
 import { actions } from '../../../state/actions';
+import { ROUTES } from '../../../routes/RouteNames';
+import { ADDRESS_ICONS } from '../../../utils/variables';
 import { RadioButton } from '../..';
 
 interface AddressSelectProps {
@@ -26,16 +29,14 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const icons = {
-    phone: Platform.OS === 'android' ? 'cellphone-android' : 'cellphone-iphone',
-    address: 'map-marker-outline',
-    check: 'check',
-    street: 'mailbox-outline',
-    sizeSm: 20,
-    sizeM: 35,
-  };
+  const { navigate } = useNavigation();
+
   const handleRemoveAddress = (addressId: string) => {
     dispatch(actions.user.removeAddress(addressId));
+  };
+
+  const handleEditAddress = (addressId: string) => {
+    navigate(ROUTES.AddAddress, { addressId });
   };
 
   const isSelected = address.id === selectedId;
@@ -45,17 +46,17 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
       <WrapLeft>
         <FullName>{address.name}</FullName>
         <RowWrap>
-          <RowIcon name={icons.phone} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.PHONE} />
           <RowLine>{address.phone}</RowLine>
         </RowWrap>
         <RowWrap>
-          <RowIcon name={icons.street} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.STREET} />
           <RowLine>
             {address.street}, {address.postcode}
           </RowLine>
         </RowWrap>
         <RowWrap>
-          <RowIcon name={icons.address} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.ADDRESS} />
           <RowLine>
             {address.city}, {address.country}
           </RowLine>
@@ -67,13 +68,10 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
         )}
         {isSelected && !isModal && (
           <EditRemoveButtonWrap>
-            <EditButton>
+            <EditButton onPress={() => handleEditAddress(address.id)}>
               <ButtonText isEdit={true}>{t('profile:edit')}</ButtonText>
             </EditButton>
-            <RemoveButton
-              disabled
-              onPress={() => handleRemoveAddress(address.id)}
-            >
+            <RemoveButton onPress={() => handleRemoveAddress(address.id)}>
               <ButtonText>{t('cart:remove')}</ButtonText>
             </RemoveButton>
           </EditRemoveButtonWrap>
@@ -92,7 +90,7 @@ const ButtonText = styled.Text<{ isEdit?: boolean }>`
 `;
 
 const SelectionWrap = styled.TouchableOpacity<{ isSelected?: boolean }>`
-  flex: 0.5;
+  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -158,6 +156,6 @@ const DefaultSelection = styled.Text`
   color: ${({ theme }) => theme.colors.secondary}; ;
 `;
 
-const RowIcon = styled(Icon)`
+const RowIcon = styled(Icon).attrs({ size: ADDRESS_ICONS.SIZE_SM })`
   color: ${({ theme }) => theme.colors.primary};
 `;

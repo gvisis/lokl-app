@@ -11,6 +11,7 @@ export interface ImagesProps {
   url: string;
   id: string;
 }
+
 export interface Category {
   id: number;
   title: string;

@@ -3,7 +3,8 @@ import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { actions } from '../../state/actions';
-import { ERROR_TYPE, ErrorType } from '../../types/general';
+import { ErrorType } from '../../types/general';
+import { ERROR_TYPE } from '../../utils/variables';
 
 export const GlobalErrorSuccess: React.FC = () => {
   const { error, success, message } = useSelector(state => state.ui.status);

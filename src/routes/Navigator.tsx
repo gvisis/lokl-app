@@ -22,6 +22,7 @@ const Navigator: React.FC = () => {
   const dispatch = useDispatch();
 
   const Stack = createStackNavigator<RootStackParamList>();
+
   const onAuthStateChanged = (user): void => {
     if (user) {
       database()

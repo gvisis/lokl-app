@@ -81,6 +81,7 @@
     "changeTheme": "Change theme",
     "changeLang": "Change language",
     "newAddressAdded": "New address added",
+    "editAddress": "Edit address",
     "addressRemoved": "Address succesfully removed",
     "addressUpdated": "Address succesfully updated"
   },
@@ -93,6 +94,7 @@
     "needBy": "I need it by: ",
     "payUpTo": "I can pay up to: ",
     "createNew": "Create new ad",
+    "added": "Added:",
     "sendMessage": "Send ad owner a message about this ad",
     "messageSuccess": "Message successfully sent to the owner"
   },

@@ -6,7 +6,7 @@ import {
   Category,
   CompanyProduct,
   CompanyProps,
-  ImagesProps,
+  UploadImageProps,
 } from '../state/app/AppInterfaces';
 import { api } from '.';
 import { UserProps } from '../state/user/UserInterfaces';
@@ -62,7 +62,7 @@ const updateProduct = async (productData: CompanyProduct) => {
 
 const uploadImageToStorage = async (
   newAdKey: string,
-  imagesToUpload: ImagesProps[],
+  imagesToUpload: UploadImageProps[],
 ) => {
   const currentUserId = api.getUserInfo().uid;
   if (imagesToUpload.length !== 0) {

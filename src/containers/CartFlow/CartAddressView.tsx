@@ -66,12 +66,7 @@ export const CartAddressView: React.FC = () => {
         />
       </CartWrapTop>
       <AddressSelectWrap>
-        {shippingAddress && (
-          <AddressSelect
-            // selectedId={shippingAddress.id}
-            address={shippingAddress}
-          />
-        )}
+        {shippingAddress && <AddressSelect address={shippingAddress} />}
       </AddressSelectWrap>
     </Container>
   );
@@ -79,8 +74,8 @@ export const CartAddressView: React.FC = () => {
 
 const AddressSelectWrap = styled.View`
   margin-top: 20px;
-  flex: 0.8;
-  padding: 0 10px; /* justify-content: center; */
+  flex: 0.4;
+  padding: 0 10px;
 `;
 
 const CartWrapTop = styled.View`

@@ -45,7 +45,9 @@ export const SingleAdView: React.FC = () => {
       <AdMidWrap showsVerticalScrollIndicator={false}>
         <TitleWrap>
           <AdStyledText>{item.title}</AdStyledText>
-          <DateAdded>Added: {getDateFromString(item.dateAdded)}</DateAdded>
+          <DateAdded>
+            {t('ads:added')} {getDateFromString(item.dateAdded)}
+          </DateAdded>
         </TitleWrap>
         <ProfileRow
           text={t('ads:payUpTo')}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import styled, { useTheme } from 'styled-components/native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -38,10 +38,8 @@ export const SearchModal: React.FC = () => {
     [searchValue],
   );
 
-  // handle search result navigate to company or product page
   const handleSearchResultNavigate = useCallback(
     item => {
-      console.log('item before', item);
       handleSearchFocus();
       if (item['website']) {
         navigate(ROUTES.SingleCompany, { companyItem: item });
@@ -55,8 +53,7 @@ export const SearchModal: React.FC = () => {
           productOwnerTitle,
         });
       } else {
-        //! NOT WORKING YET
-        console.log('item', item);
+        // TODO: navigate to app ad page
         navigate(ROUTES.AdsTab, {
           screen: ROUTES.SingleAdView,
           params: item,
@@ -82,8 +79,8 @@ export const SearchModal: React.FC = () => {
         <SearchBar
           placeholder={t('home:searchBar')}
           placeholderTextColor={theme.colors.lightGrey1}
-          onPressIn={handleSearchFocus}
           onChangeText={handleChangeText}
+          onPressIn={handleSearchFocus}
         />
         <IconWrap>
           <FilterSort name="magnify" size={30} color={theme.colors.tertiary} />
@@ -157,7 +154,7 @@ const ModalClose = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const SearchRow = styled.View<{ isFocused: boolean }>`
+const SearchRow = styled.TouchableOpacity<{ isFocused: boolean }>`
   width: 100%;
   padding: 5px;
   border-radius: ${({ theme }) => theme.border.radius5}px;
