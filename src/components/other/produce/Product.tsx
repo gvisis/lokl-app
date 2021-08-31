@@ -55,7 +55,8 @@ export const Product: React.FC<ProductScreenProps> = ({
     <TouchableNativeFeedback
       background={TouchableNativeFeedback.Ripple(theme.colors.primary3, false)}
       useForeground={true}
-      onPress={handleSingleProductNav}>
+      onPress={handleSingleProductNav}
+    >
       <ProductWrap width={width} height={height}>
         <ProductTop>
           <AddToCart onPress={handleAddToCart}>
@@ -69,7 +70,8 @@ export const Product: React.FC<ProductScreenProps> = ({
               locations={[0, 0.3, 0.5, 1]}
               style={{
                 flex: 1,
-              }}>
+              }}
+            >
               <CartIcon name={'basket-fill'} size={25} />
             </LinearGradient>
           </AddToCart>
@@ -102,8 +104,8 @@ export const Product: React.FC<ProductScreenProps> = ({
 
 const ProductWrap = styled.View`
   margin: 10px;
-  width: ${(props: ProductScreenProps) => props.width}px;
-  height: ${(props: ProductScreenProps) => props.height}px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius10}px;
@@ -130,9 +132,7 @@ const CartIcon = styled(Icon)`
   opacity: 0.9;
 `;
 
-const ProductImage = styled.ImageBackground`
-  position: absolute;
-  top: 0;
+const ProductImage = styled.Image`
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -186,5 +186,3 @@ const ProductRating = styled.View`
   align-items: flex-start;
   margin-top: 20px;
 `;
-
-export { ProductWrap };

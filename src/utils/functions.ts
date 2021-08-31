@@ -1,7 +1,6 @@
-import storage from '@react-native-firebase/storage';
-
 import { ROUTES } from '../routes/RouteNames';
 import {
+  AdsProps,
   CompanyProduct,
   CompanyProps,
   RatingData,
@@ -32,6 +31,36 @@ export const guidGenerator = () => {
     S4() +
     S4()
   );
+};
+
+export const getSearchFilteredResults = (
+  products: CompanyProduct[],
+  companies: CompanyProps[],
+  ads: AdsProps[],
+  searchValue: string,
+) => {
+  let searchResults: AnyObject[] = [];
+
+  if (searchValue !== '') {
+    const filteredProducts = products.filter(
+      product =>
+        product.title.includes(searchValue) ||
+        product.description.includes(searchValue),
+    );
+    const filteredCompanies = companies.filter(
+      company =>
+        company.title.includes(searchValue) ||
+        company.description.includes(searchValue),
+    );
+    const filteredAds = ads.filter(
+      ad =>
+        ad.title.includes(searchValue) || ad.description.includes(searchValue),
+    );
+    searchResults = [...filteredProducts, ...filteredCompanies, ...filteredAds];
+  } else {
+    searchResults = [];
+  }
+  return searchResults;
 };
 
 export const getCategoryItemsFromIds = (
@@ -94,7 +123,6 @@ export const checkForRatings = (
   }
   return updatedData;
 };
-
 export const getHeaderTitle = routeName => {
   switch (routeName) {
     case ROUTES.Profile:

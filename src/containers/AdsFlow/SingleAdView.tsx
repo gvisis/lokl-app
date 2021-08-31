@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
 
-import { Container, ProfileRow } from '../../components';
+import { ProfileRow } from '../../components';
 import { getDateFromString, getImagesFromObject } from '../../utils/functions';
 import { useFunction } from '../../utils/hooks';
 
@@ -14,24 +14,27 @@ export const SingleAdView: React.FC = () => {
   const { params } = useRoute();
   const { t } = useTranslation();
   const navigation = useNavigation();
-
+  console.log('screen', params);
+  console.log('typeof', typeof params);
+  // bad navigation logic, needs to be fixed, as it is not working  properly from diferent screens
   const { item } = params;
+
+  const images = item.images && getImagesFromObject(item);
+  const handleSend = useFunction(setMessageSent, true);
 
   useEffect(() => {
     navigation.setOptions({ title: item.title });
   }, [item.title]);
 
-  const images = item.images && getImagesFromObject(item);
-  const handleSend = useFunction(setMessageSent, true);
-
   return (
-    <View style={{ flex: 1 }}>
+    <AdContainerWrapper>
       <AdHeader
         dot={<InactiveDot />}
         activeDot={<ActiveDot />}
         loadMinimalLoader={<ActivityIndicator />}
         bounces
-        loop>
+        loop
+      >
         {images ? (
           images.map(image => (
             <AdImage key={image.id} source={{ uri: image.url }} />
@@ -74,11 +77,14 @@ export const SingleAdView: React.FC = () => {
           )}
         </AdFooterWrap>
       </AdMidWrap>
-    </View>
+    </AdContainerWrapper>
   );
 };
 
 const padding10 = { padding: '10px 0' };
+const AdContainerWrapper = styled.View`
+  flex: 1;
+`;
 const AdHeader = styled(Swiper).attrs({
   containerStyle: {
     flex: 0.5,
@@ -167,12 +173,12 @@ const SentMessageBox = styled.Text`
   margin: 15px;
   ${padding10}
 `;
-
 // AD FOOTER END
 
 // SWIPER
 const AdImage = styled.Image`
   flex: 1;
+  resize-mode: contain;
 `;
 
 const ActiveDot = styled.View`

@@ -27,6 +27,7 @@ const RowContainer = styled.View`
   width: 100%;
   flex: 1;
   margin-bottom: 10px;
+  z-index: -1;
 `;
 
 const TitleWrap = styled.View`

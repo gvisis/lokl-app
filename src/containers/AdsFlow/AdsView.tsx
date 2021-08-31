@@ -26,7 +26,7 @@ export const AdsView: React.FC = () => {
   const handleCreateAd = useFunction(navigate, ROUTES.AddAd);
 
   const renderItem = ({ item }) => (
-    <ItemCard ads onPress={ROUTES.SingleAdView} item={item} />
+    <ItemCard isAdsItem={true} onPress={ROUTES.SingleAdView} item={item} />
   );
 
   // Fetch all ads from server
@@ -38,7 +38,7 @@ export const AdsView: React.FC = () => {
 
   return (
     <Container>
-      <HomeHeader title={t('ads:title')} />
+      <HomeHeader isAdsView={true} title={t('ads:title')} />
       <AdContainer>
         {adsFromState.length !== 0 ? (
           <FlatList

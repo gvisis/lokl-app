@@ -22,7 +22,6 @@ const Navigator: React.FC = () => {
   const dispatch = useDispatch();
 
   const Stack = createStackNavigator<RootStackParamList>();
-  //! Handle user state changes - TEMPORARY CODE!!!
   const onAuthStateChanged = (user): void => {
     if (user) {
       database()

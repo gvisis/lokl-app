@@ -10,7 +10,6 @@ import { ProductView } from '../containers/ProductFlow';
 import { CompanyView, CompCategoryView } from '../containers/CompanyFlow';
 import { CategoriesView, HomeView } from '../containers/HomeFlow';
 import { RootStackParamList } from '../types/general';
-import { SearchView } from '../containers/SearchFlow';
 
 const HomeStack = createStackNavigator<RootStackParamList>();
 
@@ -45,7 +44,6 @@ export const HomeNavigation: React.FC = () => {
         name={ROUTES.CompanyCategory}
         component={CompCategoryView}
       />
-      <HomeStack.Screen name={ROUTES.Search} component={SearchView} />
     </HomeStack.Navigator>
   );
 };

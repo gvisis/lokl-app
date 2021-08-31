@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  GestureResponderEvent,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -8,7 +7,6 @@ import {
 import styled, { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/core';
 
-import { ProductWrap } from './Product';
 import { AnyObject } from '../../../types/general';
 import { getImagesFromObject } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
@@ -17,21 +15,23 @@ interface ProduceItemProps {
   item: AnyObject;
   width?: number;
   height?: number;
-  ads?: boolean;
-  onPress?: (e: GestureResponderEvent) => void;
+  isAdItem?: boolean;
+  onPress?: string;
 }
 export const ProduceItem: React.FC<ProduceItemProps> = ({
   item,
   width,
   height,
-  ads,
+  isAdItem,
   onPress,
 }) => {
   const { navigate } = useNavigation();
   const theme = useTheme();
-  const adsImage = ads && getImagesFromObject(item)[0].url;
+  const adsImage = item.images && getImagesFromObject(item)[0].url;
 
-  const handlePress = useFunction(navigate, onPress, { item });
+  const handlePress = useFunction(navigate, onPress, {
+    item,
+  });
 
   if (Platform.OS === 'android') {
     return (
@@ -41,13 +41,14 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
           false,
         )}
         useForeground={true}
-        onPress={handlePress}>
+        onPress={handlePress}
+      >
         <ProductWrap width={width} height={height}>
           <ItemText>{item.title}</ItemText>
           <ItemImage
             resizeMode="cover"
             source={{
-              uri: !ads ? item.image : adsImage,
+              uri: !isAdItem ? item.image : adsImage,
             }}
           />
         </ProductWrap>
@@ -61,7 +62,7 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
           <ItemImage
             resizeMode="cover"
             source={{
-              uri: !ads ? item.image : adsImage,
+              uri: !isAdItem ? item.image : adsImage,
             }}
           />
         </ProductWrap>
@@ -83,11 +84,22 @@ const ItemText = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   letter-spacing: 2px;
 `;
-const ItemImage = styled.ImageBackground`
-  position: absolute;
+const ItemImage = styled.Image`
   height: 100%;
   width: 100%;
   z-index: -1;
+`;
+
+const ProductWrap = styled.View`
+  margin: 10px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${({ theme }) => theme.border.radius10}px;
+  background: ${({ theme }) => theme.colors.primary1};
+  overflow: hidden;
+  elevation: 3;
 `;
 
 ProductWrap.defaultProps = {

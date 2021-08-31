@@ -43,9 +43,4 @@ export enum ROUTES {
   AddAddress = 'addAddress',
   EditAddress = 'editAddress',
   Settings = 'settings',
-
-  // Search flow
-  Search = 'search',
-  SearchModal = 'searchModal',
-  SearchResults = 'searchResults',
 }

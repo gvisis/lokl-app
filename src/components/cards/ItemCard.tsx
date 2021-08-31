@@ -3,16 +3,18 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
+import { ROUTES } from '../../routes/RouteNames';
 import { ItemCardProps } from '../../types/general';
+import { getImagesFromObject } from '../../utils/functions';
 import { useFunction } from '../../utils/hooks';
 
 export const ItemCard: React.FC<ItemCardProps> = ({
   onPress,
   productOwnerTitle,
   item,
-  ads,
+  isAdsItem,
 }) => {
-  const adImage = item.images && Object.values(item.images)[0];
+  const adImage = item.images && getImagesFromObject(item)[0].url;
   const productImage = item.image;
   const { navigate } = useNavigation();
 
@@ -22,7 +24,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   });
 
   return (
-    <ItemCardWrap onPress={handlePress} ads={ads}>
+    <ItemCardWrap onPress={handlePress} isAdsItem={isAdsItem}>
       {(productImage || adImage) && (
         <ImageBackgrounds source={{ uri: productImage || adImage }} />
       )}
@@ -34,8 +36,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   );
 };
 
-const ItemCardWrap = styled.TouchableOpacity`
-  width: ${({ ads }) => (ads ? 45 : 80)}%;
+const ItemCardWrap = styled.TouchableOpacity<{ isAdsItem: boolean }>`
+  width: ${({ isAdsItem }) => (isAdsItem ? 45 : 80)}%;
   height: ${Dimensions.get('window').height / 5}px;
   justify-content: flex-end;
   margin: 15px 10px;

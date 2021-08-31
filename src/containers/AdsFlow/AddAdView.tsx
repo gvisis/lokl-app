@@ -1,14 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import {
-  GestureResponderEvent,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { GestureResponderEvent, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+  WindowsDatePickerChangeEvent,
+} from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -53,7 +50,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           price,
           description,
           ownerId: api.getUserInfo().uid,
-          dateRequired: date.toLocaleDateString(),
+          dateRequired: date.toString(),
           dateAdded: new Date().toString(),
         },
         tempImages,
@@ -61,7 +58,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     );
     navigation.goBack();
   };
-  // ===== IMAGE PICKER =====
   const handleImagePicker = useCallback(() => {
     const options = {
       mediaType: 'photo',
@@ -78,13 +74,14 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
       }
     });
   }, [tempImages]);
-  // ===== END IMAGE PICKER =====
 
-  // ======== DATE PICKER ========
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = (event, selectedDate) => {
+  const onChange = (
+    event: WindowsDatePickerChangeEvent,
+    selectedDate: Date,
+  ) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
     setDate(currentDate);
@@ -94,114 +91,112 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     setShowDatePicker(true);
     setMode(currentMode);
   };
-  // ===== END DATE PICKER =====
 
   return (
     <Container>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Formik
-          initialValues={{
-            price: '',
-            description: '',
-            title: '',
-          }}
-          enableReinitialize
-          validationSchema={validator.ad}
-          onSubmit={values => handleAdSubmit(values)}>
-          {({ errors, values, handleChange, handleSubmit, touched }) => (
-            <AdContainer>
-              {errors.title && touched.title && (
-                <ErrorMessage>{errors.title}</ErrorMessage>
+      <Formik
+        initialValues={{
+          price: '',
+          description: '',
+          title: '',
+        }}
+        enableReinitialize
+        validationSchema={validator.ad}
+        onSubmit={values => handleAdSubmit(values)}
+      >
+        {({ errors, values, handleChange, handleSubmit, touched }) => (
+          <AdContainer>
+            {errors.title && touched.title && (
+              <ErrorMessage>{errors.title}</ErrorMessage>
+            )}
+            <ProfileRow
+              onChangeText={handleChange('title')}
+              text={values.title}
+              editable
+              placeholder={t('ads:titlePlaceholder')}
+            />
+            {/* TITLE */}
+            <AdHeader>
+              {tempImages.length != 0 &&
+                tempImages.map(image => (
+                  <AddedImage key={image.id} source={{ uri: image.url }} />
+                ))}
+              {(tempImages === null || tempImages.length != 3) && (
+                <AddImage onPress={handleImagePicker}>
+                  <AddImageText>{t('ads:exampleImg')}</AddImageText>
+                  <Icon name={'image-plus'} size={25} />
+                </AddImage>
+              )}
+            </AdHeader>
+            {/* TITLE END */}
+            {/* ERRORS TOP*/}
+            {errors.price && (
+              <AdRowWrap errorText>
+                {errors.category && touched.category && (
+                  <ErrorMessage>{t('yup:ads-categoryErr')}</ErrorMessage>
+                )}
+                {errors.price && touched.price && (
+                  <ErrorMessage>{errors.price}</ErrorMessage>
+                )}
+              </AdRowWrap>
+            )}
+            {/* ERRORS TOP END */}
+            {/* CATEGORY PICKER */}
+            <AdRowWrap>
+              <CategoryPicker
+                value={pickedCategory}
+                onValueChange={setPickedCategory}
+              />
+              <PriceInput
+                placeholderTextColor={theme.colors.lightGrey1}
+                keyboardType="numeric"
+                onChangeText={handleChange('price')}
+                placeholder={t('ads:pricePlaceholder')}
+                value={values.price}
+              />
+            </AdRowWrap>
+            {/* CATEGORY PICKER END */}
+            {/* DESCRIPTION */}
+            <AdDescriptionWrap>
+              {errors.description && touched.description && (
+                <ErrorMessage>{errors.description}</ErrorMessage>
               )}
               <ProfileRow
-                onChangeText={handleChange('title')}
-                text={values.title}
+                onChangeText={handleChange('description')}
+                text={values.description}
                 editable
-                placeholder={t('ads:titlePlaceholder')}
+                placeholder={t('ads:descriptionPlaceholder')}
+                multiline
               />
-              {/* TITLE */}
-              <AdHeader>
-                {tempImages.length != 0 &&
-                  tempImages.map(image => (
-                    <AddedImage key={image.id} source={{ uri: image.url }} />
-                  ))}
-                {(tempImages === null || tempImages.length != 3) && (
-                  <AddImage onPress={handleImagePicker}>
-                    <AddImageText>{t('ads:exampleImg')}</AddImageText>
-                    <Icon name={'image-plus'} size={25} />
-                  </AddImage>
-                )}
-              </AdHeader>
-              {/* TITLE END */}
-              {/* ERRORS TOP*/}
-              {errors.price && (
-                <AdRowWrap errorText>
-                  {errors.category && touched.category && (
-                    <ErrorMessage>{t('yup:ads-categoryErr')}</ErrorMessage>
-                  )}
-                  {errors.price && touched.price && (
-                    <ErrorMessage>{errors.price}</ErrorMessage>
-                  )}
-                </AdRowWrap>
+            </AdDescriptionWrap>
+            {/* DESCRIPTION END */}
+            {/* DATE PICKER  */}
+            <AdRowWrap>
+              <ProfileRow
+                rowLeft={<CalendarIcon name={'calendar-outline'} />}
+                rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
+                onPress={showDatepicker}
+                text={t('ads:needBy')}
+              />
+              {showDatePicker && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  minimumDate={new Date()}
+                  maximumDate={new Date(2030, 11, 31)}
+                  is24Hour={true}
+                  format="DD-MM-YYYY"
+                  display="calendar"
+                  onChange={e => onChange}
+                />
               )}
-              {/* ERRORS TOP END */}
-              {/* CATEGORY PICKER */}
-              <AdRowWrap>
-                <CategoryPicker
-                  value={pickedCategory}
-                  onValueChange={setPickedCategory}
-                />
-                <PriceInput
-                  placeholderTextColor={theme.colors.lightGrey1}
-                  keyboardType="numeric"
-                  onChangeText={handleChange('price')}
-                  placeholder={t('ads:pricePlaceholder')}
-                  value={values.price}
-                />
-              </AdRowWrap>
-              {/* CATEGORY PICKER END */}
-              {/* DESCRIPTION */}
-              <AdDescriptionWrap>
-                {errors.description && touched.description && (
-                  <ErrorMessage>{errors.description}</ErrorMessage>
-                )}
-                <ProfileRow
-                  onChangeText={handleChange('description')}
-                  text={values.description}
-                  editable
-                  placeholder={t('ads:descriptionPlaceholder')}
-                  multiline
-                />
-              </AdDescriptionWrap>
-              {/* DESCRIPTION END */}
-              {/* DATE PICKER  */}
-              <AdRowWrap>
-                <ProfileRow
-                  rowLeft={<CalendarIcon name={'calendar-outline'} />}
-                  rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
-                  onPress={showDatepicker}
-                  text={t('ads:needBy')}
-                />
-                {showDatePicker && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    minimumDate={new Date()}
-                    maximumDate={new Date(2030, 11, 31)}
-                    is24Hour={true}
-                    format="DD-MM-YYYY"
-                    display="calendar"
-                    onChange={onChange}
-                  />
-                )}
-              </AdRowWrap>
-              {/* DATE PICKER END */}
-              <CustomBtn center label={'Create'} onPress={handleSubmit} />
-            </AdContainer>
-          )}
-        </Formik>
-      </TouchableWithoutFeedback>
+            </AdRowWrap>
+            {/* DATE PICKER END */}
+            <CustomBtn center label={'Create'} onPress={handleSubmit} />
+          </AdContainer>
+        )}
+      </Formik>
     </Container>
   );
 };

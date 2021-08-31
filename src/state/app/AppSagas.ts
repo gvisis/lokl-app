@@ -4,6 +4,7 @@ import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import {
+  AdsProps,
   CompanyProduct,
   CompanyProps,
   CompanySagaProps,
@@ -16,7 +17,7 @@ import { checkForRatings, sortAsc } from '../../utils/functions';
 function* handleFetchAllAds() {
   try {
     yield* put(actions.ui.setOnSync('app', true));
-    const allAds: unknown = yield* call(firebaseDb.fetchAllAds);
+    const allAds: AdsProps = yield* call(firebaseDb.fetchAllAds);
     if (allAds) {
       const adsArray = Object.values(allAds).sort((a, b) =>
         sortAsc(a.title, b.title),
