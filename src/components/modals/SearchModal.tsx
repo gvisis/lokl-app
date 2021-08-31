@@ -12,10 +12,7 @@ import {
   getSearchFilteredResults,
 } from '../../utils/functions';
 import { ROUTES } from '../../routes/RouteNames';
-import { actions } from '../../state/actions';
-import { ERROR_TYPE } from '../../types/general';
 
-// eslint-disable-next-line react/display-name
 export const SearchModal: React.FC = () => {
   const [searchValue, setSearchValue] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
@@ -25,7 +22,6 @@ export const SearchModal: React.FC = () => {
     state => state.app,
   );
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const theme = useTheme();
   const { navigate } = useNavigation();
 
@@ -47,9 +43,9 @@ export const SearchModal: React.FC = () => {
     item => {
       console.log('item before', item);
       handleSearchFocus();
-      if (item.hasOwnProperty('website')) {
+      if (item['website']) {
         navigate(ROUTES.SingleCompany, { companyItem: item });
-      } else if (item.hasOwnProperty('amount')) {
+      } else if (item['amount']) {
         const productOwnerTitle: string = getProductOwnerTitle(
           allCompanies,
           item,
@@ -96,7 +92,6 @@ export const SearchModal: React.FC = () => {
       {focused && (
         <Modal
           isVisible={focused}
-          animationIn="slideInDown"
           backdropColor={theme.colors.background}
           backdropOpacity={1}
           onBackButtonPress={handleSearchFocus}

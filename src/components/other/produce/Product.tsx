@@ -45,7 +45,8 @@ export const Product: React.FC<ProductScreenProps> = ({
     item,
     productOwnerTitle,
   });
-  // Add ONE item to cart
+
+  // Adds only ONE item to cart
   const handleAddToCart = useCallback(() => {
     const cartProduct = { ...item };
     dispatch(actions.cart.checkCartActions(CART_ACTION.ADD, cartProduct));
@@ -102,7 +103,7 @@ export const Product: React.FC<ProductScreenProps> = ({
   );
 };
 
-const ProductWrap = styled.View`
+const ProductWrap = styled.View<{ width: number; height: number }>`
   margin: 10px;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;

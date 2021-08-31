@@ -14,8 +14,7 @@ export const SingleAdView: React.FC = () => {
   const { params } = useRoute();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  console.log('screen', params);
-  console.log('typeof', typeof params);
+
   // bad navigation logic, needs to be fixed, as it is not working  properly from diferent screens
   const { item } = params;
 
