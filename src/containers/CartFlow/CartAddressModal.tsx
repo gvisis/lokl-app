@@ -8,7 +8,17 @@ import { AddNewAddress, AddressSelect, CustomBtn } from '../../components';
 import { UserAddress } from '../../state/user/UserInterfaces';
 import { actions } from '../../state/actions';
 
-export const CartAddressModal = ({ isVisible, setModalVisible }) => {
+interface CartAddressModalProps {
+  isVisible: boolean;
+  setModalVisible: (isVisible: boolean) => void;
+  toggleNewAddressModal?: () => void;
+}
+
+export const CartAddressModal: React.FC<CartAddressModalProps> = ({
+  isVisible,
+  setModalVisible,
+  toggleNewAddressModal,
+}) => {
   const { address } = useSelector(state => state.user.userInfo);
   const { shippingAddress } = useSelector(state => state.cart);
   const [selectedId, setSelectedId] = useState(null);
@@ -63,10 +73,14 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
               />
             ))
           ) : (
-            <AddNewAddress text={t('cart:noAddress')} />
+            <AddNewAddress
+              toggleNewAddressModal={toggleNewAddressModal}
+              text={t('cart:noAddress')}
+            />
           )}
           <CustomBtn
             center
+            disabled={!address}
             label={t('cart:selectAddress')}
             onPress={handleSelection}
           />
@@ -78,7 +92,7 @@ export const CartAddressModal = ({ isVisible, setModalVisible }) => {
 const ScrollViewWrap = styled.ScrollView.attrs({ flex: 1 })``;
 
 const ContentWrap = styled.View`
-	flex: 0.7
+  flex: 0.7;
   background-color: ${({ theme }) => theme.colors.background};
   padding: 10px 15px;
   border-radius: ${({ theme }) => theme.border.radius10}px;

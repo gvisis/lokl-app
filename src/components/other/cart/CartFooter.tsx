@@ -23,8 +23,9 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const { navigate } = useNavigation();
   const route = useRoute();
   const { t } = useTranslation();
-  const { stage, finishPurchase } = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const { stage, finishPurchase } = useSelector(state => state.cart);
+  const isAddressAvailable = useSelector(state => state.user.userInfo.address);
 
   const handleNavigation = useCallback(() => {
     if (stage === ROUTES.CartItemsView) {
@@ -41,7 +42,6 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   useFocusEffect(
     useCallback(() => {
       const currentScreen = getFocusedRouteNameFromRoute(route);
-      console.log('currentScreen', currentScreen);
       dispatch(actions.cart.navigateCart(currentScreen));
     }, [route]),
   );
@@ -66,9 +66,11 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
         <CustomBtn
           center
           secondary
-          disabled={quantity === 0 || finishPurchase}
+          disabled={quantity === 0 || finishPurchase || !isAddressAvailable}
           onPress={handleNavigation}
-          label={t('cart:pay')}
+          label={
+            !isAddressAvailable ? t('cart:addShippingAddress') : t('cart:pay')
+          }
         />
       )}
     </CartFooterWrap>

@@ -42,7 +42,6 @@ export const ProductView: React.FC<ProductViewProps> = memo(
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
-    // =========== BottomSheet config =================
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['0%', '40%'], []);
 
@@ -71,7 +70,6 @@ export const ProductView: React.FC<ProductViewProps> = memo(
       }
       bottomSheetRef.current.close();
     };
-    //==================================================
 
     const handleQuantityChange = useCallback(
       (actions: ProductAddAction) => {
@@ -134,19 +132,22 @@ export const ProductView: React.FC<ProductViewProps> = memo(
           animateOnMount
           backdropComponent={BottomSheetBackdrop}
           snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
+          onChange={handleSheetChanges}
+        >
           <SheetWrap>
             <SheetTitle>{item.title}</SheetTitle>
             <SelectWrap>
               <SelectTitle>{t('cart:howMany')}</SelectTitle>
               <SelectOptionWrap>
                 <TouchableOpacity
-                  onPress={() => handleQuantityChange(CART_ACTION.DEC)}>
+                  onPress={() => handleQuantityChange(CART_ACTION.DEC)}
+                >
                   <IncDecButton name="minus-circle" size={50} />
                 </TouchableOpacity>
                 <QuantityValue>{selectedQuantity}</QuantityValue>
                 <TouchableOpacity
-                  onPress={() => handleQuantityChange(CART_ACTION.INC)}>
+                  onPress={() => handleQuantityChange(CART_ACTION.INC)}
+                >
                   <IncDecButton name="plus-circle" size={50} />
                 </TouchableOpacity>
               </SelectOptionWrap>
@@ -242,8 +243,8 @@ const IncDecButton = styled(Icon)`
   color: ${({ theme }) => theme.colors.primary};
 `;
 const QuantityValue = styled.Text`
-  margin: 5px;
-  padding: 5px;
+  margin: 5px 10px;
+  width: 50px;
   font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.secondary};

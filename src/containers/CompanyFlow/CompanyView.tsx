@@ -1,53 +1,54 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
-import { ComponentNavProps } from '../../types/general';
 import { ROUTES } from '../../routes/RouteNames';
 import { SingleCompany } from '../../components';
 
-export const CompanyView: React.FC<ComponentNavProps<ROUTES.SingleCompany>> =
-  // eslint-disable-next-line react/display-name
-  memo(({ navigation, route }) => {
-    const { companyItem } = route.params;
-    const { t } = useTranslation();
-    const allCategories = useSelector(state => state.app.categories);
-    const [compCategories, setCompCategories] = useState([]);
+export const CompanyView: React.FC = () => {
+  const { t } = useTranslation();
+  const { navigate } = useNavigation();
+  const route = useRoute();
 
-    const handleCategoryNav = useCallback(
-      category => {
-        navigation.navigate(ROUTES.CompanyCategory, { category, companyItem });
-      },
-      [navigation, companyItem],
+  const { companyItem } = route.params;
+  const allCategories = useSelector(state => state.app.categories);
+  const [compCategories, setCompCategories] = useState([]);
+  const handleCategoryNav = useCallback(
+    category => {
+      navigate(ROUTES.CompanyCategory, { category, companyItem });
+    },
+    [navigate, companyItem],
+  );
+
+  useEffect(() => {
+    setCompCategories(
+      allCategories.filter(category =>
+        companyItem.categories.includes(category.id),
+      ),
     );
+  }, [allCategories]);
 
-    useEffect(() => {
-      setCompCategories(
-        allCategories.filter(category =>
-          companyItem.categories.includes(category.id),
-        ),
-      );
-    }, [allCategories]);
-
-    return (
-      <SingleCompany companyItem={companyItem}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <CompanyDescription>{companyItem.description}</CompanyDescription>
-          {compCategories &&
-            compCategories.map(category => (
-              <CategoryCard
-                onPress={() => handleCategoryNav(category)}
-                key={category.id}>
-                <ImageBackgrounds source={{ uri: category.image }} />
-                <CategoryCardTitle>{category.title}</CategoryCardTitle>
-              </CategoryCard>
-            ))}
-        </ScrollView>
-      </SingleCompany>
-    );
-  });
+  return (
+    <SingleCompany companyItem={companyItem}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <CompanyDescription>{companyItem.description}</CompanyDescription>
+        {compCategories &&
+          compCategories.map(category => (
+            <CategoryCard
+              onPress={() => handleCategoryNav(category)}
+              key={category.id}
+            >
+              <ImageBackgrounds source={{ uri: category.image }} />
+              <CategoryCardTitle>{category.title}</CategoryCardTitle>
+            </CategoryCard>
+          ))}
+      </ScrollView>
+    </SingleCompany>
+  );
+};
 
 const CompanyDescription = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.l}px;

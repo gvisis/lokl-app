@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 
 const StyledContainer = styled.View`
@@ -9,7 +9,7 @@ const StyledContainer = styled.View`
 
 interface InputProps {
   children: React.ReactNode;
-  style?: StyleProp<any>;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const InputContainer: React.FC<InputProps> = ({ children, style }) => (

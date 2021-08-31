@@ -1,20 +1,30 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useFunction } from '../../../utils/hooks';
 import { ROUTES } from '../../../routes/RouteNames';
+import { useFunction } from '../../../utils/hooks';
 
-export const AddNewAddress = ({ text }) => {
-  const navigation = useNavigation();
+interface AddNewAddress {
+  text: string;
+  toggleNewAddressModal?: () => void;
+}
+
+export const AddNewAddress: React.FC<AddNewAddress> = ({
+  text,
+  toggleNewAddressModal,
+}) => {
+  const { navigate } = useNavigation();
   const theme = useTheme();
-  const handleAddNewAddress = useFunction(
-    navigation.navigate,
-    ROUTES.AddAddress,
-  );
+
+  const handleAddNewAddress = useFunction(navigate, ROUTES.AddAddress);
+
   return (
-    <AddAddress onPress={handleAddNewAddress}>
+    <AddAddress
+      onPress={
+        toggleNewAddressModal ? toggleNewAddressModal : handleAddNewAddress
+      }>
       <Icon
         name="plus-circle-outline"
         size={35}
@@ -30,7 +40,7 @@ const AddAddress = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   border-width: 1px;
   border-radius: 10px;
   border-color: ${({ theme }) => theme.colors.secondary};

@@ -42,7 +42,8 @@
     "addToCart": "Add to cart",
     "productAdded": "Product added to cart",
     "howMany": "How many?",
-    "pay": "Pay"
+    "pay": "Pay",
+    "addShippingAddress": "No address selected"
   },
   "category": {
     "title": "Category",
@@ -137,7 +138,9 @@
     "auth/too-many-requests": "Too many requests",
     "auth/unknown": "Unknown error",
     "auth/fill-all-fields": "Please fill all fields",
-    "thereWasError": "There was an error"
+    "thereWasError": "There was an error",
+    "watcher/fetchingAds": "There was an error fetching ads",
+    "watcher/companies": "There was an error fetching companies"
   },
   "yup": {
     "email-required": "Email is required",

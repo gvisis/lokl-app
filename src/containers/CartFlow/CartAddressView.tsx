@@ -38,6 +38,7 @@ export const CartAddressView: React.FC = () => {
         <CartAddressModal
           setModalVisible={setModalVisible}
           isVisible={modalVisible}
+          toggleNewAddressModal={toggleNewAddressModal}
         />
         <Modal
           onBackdropPress={toggleNewAddressModal}
@@ -53,7 +54,7 @@ export const CartAddressView: React.FC = () => {
           fontSize={15}
           onPress={toggleAddressmodal}
           label={t('cart:selectShippingAddress')}
-          center
+          center={true}
         />
         <CustomBtn
           secondary

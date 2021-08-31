@@ -56,7 +56,6 @@ const updateProduct = async (productData: CompanyProduct) => {
 
 const uploadImageToStorage = async (
   newAdKey: string,
-  adId: string,
   imagesToUpload: ImagesProps[],
 ) => {
   const currentUserId = api.getUserInfo().uid;

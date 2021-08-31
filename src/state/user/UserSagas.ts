@@ -183,7 +183,7 @@ function* handleCreateNewAd({ newAd, images }) {
       currentUserId,
       newAd,
     );
-    yield* call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
+    yield* call(firebaseDb.uploadImageToStorage, newAdKey, images);
   } catch (e) {
     console.log('newaderror', e);
   } finally {

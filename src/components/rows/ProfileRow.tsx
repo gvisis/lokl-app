@@ -1,22 +1,7 @@
 import React from 'react';
-import { GestureResponderEvent, TextInputProps } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 
-interface ProfileRowProps {
-  onPress?: (e: GestureResponderEvent) => void;
-  rowLeft?: React.ReactElement<any>;
-  rowRight?: React.ReactElement<any>;
-  text?: string;
-  value?: string;
-  label?: string;
-  editable?: boolean;
-  multiline?: boolean;
-  touchable?: boolean;
-  placeholder?: string;
-  placeholderTextColor?: string;
-  keyboardType?: TextInputProps['keyboardType'];
-  onChangeText?: (text: string) => void;
-}
+import { ProfileRowProps } from '../../types/general';
 
 export const ProfileRow: React.FC<ProfileRowProps> = ({
   onPress,

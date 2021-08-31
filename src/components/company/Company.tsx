@@ -41,7 +41,8 @@ export const Company: React.FC<CompanyItemProps> = ({
           false,
         )}
         useForeground={true}
-        onPress={handleSingleProductNav}>
+        onPress={handleSingleProductNav}
+      >
         <ProductWrap width={width} height={height}>
           <CompanyLeft>
             <CompanyImage
@@ -71,10 +72,10 @@ export const Company: React.FC<CompanyItemProps> = ({
   }
 };
 
-const ProductWrap = styled.View`
+const ProductWrap = styled.View<{ width: number; height: number }>`
   margin: 10px;
-  width: ${(props: CompanyItemProps) => props.width}px;
-  height: ${(props: CompanyItemProps) => props.height}px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   flex-direction: row;
   justify-content: center;
   align-items: center;

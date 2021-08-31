@@ -24,7 +24,6 @@ export interface UserProps {
   address?: UserAddress[];
   ads?: AdsProps[];
   lang?: Languages;
-  theme?: Themes;
 }
 
 // TYPES

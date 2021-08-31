@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { GestureResponderEvent, TextInputProps } from 'react-native';
 
 import { ProductScreenProps } from '../components/other/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
@@ -49,7 +50,6 @@ export type RootStackParamList = {
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;
-  [ROUTES.Search]: undefined;
   [ROUTES.Settings]: undefined;
   [ROUTES.Landing]: undefined;
   [ROUTES.Login]: undefined;
@@ -69,7 +69,23 @@ export interface ComponentNavProps<T = string> {
 
 export interface ItemCardProps {
   item: ItemProps;
-  ads?: boolean;
+  isAdsItem?: boolean;
   onPress?: string;
   productOwnerTitle?: string;
+}
+
+export interface ProfileRowProps {
+  onPress?: (e: GestureResponderEvent) => void;
+  rowLeft?: React.ReactElement;
+  rowRight?: React.ReactElement;
+  text?: string;
+  value?: string;
+  label?: string;
+  editable?: boolean;
+  multiline?: boolean;
+  touchable?: boolean;
+  placeholder?: string;
+  placeholderTextColor?: string;
+  keyboardType?: TextInputProps['keyboardType'];
+  onChangeText?: (text: string) => void;
 }

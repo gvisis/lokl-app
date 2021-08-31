@@ -19,26 +19,18 @@ import { useFunction } from '../../utils/hooks';
 
 export const AdsView: React.FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const adsFromState = useSelector(state => state.app.allAppAds);
   const { onSync } = useSelector(state => state.ui);
   const { navigate } = useNavigation();
   const handleCreateAd = useFunction(navigate, ROUTES.AddAd);
 
   const renderItem = ({ item }) => (
-    <ItemCard ads onPress={ROUTES.SingleAdView} item={item} />
-  );
-
-  // Fetch all ads from server
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(actions.app.fetchAllAds());
-    }, []),
+    <ItemCard isAdsItem={true} onPress={ROUTES.SingleAdView} item={item} />
   );
 
   return (
     <Container>
-      <HomeHeader title={t('ads:title')} />
+      <HomeHeader isAdsView={true} title={t('ads:title')} />
       <AdContainer>
         {adsFromState.length !== 0 ? (
           <FlatList
