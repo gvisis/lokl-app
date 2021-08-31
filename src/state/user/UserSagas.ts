@@ -92,10 +92,10 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
 }
 
 function* handleUpdateUserDb({ updatedInfo }) {
-  const userId: string = api.getUserInfo().uid;
   try {
     yield* put(actions.ui.setOnSync('button', true));
-    database().ref(`/users/${userId}`).update(updatedInfo);
+    console.log('userupd', updatedInfo);
+    yield call(firebaseDb.updateUser, updatedInfo);
   } catch (e) {
     console.log('huserinfoupdate', e);
   } finally {
@@ -132,7 +132,7 @@ function* handleAddNewAddress({ newAddressData }) {
       };
     }
     yield* put(actions.ui.setOnSync('button', true));
-    yield* put(actions.user.updateUserInfo(updatedUserData));
+    // yield* put(actions.user.updateUserInfo(updatedUserData));
     yield* put(
       actions.ui.setStatus(
         ERROR_TYPE.SUCCESS,
@@ -146,6 +146,35 @@ function* handleAddNewAddress({ newAddressData }) {
         ERROR_TYPE.ERROR,
         true,
         i18n.t('errors:thereWasError'),
+      ),
+    );
+  } finally {
+    yield* put(actions.ui.setOnSync('button', false));
+  }
+}
+function* handleRemoveAddress({ addressId }: { addressId: string }) {
+  const addresses: UserAddress[] = yield* select(
+    state => state.user.userInfo.address,
+  );
+  try {
+    const filteredAddresses = addresses.filter(
+      address => address.id !== addressId,
+    );
+    yield* put(actions.user.updateUserInfo({ address: filteredAddresses }));
+    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('profile:addressRemoved'),
+      ),
+    );
+  } catch (e) {
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('address/adddressRemoveError'),
       ),
     );
   } finally {
@@ -215,4 +244,5 @@ export function* userSaga() {
   yield* takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
   yield* takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
   yield* takeEvery(constants.user.ADD_ADDRESS, handleAddNewAddress);
+  yield* takeEvery(constants.user.REMOVE_ADDRESS, handleRemoveAddress);
 }

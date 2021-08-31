@@ -17,6 +17,10 @@ export const addAddress = (newAddressData: UserAddress) => ({
   type: constants.user.ADD_ADDRESS,
   newAddressData,
 });
+export const removeAddress = (addressId: string) => ({
+  type: constants.user.REMOVE_ADDRESS,
+  addressId,
+});
 
 export const getUserAds = () => ({
   type: constants.user.GET_USER_ADS,
@@ -59,6 +63,7 @@ export const userActions = {
   addAddress,
   getUserAds,
   setUserInfo,
+  removeAddress,
   createNewAd,
   passwordReset,
   updateUserInfo,

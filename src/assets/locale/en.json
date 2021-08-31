@@ -80,7 +80,9 @@
     "addresses": "Addresses",
     "changeTheme": "Change theme",
     "changeLang": "Change language",
-    "newAddressAdded": "New address added"
+    "newAddressAdded": "New address added",
+    "addressRemoved": "Address succesfully removed",
+    "addressUpdated": "Address succesfully updated"
   },
   "ads": {
     "title": "All ads",
@@ -140,7 +142,8 @@
     "auth/fill-all-fields": "Please fill all fields",
     "thereWasError": "There was an error",
     "watcher/fetchingAds": "There was an error fetching ads",
-    "watcher/companies": "There was an error fetching companies"
+    "watcher/companies": "There was an error fetching companies",
+    "address/adddressRemoveError": "There was an error removing addres"
   },
   "yup": {
     "email-required": "Email is required",

@@ -9,6 +9,7 @@ import {
   ImagesProps,
 } from '../state/app/AppInterfaces';
 import { api } from '.';
+import { UserProps } from '../state/user/UserInterfaces';
 
 const fetchAllAds = async (): Promise<AdsProps> => {
   const currentUser = api.getUserInfo().uid;
@@ -45,6 +46,11 @@ const fetchAllCompanies = async (): Promise<CompanyProps[]> => {
 const updateCompany = async (companyData: CompanyProps) => {
   const companyRef = await database().ref(`/companies/${companyData.id}`);
   await companyRef.update(companyData);
+};
+const updateUser = async (userData: UserProps) => {
+  const currentUserId = api.getUserInfo().uid;
+  const userRef = await database().ref(`/users/${currentUserId}`);
+  await userRef.update(userData);
 };
 
 const updateProduct = async (productData: CompanyProduct) => {
@@ -102,6 +108,7 @@ export const firebaseDb = {
   createAd,
   fetchAllAds,
   updateCompany,
+  updateUser,
   updateProduct,
   fetchAllCompanies,
   fetchDefaultImage,

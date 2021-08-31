@@ -26,6 +26,7 @@ export const lightTheme = {
     red: '#FF1D1D',
     red1: '#FFE8E8',
     error: '#edfe00',
+    transparent: 'transparent',
   },
   fonts: {
     size: {

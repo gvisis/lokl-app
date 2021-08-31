@@ -10,5 +10,6 @@ export const userConstants = {
   UPDATE_USER_INFO: 'user/UPDATE_USER_INFO',
   CLEAR_USER_STATE: 'user/CLEAR_USER_STATE',
   ADD_ADDRESS: 'user/ADD_ADDRESS',
+  REMOVE_ADDRESS: 'user/REMOVE_ADDRESS',
   CREATE_NEW_AD: 'user/CREATE_NEW_AD',
 };
