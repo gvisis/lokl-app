@@ -29,6 +29,7 @@ declare module 'styled-components/native' {
       red: string;
       red1: string;
       error: string;
+      transparent: string;
     };
     fonts: {
       size: {
@@ -53,7 +54,6 @@ declare module 'styled-components/native' {
         bentonBook: string;
       };
     };
-    width: number;
     border: {
       radius5: number;
       radius10: number;

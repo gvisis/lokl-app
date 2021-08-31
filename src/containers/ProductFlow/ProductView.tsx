@@ -15,16 +15,12 @@ import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import {
-  CART_ACTION,
-  ComponentNavProps,
-  ERROR_TYPE,
-  ProductAddAction,
-} from '../../types/general';
+import { ComponentNavProps, ProductAddAction } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
+import { CART_ACTION, ERROR_TYPE } from '../../utils/variables';
 import { api } from '../../api';
 import { ItemHeader } from '../../components/headers/ItemHeader';
 

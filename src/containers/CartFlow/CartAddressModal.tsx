@@ -29,20 +29,14 @@ export const CartAddressModal: React.FC<CartAddressModalProps> = ({
     shippingAddress && setSelectedId(shippingAddress.id);
   }, [shippingAddress]);
 
-  // When selected, set the selected id to local state
-  const handleSelectAddress = useCallback(
-    (id: string) => {
-      setSelectedId(id);
-    },
-    [setSelectedId],
-  );
+  const handleSelectAddress = (id: string) => {
+    setSelectedId(id);
+  };
 
-  // Toggle modal visibility
   const toggleModal = () => {
     setModalVisible(!isVisible);
   };
 
-  // When clicked, select address to state
   const handleSelection = () => {
     const selectedAddress = address.filter(
       address => address.id === selectedId,
@@ -59,13 +53,14 @@ export const CartAddressModal: React.FC<CartAddressModalProps> = ({
       onBackdropPress={toggleModal}
       swipeDirection={['left', 'right']}
       onSwipeComplete={toggleModal}
-      isVisible={isVisible}>
+      isVisible={isVisible}
+    >
       <ContentWrap>
         <ScrollViewWrap showsVerticalScrollIndicator={false}>
           {address ? (
             address.map((addressData: UserAddress) => (
               <AddressSelect
-                modal
+                isModal
                 selectedId={selectedId}
                 onPress={() => handleSelectAddress(addressData.id)}
                 key={addressData.id}

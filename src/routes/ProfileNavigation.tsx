@@ -4,7 +4,10 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import { useTheme } from 'styled-components/native';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import {
+  getFocusedRouteNameFromRoute,
+  useRoute,
+} from '@react-navigation/native';
 
 import { ROUTES } from './RouteNames';
 import {
@@ -14,15 +17,14 @@ import {
   ProfileView,
   SettingsView,
 } from '../containers/ProfileFlow';
-import { ComponentNavProps, RootStackParamList } from '../types/general';
 import { getHeaderTitle } from '../utils/functions';
+import { RootStackParamList } from '../types/general';
 
 const Profile = createStackNavigator<RootStackParamList>();
 
-export const ProfileNavigation: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
-  route,
-}) => {
+export const ProfileNavigation: React.FC = () => {
   const theme = useTheme();
+  const route = useRoute();
 
   return (
     <Profile.Navigator
@@ -38,7 +40,8 @@ export const ProfileNavigation: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
         },
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}>
+      }}
+    >
       <Profile.Screen name={ROUTES.Profile} component={ProfileView} />
       <Profile.Screen name={ROUTES.ProfileEdit} component={ProfileEditView} />
       <Profile.Screen name={ROUTES.Address} component={AddressView} />

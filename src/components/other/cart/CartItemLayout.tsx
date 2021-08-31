@@ -34,7 +34,7 @@ import { CartItem } from './CartItem';
 import { CompanyProduct } from '../../../state/app/AppInterfaces';
 
 interface CartItemLayout {
-  item: CompanyProduct;
+  item?: CompanyProduct;
 }
 
 export const CartItemLayout: React.FC<CartItemLayout> = ({ item }) => {
@@ -42,13 +42,11 @@ export const CartItemLayout: React.FC<CartItemLayout> = ({ item }) => {
   const { width } = useWindowDimensions();
   const snapPoints = [-width, -80, 0];
 
-  // ============== Functions ==============
   const handleOnSwipe = useFunction(
     dispatch,
     actions.cart.removeFromCart(item),
   );
-  // ========================================
-  // ============== Animation ==============
+
   const { gestureHandler, translation, velocity, state } =
     usePanGestureHandler();
   const ITEM_HEIGHT = 120;
@@ -79,7 +77,7 @@ export const CartItemLayout: React.FC<CartItemLayout> = ({ item }) => {
     ],
     [handleOnSwipe],
   );
-  // ========================================
+
   return (
     <Animated.View>
       <ActionWrap style={{ ...StyleSheet.absoluteFillObject }}>

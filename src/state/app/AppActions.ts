@@ -2,8 +2,8 @@ import { constants } from '../constants';
 import {
   CompanyProduct,
   CompanyProps,
-  ImagesProps,
   RatingData,
+  UploadImageProps,
 } from './AppInterfaces';
 
 export const setLanguage = (payload: string) => ({
@@ -15,12 +15,8 @@ export const setAllAds = ads => ({
   type: constants.app.SET_ALL_ADS,
   ads,
 });
-export const setTempImages = images => ({
-  type: constants.app.SET_TEMP_IMAGES,
-  images,
-});
 
-export const uploadAdImages = (adId: string, images: ImagesProps[]) => ({
+export const uploadAdImages = (adId: string, images: UploadImageProps[]) => ({
   type: constants.app.UPLOAD_AD_IMAGES,
   adId,
   images,
@@ -70,7 +66,6 @@ export const appActions = {
   setAllAds,
   setProducts,
   setAllCompanies,
-  setTempImages,
   setCategories,
   setCompanyRating,
   setProductRating,

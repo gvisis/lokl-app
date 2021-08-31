@@ -11,6 +11,7 @@ import { AirbnbRating } from 'react-native-ratings';
 import { ROUTES } from '../../routes/RouteNames';
 import { Category, CompanyProps } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
+import { SizeProps } from '../../types/general';
 
 export interface CompanyItemProps {
   companyItem: CompanyProps;
@@ -72,7 +73,7 @@ export const Company: React.FC<CompanyItemProps> = ({
   }
 };
 
-const ProductWrap = styled.View<{ width: number; height: number }>`
+const ProductWrap = styled.View<SizeProps>`
   margin: 10px;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;

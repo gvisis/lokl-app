@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 interface RadioButtonProps {
-  status?: boolean;
+  isChecked?: boolean;
 }
 
-export const RadioButton: React.FC<RadioButtonProps> = ({ status }) => (
+export const RadioButton: React.FC<RadioButtonProps> = ({ isChecked }) => (
   <RadioWrap>
-    <RadioInside status={status} />
+    <RadioInside isChecked={isChecked} />
   </RadioWrap>
 );
 
@@ -25,6 +25,6 @@ const RadioInside = styled.View<RadioButtonProps>`
   width: 12px;
   height: 12px;
   border-radius: 8px;
-  background-color: ${({ status, theme }) =>
-    status ? theme.colors.secondary : 'transparent'};
+  background-color: ${({ isChecked, theme }) =>
+    isChecked ? theme.colors.secondary : theme.colors.transparent};
 `;

@@ -59,7 +59,7 @@ export const CartPaymentView: React.FC = () => {
             {shippingAddress && (
               <ShipingAddressWrap>
                 <RowLabel>{t('cart:shippingAddress')}</RowLabel>
-                <AddressSelect address={shippingAddress} />
+                <AddressSelect disabled={true} address={shippingAddress} />
               </ShipingAddressWrap>
             )}
           </PaymentMidSection>
@@ -96,6 +96,7 @@ const PaymentHeaderWrap = styled.View`
 `;
 
 const ShipingAddressWrap = styled.View`
+  height: 80%;
   margin-top: 15px;
 `;
 

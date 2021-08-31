@@ -42,18 +42,13 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
-          onPress={handleSettingsNav}
-          text={t('profile:payments')}
-          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
-        />
-        <ProfileRow
           onPress={handleProfileEditNav}
           text={t('profile:editProfile')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <ProfileRow
           onPress={handleAddressNav}
-          text={t('profile:address')}
+          text={t('profile:addresses')}
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <CustomBtn

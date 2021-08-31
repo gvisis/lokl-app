@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject, ERROR_TYPE } from '../../types/general';
+import { AnyObject } from '../../types/general';
 import { themes } from '../../styles';
 import { constants } from '../constants';
+import { ERROR_TYPE } from '../../utils/variables';
 
 export interface UiReducerState {
   onSync: {

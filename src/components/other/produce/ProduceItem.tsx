@@ -7,7 +7,7 @@ import {
 import styled, { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/core';
 
-import { AnyObject } from '../../../types/general';
+import { AnyObject, SizeProps } from '../../../types/general';
 import { getImagesFromObject } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
 
@@ -90,7 +90,7 @@ const ItemImage = styled.Image`
   z-index: -1;
 `;
 
-const ProductWrap = styled.View`
+const ProductWrap = styled.View<SizeProps>`
   margin: 10px;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;

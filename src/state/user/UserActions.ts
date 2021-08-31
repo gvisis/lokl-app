@@ -18,6 +18,17 @@ export const addAddress = (newAddressData: UserAddress) => ({
   newAddressData,
 });
 
+export const removeAddress = (addressId: string) => ({
+  type: constants.user.REMOVE_ADDRESS,
+  addressId,
+});
+
+export const editAddress = (addressId: string, editedAddress: UserAddress) => ({
+  type: constants.user.EDIT_ADDRESS,
+  addressId,
+  editedAddress,
+});
+
 export const getUserAds = () => ({
   type: constants.user.GET_USER_ADS,
 });
@@ -46,6 +57,7 @@ export const passwordReset = (email: string) => ({
 export const clearUserState = () => ({
   type: constants.user.CLEAR_USER_STATE,
 });
+
 export const createNewAd = (newAd, images) => ({
   type: constants.user.CREATE_NEW_AD,
   newAd,
@@ -59,6 +71,8 @@ export const userActions = {
   addAddress,
   getUserAds,
   setUserInfo,
+  editAddress,
+  removeAddress,
   createNewAd,
   passwordReset,
   updateUserInfo,

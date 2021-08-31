@@ -24,7 +24,8 @@ export const AddNewAddress: React.FC<AddNewAddress> = ({
     <AddAddress
       onPress={
         toggleNewAddressModal ? toggleNewAddressModal : handleAddNewAddress
-      }>
+      }
+    >
       <Icon
         name="plus-circle-outline"
         size={35}

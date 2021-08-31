@@ -1,4 +1,5 @@
-import { AdsProps } from '../app/AppInterfaces';
+import { AdsProps, UploadImageProps } from '../app/AppInterfaces';
+import { LANG, THEME } from '../../utils/variables';
 
 // INTERFACES
 export interface UserReducerState {
@@ -6,14 +7,14 @@ export interface UserReducerState {
 }
 
 export interface UserAddress {
-  id: string;
+  id?: string;
   name: string;
   phone: string;
   street: string;
   city: string;
   country: string;
   postcode: string;
-  default: boolean;
+  default?: boolean;
 }
 
 export interface UserProps {
@@ -26,6 +27,16 @@ export interface UserProps {
   lang?: Languages;
 }
 
+export interface EditAddressProps {
+  addressId: string;
+  editedAddress: UserAddress;
+}
+
+export interface CreateNewAdProps {
+  images: UploadImageProps[];
+  newAd: AdsProps;
+}
+
 // TYPES
-export type Languages = 'en' | 'lt';
-export type Themes = 'light' | 'dark';
+export type Languages = LANG.EN | LANG.LT;
+export type Themes = THEME.DARK | THEME.LIGHT;

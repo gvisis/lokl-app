@@ -36,19 +36,20 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
       <Container>
         <Formik
           initialValues={initialFormikValues}
-          onSubmit={values => handleUserUpdate(values)}>
+          onSubmit={values => handleUserUpdate(values)}
+        >
           {({ values, handleChange, handleSubmit, handleBlur }) => (
             <EditWrap>
               <ProfileRow
                 label={t('profile:username')}
                 editable
-                onBlur={handleBlur}
+                onBlur={handleBlur('username')}
                 onChangeText={handleChange('username')}
                 placeholder={t('profile:usernamePlaceholder')}
                 text={values.username}
               />
               <ProfileRow
-                onBlur={handleBlur}
+                onBlur={handleBlur('name')}
                 editable
                 label={t('profile:fullName')}
                 onChangeText={handleChange('name')}
@@ -56,7 +57,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 text={values.name}
               />
               <ProfileRow
-                onBlur={handleBlur}
+                onBlur={handleBlur('email')}
                 editable
                 label={t('common:email')}
                 onChangeText={handleChange('email')}
@@ -64,7 +65,7 @@ export const ProfileEditView: React.FC<ComponentNavProps<ROUTES.ProfileEdit>> =
                 text={values.email}
               />
               <ProfileRow
-                onBlur={handleBlur}
+                onBlur={handleBlur('phone')}
                 label={t('profile:phone')}
                 editable
                 onChangeText={handleChange('phone')}

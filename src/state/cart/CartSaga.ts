@@ -2,7 +2,8 @@ import i18next from 'i18next';
 import { call, put, select, takeEvery } from 'typed-redux-saga';
 
 import { ROUTES } from '../../routes/RouteNames';
-import { CART_ACTION, ERROR_TYPE } from '../../types/general';
+import { CartNaviHandleProps } from '../../types/general';
+import { CART_ACTION, ERROR_TYPE } from '../../utils/variables';
 import { actions } from '../actions';
 import { CompanyProduct } from '../app/AppInterfaces';
 import { constants } from '../constants';
@@ -19,7 +20,7 @@ function* handleCartActions({
     // if it's not first item in the cart
     if (
       !cart.some((item: CompanyProduct) => item.id === product.id) &&
-      cartAction === 'add'
+      cartAction === CART_ACTION.ADD
     ) {
       const updatedAmountProduct = {
         ...product,
@@ -91,7 +92,11 @@ function* handleGetCartTotals() {
     console.log('update cart error', e);
   }
 }
-function* handleFinishPurchase({ finishPurchase }: boolean) {
+function* handleFinishPurchase({
+  finishPurchase,
+}: {
+  finishPurchase: boolean;
+}) {
   // Fake delay to show loading while "payment processing"
   const delay = (time: number) =>
     new Promise(resolve => setTimeout(resolve, time));
@@ -114,13 +119,13 @@ function* handleFinishPurchase({ finishPurchase }: boolean) {
     );
   }
 }
-
-function* handleCartNavigation({ currentScreen }: string) {
+function* handleCartNavigation({ currentScreen }: CartNaviHandleProps) {
   const possibleScreens = [
     ROUTES.CartItemsView,
     ROUTES.CartAddressView,
     ROUTES.CartPaymentView,
   ];
+
   try {
     if (possibleScreens.includes(currentScreen)) {
       yield* put(actions.cart.setCartStage(currentScreen));

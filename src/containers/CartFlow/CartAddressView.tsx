@@ -47,7 +47,8 @@ export const CartAddressView: React.FC = () => {
           onSwipeComplete={toggleNewAddressModal}
           animationIn="slideInDown"
           avoidKeyboard={true}
-          onBackButtonPress={toggleNewAddressModal}>
+          onBackButtonPress={toggleNewAddressModal}
+        >
           <AddEditAddressView />
         </Modal>
         <CustomBtn
@@ -63,17 +64,20 @@ export const CartAddressView: React.FC = () => {
           center
           onPress={toggleNewAddressModal}
         />
-        {shippingAddress && (
-          <AddressSelect
-            selectedId={shippingAddress.id}
-            modal
-            address={shippingAddress}
-          />
-        )}
       </CartWrapTop>
+      <AddressSelectWrap>
+        {shippingAddress && <AddressSelect address={shippingAddress} />}
+      </AddressSelectWrap>
     </Container>
   );
 };
+
+const AddressSelectWrap = styled.View`
+  margin-top: 20px;
+  flex: 0.4;
+  padding: 0 10px;
+`;
+
 const CartWrapTop = styled.View`
   padding: 0 10px;
 `;

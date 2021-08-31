@@ -25,7 +25,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { stage, finishPurchase } = useSelector(state => state.cart);
-  const isAddressAvailable = useSelector(state => state.user.userInfo.address);
+  const { shippingAddress } = useSelector(state => state.cart);
 
   const handleNavigation = useCallback(() => {
     if (stage === ROUTES.CartItemsView) {
@@ -66,10 +66,10 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
         <CustomBtn
           center
           secondary
-          disabled={quantity === 0 || finishPurchase || !isAddressAvailable}
+          disabled={quantity === 0 || finishPurchase || !shippingAddress}
           onPress={handleNavigation}
           label={
-            !isAddressAvailable ? t('cart:addShippingAddress') : t('cart:pay')
+            !shippingAddress ? t('cart:addShippingAddress') : t('cart:pay')
           }
         />
       )}

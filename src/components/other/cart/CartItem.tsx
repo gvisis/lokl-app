@@ -8,11 +8,11 @@ import { actions } from '../../../state/actions';
 import { CompanyProduct } from '../../../state/app/AppInterfaces';
 import { getProductOwnerTitle } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
-import { CART_ACTION } from '../../../types/general';
+import { CART_ACTION } from '../../../utils/variables';
 
 interface CartItem {
   item: CompanyProduct;
-  shouldRemove: any;
+  shouldRemove: number;
 }
 
 export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
@@ -41,7 +41,7 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
       <CartItemMid>
         <ItemName>{title}</ItemName>
         <ItemSeller>{getProductOwnerTitle(allCompanies, item)}</ItemSeller>
-        <ItemPrice>{price} €</ItemPrice>
+        <ItemPrice>€ {price}</ItemPrice>
       </CartItemMid>
       <CartItemRight>
         <TouchableOpacity onPress={handleIncreaseAmount}>

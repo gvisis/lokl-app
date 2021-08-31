@@ -7,8 +7,13 @@ import { constants } from '../constants';
 import { api } from '../../api';
 import { guidGenerator } from '../../utils/functions';
 import { firebaseDb } from '../../api/firebaseDb';
-import { UserAddress, UserProps } from './UserInterfaces';
-import { ERROR_TYPE } from '../../types/general';
+import {
+  CreateNewAdProps,
+  EditAddressProps,
+  UserAddress,
+  UserProps,
+} from './UserInterfaces';
+import { ERROR_TYPE } from '../../utils/variables';
 
 interface UserAuthCredentials {
   email: string;
@@ -92,10 +97,10 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
 }
 
 function* handleUpdateUserDb({ updatedInfo }) {
-  const userId: string = api.getUserInfo().uid;
   try {
     yield* put(actions.ui.setOnSync('button', true));
-    database().ref(`/users/${userId}`).update(updatedInfo);
+    console.log('userupd', updatedInfo);
+    yield call(firebaseDb.updateUser, updatedInfo);
   } catch (e) {
     console.log('huserinfoupdate', e);
   } finally {
@@ -106,10 +111,10 @@ function* handleUpdateUserDb({ updatedInfo }) {
 function* handleAddNewAddress({ newAddressData }) {
   const { street, city, name, phone, country, postcode } = newAddressData;
   const userInfo: UserProps = yield* select(state => state.user.userInfo);
-  const addressId = guidGenerator();
+  const newAddressId = guidGenerator();
   let updatedUserData;
   const newAddressObject: UserAddress = {
-    id: addressId,
+    id: newAddressId,
     name,
     phone,
     street,
@@ -152,6 +157,68 @@ function* handleAddNewAddress({ newAddressData }) {
     yield* put(actions.ui.setOnSync('button', false));
   }
 }
+function* handleEditAddress({ addressId, editedAddress }: EditAddressProps) {
+  try {
+    const addresses: UserAddress[] = yield* select(
+      state => state.user.userInfo.address,
+    );
+
+    const updatedAddresses = addresses
+      .map(address => {
+        if (address.id === addressId) {
+          return {
+            ...address,
+            ...editedAddress,
+          };
+        }
+        return address;
+      })
+      .flat();
+
+    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.user.updateUserInfo({ address: updatedAddresses }));
+  } catch (e) {
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
+  } finally {
+    yield* put(actions.ui.setOnSync('button', false));
+  }
+}
+
+function* handleRemoveAddress({ addressId }: { addressId: string }) {
+  const addresses: UserAddress[] = yield* select(
+    state => state.user.userInfo.address,
+  );
+  try {
+    const filteredAddresses = addresses.filter(
+      address => address.id !== addressId,
+    );
+    yield* put(actions.user.updateUserInfo({ address: filteredAddresses }));
+    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('profile:addressRemoved'),
+      ),
+    );
+  } catch (e) {
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('address/adddressRemoveError'),
+      ),
+    );
+  } finally {
+    yield* put(actions.ui.setOnSync('button', false));
+  }
+}
 
 function* handleCreateUserDb(email: string) {
   const userInfo: UserProps = {
@@ -170,7 +237,7 @@ function* handleCreateUserDb(email: string) {
     console.log('huserinfocreate', e);
   }
 }
-function* handleCreateNewAd({ newAd, images }) {
+function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
   try {
     if (images.length === 0) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
@@ -215,4 +282,6 @@ export function* userSaga() {
   yield* takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
   yield* takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
   yield* takeEvery(constants.user.ADD_ADDRESS, handleAddNewAddress);
+  yield* takeEvery(constants.user.REMOVE_ADDRESS, handleRemoveAddress);
+  yield* takeEvery(constants.user.EDIT_ADDRESS, handleEditAddress);
 }

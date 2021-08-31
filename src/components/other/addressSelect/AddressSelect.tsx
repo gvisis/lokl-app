@@ -1,35 +1,44 @@
 import React from 'react';
-import { GestureResponderEvent, Platform } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-import { RadioButton } from '../..';
 import { UserAddress } from '../../../state/user/UserInterfaces';
+import { actions } from '../../../state/actions';
+import { ROUTES } from '../../../routes/RouteNames';
+import { ADDRESS_ICONS } from '../../../utils/variables';
+import { RadioButton } from '../..';
 
 interface AddressSelectProps {
   address: UserAddress;
-  modal?: boolean;
+  isModal?: boolean;
+  disabled?: boolean;
   selectedId?: string;
-  onPress?: (e: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
 export const AddressSelect: React.FC<AddressSelectProps> = ({
   address,
-  modal,
+  isModal,
   selectedId,
   onPress,
   ...props
 }) => {
-  const icons = {
-    phone: Platform.OS === 'android' ? 'cellphone-android' : 'cellphone-iphone',
-    address: 'map-marker-outline',
-    check: 'check',
-    street: 'mailbox-outline',
-    sizeSm: 20,
-    sizeM: 35,
-  };
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { navigate } = useNavigation();
+
+  const handleRemoveAddress = (addressId: string) => {
+    dispatch(actions.user.removeAddress(addressId));
+  };
+
+  const handleEditAddress = (addressId: string) => {
+    navigate(ROUTES.AddAddress, { addressId });
+  };
+
   const isSelected = address.id === selectedId;
 
   return (
@@ -37,33 +46,51 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
       <WrapLeft>
         <FullName>{address.name}</FullName>
         <RowWrap>
-          <RowIcon name={icons.phone} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.PHONE} />
           <RowLine>{address.phone}</RowLine>
         </RowWrap>
         <RowWrap>
-          <RowIcon name={icons.street} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.STREET} />
           <RowLine>
             {address.street}, {address.postcode}
           </RowLine>
         </RowWrap>
         <RowWrap>
-          <RowIcon name={icons.address} size={icons.sizeSm} />
+          <RowIcon name={ADDRESS_ICONS.ADDRESS} />
           <RowLine>
             {address.city}, {address.country}
           </RowLine>
         </RowWrap>
       </WrapLeft>
-      {address.default && (
-        <WrapRight>
+      <WrapRight>
+        {address.default && (
           <DefaultSelection>{t('common:default')}</DefaultSelection>
-        </WrapRight>
-      )}
-      {modal && <RadioButton status={isSelected ? true : false} />}
+        )}
+        {isSelected && !isModal && (
+          <EditRemoveButtonWrap>
+            <EditButton onPress={() => handleEditAddress(address.id)}>
+              <ButtonText isEdit={true}>{t('profile:edit')}</ButtonText>
+            </EditButton>
+            <RemoveButton onPress={() => handleRemoveAddress(address.id)}>
+              <ButtonText>{t('cart:remove')}</ButtonText>
+            </RemoveButton>
+          </EditRemoveButtonWrap>
+        )}
+        {isModal && <RadioButton isChecked={isSelected ? true : false} />}
+      </WrapRight>
     </SelectionWrap>
   );
 };
 
-const SelectionWrap = styled.TouchableOpacity`
+const ButtonText = styled.Text<{ isEdit?: boolean }>`
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
+  color: ${({ isEdit, theme }) =>
+    !isEdit ? theme.colors.primary : theme.colors.white};
+  font-family: ${({ theme }) => theme.fonts.family.benton};
+`;
+
+const SelectionWrap = styled.TouchableOpacity<{ isSelected?: boolean }>`
+  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -71,8 +98,7 @@ const SelectionWrap = styled.TouchableOpacity`
   padding: 5px;
   border-width: 1px;
   border-radius: 10px;
-  background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.primary2 : theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background};
   border-color: ${({ theme }) => theme.colors.secondary};
 `;
 
@@ -102,13 +128,34 @@ const WrapRight = styled.View`
   justify-content: center;
   align-items: center;
 `;
+const EditRemoveButtonWrap = styled.View`
+  justify-content: center;
+  flex: 1;
+`;
+const ActionButtons = styled.TouchableOpacity`
+  justify-content: center;
+  padding: 10px 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  align-items: center;
+`;
+
+const EditButton = styled(ActionButtons)`
+  background-color: ${({ theme }) => theme.colors.tertiary2};
+`;
+const RemoveButton = styled(ActionButtons)`
+  border-color: ${({ theme }) => theme.colors.secondary};
+  border-width: 1px;
+`;
+
 const DefaultSelection = styled.Text`
   text-align: center;
+  margin: 5px 0;
   width: 100%;
   font-family: ${({ theme }) => theme.fonts.family.nexaBold};
   color: ${({ theme }) => theme.colors.secondary}; ;
 `;
 
-const RowIcon = styled(Icon)`
+const RowIcon = styled(Icon).attrs({ size: ADDRESS_ICONS.SIZE_SM })`
   color: ${({ theme }) => theme.colors.primary};
 `;
