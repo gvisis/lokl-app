@@ -2,10 +2,13 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { GestureResponderEvent, TextInputProps } from 'react-native';
 
-import { ProductScreenProps } from '../components/other/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
-import { AdsProps, CompanyProduct } from '../state/app/AppInterfaces';
+import {
+  AdsProps,
+  CompanyProduct,
+  CompanyProps,
+} from '../state/app/AppInterfaces';
 import { CART_ACTION, ERROR_TYPE, ON_SYNC } from '../utils/variables';
 
 // Types
@@ -20,6 +23,7 @@ export type CartNaviHandleProps = {
     | ROUTES.CartAddressView
     | ROUTES.CartPaymentView;
 };
+
 export type RootStackParamList = {
   [ROUTES.Home]: undefined;
   [ROUTES.HomeTab]: undefined;
@@ -69,6 +73,15 @@ export interface ItemCardProps {
   productOwnerTitle?: string;
 }
 
+export interface ProductScreenProps {
+  item?: CompanyProduct;
+  allCompanies?: CompanyProps[];
+  width?: number;
+  height?: number;
+  productOwnerTitle?: string;
+  onPress?: (event: GestureResponderEvent) => void;
+}
+
 export interface ProfileRowProps {
   onPress?: (e: GestureResponderEvent) => void;
   rowLeft?: React.ReactElement;
@@ -91,7 +104,7 @@ export interface SizeProps {
   height: number;
 }
 
-export interface TextInputProps {
+export interface ProfileTextProps {
   label?: string;
   textSize?: number;
 }

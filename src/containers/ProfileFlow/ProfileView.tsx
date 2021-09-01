@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Alert } from 'react-native';
 
 import { useFunction } from '../../utils/hooks';
 import { actions } from '../../state/actions';
@@ -25,6 +26,31 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
   const handleSettingsNav = useFunction(navigation.navigate, ROUTES.Settings);
   const handleAddressNav = useFunction(navigation.navigate, ROUTES.Address);
   const handleLogout = useFunction(dispatch, actions.user.logout());
+
+  const handleLogoutPress = useCallback(() => {
+    // Alert.alert(
+    // 	t('profile.logout.title'),
+    // 	t('profile.logout.message'),
+    // 	[
+    // 		{
+    // 			text: t('profile.logout.cancel'),
+    // 			style: 'cancel',
+    // 		},
+    // 		{
+    // 			text: t('profile.logout.ok'),
+    // 			onPress: () => dispatch(actions.user.logout()),
+    // 		},
+    // 	],
+    // 	{ cancelable: false },
+    // );
+    Alert.alert(t('login:signout'), t('profile:logoutConfirm'), [
+      {
+        text: t('profile:cancel'),
+        style: 'cancel',
+      },
+      { text: t('profile:confirm'), onPress: handleLogout },
+    ]);
+  }, []);
 
   return (
     <Container>
@@ -52,8 +78,8 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
           rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
         />
         <CustomBtn
-          label={t('login:logout')}
-          onPress={handleLogout}
+          label={t('login:signout')}
+          onPress={handleLogoutPress}
           center
           style={{ position: 'absolute', bottom: 25 }}
         />

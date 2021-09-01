@@ -71,18 +71,18 @@ export const getSearchFilteredResults = (
 
 export const getCategoryItemsFromIds = (
   companies: CompanyProps[],
-  categoryId: number,
+  categoryId: string,
 ) =>
   companies
     .map(company => company['produce'])
     .flat()
     .filter(product => product.category === categoryId);
 
-export const getFormatedPrice = (price: number) =>
+export const getFormatedPrice = (price: string) =>
   new Intl.NumberFormat('lt-LT', {
     style: 'currency',
     currency: 'EUR',
-  }).format(price);
+  }).format(parseFloat(price));
 
 export const getImagesFromObject = (item: ImagesFromObject) => {
   const imgArray = [];

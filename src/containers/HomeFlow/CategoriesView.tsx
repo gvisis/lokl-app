@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,20 +7,25 @@ import { useSelector } from 'react-redux';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { EmptyView, ItemCard, SingleCompany } from '../../components';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
 import {
   getCategoryItemsFromIds,
   getProductOwnerTitle,
 } from '../../utils/functions';
+import { CompanyProps } from '../../state/app/AppInterfaces';
 
-// eslint-disable-next-line react/display-name
-export const CategoriesView: React.FC = memo(() => {
+interface CategoryParamProps {
+  item?: CompanyProps;
+}
+
+export const CategoriesView: React.FC = () => {
+  ``;
   const [categoryItems, setCategoryItems] = useState([]);
   const { allCompanies } = useSelector(state => state.app);
   const { params } = useRoute();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { item } = params;
+
+  const { item }: CategoryParamProps = params;
 
   useEffect(() => {
     navigation.setOptions({ title: item.title });
@@ -48,7 +53,7 @@ export const CategoriesView: React.FC = memo(() => {
       </ScrollView>
     </SingleCompany>
   );
-});
+};
 
 const CategorySection = styled.View`
   flex: 1;

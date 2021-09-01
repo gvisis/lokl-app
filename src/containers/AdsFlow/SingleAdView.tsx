@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Image } from 'react-native';
 import styled, { css, useTheme } from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,7 @@ export const SingleAdView: React.FC = () => {
   const [adOwner, setAdOwner] = useState(null);
   const { params } = useRoute();
   const { t } = useTranslation();
+
   const navigation = useNavigation();
   const theme = useTheme();
 

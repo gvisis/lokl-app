@@ -12,7 +12,7 @@
   "login": {
     "title": "Login",
     "login": "Login",
-    "logout": "Logout",
+    "signout": "Sign out",
     "signup": "Sign up",
     "noAccount": "Don't have an account?",
     "forgotPass": "Forgot password?",
@@ -69,6 +69,7 @@
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "password": "Password",
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
@@ -84,7 +85,8 @@
     "newAddressAdded": "New address added",
     "editAddress": "Edit address",
     "addressRemoved": "Address succesfully removed",
-    "addressUpdated": "Address succesfully updated"
+    "addressUpdated": "Address succesfully updated",
+    "logoutConfirm": "Are you sure you want to sign out?"
   },
   "ads": {
     "title": "All ads",
@@ -101,7 +103,6 @@
     "messageSuccess": "Message successfully sent to the owner"
   },
   "common": {
-    "Forgot password": "Forgot password?",
     "passReset": "Password reset",
     "email": "Email",
     "reset": "Reset",

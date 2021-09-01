@@ -3,9 +3,7 @@ import { GestureResponderEvent, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
-import DateTimePicker, {
-  WindowsDatePickerChangeEvent,
-} from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -25,6 +23,8 @@ import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
 import { ERROR_TYPE } from '../../utils/variables';
+import { AdsProps } from '../../state/app/AppInterfaces';
+import { uploadAdImages } from '../../state/app/AppActions';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -41,8 +41,14 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
+  interface AdSubmitValues {
+    title: string;
+    description: string;
+    price: string;
+  }
+
   //! MOVE VALUES TO SAGA, SAVE SPACE. SAVE THE PLANET
-  const handleAdSubmit = values => {
+  const handleAdSubmit = (values: AdSubmitValues) => {
     const { title, description, price } = values;
     dispatch(
       actions.user.createNewAd(

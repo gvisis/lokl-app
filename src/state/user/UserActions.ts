@@ -59,7 +59,7 @@ export const clearUserState = () => ({
   type: constants.user.CLEAR_USER_STATE,
 });
 
-export const createNewAd = (newAd: AdsProps, images: ImagesProps) => ({
+export const createNewAd = (newAd: AdsProps, images: ImagesProps[]) => ({
   type: constants.user.CREATE_NEW_AD,
   newAd,
   images,

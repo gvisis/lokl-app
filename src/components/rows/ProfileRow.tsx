@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components/native';
 
-import { ProfileRowProps, TextInputProps } from '../../types/general';
+import { ProfileRowProps, ProfileTextProps } from '../../types/general';
 
 export const ProfileRow: React.FC<ProfileRowProps> = ({
   onPress,
@@ -65,7 +65,7 @@ const RowWrap = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const RowText = styled.TextInput<TextInputProps>`
+const RowText = styled.TextInput<ProfileTextProps>`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme, textSize }) =>
     textSize ? textSize : theme.fonts.size.l}px;

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -46,7 +47,7 @@ const TitleWrap = styled.View`
   justify-content: space-between;
 `;
 
-const OwnerWrap = styled.TouchableOpacity`
+const OwnerWrap = styled.View`
   background: ${({ theme }) => theme.colors.tertiary85};
   margin: 10px;
   padding: 10px;
