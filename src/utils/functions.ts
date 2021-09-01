@@ -1,5 +1,8 @@
 import i18next from 'i18next';
+import { Asset } from 'react-native-image-picker';
 
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import { ROUTES } from '../routes/RouteNames';
 import {
   AdsProps,
@@ -75,7 +78,13 @@ export const getCategoryItemsFromIds = (
     .flat()
     .filter(product => product.category === categoryId);
 
-export const getImagesFromObject = item => {
+export const getFormatedPrice = (price: number) =>
+  new Intl.NumberFormat('lt-LT', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(price);
+
+export const getImagesFromObject = (item: ImagesFromObject) => {
   const imgArray = [];
   for (const key in item.images) {
     imgArray.push({ id: key, url: item.images[key] });
@@ -129,7 +138,7 @@ export const checkForRatings = (
   return updatedData;
 };
 
-export const getHeaderTitle = (routeName: RouteName) => {
+export const getHeaderTitle = (routeName: string) => {
   switch (routeName) {
     case ROUTES.Profile:
       return i18next.t('profile:title');
@@ -179,7 +188,7 @@ export const getTabIconName = (routeName: string) => {
   }
 };
 
-export const getImageObject = assets => {
+export const getImageObject = (assets: Asset[]) => {
   const imageUrl = assets[0].uri;
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
   return { url: imageUrl, id: imageId };

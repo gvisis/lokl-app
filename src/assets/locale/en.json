@@ -28,7 +28,7 @@
     "items": "Items:",
     "checkout": "Checkout",
     "payment": "Payment",
-    "total": "Total price: €",
+    "total": "Total price: ",
     "remove": "Remove",
     "paymentDetails": "Payment details",
     "completePaymentSubtitle": "Complete your purchase by providing payment details",
@@ -96,6 +96,7 @@
     "payUpTo": "I can pay up to: ",
     "createNew": "Create new ad",
     "added": "Added:",
+    "owner": "Who's looking?",
     "sendMessage": "Send ad owner a message about this ad",
     "messageSuccess": "Message successfully sent to the owner"
   },

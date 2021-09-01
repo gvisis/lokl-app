@@ -6,13 +6,20 @@ import { useTranslation } from 'react-i18next';
 
 import { CartItemLayout, EmptyView } from '../../components';
 import { actions } from '../../state/actions';
+import { CompanyProduct } from '../../state/app/AppInterfaces';
+
+interface RenderCartItem {
+  item: CompanyProduct;
+}
 
 export const CartItemsView: React.FC = () => {
   const { cart } = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const handleRenderCartItem = ({ item }) => <CartItemLayout item={item} />;
+  const handleRenderCartItem = ({ item }: RenderCartItem) => (
+    <CartItemLayout item={item} />
+  );
 
   useEffect(() => {
     dispatch(actions.cart.getCartTotals());

@@ -108,7 +108,7 @@ const RowLabel = styled.Text`
 `;
 
 const PaymentMidSection = styled.View`
-  flex: 1;
+  flex: 0.5;
   padding: 20px 10px;
 `;
 const PaymentTitle = styled.Text`

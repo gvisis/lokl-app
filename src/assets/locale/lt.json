@@ -4,10 +4,10 @@
   },
   "home": {
     "title": "Rask savo produktą",
-    "row Produce": "Produktai",
-    "row Company": "Pardavėjai",
-    "row Items": "Produkcija",
-    "row Ads": "Skelbimai",
+    "rowProduce": "Kategorijos",
+    "rowCompany": "Pardavėjai",
+    "rowItems": "Produkcija",
+    "rowAds": "Skelbimai",
     "search bar": "Ieškau...",
     "view more": "Daugiau"
   },

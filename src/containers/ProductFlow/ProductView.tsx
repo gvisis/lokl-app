@@ -19,7 +19,7 @@ import { ComponentNavProps, ProductAddAction } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
-import { calcRatingAverage } from '../../utils/functions';
+import { calcRatingAverage, getFormatedPrice } from '../../utils/functions';
 import { CART_ACTION, ERROR_TYPE } from '../../utils/variables';
 import { api } from '../../api';
 import { ItemHeader } from '../../components/headers/ItemHeader';
@@ -149,7 +149,7 @@ export const ProductView: React.FC<ProductViewProps> = memo(
               </SelectOptionWrap>
               <SelectTitle>
                 {t('cart:total')}
-                {productTotalPrice}
+                {getFormatedPrice(productTotalPrice)}
               </SelectTitle>
             </SelectWrap>
             <SheetFooter>

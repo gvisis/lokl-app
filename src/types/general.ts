@@ -83,9 +83,15 @@ export interface ProfileRowProps {
   placeholderTextColor?: string;
   keyboardType?: TextInputProps['keyboardType'];
   onChangeText?: (text: string) => void;
+  textSize?: number;
 }
 
 export interface SizeProps {
   width: number;
   height: number;
+}
+
+export interface TextInputProps {
+  label?: string;
+  textSize?: number;
 }

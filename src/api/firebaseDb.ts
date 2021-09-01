@@ -37,20 +37,21 @@ const fetchCategories = async (): Promise<Category> => {
   return categories;
 };
 
-const fetchAllCompanies = async (): Promise<CompanyProps[]> => {
-  const companiesRef = await database().ref('/companies/');
-  const companies = await companiesRef.once('value').then(snap => snap.val());
-  return companies;
-};
-
 const updateCompany = async (companyData: CompanyProps) => {
   const companyRef = await database().ref(`/companies/${companyData.id}`);
   await companyRef.update(companyData);
 };
+
 const updateUser = async (userData: UserProps) => {
   const currentUserId = api.getUserInfo().uid;
   const userRef = await database().ref(`/users/${currentUserId}`);
   await userRef.update(userData);
+};
+
+const fetchAdOwnerDetails = async (ownerId: string) => {
+  const userRef = await database().ref(`/users/${ownerId}`);
+  const user = await userRef.once('value').then(snap => snap.val());
+  return user;
 };
 
 const updateProduct = async (productData: CompanyProduct) => {
@@ -59,7 +60,6 @@ const updateProduct = async (productData: CompanyProduct) => {
   );
   await productRef.set([productData]);
 };
-
 const uploadImageToStorage = async (
   newAdKey: string,
   imagesToUpload: ImagesProps[],
@@ -110,8 +110,8 @@ export const firebaseDb = {
   updateCompany,
   updateUser,
   updateProduct,
-  fetchAllCompanies,
   fetchDefaultImage,
   fetchCategories,
+  fetchAdOwnerDetails,
   uploadImageToStorage,
 };

@@ -12,6 +12,7 @@ import styled from 'styled-components/native';
 import { CustomBtn } from '../..';
 import { ROUTES } from '../../../routes/RouteNames';
 import { actions } from '../../../state/actions';
+import { getFormatedPrice } from '../../../utils/functions';
 
 interface CartFooter {
   quantity: number;
@@ -53,7 +54,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
       </TotalItems>
       <TotalPrice>
         {t('cart:total')}
-        {total}
+        {getFormatedPrice(total)}
       </TotalPrice>
       {stage !== ROUTES.CartPaymentView ? (
         <CustomBtn

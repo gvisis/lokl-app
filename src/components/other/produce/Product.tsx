@@ -13,6 +13,7 @@ import { CompanyProduct, CompanyProps } from '../../../state/app/AppInterfaces';
 import { actions } from '../../../state/actions';
 import {
   calcRatingAverage,
+  getFormatedPrice,
   getProductOwnerTitle,
 } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
@@ -84,7 +85,7 @@ export const Product: React.FC<ProductScreenProps> = ({
         </ProductTop>
         <ProductBottom>
           <ProductName>{item.title}</ProductName>
-          <ProductPrice>€ {item.price}</ProductPrice>
+          <ProductPrice>{getFormatedPrice(item.price)}</ProductPrice>
           <ProductRating>
             <AirbnbRating
               count={5}

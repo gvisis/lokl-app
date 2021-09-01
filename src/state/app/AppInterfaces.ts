@@ -25,11 +25,13 @@ export interface RatingData {
 
 export interface UploadImageProps {
   adId: string;
+  id?: string;
   images: ImagesProps[];
 }
 
 export interface Product {
   id: string;
+  adId: string;
   title: string;
   description?: string;
   category: number;

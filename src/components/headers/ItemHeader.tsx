@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { getFormatedPrice } from '../../utils/functions';
 
 export const ItemHeader = ({
   item,
@@ -23,7 +24,7 @@ export const ItemHeader = ({
     <BottomHeader>
       <ProductTitle>{item.title}</ProductTitle>
       <ProductCat>{item.category}</ProductCat>
-      <Price>€ {item.price}</Price>
+      <Price>{getFormatedPrice(item.price)}</Price>
     </BottomHeader>
   </ItemHeaderWrap>
 );
