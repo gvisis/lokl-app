@@ -8,7 +8,10 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {
+  ImageLibraryOptions,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -59,7 +62,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     navigation.goBack();
   };
   const handleImagePicker = useCallback(() => {
-    const options = {
+    const options: ImageLibraryOptions = {
       mediaType: 'photo',
       quality: 1,
       maxWidth: 1920,
@@ -78,10 +81,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = (
-    event: WindowsDatePickerChangeEvent,
-    selectedDate: Date,
-  ) => {
+  const onChange = (event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
     setDate(currentDate);
@@ -115,7 +115,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
               editable
               placeholder={t('ads:titlePlaceholder')}
             />
-            {/* TITLE */}
             <AdHeader>
               {tempImages.length != 0 &&
                 tempImages.map(image => (
@@ -128,8 +127,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 </AddImage>
               )}
             </AdHeader>
-            {/* TITLE END */}
-            {/* ERRORS TOP*/}
             {errors.price && (
               <AdRowWrap errorText>
                 {errors.category && touched.category && (
@@ -140,8 +137,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 )}
               </AdRowWrap>
             )}
-            {/* ERRORS TOP END */}
-            {/* CATEGORY PICKER */}
             <AdRowWrap>
               <CategoryPicker
                 value={pickedCategory}
@@ -155,8 +150,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 value={values.price}
               />
             </AdRowWrap>
-            {/* CATEGORY PICKER END */}
-            {/* DESCRIPTION */}
             <AdDescriptionWrap>
               {errors.description && touched.description && (
                 <ErrorMessage>{errors.description}</ErrorMessage>
@@ -169,8 +162,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 multiline
               />
             </AdDescriptionWrap>
-            {/* DESCRIPTION END */}
-            {/* DATE PICKER  */}
             <AdRowWrap>
               <ProfileRow
                 rowLeft={<CalendarIcon name={'calendar-outline'} />}
@@ -188,11 +179,10 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   is24Hour={true}
                   format="DD-MM-YYYY"
                   display="calendar"
-                  onChange={e => onChange}
+                  onChange={onChange}
                 />
               )}
             </AdRowWrap>
-            {/* DATE PICKER END */}
             <CustomBtn center label={'Create'} onPress={handleSubmit} />
           </AdContainer>
         )}
@@ -237,12 +227,14 @@ const CalendarIcon = styled(Icon)`
   color: ${({ theme }) => theme.colors.secondary};
 `;
 const DateText = styled.Text`
-  background-color: ${({ theme }) => theme.colors.primary};
-  padding: 10px 5px;
+	margin-right: 5px;
+  padding: 5px;
   border-radius: ${({ theme }) => theme.border.radius5}px;
-  color: ${({ theme }) => theme.colors.primary3};
+  color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.family.benton};
-  elevation: 1;
+  border-width: 1px;
+	text-align: center
+  border-color: ${({ theme }) => theme.colors.primary};
 `;
 const PriceInput = styled.TextInput`
   flex: 0.3;

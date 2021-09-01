@@ -1,4 +1,4 @@
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware, { SagaMiddleware, SagaMonitor } from 'redux-saga';
 import { compact } from 'lodash';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -22,9 +22,10 @@ export const configStore = (initialState?: PersistedAppState) => {
   const Reactotron = initReactotron();
   sagaMonitor = Reactotron.createSagaMonitor();
   reactorEnhancer = Reactotron.createEnhancer();
-  console.tron = Reactotron;
 
-  const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+  const sagaMiddleware: SagaMiddleware<SagaMonitor> = createSagaMiddleware({
+    sagaMonitor,
+  });
   const appliedMiddleware = applyMiddleware(sagaMiddleware);
   const enhancers = compose(...compact([appliedMiddleware, reactorEnhancer]));
 

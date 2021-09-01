@@ -35,3 +35,10 @@ export enum ON_SYNC {
   USER = 'user',
   APP = 'app',
 }
+
+export enum TAB_ICONS {
+  Home = 'home',
+  Tag = 'tag',
+  User = 'user',
+  Cart = 'shopping-cart',
+}

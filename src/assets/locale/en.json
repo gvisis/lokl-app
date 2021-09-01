@@ -1,6 +1,7 @@
 {
   "home": {
     "title": "Find your produce",
+    "home": "Home",
     "rowProduce": "Categories",
     "rowCompany": "Companies",
     "rowProducts": "Products",
@@ -22,6 +23,7 @@
   },
   "cart": {
     "title": "Cart",
+    "shoppingCart": "Shopping cart",
     "empty": "Your cart is empty",
     "items": "Items:",
     "checkout": "Checkout",
@@ -86,7 +88,7 @@
   },
   "ads": {
     "title": "All ads",
-    "titlePlaceholder": "What are you looking for?",
+    "titlePlaceholder": "Title for your ad",
     "descriptionPlaceholder": "Describe what are you looking for...",
     "pricePlaceholder": "Enter max price",
     "exampleImg": "Select example image",

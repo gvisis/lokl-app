@@ -96,7 +96,7 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
   }
 }
 
-function* handleUpdateUserDb({ updatedInfo }) {
+function* handleUpdateUserDb({ updatedInfo }: { updatedInfo: UserProps }) {
   try {
     yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     console.log('userupd', updatedInfo);
@@ -108,7 +108,11 @@ function* handleUpdateUserDb({ updatedInfo }) {
   }
 }
 
-function* handleAddNewAddress({ newAddressData }) {
+function* handleAddNewAddress({
+  newAddressData,
+}: {
+  newAddressData: UserAddress;
+}) {
   const { street, city, name, phone, country, postcode } = newAddressData;
   const userInfo: UserProps = yield* select(state => state.user.userInfo);
   const newAddressId = guidGenerator();
@@ -250,6 +254,9 @@ function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
       currentUserId,
       newAd,
     );
+    console.log('newAdKey', newAdKey);
+    console.log('images', images);
+
     yield* call(firebaseDb.uploadImageToStorage, newAdKey, images);
   } catch (e) {
     console.log('newaderror', e);

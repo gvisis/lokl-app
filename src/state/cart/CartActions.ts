@@ -14,7 +14,7 @@ const checkCartActions = (
   selectedQuantity,
 });
 
-const updateCart = newCart => ({
+const updateCart = (newCart: CompanyProduct[]) => ({
   type: constants.cart.UPDATE_CART,
   newCart,
 });

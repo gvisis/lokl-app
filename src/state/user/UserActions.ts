@@ -3,6 +3,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { constants } from '../constants';
 import { AnyObject } from '../../types/general';
 import { UserAddress } from './UserInterfaces';
+import { AdsProps, ImagesProps } from '../app/AppInterfaces';
 
 export const setUserInfo = createAction<AnyObject>(
   constants.user.SET_USER_INFO,
@@ -58,7 +59,7 @@ export const clearUserState = () => ({
   type: constants.user.CLEAR_USER_STATE,
 });
 
-export const createNewAd = (newAd, images) => ({
+export const createNewAd = (newAd: AdsProps, images: ImagesProps) => ({
   type: constants.user.CREATE_NEW_AD,
   newAd,
   images,

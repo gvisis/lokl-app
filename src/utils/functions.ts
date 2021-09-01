@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 import { ROUTES } from '../routes/RouteNames';
 import {
   AdsProps,
@@ -6,6 +8,7 @@ import {
   RatingData,
 } from '../state/app/AppInterfaces';
 import { AnyObject } from '../types/general';
+import { TAB_ICONS } from './variables';
 
 export const capitalizeFirst = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
@@ -125,24 +128,25 @@ export const checkForRatings = (
   }
   return updatedData;
 };
-export const getHeaderTitle = routeName => {
+
+export const getHeaderTitle = (routeName: RouteName) => {
   switch (routeName) {
     case ROUTES.Profile:
-      return 'Profile';
+      return i18next.t('profile:title');
     case ROUTES.ProfileEdit:
-      return 'Edit Profile';
+      return i18next.t('profile:editProfile');
     case ROUTES.Settings:
-      return 'Settings';
+      return i18next.t('profile:settings');
     case ROUTES.Home:
-      return 'Home';
+      return i18next.t('home:home');
     case ROUTES.Cart:
-      return 'Shopping Cart';
+      return i18next.t('cart:shoppingCart');
     case ROUTES.Address:
-      return 'Addresses';
+      return i18next.t('profile:addresses');
     case ROUTES.AddAddress:
-      return 'Add new address';
+      return i18next.t('common:addNewAddress');
     default:
-      return 'Home';
+      return i18next.t('home:home');
   }
 };
 
@@ -160,19 +164,18 @@ export const getTabLabel = (routeName: string) => {
       return capitalizeFirst(ROUTES.Home);
   }
 };
-
 export const getTabIconName = (routeName: string) => {
   switch (routeName) {
     case ROUTES.HomeTab:
-      return 'home';
+      return TAB_ICONS.Home;
     case ROUTES.AdsTab:
-      return 'tag';
+      return TAB_ICONS.Tag;
     case ROUTES.Profile:
-      return 'user';
+      return TAB_ICONS.User;
     case ROUTES.CartTab:
-      return 'shopping-cart';
+      return TAB_ICONS.Cart;
     default:
-      return 'home';
+      return TAB_ICONS.Home;
   }
 };
 
