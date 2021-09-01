@@ -46,7 +46,7 @@ const TitleWrap = styled.View`
 `;
 
 const OwnerWrap = styled.TouchableOpacity`
-  background: ${({ theme }) => theme.colors.tertiary + 'D9'};
+  background: ${({ theme }) => theme.colors.tertiary85};
   margin: 10px;
   padding: 10px;
   flex: 0.9;

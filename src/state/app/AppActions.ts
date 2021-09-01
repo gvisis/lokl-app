@@ -1,5 +1,6 @@
 import { constants } from '../constants';
 import {
+  AdsProps,
   CompanyProduct,
   CompanyProps,
   RatingData,
@@ -11,7 +12,7 @@ export const setLanguage = (payload: string) => ({
   payload,
 });
 
-export const setAllAds = ads => ({
+export const setAllAds = (ads: AdsProps) => ({
   type: constants.app.SET_ALL_ADS,
   ads,
 });

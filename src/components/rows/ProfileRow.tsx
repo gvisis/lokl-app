@@ -19,7 +19,7 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
 }) => {
   const theme = useTheme();
   return (
-    <RowWrap label={label} disabled={touchable} onPress={onPress}>
+    <RowWrap disabled={touchable} onPress={onPress}>
       {rowLeft && <RowLeft>{rowLeft}</RowLeft>}
       {label && editable && <RowLabel>{label}</RowLabel>}
       {editable ? (
@@ -32,7 +32,8 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
           }
           label={label}
           editable={editable}
-          onChangeText={onChangeText}>
+          onChangeText={onChangeText}
+        >
           {text}
         </EditableInput>
       ) : (
@@ -80,7 +81,7 @@ const RowLabel = styled.Text`
   z-index: 1;
 `;
 
-const EditableInput = styled(RowText)`
+const EditableInput = styled(RowText)<{ label?: string }>`
   margin: ${({ label }) => (label ? '20px 20px 5px' : '5px')};
   background-color: ${({ theme }) => theme.colors.white};
   flex: 1;

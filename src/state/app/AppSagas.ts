@@ -1,51 +1,53 @@
-import { call, fork, put, takeEvery } from 'typed-redux-saga';
+import { call, put, takeEvery } from 'typed-redux-saga';
 
 import { actions } from '../actions';
 import { constants } from '../constants';
 import { firebaseDb } from '../../api/firebaseDb';
 import {
-  AdsProps,
   CompanyProduct,
   CompanyProps,
   CompanySagaProps,
   ProductSagaProps,
   UploadImageProps,
 } from './AppInterfaces';
-import { checkForRatings, sortAsc } from '../../utils/functions';
+import {
+  CheckForRatings,
+  checkForRatings,
+  sortAsc,
+} from '../../utils/functions';
+import { ERROR_TYPE } from '../../utils/variables';
 
 function* handleUploadImages({ adId, images }: UploadImageProps) {
   try {
     yield* call(firebaseDb.uploadImageToStorage, adId, images);
   } catch (e) {
-    console.log('uploadimageserror', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 
 function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
   try {
-    // receives an nested object, typescript doesnt like it
-    const updatedCompany: CompanyProps = yield* call(
+    const updatedCompany: CheckForRatings = yield* call(
       checkForRatings,
       company,
       ratingData,
     );
-    yield* call(firebaseDb.updateCompany, updatedCompany);
+    yield* call(firebaseDb.updateCompany, updatedCompany as CompanyProps);
   } catch (e) {
-    console.log('set company rating error', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 
 function* handleSetProductRating({ product, ratingData }: ProductSagaProps) {
   try {
-    // receives an nested object, typescript doesnt like it
-    const updatedProduct: CompanyProduct = yield* call(
+    const updatedProduct: CheckForRatings = yield* call(
       checkForRatings,
       product,
       ratingData,
     );
-    yield* call(firebaseDb.updateProduct, updatedProduct);
+    yield* call(firebaseDb.updateProduct, updatedProduct as CompanyProduct);
   } catch (e) {
-    console.log('set product rating error', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 
@@ -57,7 +59,7 @@ function* handleFetchCategories() {
     );
     yield* put(actions.app.setCategories(categoriesArray));
   } catch (e) {
-    console.log('fetch all categories error', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 

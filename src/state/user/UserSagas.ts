@@ -13,7 +13,7 @@ import {
   UserAddress,
   UserProps,
 } from './UserInterfaces';
-import { ERROR_TYPE } from '../../utils/variables';
+import { ERROR_TYPE, ON_SYNC } from '../../utils/variables';
 
 interface UserAuthCredentials {
   email: string;
@@ -22,7 +22,7 @@ interface UserAuthCredentials {
 
 function* handleLogin({ email, password }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
     yield* call(api.login, email, password);
     yield* put(
       actions.ui.setStatus(
@@ -36,13 +36,13 @@ function* handleLogin({ email, password }: UserAuthCredentials) {
       actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 
 function* handleLogout() {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
     yield* call(api.logout);
     yield* put(
       actions.ui.setStatus(
@@ -58,12 +58,12 @@ function* handleLogout() {
   } finally {
     yield* put(actions.user.clearUserState());
     yield* put(actions.cart.clearCart());
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 function* handleSignup({ email, password }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
     yield* call(api.signup, email, password);
     yield* call(handleCreateUserDb, email);
     yield* put(
@@ -78,13 +78,13 @@ function* handleSignup({ email, password }: UserAuthCredentials) {
       actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 
 function* handlePasswordReset({ email }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* call(api.passworReset, email);
     yield* put(actions.ui.passResetSuccess(true));
   } catch (e) {
@@ -92,19 +92,19 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
       actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
 function* handleUpdateUserDb({ updatedInfo }) {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     console.log('userupd', updatedInfo);
     yield call(firebaseDb.updateUser, updatedInfo);
   } catch (e) {
     console.log('huserinfoupdate', e);
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
@@ -136,7 +136,7 @@ function* handleAddNewAddress({ newAddressData }) {
         address: [newAddressObject],
       };
     }
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* put(actions.user.updateUserInfo(updatedUserData));
     yield* put(
       actions.ui.setStatus(
@@ -154,7 +154,7 @@ function* handleAddNewAddress({ newAddressData }) {
       ),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 function* handleEditAddress({ addressId, editedAddress }: EditAddressProps) {
@@ -175,7 +175,7 @@ function* handleEditAddress({ addressId, editedAddress }: EditAddressProps) {
       })
       .flat();
 
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* put(actions.user.updateUserInfo({ address: updatedAddresses }));
   } catch (e) {
     yield* put(
@@ -186,7 +186,7 @@ function* handleEditAddress({ addressId, editedAddress }: EditAddressProps) {
       ),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
@@ -199,7 +199,7 @@ function* handleRemoveAddress({ addressId }: { addressId: string }) {
       address => address.id !== addressId,
     );
     yield* put(actions.user.updateUserInfo({ address: filteredAddresses }));
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* put(
       actions.ui.setStatus(
         ERROR_TYPE.SUCCESS,
@@ -216,7 +216,7 @@ function* handleRemoveAddress({ addressId }: { addressId: string }) {
       ),
     );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
@@ -243,7 +243,7 @@ function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
       newAd.image = defaultAdImage;
     }
-    yield* put(actions.ui.setOnSync('app', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.APP, true));
     const currentUserId = api.getUserInfo().uid;
     const newAdKey: string = yield* call(
       firebaseDb.createAd,
@@ -254,13 +254,13 @@ function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
   } catch (e) {
     console.log('newaderror', e);
   } finally {
-    yield* put(actions.ui.setOnSync('app', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.APP, false));
   }
 }
 
 function* handleGetUserAds() {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     const currentUser: string = api.getUserInfo().uid;
     database()
       .ref(`/users/${currentUser}`)
@@ -269,7 +269,7 @@ function* handleGetUserAds() {
   } catch (e) {
     console.log('get user ads error', e);
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 

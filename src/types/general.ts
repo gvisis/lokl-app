@@ -6,13 +6,14 @@ import { ProductScreenProps } from '../components/other/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
 import { AdsProps, CompanyProduct } from '../state/app/AppInterfaces';
-import { CART_ACTION, ERROR_TYPE } from '../utils/variables';
+import { CART_ACTION, ERROR_TYPE, ON_SYNC } from '../utils/variables';
 
 // Types
 export type AnyObject = { [key: string]: any };
 export type ErrorType = ERROR_TYPE.ERROR | ERROR_TYPE.SUCCESS | null;
 export type ProductAddAction = CART_ACTION.INC | CART_ACTION.DEC;
 export type ItemProps = AdsProps | CompanyProduct;
+export type SetOnSync = ON_SYNC.BUTTON | ON_SYNC.USER | ON_SYNC.APP;
 export type CartNaviHandleProps = {
   currentScreen:
     | ROUTES.CartItemsView

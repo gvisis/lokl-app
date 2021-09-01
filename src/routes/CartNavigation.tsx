@@ -32,7 +32,7 @@ export const CartNavigation: React.FC = () => {
   if (finishPurchase) {
     return (
       <>
-        <EmptyView text={'Finishing your purchase... Thank you for waiting'} />
+        <EmptyView text={t('cart:finishPurchase')} />
         <ScreenLoader size={50} color={theme.colors.primary} />
       </>
     );
@@ -43,7 +43,8 @@ export const CartNavigation: React.FC = () => {
       <TopBar.Navigator
         screenOptions={{
           swipeEnabled: false,
-        }}>
+        }}
+      >
         <TopBar.Screen
           name={ROUTES.CartItemsView}
           component={CartItemsView}

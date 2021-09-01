@@ -21,7 +21,7 @@ interface CustomBtnProps {
   center?: boolean;
   activeOpacity?: number;
   disabled?: boolean;
-  onPress?: (e: GestureResponderEvent) => void;
+  onPress?: () => void;
   width?: number;
   fontSize?: number;
   secondary?: boolean;

@@ -13,6 +13,7 @@ export const lightTheme = {
     tertiary1: '#2ECF80',
     tertiary2: '#23C77C',
     tertiary3: '#F0F9F5',
+    tertiary85: '#25C97CD9',
     background: '#F9FAFE',
     background5: '#F9FAFE0D',
     background10: '#F9FAFE1A',

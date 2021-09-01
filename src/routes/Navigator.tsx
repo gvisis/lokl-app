@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import database from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,7 +23,7 @@ const Navigator: React.FC = () => {
 
   const Stack = createStackNavigator<RootStackParamList>();
 
-  const onAuthStateChanged = (user): void => {
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User): void => {
     if (user) {
       database()
         .ref(`/users/${user.uid}`)

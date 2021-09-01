@@ -91,8 +91,10 @@ export const getProductOwnerTitle = (
 export const calcRatingAverage = (ratings: RatingData[]) =>
   ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length;
 
+export type CheckForRatings = CompanyProduct | CompanyProps;
+
 export const checkForRatings = (
-  ratedItem: AnyObject,
+  ratedItem: CheckForRatings,
   ratingData: RatingData,
 ) => {
   const { id, rating } = ratingData;

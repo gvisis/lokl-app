@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject } from '../../types/general';
+import { AnyObject, ErrorType, SetOnSync } from '../../types/general';
 import { themes } from '../../styles';
 import { constants } from '../constants';
 import { ERROR_TYPE } from '../../utils/variables';
@@ -35,18 +35,24 @@ const INITIAL_STATE: UiReducerState = {
   theme: themes.light,
 };
 
-export interface UiStateSetter {
-  key: string;
+export interface UiStateSetter<T> {
+  key: T;
   bool: boolean;
   message?: string;
 }
 
 export const uiReducer = createReducer(INITIAL_STATE, {
-  [constants.ui.SET_ON_SYNC]: (state, { key, bool }: UiStateSetter) => {
+  [constants.ui.SET_ON_SYNC]: (
+    state,
+    { key, bool }: UiStateSetter<SetOnSync>,
+  ) => {
     state.onSync[key] = bool;
   },
 
-  [constants.ui.SET_STATUS]: (state, { key, bool, message }: UiStateSetter) => {
+  [constants.ui.SET_STATUS]: (
+    state,
+    { key, bool, message }: UiStateSetter<ErrorType>,
+  ) => {
     if (key === ERROR_TYPE.SUCCESS) {
       state.status.error = false;
     }
@@ -61,7 +67,7 @@ export const uiReducer = createReducer(INITIAL_STATE, {
     state.status = INITIAL_STATE.status;
   },
 
-  [constants.ui.PASS_RESET_SUCCESS]: (state, { bool }: UiStateSetter) => {
+  [constants.ui.PASS_RESET_SUCCESS]: (state, { bool }: { bool: boolean }) => {
     state.passResetStatus = bool;
   },
 
@@ -69,7 +75,7 @@ export const uiReducer = createReducer(INITIAL_STATE, {
     state.passResetStatus = INITIAL_STATE.passResetStatus;
   },
 
-  [constants.ui.SET_THEME]: (state, { bool }: UiStateSetter) => {
+  [constants.ui.SET_THEME]: (state, { bool }: { bool: boolean }) => {
     state.theme = bool ? themes.light : themes.dark;
   },
 });

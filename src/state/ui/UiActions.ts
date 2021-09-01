@@ -1,7 +1,7 @@
-import { ErrorType } from '../../types/general';
+import { ErrorType, SetOnSync } from '../../types/general';
 import { constants } from '../constants';
 
-const setOnSync = (key: string, bool: boolean) => ({
+const setOnSync = (key: SetOnSync, bool: boolean) => ({
   type: constants.ui.SET_ON_SYNC,
   key,
   bool,

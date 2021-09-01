@@ -1,9 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import {
-  BottomTabNavigationProp,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components/native';
 
 import { getTabIconName, getTabLabel } from '../utils/functions';
@@ -34,7 +31,8 @@ export const TabNavigation: React.FC = () => {
           elevation: 0,
           borderTopWidth: 0,
         },
-      }}>
+      }}
+    >
       <Tab.Screen name={ROUTES.HomeTab} component={HomeNavigation} />
       <Tab.Screen name={ROUTES.AdsTab} component={AdsNavigation} />
       <Tab.Screen name={ROUTES.CartTab} component={CartNavigation} />

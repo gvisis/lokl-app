@@ -4,6 +4,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import { useTheme } from 'styled-components/native';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from './RouteNames';
 import { AddAdView, AdsView, SingleAdView } from '../containers/AdsFlow';
@@ -13,6 +14,7 @@ const AdsStack = createStackNavigator<RootStackParamList>();
 
 export const AdsNavigation: React.FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <AdsStack.Navigator
       screenOptions={{
@@ -26,7 +28,8 @@ export const AdsNavigation: React.FC = () => {
         gestureDirection: 'horizontal',
 
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}>
+      }}
+    >
       <AdsStack.Screen
         name={ROUTES.Ads}
         component={AdsView}
@@ -35,7 +38,7 @@ export const AdsNavigation: React.FC = () => {
       <AdsStack.Screen
         name={ROUTES.AddAd}
         component={AddAdView}
-        options={{ headerTitle: 'Create an ad' }}
+        options={{ headerTitle: t('ads:createNew') }}
       />
       <AdsStack.Screen name={ROUTES.SingleAdView} component={SingleAdView} />
     </AdsStack.Navigator>

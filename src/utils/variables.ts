@@ -29,3 +29,9 @@ export enum ERROR_TYPE {
   SUCCESS = 'success',
   ERROR = 'error',
 }
+
+export enum ON_SYNC {
+  BUTTON = 'button',
+  USER = 'user',
+  APP = 'app',
+}

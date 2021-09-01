@@ -1,10 +1,7 @@
 {
-  "landing": {
-    "appName": "NyanCapp!"
-  },
   "home": {
     "title": "Find your produce",
-    "rowProduce": "Produce",
+    "rowProduce": "Categories",
     "rowCompany": "Companies",
     "rowProducts": "Products",
     "rowAds": "Ads",
@@ -41,6 +38,8 @@
     "shippingAddress": "Shipping address",
     "addToCart": "Add to cart",
     "productAdded": "Product added to cart",
+    "purchaseSuccess": "Purchase Successful",
+    "finishPurchase": "Finishing your purchase... Thank you for waiting",
     "howMany": "How many?",
     "pay": "Pay",
     "addShippingAddress": "No address selected"

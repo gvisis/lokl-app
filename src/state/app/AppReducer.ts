@@ -2,9 +2,10 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import { AppReducer } from './AppInterfaces';
 import { constants } from '../constants';
+import { LANG } from '../../utils/variables';
 
 const INITIAL_STATE: AppReducer = {
-  language: 'en',
+  language: LANG.EN,
   allAppAds: [],
   tempImages: [],
   allCompanies: null,

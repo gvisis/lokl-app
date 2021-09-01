@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { call, put, select, takeEvery } from 'typed-redux-saga';
+import { delay, put, select, takeEvery } from 'typed-redux-saga';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { CartNaviHandleProps } from '../../types/general';
@@ -97,16 +97,18 @@ function* handleFinishPurchase({
 }: {
   finishPurchase: boolean;
 }) {
-  // Fake delay to show loading while "payment processing"
-  const delay = (time: number) =>
-    new Promise(resolve => setTimeout(resolve, time));
   try {
     if (finishPurchase) {
-      yield* call(delay, 3000);
+      // Fake delay to show loading while "payment processing"
+      yield delay(3000);
       yield* put(actions.cart.clearCart());
       yield* put(actions.cart.cartFinishPurchase(false));
       yield* put(
-        actions.ui.setStatus(ERROR_TYPE.SUCCESS, true, 'Purchase Successful'),
+        actions.ui.setStatus(
+          ERROR_TYPE.SUCCESS,
+          true,
+          i18next.t('cart:purchaseSuccess'),
+        ),
       );
     }
   } catch (e) {
