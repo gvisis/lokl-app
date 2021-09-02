@@ -1,7 +1,7 @@
 import { call, put, take } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import { EventChannel, eventChannel } from 'redux-saga';
-import i18next from 'i18next';
+import i18n from 'i18next';
 
 import { actions } from '../actions';
 import { UserProps } from '../user/UserInterfaces';
@@ -37,7 +37,7 @@ export function* adsWatcher() {
       actions.ui.setStatus(
         ERROR_TYPE.ERROR,
         true,
-        i18next.t('errors:watcher/fetchingAds'),
+        i18n.t('errors:watcher/fetchingAds'),
       ),
     );
   }

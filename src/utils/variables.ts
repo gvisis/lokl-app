@@ -10,12 +10,14 @@ export const COUNTRY = {
   LITHUANIA: 'Lithuania',
 };
 export enum THEME {
-  DARK = 'dark',
-  LIGHT = 'light',
+  DARK = 'Dark',
+  LIGHT = 'Light',
+  SWITCH = 'themeSwitch',
 }
 export enum LANG {
   EN = 'en',
   LT = 'lt',
+  SWITCH = 'langSwitch',
 }
 
 export enum CART_ACTION {

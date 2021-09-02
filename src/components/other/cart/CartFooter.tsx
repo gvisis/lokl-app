@@ -16,7 +16,7 @@ import { getFormatedPrice } from '../../../utils/functions';
 
 interface CartFooter {
   quantity: number;
-  total: number;
+  total: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -81,6 +81,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
 const TotalPrice = styled.Text`
   padding: 10px;
   text-align: center;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;
@@ -88,6 +89,7 @@ const TotalPrice = styled.Text`
 const TotalItems = styled.Text`
   padding: 10px;
   text-align: center;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;

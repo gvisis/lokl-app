@@ -8,7 +8,6 @@ import {
   CompanyProps,
   CompanySagaProps,
   ProductSagaProps,
-  UploadImageProps,
 } from './AppInterfaces';
 import {
   CheckForRatings,
@@ -16,14 +15,6 @@ import {
   sortAsc,
 } from '../../utils/functions';
 import { ERROR_TYPE } from '../../utils/variables';
-
-function* handleUploadImages({ adId, images }: UploadImageProps) {
-  try {
-    yield* call(firebaseDb.uploadImageToStorage, adId, images);
-  } catch (e) {
-    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
-  }
-}
 
 function* handleSetCompanyRating({ company, ratingData }: CompanySagaProps) {
   try {
@@ -65,7 +56,6 @@ function* handleFetchCategories() {
 
 export function* appSaga() {
   //! error: no overload matches this call?
-  yield* takeEvery(constants.app.UPLOAD_AD_IMAGES, handleUploadImages);
   yield* takeEvery(constants.app.FETCH_CATEGORIES, handleFetchCategories);
   yield* takeEvery(constants.app.SET_PRODUCT_RATING, handleSetProductRating);
   yield* takeEvery(constants.app.SET_COMPANY_RATING, handleSetCompanyRating);

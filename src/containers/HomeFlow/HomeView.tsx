@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,6 +24,7 @@ import {
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { allCompanies, categories, allProducts, allAppAds } = useSelector(
     state => state.app,
   );
@@ -70,7 +71,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           ) : (
-            <ScreenLoader color={'red'} size={50} />
+            <ScreenLoader color={theme.colors.primary} size={50} />
           )}
         </HomeRow>
         {/* COMPANIES ROW */}
@@ -85,7 +86,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           ) : (
-            <ScreenLoader color={'red'} size={50} />
+            <ScreenLoader color={theme.colors.primary} size={50} />
           )}
         </HomeRow>
         {/* PRODUCTS ROW */}
@@ -100,7 +101,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           ) : (
-            <ScreenLoader color={'red'} size={50} />
+            <ScreenLoader color={theme.colors.primary} size={50} />
           )}
         </HomeRow>
         {/* ADS ROW */}
@@ -115,7 +116,7 @@ export const HomeView: React.FC = () => {
               showsHorizontalScrollIndicator={false}
             />
           ) : (
-            <ScreenLoader color={'red'} size={50} />
+            <ScreenLoader color={theme.colors.primary} size={50} />
           )}
         </HomeRow>
       </HomeContent>

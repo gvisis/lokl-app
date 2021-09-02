@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GestureResponderEvent, Platform } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,14 +17,13 @@ import {
   Container,
   CustomBtn,
   ProfileRow,
+  ScreenLoader,
 } from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
 import { ERROR_TYPE } from '../../utils/variables';
-import { AdsProps } from '../../state/app/AppInterfaces';
-import { uploadAdImages } from '../../state/app/AppActions';
 
 interface AddAdViewProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -35,6 +34,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const [tempImages, setTempImages] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [pickedCategory, setPickedCategory] = useState<string>(null);
+  const { onSync } = useSelector(state => state.ui);
 
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -65,14 +65,20 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
         tempImages,
       ),
     );
-    navigation.goBack();
   };
+
+  useEffect(() => {
+    if (onSync.app) {
+      navigation.goBack();
+    }
+  }, [onSync.app]);
+
   const handleImagePicker = useCallback(() => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
       quality: 1,
-      maxWidth: 1920,
-      maxHeight: 1080,
+      maxWidth: 1280,
+      maxHeight: 1024,
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
@@ -100,6 +106,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
 
   return (
     <Container>
+      {onSync.app && <ScreenLoader size={50} color={theme.colors.primary} />}
       <Formik
         initialValues={{
           price: '',
@@ -134,10 +141,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
               )}
             </AdHeader>
             {errors.price && (
-              <AdRowWrap errorText>
-                {errors.category && touched.category && (
-                  <ErrorMessage>{t('yup:ads-categoryErr')}</ErrorMessage>
-                )}
+              <AdRowWrap errorText={true}>
                 {errors.price && touched.price && (
                   <ErrorMessage>{errors.price}</ErrorMessage>
                 )}
@@ -189,7 +193,12 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                 />
               )}
             </AdRowWrap>
-            <CustomBtn center label={'Create'} onPress={handleSubmit} />
+            <CustomBtn
+              disabled={onSync.app}
+              center
+              label={'Create'}
+              onPress={handleSubmit}
+            />
           </AdContainer>
         )}
       </Formik>
@@ -216,7 +225,7 @@ const AdHeader = styled.View`
   border-color: ${({ theme }) => theme.colors.lightGrey1}; ;
 `;
 
-const AdRowWrap = styled.View`
+const AdRowWrap = styled.View<{ errorText?: boolean }>`
   width: 100%;
   flex-direction: row;
   align-items: center;

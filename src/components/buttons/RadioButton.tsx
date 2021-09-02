@@ -26,5 +26,5 @@ const RadioInside = styled.View<RadioButtonProps>`
   height: 12px;
   border-radius: 8px;
   background-color: ${({ isChecked, theme }) =>
-    isChecked ? theme.colors.secondary : theme.colors.transparent};
+    isChecked ? theme.colors.secondary : theme.colors.background};
 `;

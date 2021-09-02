@@ -1,9 +1,11 @@
 import { call, put, take } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
-import { EventChannel, eventChannel } from 'redux-saga';
+import { eventChannel } from 'redux-saga';
 
 import { api } from '../../api';
 import { actions } from '../actions';
+import { ERROR_TYPE } from '../../utils/variables';
+import { UserProps } from './UserInterfaces';
 
 async function usersChannel(uid: string) {
   const db = database().ref(`/users/${uid}`);
@@ -15,17 +17,21 @@ async function usersChannel(uid: string) {
   });
 }
 
+interface UserWatcherProps {
+  user?: UserProps;
+}
+
 export function* watchUser() {
   const uid: string = api.getUserInfo() && api.getUserInfo().uid;
   if (uid) {
-    const channel: EventChannel<unknown> = yield* call(usersChannel, uid);
+    const channel = yield* call(usersChannel, uid as string);
     try {
       while (true) {
-        const { user } = yield* take(channel);
+        const { user }: UserWatcherProps = yield* take(channel);
         yield* put(actions.user.setUserInfo(user));
       }
     } catch (e) {
-      console.log(e);
+      yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
     }
   }
 }

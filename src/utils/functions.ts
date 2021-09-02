@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18n from 'i18next';
 import { Asset } from 'react-native-image-picker';
 
 import 'intl';
@@ -6,6 +6,7 @@ import 'intl/locale-data/jsonp/en';
 import { ROUTES } from '../routes/RouteNames';
 import {
   AdsProps,
+  Category,
   CompanyProduct,
   CompanyProps,
   RatingData,
@@ -18,6 +19,11 @@ export const capitalizeFirst = (text: string) =>
 
 export const sortAsc = (a: string, b: string) => a.localeCompare(b);
 export const sortDesc = (a: string, b: string) => b.localeCompare(a);
+
+export const getCategoryTitleFromId = (categories: Category[], id: string) => {
+  const category = categories.find(category => category.id === id);
+  return category ? category.title : '';
+};
 
 export const guidGenerator = () => {
   const S4 = function () {
@@ -141,36 +147,36 @@ export const checkForRatings = (
 export const getHeaderTitle = (routeName: string) => {
   switch (routeName) {
     case ROUTES.Profile:
-      return i18next.t('profile:title');
+      return i18n.t('profile:title');
     case ROUTES.ProfileEdit:
-      return i18next.t('profile:editProfile');
+      return i18n.t('profile:editProfile');
     case ROUTES.Settings:
-      return i18next.t('profile:settings');
+      return i18n.t('profile:settings');
     case ROUTES.Home:
-      return i18next.t('home:home');
+      return i18n.t('home:home');
     case ROUTES.Cart:
-      return i18next.t('cart:shoppingCart');
+      return i18n.t('cart:shoppingCart');
     case ROUTES.Address:
-      return i18next.t('profile:addresses');
+      return i18n.t('profile:addresses');
     case ROUTES.AddAddress:
-      return i18next.t('common:addNewAddress');
+      return i18n.t('common:addNewAddress');
     default:
-      return i18next.t('home:home');
+      return i18n.t('home:home');
   }
 };
 
 export const getTabLabel = (routeName: string) => {
   switch (routeName) {
     case ROUTES.HomeTab:
-      return capitalizeFirst(ROUTES.Home);
+      return capitalizeFirst(i18n.t('home:home'));
     case ROUTES.AdsTab:
-      return capitalizeFirst(ROUTES.Ads);
+      return capitalizeFirst(i18n.t('ads:title'));
     case ROUTES.Profile:
-      return capitalizeFirst(ROUTES.Profile);
+      return capitalizeFirst(i18n.t('profile:title'));
     case ROUTES.CartTab:
-      return capitalizeFirst(ROUTES.Cart);
+      return capitalizeFirst(i18n.t('cart:title'));
     default:
-      return capitalizeFirst(ROUTES.Home);
+      return capitalizeFirst(i18n.t('home:home'));
   }
 };
 export const getTabIconName = (routeName: string) => {

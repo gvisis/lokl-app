@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,7 +15,7 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
   navigation,
 }) => {
   const { userInfo } = useSelector(state => state.user);
-
+  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -28,21 +28,6 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
   const handleLogout = useFunction(dispatch, actions.user.logout());
 
   const handleLogoutPress = useCallback(() => {
-    // Alert.alert(
-    // 	t('profile.logout.title'),
-    // 	t('profile.logout.message'),
-    // 	[
-    // 		{
-    // 			text: t('profile.logout.cancel'),
-    // 			style: 'cancel',
-    // 		},
-    // 		{
-    // 			text: t('profile.logout.ok'),
-    // 			onPress: () => dispatch(actions.user.logout()),
-    // 		},
-    // 	],
-    // 	{ cancelable: false },
-    // );
     Alert.alert(t('login:signout'), t('profile:logoutConfirm'), [
       {
         text: t('profile:cancel'),
@@ -65,17 +50,35 @@ export const ProfileView: React.FC<ComponentNavProps<ROUTES.Profile>> = ({
         <ProfileRow
           onPress={handleSettingsNav}
           text={t('profile:settings')}
-          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+          rowRight={
+            <Icon
+              name="chevron-right"
+              size={30}
+              color={theme.colors.secondaryBtn}
+            />
+          }
         />
         <ProfileRow
           onPress={handleProfileEditNav}
           text={t('profile:editProfile')}
-          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+          rowRight={
+            <Icon
+              name="chevron-right"
+              size={30}
+              color={theme.colors.secondaryBtn}
+            />
+          }
         />
         <ProfileRow
           onPress={handleAddressNav}
           text={t('profile:addresses')}
-          rowRight={<Icon name="chevron-right" size={30} color={'orange'} />}
+          rowRight={
+            <Icon
+              name="chevron-right"
+              size={30}
+              color={theme.colors.secondaryBtn}
+            />
+          }
         />
         <CustomBtn
           label={t('login:signout')}
@@ -113,12 +116,14 @@ const ProfileImage = styled.Image`
 const ProfileName = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.nexaBold};
   font-size: ${({ theme }) => theme.fonts.size.xxl}px;
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 5px;
   letter-spacing: 1px;
 `;
 
 const ProfileEmail = styled.Text`
   font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
   letter-spacing: 1px;
 `;

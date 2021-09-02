@@ -51,7 +51,15 @@
     "empty": "No products available"
   },
   "company": {
-    "delivery": "Delivery available"
+    "delivery": "Delivery available",
+    "postCode": "Post code",
+    "address": "Address",
+    "street": "Street",
+    "contactInfo": "Contact info",
+    "city": "City",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website"
   },
   "profile": {
     "title": "Profile",
@@ -80,11 +88,12 @@
     "payments": "Payments",
     "editProfile": "Edit profile",
     "addresses": "Addresses",
-    "changeTheme": "Change theme",
-    "changeLang": "Change language",
+    "changeTheme": "Switch theme",
+    "changeLang": "Switch languages",
     "newAddressAdded": "New address added",
     "editAddress": "Edit address",
     "addressRemoved": "Address succesfully removed",
+    "addressRemoveConfirm": "Are you sure you want to remove this address?",
     "addressUpdated": "Address succesfully updated",
     "logoutConfirm": "Are you sure you want to sign out?"
   },
@@ -100,7 +109,8 @@
     "added": "Added:",
     "owner": "Who's looking?",
     "sendMessage": "Send ad owner a message about this ad",
-    "messageSuccess": "Message successfully sent to the owner"
+    "messageSuccess": "Message successfully sent to the owner",
+    "adSuccessfull": "Ad succesfully added"
   },
   "common": {
     "passReset": "Password reset",
@@ -146,9 +156,12 @@
     "auth/unknown": "Unknown error",
     "auth/fill-all-fields": "Please fill all fields",
     "thereWasError": "There was an error",
+    "profile/userUpdate": "User info update failed",
     "watcher/fetchingAds": "There was an error fetching ads",
     "watcher/companies": "There was an error fetching companies",
-    "address/adddressRemoveError": "There was an error removing addres"
+    "address/adddressRemoveError": "There was an error removing addres",
+    "cart/cartUpdating": "There was an error updating your cart",
+    "cart/removeFromCart": "There was an error removing your item from cart"
   },
   "yup": {
     "email-required": "Email is required",

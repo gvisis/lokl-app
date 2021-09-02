@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery } from 'typed-redux-saga';
+import { call, delay, put, select, takeEvery } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -99,10 +99,15 @@ function* handlePasswordReset({ email }: UserAuthCredentials) {
 function* handleUpdateUserDb({ updatedInfo }: { updatedInfo: UserProps }) {
   try {
     yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
-    console.log('userupd', updatedInfo);
     yield call(firebaseDb.updateUser, updatedInfo);
   } catch (e) {
-    console.log('huserinfoupdate', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:profile/userUpdate'),
+      ),
+    );
   } finally {
     yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
@@ -238,29 +243,34 @@ function* handleCreateUserDb(email: string) {
     database().ref(`/users/${newUserId}`).set(userInfo);
     yield* put(actions.user.setUserInfo(userInfo));
   } catch (e) {
-    console.log('huserinfocreate', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
   try {
+    yield* put(actions.ui.setOnSync(ON_SYNC.APP, true));
     if (images.length === 0) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
       newAd.image = defaultAdImage;
     }
-    yield* put(actions.ui.setOnSync(ON_SYNC.APP, true));
     const currentUserId = api.getUserInfo().uid;
     const newAdKey: string = yield* call(
       firebaseDb.createAd,
       currentUserId,
       newAd,
     );
-    console.log('newAdKey', newAdKey);
-    console.log('images', images);
-
-    yield* call(firebaseDb.uploadImageToStorage, newAdKey, images);
+    yield* call(firebaseDb.uploadAdImagesToStorage, newAdKey, images);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('ads:adSuccessfull'),
+      ),
+    );
   } catch (e) {
-    console.log('newaderror', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   } finally {
+    yield* delay(3500);
     yield* put(actions.ui.setOnSync(ON_SYNC.APP, false));
   }
 }
@@ -274,7 +284,13 @@ function* handleGetUserAds() {
       .once('value')
       .then(snap => snap.val().ads);
   } catch (e) {
-    console.log('get user ads error', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
   } finally {
     yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }

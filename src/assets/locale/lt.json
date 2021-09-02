@@ -110,6 +110,7 @@
     "newAddressAdded": "Adresas pridėtas",
     "editAddress": "Keisti adresą",
     "addressRemoved": "Adresas ištrintas",
+    "addressRemoveConfirm": "Ar tikrai norite ištrinti šį adresą?",
     "addressUpdated": "Adresas pakeistas",
     "logoutConfirm": "Ar tikrai atsijungiate?"
   },

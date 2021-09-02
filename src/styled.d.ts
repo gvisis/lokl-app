@@ -31,6 +31,7 @@ declare module 'styled-components/native' {
       red1: string;
       error: string;
       transparent: string;
+      textPrimary: string;
     };
     fonts: {
       size: {

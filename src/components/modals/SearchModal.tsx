@@ -6,6 +6,7 @@ import styled, { useTheme } from 'styled-components/native';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as _ from 'lodash';
 
 import {
   getProductOwnerTitle,
@@ -41,9 +42,9 @@ export const SearchModal: React.FC = () => {
   const handleSearchResultNavigate = useCallback(
     item => {
       handleSearchFocus();
-      if (item['website']) {
+      if (_.hasIn(item, 'website')) {
         navigate(ROUTES.SingleCompany, { companyItem: item });
-      } else if (item['amount']) {
+      } else if (_.hasIn(item, 'amount')) {
         const productOwnerTitle: string = getProductOwnerTitle(
           allCompanies,
           item,
@@ -56,7 +57,7 @@ export const SearchModal: React.FC = () => {
         // TODO: navigate to app ad page
         navigate(ROUTES.AdsTab, {
           screen: ROUTES.SingleAdView,
-          params: item,
+          params: { item },
         });
       }
     },
@@ -162,7 +163,7 @@ const SearchRow = styled.TouchableOpacity<{ isFocused: boolean }>`
   margin-top: 20px;
   border-width: 1px;
   border-color: ${({ theme, isFocused }) =>
-    isFocused ? theme.colors.secondary : theme.colors.lightGrey2};
+    isFocused ? theme.colors.secondary : theme.colors.lightGrey1};
 `;
 
 const SearchBar = styled.TextInput`

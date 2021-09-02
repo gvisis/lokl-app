@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/core';
 
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
@@ -11,15 +12,13 @@ import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
 
-export const LoginView: React.FC<Container> = ({ navigation }) => {
+export const LoginView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { navigate } = useNavigation();
 
-  const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
-  const navigateToForgotPassword = useFunction(
-    navigation.navigate,
-    ROUTES.ForgotPassword,
-  );
+  const navigateToSignup = useFunction(navigate, ROUTES.Signup);
+  const navigateToForgotPassword = useFunction(navigate, ROUTES.ForgotPassword);
 
   const handleLoginSubmit = useCallback(
     (email: string, password: string): void => {
@@ -33,7 +32,8 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={validator.login}
-        onSubmit={({ email, password }) => handleLoginSubmit(email, password)}>
+        onSubmit={({ email, password }) => handleLoginSubmit(email, password)}
+      >
         {({
           handleChange,
           handleBlur,

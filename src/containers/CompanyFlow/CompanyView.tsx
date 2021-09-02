@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useNavigation, useRoute } from '@react-navigation/core';
 
@@ -22,7 +22,6 @@ export const CompanyView: React.FC = () => {
     },
     [navigate, companyItem],
   );
-
   useEffect(() => {
     setCompCategories(
       allCategories.filter(category =>
@@ -33,7 +32,7 @@ export const CompanyView: React.FC = () => {
 
   return (
     <SingleCompany companyItem={companyItem}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <CompanyDescription>{companyItem.description}</CompanyDescription>
         {compCategories &&
           compCategories.map(category => (
@@ -45,16 +44,57 @@ export const CompanyView: React.FC = () => {
               <CategoryCardTitle>{category.title}</CategoryCardTitle>
             </CategoryCard>
           ))}
+        <CompanyDetails>
+          <CompanyDetailsTitle>{t('company:contactInfo')}</CompanyDetailsTitle>
+          <CompanyDetailsInfoWrap>
+            <View>
+              {Object.entries(companyItem.address).map(([key, item]) => (
+                <CompanyDetailsItem key={key}>
+                  <CompanyDetailsItemTitle>
+                    {t(`company:${key}`)}
+                  </CompanyDetailsItemTitle>
+                  <CompanyDetailsItemText>{item}</CompanyDetailsItemText>
+                </CompanyDetailsItem>
+              ))}
+            </View>
+            <View>
+              <CompanyDetailsItem>
+                <CompanyDetailsItemTitle>
+                  {t('company:phone')}
+                </CompanyDetailsItemTitle>
+                <CompanyDetailsItemText>
+                  {companyItem.phone}
+                </CompanyDetailsItemText>
+              </CompanyDetailsItem>
+              <CompanyDetailsItem>
+                <CompanyDetailsItemTitle>
+                  {t('company:email')}
+                </CompanyDetailsItemTitle>
+                <CompanyDetailsItemText>
+                  {companyItem.email}
+                </CompanyDetailsItemText>
+              </CompanyDetailsItem>
+              <CompanyDetailsItem>
+                <CompanyDetailsItemTitle>
+                  {t('company:website')}
+                </CompanyDetailsItemTitle>
+                <CompanyDetailsItemText>
+                  {companyItem.website}
+                </CompanyDetailsItemText>
+              </CompanyDetailsItem>
+            </View>
+          </CompanyDetailsInfoWrap>
+        </CompanyDetails>
       </ScrollView>
     </SingleCompany>
   );
 };
-
 const CompanyDescription = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   font-family: ${({ theme }) => theme.fonts.family.latoLight};
   padding: 10px;
   border-bottom-width: 1px;
+  border-bottom-color: ${({ theme }) => theme.colors.lightGrey1};
   margin-bottom: 10px;
 `;
 const ImageBackgrounds = styled.ImageBackground`
@@ -83,4 +123,35 @@ const CategoryCardTitle = styled.Text`
   text-align: center;
   background-color: ${({ theme }) => theme.colors.secondary + '90'};
   color: ${({ theme }) => theme.colors.white};
+`;
+const CompanyDetailsInfoWrap = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const CompanyDetailsTitle = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.size.xl}px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  margin-bottom: 10px;
+`;
+
+const CompanyDetails = styled.View`
+  margin: 20px 0;
+  padding: 0 20px;
+`;
+
+const CompanyDetailsItem = styled.View`
+  margin-top: 10px;
+`;
+
+const CompanyDetailsItemTitle = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.size.m}px;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+const CompanyDetailsItemText = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;

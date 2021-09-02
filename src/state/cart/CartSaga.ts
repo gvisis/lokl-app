@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18n from 'i18next';
 import { delay, put, select, takeEvery } from 'typed-redux-saga';
 
 import { ROUTES } from '../../routes/RouteNames';
@@ -53,7 +53,13 @@ function* handleCartActions({
     }
     yield* put(actions.cart.updateCart(tempCart));
   } catch (e) {
-    console.log('checkaction error', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('error:cart/cartUpdating'),
+      ),
+    );
   } finally {
     yield* put(actions.cart.getCartTotals());
   }
@@ -66,7 +72,13 @@ function* handleRemoveFromCart({ itemToRemove }: CartRemove) {
     );
     yield* put(actions.cart.updateCart(tempCart));
   } catch (e) {
-    console.log('checkaction error', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('error:cart/removeFromCart'),
+      ),
+    );
   } finally {
     yield* put(actions.cart.getCartTotals());
   }
@@ -77,7 +89,7 @@ function* handleGetCartTotals() {
     const cart: CartReducer = yield* select(state => state.cart);
     const { total, quantity } = cart.cart.reduce(
       (cartTotal, cartItem: CompanyProduct) => {
-        const itemTotal = cartItem.price * cartItem.amount;
+        const itemTotal = parseFloat(cartItem.price) * cartItem.amount;
         cartTotal.total += parseFloat(itemTotal.toFixed(2));
         cartTotal.quantity += cartItem.amount;
         return cartTotal;
@@ -89,7 +101,7 @@ function* handleGetCartTotals() {
     );
     yield* put(actions.cart.updateCartTotals(total, quantity));
   } catch (e) {
-    console.log('update cart error', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }
 function* handleFinishPurchase({
@@ -107,7 +119,7 @@ function* handleFinishPurchase({
         actions.ui.setStatus(
           ERROR_TYPE.SUCCESS,
           true,
-          i18next.t('cart:purchaseSuccess'),
+          i18n.t('cart:purchaseSuccess'),
         ),
       );
     }
@@ -116,7 +128,7 @@ function* handleFinishPurchase({
       actions.ui.setStatus(
         ERROR_TYPE.ERROR,
         true,
-        i18next.t('errors:thereWasError'),
+        i18n.t('errors:thereWasError'),
       ),
     );
   }
@@ -137,7 +149,7 @@ function* handleCartNavigation({ currentScreen }: CartNaviHandleProps) {
       actions.ui.setStatus(
         ERROR_TYPE.ERROR,
         true,
-        i18next.t('errors:thereWasError'),
+        i18n.t('errors:thereWasError'),
       ),
     );
   }

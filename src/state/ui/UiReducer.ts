@@ -1,9 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject, ErrorType, SetOnSync } from '../../types/general';
-import { themes } from '../../styles';
+import { ErrorType, SetOnSync, ThemeTypes } from '../../types/general';
 import { constants } from '../constants';
-import { ERROR_TYPE } from '../../utils/variables';
+import { ERROR_TYPE, THEME } from '../../utils/variables';
 
 export interface UiReducerState {
   onSync: {
@@ -17,7 +16,7 @@ export interface UiReducerState {
     message: string;
   };
   passResetStatus: boolean;
-  theme: AnyObject;
+  appTheme: ThemeTypes;
 }
 
 const INITIAL_STATE: UiReducerState = {
@@ -32,9 +31,8 @@ const INITIAL_STATE: UiReducerState = {
     message: '',
   },
   passResetStatus: false,
-  theme: themes.light,
+  appTheme: THEME.LIGHT,
 };
-
 export interface UiStateSetter<T> {
   key: T;
   bool: boolean;
@@ -75,7 +73,7 @@ export const uiReducer = createReducer(INITIAL_STATE, {
     state.passResetStatus = INITIAL_STATE.passResetStatus;
   },
 
-  [constants.ui.SET_THEME]: (state, { bool }: { bool: boolean }) => {
-    state.theme = bool ? themes.light : themes.dark;
+  [constants.ui.SET_THEME]: (state, { theme }: { theme: ThemeTypes }) => {
+    state.appTheme = theme;
   },
 });

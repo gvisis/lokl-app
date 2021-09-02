@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Formik } from 'formik';
 
+import { validator } from '../../utils/validators';
 import {
   AddressSelect,
   Container,
@@ -26,44 +28,71 @@ export const CartPaymentView: React.FC = () => {
       {cart.length === 0 ? (
         <EmptyView text={t('cart:empty')} />
       ) : (
-        <Container>
-          <PaymentHeaderWrap>
-            <PaymentTitle>{t('cart:paymentDetails')}</PaymentTitle>
-            <PaymentSubtitle>
-              {t('cart:completePaymentSubtitle')}
-            </PaymentSubtitle>
-          </PaymentHeaderWrap>
-          <PaymentMidSection>
-            <ProfileRow
-              editable
-              text={name}
-              label={t('profile:fullName')}
-              placeholder={t('profile:namePlaceholder')}
-            />
-            <ProfileRow
-              editable
-              text={email}
-              label={t('common:email')}
-              placeholder={t('profile:emailPlaceholder')}
-            />
-            <RowLabel>{t('cart:cardDetails')}</RowLabel>
-            <CardInputWrap>
-              <CardInput
-                flex={0.8}
-                placeholder={t('cart:cardDetailsPlaceholder')}
-                maxLength={16}
-              />
-              <CardInput flex={0.3} maxLength={5} placeholder={'MM / YY'} />
-              <CardInput flex={0.2} maxLength={3} placeholder={'CVC'} />
-            </CardInputWrap>
-            {shippingAddress && (
-              <ShipingAddressWrap>
-                <RowLabel>{t('cart:shippingAddress')}</RowLabel>
-                <AddressSelect disabled={true} address={shippingAddress} />
-              </ShipingAddressWrap>
-            )}
-          </PaymentMidSection>
-        </Container>
+        <Formik
+          initialValues={{
+            cardNumber: '',
+            expiryDate: '',
+            cvv: '',
+            name,
+            email,
+          }}
+          validationSchema={validator.payment}
+        >
+          {({ handleChange, values }) => (
+            <Container>
+              <PaymentHeaderWrap>
+                <PaymentTitle>{t('cart:paymentDetails')}</PaymentTitle>
+                <PaymentSubtitle>
+                  {t('cart:completePaymentSubtitle')}
+                </PaymentSubtitle>
+              </PaymentHeaderWrap>
+              <PaymentMidSection>
+                <ProfileRow
+                  editable
+                  text={name}
+                  label={t('profile:fullName')}
+                  placeholder={t('profile:namePlaceholder')}
+                />
+                <ProfileRow
+                  editable
+                  text={email}
+                  label={t('common:email')}
+                  placeholder={t('profile:emailPlaceholder')}
+                />
+                <RowLabel>{t('cart:cardDetails')}</RowLabel>
+                <CardInputWrap>
+                  <CardInput
+                    flex={0.8}
+                    onChangeText={handleChange('cardNumber')}
+                    placeholder={t('cart:cardDetailsPlaceholder')}
+                    maxLength={16}
+                    value={values.cardNumber}
+                  />
+                  <CardInput
+                    value={values.expiryDate}
+                    onChangeText={handleChange('expiryDate')}
+                    flex={0.3}
+                    maxLength={5}
+                    placeholder={'MM / YY'}
+                  />
+                  <CardInput
+                    value={values.cvv}
+                    onChangeText={handleChange('cvv')}
+                    flex={0.2}
+                    maxLength={3}
+                    placeholder={'CVV'}
+                  />
+                </CardInputWrap>
+                {shippingAddress && (
+                  <ShipingAddressWrap>
+                    <RowLabel>{t('cart:shippingAddress')}</RowLabel>
+                    <AddressSelect disabled={true} address={shippingAddress} />
+                  </ShipingAddressWrap>
+                )}
+              </PaymentMidSection>
+            </Container>
+          )}
+        </Formik>
       )}
     </Container>
   );

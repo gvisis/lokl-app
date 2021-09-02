@@ -10,7 +10,7 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute } from '@react-navigation/core';
 
@@ -18,7 +18,11 @@ import { ProductAddAction, ProductScreenProps } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
 import { CompanyProduct } from '../../state/app/AppInterfaces';
-import { calcRatingAverage, getFormatedPrice } from '../../utils/functions';
+import {
+  calcRatingAverage,
+  getCategoryTitleFromId,
+  getFormatedPrice,
+} from '../../utils/functions';
 import { CART_ACTION, ERROR_TYPE } from '../../utils/variables';
 import { api } from '../../api';
 import { ItemHeader } from '../../components/headers/ItemHeader';
@@ -35,7 +39,7 @@ export const ProductView: React.FC<ProductViewProps> = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { params } = useRoute();
-
+  const categories = useSelector(state => state.app.categories);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['0%', '40%'], []);
 
@@ -72,7 +76,7 @@ export const ProductView: React.FC<ProductViewProps> = () => {
   );
 
   useEffect(() => {
-    setProductTotalPrice(item.price * selectedQuantity);
+    setProductTotalPrice(parseFloat(item.price) * selectedQuantity);
   }, [selectedQuantity]);
 
   useEffect(() => {
@@ -84,11 +88,15 @@ export const ProductView: React.FC<ProductViewProps> = () => {
     const newRatingObject = { id: currentUserId, rating: userRating };
     dispatch(actions.app.setProductRating(item, newRatingObject));
   };
-
+  const categoryTitle = getCategoryTitleFromId(categories, item.category);
   const ratingCustomImage = require('../../assets/images/ratingfull.png');
   return (
     <Container>
-      <ItemHeader productOwnerTitle={productOwnerTitle} item={item} />
+      <ItemHeader
+        productOwnerTitle={productOwnerTitle}
+        categoryTitle={categoryTitle}
+        item={item}
+      />
       <ItemMidSection>
         <ScrollView showsVerticalScrollIndicator={false}>
           <ItemDescription>{item.description}</ItemDescription>

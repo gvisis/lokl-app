@@ -1,7 +1,7 @@
 import { call, put, take } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import { EventChannel, eventChannel } from 'redux-saga';
-import i18next from 'i18next';
+import i18n from 'i18next';
 
 import { actions } from '../actions';
 import { ERROR_TYPE } from '../../utils/variables';
@@ -49,7 +49,7 @@ export function* companiesWatcher() {
       actions.ui.setStatus(
         ERROR_TYPE.ERROR,
         true,
-        i18next.t('errors:watcher/companies'),
+        i18n.t('errors:watcher/companies'),
       ),
     );
   }

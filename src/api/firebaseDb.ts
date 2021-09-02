@@ -10,6 +10,7 @@ import {
 } from '../state/app/AppInterfaces';
 import { api } from '.';
 import { UserProps } from '../state/user/UserInterfaces';
+import storeRegistry from '../utils/redux/storeRegistry';
 
 const fetchAllAds = async (): Promise<AdsProps> => {
   const currentUser = api.getUserInfo().uid;
@@ -60,7 +61,8 @@ const updateProduct = async (productData: CompanyProduct) => {
   );
   await productRef.set([productData]);
 };
-const uploadImageToStorage = async (
+
+const uploadAdImagesToStorage = async (
   newAdKey: string,
   imagesToUpload: ImagesProps[],
 ) => {
@@ -79,27 +81,13 @@ const uploadImageToStorage = async (
       const adDbRefKey = adDbRef.push().key;
 
       // Upload image to firebase storage
-      const storagePut = storageRef.putFile(tempImage.url);
+      await storageRef.putFile(tempImage.url);
 
-      // make it pretty later, with loading state
-      // Catch error and if success, update ad object with link to images.
-      storagePut.on(
-        'state_changed',
-        taskSnapshot => {
-          console.log(
-            `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-          );
-        },
-        err => {
-          console.log('Upload error:', err);
-        },
-        () => {
-          storagePut.snapshot.ref.getDownloadURL().then(downloadURL => {
-            // Update ad object with link to images
-            adDbRef.child(adDbRefKey).set(downloadURL);
-          });
-        },
-      );
+      // Get download Url for the image
+      const downloadUrl = await storageRef.getDownloadURL();
+
+      // Update the adDbRef with the image url
+      await adDbRef.child(adDbRefKey).set(downloadUrl);
     });
   }
 };
@@ -113,5 +101,5 @@ export const firebaseDb = {
   fetchDefaultImage,
   fetchCategories,
   fetchAdOwnerDetails,
-  uploadImageToStorage,
+  uploadAdImagesToStorage,
 };

@@ -8,21 +8,23 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { themes } from '../styles';
 import { GlobalErrorSuccess, ScreenLoader } from '../components';
 import { AuthNavigation, TabNavigation } from '.';
 import { actions } from '../state/actions';
 import { RootStackParamList } from '../types/general';
 import { ROUTES } from './RouteNames';
+import { THEME } from '../utils/variables';
 
 const Navigator: React.FC = () => {
   // Set an initializing state whilst Firebase connects
   const loading = useSelector(state => state.ui.onSync.user);
   const { userInfo } = useSelector(state => state.user);
-  const { theme } = useSelector(state => state.ui);
+  const { appTheme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
 
   const Stack = createStackNavigator<RootStackParamList>();
-
+  const theme = appTheme === THEME.LIGHT ? themes.light : themes.dark;
   const onAuthStateChanged = (user: FirebaseAuthTypes.User): void => {
     if (user) {
       database()

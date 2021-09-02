@@ -8,9 +8,11 @@ import { getFormatedPrice } from '../../utils/functions';
 export const ItemHeader = ({
   item,
   productOwnerTitle,
+  categoryTitle,
 }: {
   item: CompanyProduct;
   productOwnerTitle: string;
+  categoryTitle: string;
 }) => (
   <ItemHeaderWrap>
     <TitleWrap>
@@ -24,7 +26,7 @@ export const ItemHeader = ({
     </TitleWrap>
     <BottomHeader>
       <ProductTitle>{item.title}</ProductTitle>
-      <ProductCat>{item.category}</ProductCat>
+      <ProductCat>{categoryTitle}</ProductCat>
       <Price>{getFormatedPrice(item.price)}</Price>
     </BottomHeader>
   </ItemHeaderWrap>
@@ -73,7 +75,6 @@ const CompanyLogo = styled.Image`
 `;
 const BottomHeader = styled.View`
   flex: 0.2;
-  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -88,15 +89,10 @@ const ProductTitle = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.l}px;
 `;
 const ProductCat = styled.Text`
-  color: ${({ theme }) => theme.colors.red1};
+  color: ${({ theme }) => theme.colors.secondary2};
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
-  padding: 0 10px;
-  background: ${({ theme }) => theme.colors.red};
-  border-radius: ${({ theme }) => theme.border.radius5}px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.black};
-  elevation: 3;
+  padding: 0 5px;
 `;
 const Price = styled.Text`
   margin-left: 5px;

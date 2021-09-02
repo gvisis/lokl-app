@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/core';
 
 import { SearchModal } from '../modals/SearchModal';
+import { ROUTES } from '../../routes/RouteNames';
 
 interface HeaderProps {
   title: string;
@@ -11,11 +13,15 @@ interface HeaderProps {
 
 export const HomeHeader: React.FC<HeaderProps> = ({ title }) => {
   const cartQty = useSelector(state => state.cart.quantity);
+  const navigation = useNavigation();
+  const handleNavToCart = () => {
+    navigation.push(ROUTES.TabNav, { screen: ROUTES.CartTab });
+  };
 
   return (
     <HeaderContainer>
       <TitleText size={40}>{title}</TitleText>
-      <IconWrap>
+      <IconWrap onPress={handleNavToCart}>
         {cartQty !== 0 && <BasketQty>{cartQty}</BasketQty>}
         <Basket name={cartQty === 0 ? 'basket-outline' : 'basket'} size={30} />
       </IconWrap>

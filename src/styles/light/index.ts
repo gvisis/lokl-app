@@ -28,6 +28,7 @@ export const lightTheme = {
     red1: '#FFE8E8',
     error: '#edfe00',
     transparent: 'transparent',
+    textPrimary: '#1D203A',
   },
   fonts: {
     size: {

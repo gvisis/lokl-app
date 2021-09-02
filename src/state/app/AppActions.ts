@@ -17,11 +17,6 @@ export const setAllAds = (ads: AdsProps) => ({
   ads,
 });
 
-export const uploadAdImages = (adId: string, images: UploadImageProps[]) => ({
-  type: constants.app.UPLOAD_AD_IMAGES,
-  adId,
-  images,
-});
 export const pickImage = () => ({
   type: constants.app.PICK_IMAGE,
 });
@@ -73,5 +68,4 @@ export const appActions = {
   setLanguage,
   fetchCategories,
   pickImage,
-  uploadAdImages,
 };
