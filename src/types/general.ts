@@ -25,6 +25,7 @@ export type ItemProps = AdsProps | CompanyProduct;
 export type ThemeTypes = THEME.LIGHT | THEME.DARK;
 export type LanguageTypes = LANG.EN | LANG.LT;
 export type SetOnSync = ON_SYNC.BUTTON | ON_SYNC.USER | ON_SYNC.APP;
+export type ApiProps<T> = (email: string, password?: string) => Promise<T>;
 export type CartNaviHandleProps = {
   currentScreen:
     | ROUTES.CartItemsView
@@ -37,10 +38,8 @@ export type RootStackParamList = {
   [ROUTES.HomeTab]: undefined;
   [ROUTES.TabNav]: undefined;
   [ROUTES.AuthNav]: undefined;
-  [ROUTES.Error]: undefined;
-  [ROUTES.Product]: undefined;
+  [ROUTES.Product]: ProductViewProps | undefined;
   [ROUTES.CartTab]: undefined;
-  [ROUTES.Cart]: undefined;
   [ROUTES.CartItemsView]: undefined;
   [ROUTES.CartAddressView]: undefined;
   [ROUTES.CartPaymentView]: undefined;
@@ -49,11 +48,10 @@ export type RootStackParamList = {
   [ROUTES.SingleCompany]: CompanyItemProps | undefined;
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
-  [ROUTES.AddAd]: undefined;
+  [ROUTES.AddAd]: AddAdViewProps | undefined;
   [ROUTES.SingleAdView]: undefined;
   [ROUTES.Address]: undefined;
   [ROUTES.AddAddress]: undefined;
-  [ROUTES.EditAddress]: undefined;
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;
@@ -65,6 +63,13 @@ export type RootStackParamList = {
 };
 
 // Interfaces
+interface ProductViewProps extends ProductScreenProps {
+  item?: CompanyProduct;
+}
+interface AddAdViewProps {
+  onPress?: (event: GestureResponderEvent) => void;
+}
+
 export interface PayloadAction<T> {
   payload: T;
   type: string;

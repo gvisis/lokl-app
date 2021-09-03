@@ -25,8 +25,9 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const route = useRoute();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { stage, finishPurchase } = useSelector(state => state.cart);
-  const { shippingAddress } = useSelector(state => state.cart);
+  const { stage, finishPurchase, shippingAddress } = useSelector(
+    state => state.cart,
+  );
 
   const handleNavigation = useCallback(() => {
     if (stage === ROUTES.CartItemsView) {

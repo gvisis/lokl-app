@@ -9,7 +9,7 @@ interface CustomInputProps {
   onChangeText?: (value: string) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   error?: string;
-  touched: boolean;
+  touched?: boolean;
   iconName?: string;
   iconSize?: number;
   iconColor?: string;
@@ -21,7 +21,6 @@ export const CustomInput: React.FC<CustomInputProps> = ({
   value,
   onChangeText,
   error,
-  touched,
   iconName,
   iconSize,
   iconColor,
@@ -30,7 +29,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
   const theme = useTheme();
   return (
     <InputContainer>
-      {error && touched && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <InputWrapper>
         {iconName && (
           <IconWrapper>

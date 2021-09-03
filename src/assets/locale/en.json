@@ -3,7 +3,7 @@
     "title": "Find your produce",
     "home": "Home",
     "rowProduce": "Categories",
-    "rowCompany": "Companies",
+    "rowCompany": "Sellers",
     "rowProducts": "Products",
     "rowAds": "Ads",
     "searchBar": "Search for...",
@@ -63,7 +63,7 @@
   },
   "profile": {
     "title": "Profile",
-    "namePlaceholder": "Your full name",
+    "namePlaceholder": "Full name",
     "emailPlaceholder": "Enter your email",
     "addressPlaceholder": "(include house/flat number)",
     "usernamePlaceholder": "Choose your username",

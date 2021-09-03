@@ -16,7 +16,6 @@ export * from './other/addressSelect/AddressSelect';
 export * from './other/produce/ProduceItem';
 export * from './headers/HomeHeader';
 export * from './company/SingleCompany';
-export * from './other/PassResetForm';
 export * from './other/ScreenLoader';
 export * from './errors/GlobalErrorSuccess';
 export * from './other/CategoryPicker';

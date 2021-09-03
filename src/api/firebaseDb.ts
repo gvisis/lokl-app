@@ -10,7 +10,6 @@ import {
 } from '../state/app/AppInterfaces';
 import { api } from '.';
 import { UserProps } from '../state/user/UserInterfaces';
-import storeRegistry from '../utils/redux/storeRegistry';
 
 const fetchAllAds = async (): Promise<AdsProps> => {
   const currentUser = api.getUserInfo().uid;

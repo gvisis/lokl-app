@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { GestureResponderEvent, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -25,10 +25,7 @@ import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
 import { ERROR_TYPE } from '../../utils/variables';
 
-interface AddAdViewProps {
-  onPress?: (event: GestureResponderEvent) => void;
-}
-export const AddAdView: React.FC<AddAdViewProps> = () => {
+export const AddAdView: React.FC = () => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState<string>('date');
   const [tempImages, setTempImages] = useState([]);
@@ -93,7 +90,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = (event, selectedDate: Date) => {
+  const onChange = (_event: Event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
     setDate(currentDate);
@@ -106,7 +103,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
 
   return (
     <Container>
-      {onSync.app && <ScreenLoader size={50} color={theme.colors.primary} />}
       <Formik
         initialValues={{
           price: '',
@@ -187,7 +183,6 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
                   minimumDate={new Date()}
                   maximumDate={new Date(2030, 11, 31)}
                   is24Hour={true}
-                  format="DD-MM-YYYY"
                   display="calendar"
                   onChange={onChange}
                 />
@@ -202,6 +197,7 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           </AdContainer>
         )}
       </Formik>
+      {onSync.app && <ScreenLoader size={50} color={theme.colors.primary} />}
     </Container>
   );
 };
@@ -291,4 +287,3 @@ const AddImageText = styled.Text`
   color: ${({ theme }) => theme.colors.lightGrey};
   text-align: center;
 `;
-// IMAGE PICKER END

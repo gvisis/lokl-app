@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/core';
 
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
@@ -10,14 +11,13 @@ import { AuthContainer } from '.';
 import { CustomBtn, CustomInput } from '../../components';
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
-import { ComponentNavProps } from '../../types/general';
+import { UserAuthCredentials } from '../../state/user/UserInterfaces';
 
-export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
-  navigation,
-}) => {
+export const RegisterView = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigateToLogin = useFunction(navigation.navigate, ROUTES.Login);
+  const { navigate } = useNavigation();
+  const navigateToLogin = useFunction(navigate, ROUTES.Login);
   return (
     <AuthContainer headerTitle={t('signup:title')}>
       <Formik
@@ -26,23 +26,18 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
           password: '',
           confirmPassword: '',
         }}
+        validateOnChange={false}
+        validateOnBlur={false}
         validationSchema={validator.signup}
-        onSubmit={({ email, password }) =>
-          dispatch(actions.user.signup(email, password))
-        }>
-        {({
-          errors,
-          values,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
+        onSubmit={({ email, password }: UserAuthCredentials) => {
+          dispatch(actions.user.signup(email, password));
+        }}
+      >
+        {({ errors, values, touched, handleChange, handleSubmit }) => (
           <Wrapper>
             <CustomInput
               placeholder={t('common:enterEmail')}
               onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
               value={values.email}
               error={errors.email}
               touched={touched.email}
@@ -52,7 +47,6 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
               secureTextEntry
               placeholder={t('common:enterPass')}
               onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
               value={values.password}
               error={errors.password}
               touched={touched.password}
@@ -62,7 +56,6 @@ export const RegisterView: React.FC<ComponentNavProps<ROUTES.Signup>> = ({
               secureTextEntry
               placeholder={t('common:confirmPass')}
               onChangeText={handleChange('confirmPassword')}
-              onBlur={handleBlur('confirmPassword')}
               value={values.confirmPassword}
               error={errors.confirmPassword}
               touched={touched.confirmPassword}

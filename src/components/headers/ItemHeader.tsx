@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -20,7 +19,6 @@ export const ItemHeader = ({
       {item && (
         <OwnerWrap>
           <OwnerTitle>{productOwnerTitle}</OwnerTitle>
-          <CompanyLogo source={{ uri: item.image }} />
         </OwnerWrap>
       )}
     </TitleWrap>
@@ -63,16 +61,6 @@ const OwnerTitle = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.xl}px;
 `;
 
-const CompanyLogo = styled.Image`
-  position: absolute;
-  right: -30px;
-  bottom: 0;
-  height: 84px;
-  width: 84px;
-  border-width: 4px;
-  border-color: ${({ theme }) => theme.colors.tertiary};
-  border-radius: ${({ theme }) => theme.border.radius50}px;
-`;
 const BottomHeader = styled.View`
   flex: 0.2;
   flex-direction: row;

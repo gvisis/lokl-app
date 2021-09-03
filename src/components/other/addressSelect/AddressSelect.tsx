@@ -132,7 +132,7 @@ const RowLine = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.s}px;
   margin-left: 5px;
   font-family: ${({ theme }) => theme.fonts.family.nexaLight};
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 const WrapRight = styled.View`

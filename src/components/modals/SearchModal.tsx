@@ -36,7 +36,7 @@ export const SearchModal: React.FC = () => {
       );
       setSearchResults(filteredResults);
     }, [searchValue]),
-    [searchValue],
+    [allProducts, allCompanies, allAppAds, searchValue],
   );
 
   const handleSearchResultNavigate = useCallback(
@@ -54,11 +54,7 @@ export const SearchModal: React.FC = () => {
           productOwnerTitle,
         });
       } else {
-        // TODO: navigate to app ad page
-        navigate(ROUTES.AdsTab, {
-          screen: ROUTES.SingleAdView,
-          params: { item },
-        });
+        navigate(ROUTES.SingleAdView, { item });
       }
     },
     [navigate, focused],

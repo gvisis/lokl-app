@@ -28,7 +28,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       )}
       <ItemFooter>
         <ItemCardTitle numberOfLines={1} ellipsizeMode="tail">
-          {item.title}sss
+          {item.title}
         </ItemCardTitle>
         <ItemPrice>{getFormatedPrice(item.price)}</ItemPrice>
       </ItemFooter>

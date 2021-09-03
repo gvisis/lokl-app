@@ -69,7 +69,7 @@ const RowText = styled.TextInput<ProfileTextProps>`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme, textSize }) =>
     textSize ? textSize : theme.fonts.size.l}px;
-  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
   letter-spacing: 1px;
   flex: 0.8;
 `;

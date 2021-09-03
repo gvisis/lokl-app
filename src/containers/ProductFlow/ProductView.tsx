@@ -13,25 +13,21 @@ import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute } from '@react-navigation/core';
+import * as _ from 'lodash';
 
 import { ProductAddAction, ProductScreenProps } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
 import {
   calcRatingAverage,
   getCategoryTitleFromId,
   getFormatedPrice,
 } from '../../utils/functions';
-import { CART_ACTION, ERROR_TYPE } from '../../utils/variables';
+import { CART_ACTION, ERROR_TYPE, RATING_ICON } from '../../utils/variables';
 import { api } from '../../api';
 import { ItemHeader } from '../../components/headers/ItemHeader';
 
-interface ProductViewProps extends ProductScreenProps {
-  item?: CompanyProduct;
-}
-
-export const ProductView: React.FC<ProductViewProps> = () => {
+export const ProductView: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
@@ -76,7 +72,7 @@ export const ProductView: React.FC<ProductViewProps> = () => {
   );
 
   useEffect(() => {
-    setProductTotalPrice(parseFloat(item.price) * selectedQuantity);
+    setProductTotalPrice(_.multiply(parseFloat(item.price), selectedQuantity));
   }, [selectedQuantity]);
 
   useEffect(() => {
@@ -89,7 +85,6 @@ export const ProductView: React.FC<ProductViewProps> = () => {
     dispatch(actions.app.setProductRating(item, newRatingObject));
   };
   const categoryTitle = getCategoryTitleFromId(categories, item.category);
-  const ratingCustomImage = require('../../assets/images/ratingfull.png');
   return (
     <Container>
       <ItemHeader
@@ -110,7 +105,7 @@ export const ProductView: React.FC<ProductViewProps> = () => {
           defaultRating={calcRatingAverage(item.ratings)}
           onFinishRating={handleRating}
           size={25}
-          starImage={ratingCustomImage}
+          starImage={RATING_ICON}
         />
       </ItemFooter>
       <AddWrap>

@@ -1,7 +1,6 @@
 export enum ROUTES {
   // Misc
   Home = 'home',
-  Error = 'error',
   TabNav = 'tabNav',
   AuthNav = 'authNav',
   SingleCategory = 'singleCategory',

@@ -55,6 +55,6 @@ export const AdsView: React.FC = () => {
 };
 
 const AdContainer = styled.View`
-  flex: 1;
+  flex: 0.7;
   padding-bottom: 25px;
 `;

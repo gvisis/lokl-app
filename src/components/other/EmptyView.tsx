@@ -20,7 +20,7 @@ const NoItemsText = styled.Text`
   text-align: center;
   padding: 30px;
   width: 80%;
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.textPrimary};
   border-radius: ${({ theme }) => theme.border.radius25}px;
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.secondary};

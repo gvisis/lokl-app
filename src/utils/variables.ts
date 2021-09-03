@@ -6,6 +6,12 @@ export const ADDRESS_ICONS = {
   SIZE_SM: 20,
   SIZE_M: 35,
 };
+
+export const RATING_ICON = require('../assets/images/ratingfull.png');
+
+export const DEFAULT_IMG =
+  'https://firebasestorage.googleapis.com/v0/b/kilo-first-app.appspot.com/o/images%2Fads%2Fdefault.png?alt=media&token=212cf4ef-a40c-4bbc-9d78-b7d620a065ac';
+
 export const COUNTRY = {
   LITHUANIA: 'Lithuania',
 };

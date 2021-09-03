@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import styled, { css, useTheme } from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import { useTranslation } from 'react-i18next';
@@ -15,16 +15,21 @@ import { useFunction } from '../../utils/hooks';
 import { firebaseDb } from '../../api/firebaseDb';
 import { AdsProps } from '../../state/app/AppInterfaces';
 
+interface SingleAdParams {
+  params?: {
+    item?: AdsProps;
+  };
+}
+
 export const SingleAdView: React.FC = () => {
   const [messageSent, setMessageSent] = useState(false);
   const [adOwner, setAdOwner] = useState(null);
-  const { params } = useRoute();
+  const { params }: SingleAdParams = useRoute();
   const { t } = useTranslation();
 
   const navigation = useNavigation();
   const theme = useTheme();
 
-  //TODO: bad navigation logic, needs to be fixed, as it is not working  properly from diferent navigators
   const { item } = params;
 
   const images = item.images && getImagesFromObject(item);
@@ -66,7 +71,7 @@ export const SingleAdView: React.FC = () => {
           </AdHeader>
           <AdMidWrap showsVerticalScrollIndicator={false}>
             <TitleWrap>
-              <AdStyledText>{item.title}</AdStyledText>
+              <AdStyledText ellipsizeMode="tail">{item.title}</AdStyledText>
               <DateAdded>
                 {t('ads:added')} {getDateFromString(item.dateAdded)}
               </DateAdded>
@@ -157,9 +162,10 @@ const AdMidWrap = styled.ScrollView.attrs({ flex: 1 })`
 
 const AdStyledText = styled.Text`
   color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fonts.size.xxl}px;
+  font-size: ${({ theme }) => theme.fonts.size.xl}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 0.5px;
+  flex: 1;
 `;
 
 const TitleWrap = styled.View`
@@ -196,7 +202,8 @@ const AdDescription = styled.Text`
 const AdFooterWrap = styled.View`
   flex: 1;
   margin: 0 10px;
-  ${padding10}${borderStyle};
+  ${padding10}
+  ${borderStyle}
 `;
 
 const MessageToOwner = styled.View`
@@ -234,7 +241,7 @@ const SentMessageBox = styled.Text`
 // SWIPER
 const AdImage = styled.Image`
   flex: 1;
-  resize-mode: cover;
+  resize-mode: contain;
 `;
 
 const ActiveDot = styled.View`

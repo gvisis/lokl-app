@@ -112,8 +112,8 @@ const paymentValidatorSchema = Yup.object().shape({
     .min(5, 'Minimum 5 digits')
     .max(5, 'Maximum 5 digits')
     .trim(),
-  cvv: Yup.string()
-    .required('CVV required')
+  cvc: Yup.string()
+    .required('CVC required')
     .min(3, 'Minimum 3 digits')
     .max(3, 'Maximum 3 digits')
     .trim(),

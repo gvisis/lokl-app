@@ -1,23 +1,19 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { ROUTES } from '../../routes/RouteNames';
-import { RootStackParamList } from '../../types/general';
 import { Container } from '..';
 import { CompanyProps } from '../../state/app/AppInterfaces';
 import { api } from '../../api';
 import { actions } from '../../state/actions';
 import { calcRatingAverage } from '../../utils/functions';
+import { RATING_ICON } from '../../utils/variables';
 
 interface SingleCompanyProps {
   companyItem: CompanyProps;
-  navigation?: StackNavigationProp<RootStackParamList, ROUTES.SingleCompany>;
-  route?: RouteProp<RootStackParamList, ROUTES.SingleCompany>;
   children?: React.ReactNode;
   showRating?: boolean;
 }
@@ -34,7 +30,6 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
   useEffect(() => {
     navigation.setOptions({ title: companyItem.title });
   }, [companyItem]);
-  const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleRating = (userRating: number) => {
     const currentUserId = api.getUserInfo().uid;
@@ -60,7 +55,7 @@ export const SingleCompany: React.FC<SingleCompanyProps> = ({
               defaultRating={calcRatingAverage(companyItem.ratings)}
               onFinishRating={handleRating}
               size={25}
-              starImage={ratingCustomImage}
+              starImage={RATING_ICON}
             />
           </BottomHeader>
         )}

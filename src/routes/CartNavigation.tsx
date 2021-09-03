@@ -17,6 +17,8 @@ export const CartNavigation: React.FC = () => {
   const { finishPurchase, stage, quantity, total } = useSelector(
     state => state.cart,
   );
+  console.log('quantity cart nav', quantity);
+
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -40,11 +42,7 @@ export const CartNavigation: React.FC = () => {
 
   return (
     <Container>
-      <TopBar.Navigator
-        screenOptions={{
-          swipeEnabled: false,
-        }}
-      >
+      <TopBar.Navigator>
         <TopBar.Screen
           name={ROUTES.CartItemsView}
           component={CartItemsView}
@@ -61,7 +59,7 @@ export const CartNavigation: React.FC = () => {
           options={{ tabBarLabel: t('cart:payment') }}
         />
       </TopBar.Navigator>
-      <CartFooter quantity={quantity} total={total} />
+      <CartFooter quantity={quantity} total={total.toString()} />
     </Container>
   );
 };

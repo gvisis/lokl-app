@@ -84,11 +84,11 @@ export const getCategoryItemsFromIds = (
     .flat()
     .filter(product => product.category === categoryId);
 
-export const getFormatedPrice = (price: string) =>
+export const getFormatedPrice = (price: number) =>
   new Intl.NumberFormat('lt-LT', {
     style: 'currency',
     currency: 'EUR',
-  }).format(parseFloat(price));
+  }).format(price);
 
 export const getImagesFromObject = (item: ImagesFromObject) => {
   const imgArray = [];
@@ -106,8 +106,14 @@ export const getProductOwnerTitle = (
     .filter(company => company.id === item.owner)
     .map(company => company.title)[0];
 
-export const calcRatingAverage = (ratings: RatingData[]) =>
-  ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length;
+export const calcRatingAverage = (ratings: RatingData[]) => {
+  if (ratings && ratings.length !== 0) {
+    return (
+      ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length
+    );
+  }
+  return 0;
+};
 
 export type CheckForRatings = CompanyProduct | CompanyProps;
 
@@ -154,8 +160,6 @@ export const getHeaderTitle = (routeName: string) => {
       return i18n.t('profile:settings');
     case ROUTES.Home:
       return i18n.t('home:home');
-    case ROUTES.Cart:
-      return i18n.t('cart:shoppingCart');
     case ROUTES.Address:
       return i18n.t('profile:addresses');
     case ROUTES.AddAddress:

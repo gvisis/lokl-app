@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'styled-components/native';
 import ToggleSwitch from 'rn-toggle-switch';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,8 +23,7 @@ export const ToggleSwitcher: React.FC<ToggleSwitcherProps> = ({ toggle }) => {
           appTheme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT,
         ),
       );
-    }
-    if (toggle) {
+    } else {
       locale.changeLanguage(locale.language === LANG.EN ? LANG.LT : LANG.EN);
     }
     setSwitchBool(!switcherBool);

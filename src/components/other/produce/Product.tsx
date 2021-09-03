@@ -15,7 +15,7 @@ import {
   getProductOwnerTitle,
 } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
-import { CART_ACTION } from '../../../utils/variables';
+import { CART_ACTION, RATING_ICON } from '../../../utils/variables';
 import { ProductScreenProps } from '../../../types/general';
 
 export const Product: React.FC<ProductScreenProps> = ({
@@ -27,7 +27,6 @@ export const Product: React.FC<ProductScreenProps> = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
-  const ratingCustomImage = require('../../../assets/images/ratingfull.png');
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 
@@ -81,7 +80,7 @@ export const Product: React.FC<ProductScreenProps> = ({
               size={15}
               selectedColor={theme.colors.red}
               unSelectedColor={theme.colors.red1}
-              starImage={ratingCustomImage}
+              starImage={RATING_ICON}
             />
           </ProductRating>
         </ProductBottom>
