@@ -30,35 +30,26 @@ export const LoginView: React.FC = () => {
   return (
     <AuthContainer headerTitle={t('login:title')}>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: 'Te@te.com', password: 'tete123' }}
+        validateOnChange={false}
+        validateOnBlur={false}
         validationSchema={validator.login}
         onSubmit={({ email, password }) => handleLoginSubmit(email, password)}
       >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          errors,
-          values,
-          touched,
-        }) => (
+        {({ handleChange, handleSubmit, errors, values }) => (
           <>
             <CustomInput
               placeholder={t('common:email')}
               onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
               value={values.email}
               error={errors.email}
-              touched={touched.email}
               iconName={'account'}
             />
             <CustomInput
               placeholder={t('login:password')}
               onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
               value={values.password}
               error={errors.password}
-              touched={touched.password}
               iconName={'key-variant'}
               secureTextEntry
             />
@@ -94,7 +85,7 @@ const LoginFooter = styled.View`
 `;
 
 const StyledText = styled.Text`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   text-decoration: underline;
@@ -103,7 +94,7 @@ const StyledText = styled.Text`
 `;
 
 const StyledTextSecondary = styled(StyledText)`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   text-decoration: none;
   margin: 10px 0;
 `;

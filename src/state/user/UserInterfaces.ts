@@ -31,7 +31,11 @@ export interface EditAddressProps {
   addressId: string;
   editedAddress: UserAddress;
 }
-
+export interface UserAuthCredentials {
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
 export interface CreateNewAdProps {
   images: UploadImageProps[] | ImagesProps[];
   newAd?: AdsProps;

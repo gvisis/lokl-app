@@ -28,7 +28,6 @@ function* handleCartActions({
           ? selectedQuantity + product.amount
           : ++product.amount,
       };
-
       tempCart = [...cart, updatedAmountProduct];
       yield* put(actions.cart.updateCart(tempCart));
     } else {
@@ -60,8 +59,6 @@ function* handleCartActions({
         i18n.t('error:cart/cartUpdating'),
       ),
     );
-  } finally {
-    yield* put(actions.cart.getCartTotals());
   }
 }
 function* handleRemoveFromCart({ itemToRemove }: CartRemove) {
@@ -79,8 +76,6 @@ function* handleRemoveFromCart({ itemToRemove }: CartRemove) {
         i18n.t('error:cart/removeFromCart'),
       ),
     );
-  } finally {
-    yield* put(actions.cart.getCartTotals());
   }
 }
 

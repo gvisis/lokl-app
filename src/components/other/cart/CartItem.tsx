@@ -29,14 +29,12 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
     actions.cart.checkCartActions(CART_ACTION.ADD, item),
   );
 
-  const handleDecreaseAmount = useCallback(
-    (item: CompanyProduct) => {
-      item.amount === 1
-        ? shouldRemove.setValue(1)
-        : dispatch(actions.cart.checkCartActions(CART_ACTION.REMOVE, item));
-    },
-    [item],
-  );
+  const handleDecreaseAmount = useCallback(() => {
+    item.amount === 1
+      ? shouldRemove.setValue(1)
+      : dispatch(actions.cart.checkCartActions(CART_ACTION.REMOVE, item));
+  }, [item]);
+
   return (
     <CartItemWrap>
       <CartItemLeft>
@@ -45,14 +43,14 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
       <CartItemMid>
         <ItemName>{title}</ItemName>
         <ItemSeller>{getProductOwnerTitle(allCompanies, item)}</ItemSeller>
-        <ItemPrice>{getFormatedPrice(price)}</ItemPrice>
+        <ItemPrice>{getFormatedPrice(parseFloat(price))}</ItemPrice>
       </CartItemMid>
       <CartItemRight>
         <TouchableOpacity onPress={handleIncreaseAmount}>
           <IncDecButton name="plus-circle" size={25} />
         </TouchableOpacity>
         <QuantityValue>{amount}</QuantityValue>
-        <TouchableOpacity onPress={() => handleDecreaseAmount(item)}>
+        <TouchableOpacity onPress={handleDecreaseAmount}>
           <IncDecButton name="minus-circle" size={25} />
         </TouchableOpacity>
       </CartItemRight>

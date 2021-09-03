@@ -1,4 +1,11 @@
-import { call, delay, put, select, takeEvery } from 'typed-redux-saga';
+import {
+  call,
+  delay,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -11,14 +18,10 @@ import {
   CreateNewAdProps,
   EditAddressProps,
   UserAddress,
+  UserAuthCredentials,
   UserProps,
 } from './UserInterfaces';
 import { ERROR_TYPE, ON_SYNC } from '../../utils/variables';
-
-interface UserAuthCredentials {
-  email: string;
-  password: string;
-}
 
 function* handleLogin({ email, password }: UserAuthCredentials) {
   try {

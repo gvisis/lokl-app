@@ -4,7 +4,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -25,7 +25,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const route = useRoute();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { stage, finishPurchase, shippingAddress } = useSelector(
+  const { stage, cart, finishPurchase, shippingAddress } = useSelector(
     state => state.cart,
   );
 
@@ -40,6 +40,10 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
       dispatch(actions.cart.cartFinishPurchase(true));
     }
   }, [stage]);
+
+  useEffect(() => {
+    dispatch(actions.cart.getCartTotals());
+  }, [cart, dispatch]);
 
   useFocusEffect(
     useCallback(() => {

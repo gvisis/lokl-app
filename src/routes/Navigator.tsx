@@ -10,7 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { themes } from '../styles';
 import { GlobalErrorSuccess, ScreenLoader } from '../components';
-import { AuthNavigation, TabNavigation } from '.';
+import { AuthNavigation, HomeNavigation } from '.';
 import { actions } from '../state/actions';
 import { RootStackParamList } from '../types/general';
 import { ROUTES } from './RouteNames';
@@ -25,6 +25,7 @@ const Navigator: React.FC = () => {
 
   const Stack = createStackNavigator<RootStackParamList>();
   const theme = appTheme === THEME.LIGHT ? themes.light : themes.dark;
+
   const onAuthStateChanged = (user: FirebaseAuthTypes.User): void => {
     if (user) {
       database()
@@ -53,7 +54,7 @@ const Navigator: React.FC = () => {
         <StatusBar backgroundColor={theme.colors.secondary} />
         <Stack.Navigator headerMode="none">
           {userInfo ? (
-            <Stack.Screen name={ROUTES.TabNav} component={TabNavigation} />
+            <Stack.Screen name={ROUTES.Home} component={HomeNavigation} />
           ) : (
             <Stack.Screen name={ROUTES.AuthNav} component={AuthNavigation} />
           )}

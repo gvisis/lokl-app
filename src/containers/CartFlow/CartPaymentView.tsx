@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
@@ -11,17 +11,11 @@ import {
   EmptyView,
   ProfileRow,
 } from '../../components';
-import { actions } from '../../state/actions';
 
 export const CartPaymentView: React.FC = () => {
   const { cart, shippingAddress } = useSelector(state => state.cart);
   const { name, email } = useSelector(state => state.user.userInfo);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    dispatch(actions.cart.getCartTotals());
-  }, [cart, dispatch]);
 
   return (
     <Container>
@@ -32,7 +26,7 @@ export const CartPaymentView: React.FC = () => {
           initialValues={{
             cardNumber: '',
             expiryDate: '',
-            cvv: '',
+            cvc: '',
             name,
             email,
           }}
@@ -76,11 +70,11 @@ export const CartPaymentView: React.FC = () => {
                     placeholder={'MM / YY'}
                   />
                   <CardInput
-                    value={values.cvv}
-                    onChangeText={handleChange('cvv')}
+                    value={values.cvc}
+                    onChangeText={handleChange('cvc')}
                     flex={0.2}
                     maxLength={3}
-                    placeholder={'CVV'}
+                    placeholder={'cvc'}
                   />
                 </CardInputWrap>
                 {shippingAddress && (

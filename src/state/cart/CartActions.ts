@@ -48,6 +48,7 @@ const removeFromCart = (itemToRemove: CompanyProduct) => ({
   type: constants.cart.REMOVE_FROM_CART,
   itemToRemove,
 });
+
 export const setShippingAddress = (shippingAddress: UserAddress) => ({
   type: constants.cart.SET_SHIPPING_ADDRESS,
   shippingAddress,
