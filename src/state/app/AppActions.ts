@@ -4,7 +4,6 @@ import {
   CompanyProduct,
   CompanyProps,
   RatingData,
-  UploadImageProps,
 } from './AppInterfaces';
 
 export const setLanguage = (payload: string) => ({
@@ -12,7 +11,7 @@ export const setLanguage = (payload: string) => ({
   payload,
 });
 
-export const setAllAds = (ads: AdsProps) => ({
+export const setAllAds = (ads: AdsProps[]) => ({
   type: constants.app.SET_ALL_ADS,
   ads,
 });
@@ -53,7 +52,7 @@ export const setProductRating = (
   ratingData,
 });
 
-export const setProducts = (products: any) => ({
+export const setProducts = (products: CompanyProduct[]) => ({
   type: constants.app.SET_ALL_PRODUCTS,
   products,
 });

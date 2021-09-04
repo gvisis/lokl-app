@@ -26,8 +26,8 @@ export const SearchModal: React.FC = () => {
   const theme = useTheme();
   const { navigate } = useNavigation();
 
-  useEffect(
-    useCallback(() => {
+  useEffect(() => {
+    if (allProducts && allCompanies && allAppAds) {
       const filteredResults = getSearchFilteredResults(
         allProducts,
         allCompanies,
@@ -35,9 +35,8 @@ export const SearchModal: React.FC = () => {
         searchValue,
       );
       setSearchResults(filteredResults);
-    }, [searchValue]),
-    [allProducts, allCompanies, allAppAds, searchValue],
-  );
+    }
+  }, [searchValue]);
 
   const handleSearchResultNavigate = useCallback(
     item => {

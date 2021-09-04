@@ -28,37 +28,31 @@ function allCompaniesChannel() {
 }
 
 export function* companiesWatcher() {
-  const uid: string = api.getUserInfo() && api.getUserInfo().uid;
-  if (uid) {
+  try {
     const channel: EventChannel<CompaniesWatcher> = yield* call(
       allCompaniesChannel,
     );
-    try {
-      while (true) {
-        const { companies }: CompaniesWatcher = yield* take(channel);
-
-        const companiesArray: CompanyProps[] = Object.values(companies).sort(
-          (a, b) => sortAsc(a.title, b.title),
-        );
-        yield* put(actions.app.setAllCompanies(companiesArray));
-        const filteredComps =
-          companiesArray &&
-          companiesArray
-            .filter(company => company.produce.length > 0)
-            .map(company => company.produce)
-            .reduce((firstValue, secondValue) =>
-              firstValue.concat(secondValue),
-            );
-        yield* put(actions.app.setProducts(filteredComps));
-      }
-    } catch (e) {
-      yield* put(
-        actions.ui.setStatus(
-          ERROR_TYPE.ERROR,
-          true,
-          i18n.t('errors:watcher/companies'),
-        ),
+    while (true) {
+      const { companies }: CompaniesWatcher = yield* take(channel);
+      const companiesArray: CompanyProps[] = Object.values(companies).sort(
+        (a, b) => sortAsc(a.title, b.title),
       );
+      yield* put(actions.app.setAllCompanies(companiesArray));
+      const filteredComps =
+        companiesArray &&
+        companiesArray
+          .filter(company => company.produce.length > 0)
+          .map(company => company.produce)
+          .reduce((firstValue, secondValue) => firstValue.concat(secondValue));
+      yield* put(actions.app.setProducts(filteredComps));
     }
+  } catch (e) {
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:watcher/companies'),
+      ),
+    );
   }
 }

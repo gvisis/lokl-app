@@ -29,7 +29,9 @@ export const CategoriesView: React.FC = () => {
 
   useEffect(() => {
     navigation.setOptions({ title: item.title });
-    const itemsForCategory = getCategoryItemsFromIds(allCompanies, item.id);
+    const itemsForCategory = allCompanies
+      ? getCategoryItemsFromIds(allCompanies, item.id)
+      : [];
     setCategoryItems(itemsForCategory);
   }, [item, allCompanies]);
 

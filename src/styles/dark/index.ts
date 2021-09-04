@@ -13,6 +13,7 @@ export const darkTheme = {
     tertiary1: '#2ECF80',
     tertiary2: '#23C77C',
     tertiary3: '#F0F9F5',
+    tertiary85: '#25C97CD9',
     background: '#1D203A',
     background5: '#1D203A',
     background10: '#1D203A',
