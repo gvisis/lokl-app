@@ -1,11 +1,9 @@
 {
-  "landing": {
-    "appName": "NyanCapp!"
-  },
   "home": {
     "title": "Find your produce",
-    "rowProduce": "Produce",
-    "rowCompany": "Companies",
+    "home": "Home",
+    "rowProduce": "Categories",
+    "rowCompany": "Sellers",
     "rowProducts": "Products",
     "rowAds": "Ads",
     "searchBar": "Search for...",
@@ -14,7 +12,7 @@
   "login": {
     "title": "Login",
     "login": "Login",
-    "logout": "Logout",
+    "signout": "Sign out",
     "signup": "Sign up",
     "noAccount": "Don't have an account?",
     "forgotPass": "Forgot password?",
@@ -25,11 +23,12 @@
   },
   "cart": {
     "title": "Cart",
+    "shoppingCart": "Shopping cart",
     "empty": "Your cart is empty",
     "items": "Items:",
     "checkout": "Checkout",
     "payment": "Payment",
-    "total": "Total price: €",
+    "total": "Total price: ",
     "remove": "Remove",
     "paymentDetails": "Payment details",
     "completePaymentSubtitle": "Complete your purchase by providing payment details",
@@ -41,6 +40,8 @@
     "shippingAddress": "Shipping address",
     "addToCart": "Add to cart",
     "productAdded": "Product added to cart",
+    "purchaseSuccess": "Purchase Successful",
+    "finishPurchase": "Finishing your purchase... Thank you for waiting",
     "howMany": "How many?",
     "pay": "Pay",
     "addShippingAddress": "No address selected"
@@ -50,11 +51,19 @@
     "empty": "No products available"
   },
   "company": {
-    "delivery": "Delivery available"
+    "delivery": "Delivery available",
+    "postCode": "Post code",
+    "address": "Address",
+    "street": "Street",
+    "contactInfo": "Contact info",
+    "city": "City",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website"
   },
   "profile": {
     "title": "Profile",
-    "namePlaceholder": "Your full name",
+    "namePlaceholder": "Full name",
     "emailPlaceholder": "Enter your email",
     "addressPlaceholder": "(include house/flat number)",
     "usernamePlaceholder": "Choose your username",
@@ -68,6 +77,7 @@
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "password": "Password",
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
@@ -78,16 +88,18 @@
     "payments": "Payments",
     "editProfile": "Edit profile",
     "addresses": "Addresses",
-    "changeTheme": "Change theme",
-    "changeLang": "Change language",
+    "changeTheme": "Switch theme",
+    "changeLang": "Switch languages",
     "newAddressAdded": "New address added",
     "editAddress": "Edit address",
     "addressRemoved": "Address succesfully removed",
-    "addressUpdated": "Address succesfully updated"
+    "addressRemoveConfirm": "Are you sure you want to remove this address?",
+    "addressUpdated": "Address succesfully updated",
+    "logoutConfirm": "Are you sure you want to sign out?"
   },
   "ads": {
     "title": "All ads",
-    "titlePlaceholder": "What are you looking for?",
+    "titlePlaceholder": "Title for your ad",
     "descriptionPlaceholder": "Describe what are you looking for...",
     "pricePlaceholder": "Enter max price",
     "exampleImg": "Select example image",
@@ -95,11 +107,12 @@
     "payUpTo": "I can pay up to: ",
     "createNew": "Create new ad",
     "added": "Added:",
+    "owner": "Who's looking?",
     "sendMessage": "Send ad owner a message about this ad",
-    "messageSuccess": "Message successfully sent to the owner"
+    "messageSuccess": "Message successfully sent to the owner",
+    "adSuccessfull": "Ad succesfully added"
   },
   "common": {
-    "Forgot password": "Forgot password?",
     "passReset": "Password reset",
     "email": "Email",
     "reset": "Reset",
@@ -143,9 +156,12 @@
     "auth/unknown": "Unknown error",
     "auth/fill-all-fields": "Please fill all fields",
     "thereWasError": "There was an error",
+    "profile/userUpdate": "User info update failed",
     "watcher/fetchingAds": "There was an error fetching ads",
     "watcher/companies": "There was an error fetching companies",
-    "address/adddressRemoveError": "There was an error removing addres"
+    "address/adddressRemoveError": "There was an error removing addres",
+    "cart/cartUpdating": "There was an error updating your cart",
+    "cart/removeFromCart": "There was an error removing your item from cart"
   },
   "yup": {
     "email-required": "Email is required",

@@ -56,10 +56,8 @@ export const AddEditAddressView: React.FC = () => {
   const handleAddressAction = useCallback(
     values => {
       if (addressId) {
-        console.log('sitas', values);
         dispatch(actions.user.editAddress(addressId, values));
       } else {
-        console.log('anas', values);
         dispatch(actions.user.addAddress(values));
       }
       navigation.navigate(ROUTES.Address);

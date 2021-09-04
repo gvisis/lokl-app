@@ -12,10 +12,11 @@ import styled from 'styled-components/native';
 import { CustomBtn } from '../..';
 import { ROUTES } from '../../../routes/RouteNames';
 import { actions } from '../../../state/actions';
+import { getFormatedPrice } from '../../../utils/functions';
 
 interface CartFooter {
   quantity: number;
-  total: number;
+  total: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -24,8 +25,9 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const route = useRoute();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { stage, finishPurchase } = useSelector(state => state.cart);
-  const { shippingAddress } = useSelector(state => state.cart);
+  const { stage, finishPurchase, shippingAddress } = useSelector(
+    state => state.cart,
+  );
 
   const handleNavigation = useCallback(() => {
     if (stage === ROUTES.CartItemsView) {
@@ -53,7 +55,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
       </TotalItems>
       <TotalPrice>
         {t('cart:total')}
-        {total}
+        {getFormatedPrice(parseFloat(total))}
       </TotalPrice>
       {stage !== ROUTES.CartPaymentView ? (
         <CustomBtn
@@ -80,6 +82,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
 const TotalPrice = styled.Text`
   padding: 10px;
   text-align: center;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;
@@ -87,6 +90,7 @@ const TotalPrice = styled.Text`
 const TotalItems = styled.Text`
   padding: 10px;
   text-align: center;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fonts.size.l}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
   letter-spacing: 1px;

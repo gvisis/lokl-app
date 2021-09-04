@@ -2,13 +2,16 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import { CompanyProduct } from '../../state/app/AppInterfaces';
+import { getFormatedPrice } from '../../utils/functions';
 
 export const ItemHeader = ({
   item,
   productOwnerTitle,
+  categoryTitle,
 }: {
   item: CompanyProduct;
   productOwnerTitle: string;
+  categoryTitle: string;
 }) => (
   <ItemHeaderWrap>
     <TitleWrap>
@@ -16,14 +19,13 @@ export const ItemHeader = ({
       {item && (
         <OwnerWrap>
           <OwnerTitle>{productOwnerTitle}</OwnerTitle>
-          <CompanyLogo source={{ uri: item.image }} />
         </OwnerWrap>
       )}
     </TitleWrap>
     <BottomHeader>
       <ProductTitle>{item.title}</ProductTitle>
-      <ProductCat>{item.category}</ProductCat>
-      <Price>€ {item.price}</Price>
+      <ProductCat>{categoryTitle}</ProductCat>
+      <Price>{getFormatedPrice(item.price)}</Price>
     </BottomHeader>
   </ItemHeaderWrap>
 );
@@ -45,8 +47,8 @@ const TitleWrap = styled.View`
   justify-content: space-between;
 `;
 
-const OwnerWrap = styled.TouchableOpacity`
-  background: ${({ theme }) => theme.colors.tertiary + 'D9'};
+const OwnerWrap = styled.View`
+  background: ${({ theme }) => theme.colors.tertiary85};
   margin: 10px;
   padding: 10px;
   flex: 0.9;
@@ -59,19 +61,8 @@ const OwnerTitle = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.xl}px;
 `;
 
-const CompanyLogo = styled.Image`
-  position: absolute;
-  right: -30px;
-  bottom: 0;
-  height: 84px;
-  width: 84px;
-  border-width: 4px;
-  border-color: ${({ theme }) => theme.colors.tertiary};
-  border-radius: ${({ theme }) => theme.border.radius50}px;
-`;
 const BottomHeader = styled.View`
   flex: 0.2;
-  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -86,15 +77,10 @@ const ProductTitle = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.l}px;
 `;
 const ProductCat = styled.Text`
-  color: ${({ theme }) => theme.colors.red1};
+  color: ${({ theme }) => theme.colors.secondary2};
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   font-size: ${({ theme }) => theme.fonts.size.s}px;
-  padding: 0 10px;
-  background: ${({ theme }) => theme.colors.red};
-  border-radius: ${({ theme }) => theme.border.radius5}px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.black};
-  elevation: 3;
+  padding: 0 5px;
 `;
 const Price = styled.Text`
   margin-left: 5px;

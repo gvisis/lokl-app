@@ -21,5 +21,6 @@ export interface CartActions {
   type?: string;
 }
 export interface CartRemove {
+  type: CART_ACTION.REMOVE;
   itemToRemove: CompanyProduct;
 }

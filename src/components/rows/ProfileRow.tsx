@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components/native';
 
-import { ProfileRowProps } from '../../types/general';
+import { ProfileRowProps, ProfileTextProps } from '../../types/general';
 
 export const ProfileRow: React.FC<ProfileRowProps> = ({
   onPress,
@@ -15,11 +15,12 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
   multiline,
   onChangeText,
   placeholderTextColor,
+  textSize,
   ...props
 }) => {
   const theme = useTheme();
   return (
-    <RowWrap label={label} disabled={touchable} onPress={onPress}>
+    <RowWrap disabled={touchable} onPress={onPress}>
       {rowLeft && <RowLeft>{rowLeft}</RowLeft>}
       {label && editable && <RowLabel>{label}</RowLabel>}
       {editable ? (
@@ -30,13 +31,15 @@ export const ProfileRow: React.FC<ProfileRowProps> = ({
           placeholderTextColor={
             placeholderTextColor ? placeholderTextColor : theme.colors.lightGrey
           }
+          textSize={textSize}
           label={label}
           editable={editable}
-          onChangeText={onChangeText}>
+          onChangeText={onChangeText}
+        >
           {text}
         </EditableInput>
       ) : (
-        <RowText>{text}</RowText>
+        <RowText textSize={textSize}>{text}</RowText>
       )}
       {rowRight && <RowRight>{rowRight}</RowRight>}
     </RowWrap>
@@ -62,10 +65,11 @@ const RowWrap = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const RowText = styled.TextInput`
+const RowText = styled.TextInput<ProfileTextProps>`
   color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
-  font-family: ${({ theme }) => theme.fonts.family.nexaBold};
+  font-size: ${({ theme, textSize }) =>
+    textSize ? textSize : theme.fonts.size.l}px;
+  font-family: ${({ theme }) => theme.fonts.family.nexaLight};
   letter-spacing: 1px;
   flex: 0.8;
 `;
@@ -80,11 +84,12 @@ const RowLabel = styled.Text`
   z-index: 1;
 `;
 
-const EditableInput = styled(RowText)`
+const EditableInput = styled(RowText)<TextInputProps>`
   margin: ${({ label }) => (label ? '20px 20px 5px' : '5px')};
   background-color: ${({ theme }) => theme.colors.white};
   flex: 1;
-  font-size: ${({ theme }) => theme.fonts.size.l}px;
+  font-size: ${({ theme, textSize }) =>
+    textSize ? textSize : theme.fonts.size.l}px;
   min-height: ${({ multiline }) => (multiline ? '80px' : 'auto')};
   max-height: ${({ multiline }) => (multiline ? '200px' : 'auto')};
   text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};

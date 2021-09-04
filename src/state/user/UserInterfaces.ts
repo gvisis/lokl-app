@@ -1,4 +1,4 @@
-import { AdsProps, UploadImageProps } from '../app/AppInterfaces';
+import { AdsProps, ImagesProps, UploadImageProps } from '../app/AppInterfaces';
 import { LANG, THEME } from '../../utils/variables';
 
 // INTERFACES
@@ -31,10 +31,14 @@ export interface EditAddressProps {
   addressId: string;
   editedAddress: UserAddress;
 }
-
+export interface UserAuthCredentials {
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
 export interface CreateNewAdProps {
-  images: UploadImageProps[];
-  newAd: AdsProps;
+  images: UploadImageProps[] | ImagesProps[];
+  newAd?: AdsProps;
 }
 
 // TYPES

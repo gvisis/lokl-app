@@ -10,7 +10,7 @@ import Animated, {
   multiply,
   sub,
 } from 'react-native-reanimated';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 
 interface ActionProps {
   x: Animated.Node<number>;
@@ -18,7 +18,7 @@ interface ActionProps {
 }
 export const RemoveAction = ({ x, deleteOpacity }: ActionProps) => {
   const { t } = useTranslation();
-
+  const theme = useTheme();
   const size = cond(lessThan(x, 10), x, add(x, sub(x, 10)));
   const translateX = cond(lessThan(x, 10), 0, divide(sub(x, 10), 2));
   const textOpacity = interpolateNode(size, {
@@ -28,20 +28,22 @@ export const RemoveAction = ({ x, deleteOpacity }: ActionProps) => {
   return (
     <Animated.View
       style={{
-        backgroundColor: 'orange',
+        backgroundColor: theme.colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
         height: size,
         width: size,
         transform: [{ translateX }],
-      }}>
+      }}
+    >
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
           justifyContent: 'center',
           alignItems: 'center',
           opacity: multiply(textOpacity, deleteOpacity),
-        }}>
+        }}
+      >
         <RemoveText>{t('cart:remove')}</RemoveText>
       </Animated.View>
     </Animated.View>

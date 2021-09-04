@@ -13,7 +13,7 @@ export interface ImagesProps {
 }
 
 export interface Category {
-  id: number;
+  id: string;
   title: string;
   image?: string;
 }
@@ -25,22 +25,24 @@ export interface RatingData {
 
 export interface UploadImageProps {
   adId: string;
+  id?: string;
   images: ImagesProps[];
 }
 
 export interface Product {
   id: string;
+  adId?: string;
   title: string;
   description?: string;
-  category: number;
-  price: number;
-  image: string;
+  category: string;
+  price?: string;
+  image?: string;
   images?: UploadImageProps;
 }
 
 export interface CompanyProduct extends Product {
   owner: string;
-  delivery: boolean;
+  delivery?: boolean;
   available: boolean;
   ratings: RatingData[];
   amount: number;
@@ -58,7 +60,7 @@ export interface CompanyProps {
   image?: string;
   description?: string;
   website?: string;
-  categories: number[];
+  categories: string[];
   ratings: RatingData[];
   produce?: CompanyProduct[];
   address: {

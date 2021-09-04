@@ -27,7 +27,10 @@ export const ProduceItem: React.FC<ProduceItemProps> = ({
 }) => {
   const { navigate } = useNavigation();
   const theme = useTheme();
-  const adsImage = item.images && getImagesFromObject(item)[0].url;
+  const adsImage =
+    item.images && Object.keys(item.images).length > 0
+      ? getImagesFromObject(item)[0].url
+      : item.image;
 
   const handlePress = useFunction(navigate, onPress, {
     item,

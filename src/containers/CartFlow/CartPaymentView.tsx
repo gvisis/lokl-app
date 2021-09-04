@@ -1,69 +1,92 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Formik } from 'formik';
 
+import { validator } from '../../utils/validators';
 import {
   AddressSelect,
   Container,
   EmptyView,
   ProfileRow,
 } from '../../components';
-import { actions } from '../../state/actions';
 
 export const CartPaymentView: React.FC = () => {
   const { cart, shippingAddress } = useSelector(state => state.cart);
   const { name, email } = useSelector(state => state.user.userInfo);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    dispatch(actions.cart.getCartTotals());
-  }, [cart, dispatch]);
 
   return (
     <Container>
       {cart.length === 0 ? (
         <EmptyView text={t('cart:empty')} />
       ) : (
-        <Container>
-          <PaymentHeaderWrap>
-            <PaymentTitle>{t('cart:paymentDetails')}</PaymentTitle>
-            <PaymentSubtitle>
-              {t('cart:completePaymentSubtitle')}
-            </PaymentSubtitle>
-          </PaymentHeaderWrap>
-          <PaymentMidSection>
-            <ProfileRow
-              editable
-              text={name}
-              label={t('profile:fullName')}
-              placeholder={t('profile:namePlaceholder')}
-            />
-            <ProfileRow
-              editable
-              text={email}
-              label={t('common:email')}
-              placeholder={t('profile:emailPlaceholder')}
-            />
-            <RowLabel>{t('cart:cardDetails')}</RowLabel>
-            <CardInputWrap>
-              <CardInput
-                flex={0.8}
-                placeholder={t('cart:cardDetailsPlaceholder')}
-                maxLength={16}
-              />
-              <CardInput flex={0.3} maxLength={5} placeholder={'MM / YY'} />
-              <CardInput flex={0.2} maxLength={3} placeholder={'CVC'} />
-            </CardInputWrap>
-            {shippingAddress && (
-              <ShipingAddressWrap>
-                <RowLabel>{t('cart:shippingAddress')}</RowLabel>
-                <AddressSelect disabled={true} address={shippingAddress} />
-              </ShipingAddressWrap>
-            )}
-          </PaymentMidSection>
-        </Container>
+        <Formik
+          initialValues={{
+            cardNumber: '',
+            expiryDate: '',
+            cvc: '',
+            name,
+            email,
+          }}
+          validationSchema={validator.payment}
+        >
+          {({ handleChange, values }) => (
+            <Container>
+              <PaymentHeaderWrap>
+                <PaymentTitle>{t('cart:paymentDetails')}</PaymentTitle>
+                <PaymentSubtitle>
+                  {t('cart:completePaymentSubtitle')}
+                </PaymentSubtitle>
+              </PaymentHeaderWrap>
+              <PaymentMidSection>
+                <ProfileRow
+                  editable
+                  text={name}
+                  label={t('profile:fullName')}
+                  placeholder={t('profile:namePlaceholder')}
+                />
+                <ProfileRow
+                  editable
+                  text={email}
+                  label={t('common:email')}
+                  placeholder={t('profile:emailPlaceholder')}
+                />
+                <RowLabel>{t('cart:cardDetails')}</RowLabel>
+                <CardInputWrap>
+                  <CardInput
+                    flex={0.8}
+                    onChangeText={handleChange('cardNumber')}
+                    placeholder={t('cart:cardDetailsPlaceholder')}
+                    maxLength={16}
+                    value={values.cardNumber}
+                  />
+                  <CardInput
+                    value={values.expiryDate}
+                    onChangeText={handleChange('expiryDate')}
+                    flex={0.3}
+                    maxLength={5}
+                    placeholder={'MM / YY'}
+                  />
+                  <CardInput
+                    value={values.cvc}
+                    onChangeText={handleChange('cvc')}
+                    flex={0.2}
+                    maxLength={3}
+                    placeholder={'cvc'}
+                  />
+                </CardInputWrap>
+                {shippingAddress && (
+                  <ShipingAddressWrap>
+                    <RowLabel>{t('cart:shippingAddress')}</RowLabel>
+                    <AddressSelect disabled={true} address={shippingAddress} />
+                  </ShipingAddressWrap>
+                )}
+              </PaymentMidSection>
+            </Container>
+          )}
+        </Formik>
       )}
     </Container>
   );
@@ -108,7 +131,7 @@ const RowLabel = styled.Text`
 `;
 
 const PaymentMidSection = styled.View`
-  flex: 1;
+  flex: 0.5;
   padding: 20px 10px;
 `;
 const PaymentTitle = styled.Text`

@@ -17,7 +17,7 @@ export const CategoryPicker: React.FC<CategoryPicker> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const categories = useSelector(state => state.app.categories);
-
+  // dangerous map
   const categoryItems = categories.map(category => ({
     label: category.title,
     value: category.id,

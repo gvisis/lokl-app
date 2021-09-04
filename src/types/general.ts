@@ -2,32 +2,44 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { GestureResponderEvent, TextInputProps } from 'react-native';
 
-import { ProductScreenProps } from '../components/other/produce/Product';
 import { CompanyItemProps } from '../components/company/Company';
 import { ROUTES } from '../routes/RouteNames';
-import { AdsProps, CompanyProduct } from '../state/app/AppInterfaces';
-import { CART_ACTION, ERROR_TYPE } from '../utils/variables';
+import {
+  AdsProps,
+  CompanyProduct,
+  CompanyProps,
+} from '../state/app/AppInterfaces';
+import {
+  CART_ACTION,
+  ERROR_TYPE,
+  LANG,
+  ON_SYNC,
+  THEME,
+} from '../utils/variables';
 
 // Types
 export type AnyObject = { [key: string]: any };
 export type ErrorType = ERROR_TYPE.ERROR | ERROR_TYPE.SUCCESS | null;
 export type ProductAddAction = CART_ACTION.INC | CART_ACTION.DEC;
 export type ItemProps = AdsProps | CompanyProduct;
+export type ThemeTypes = THEME.LIGHT | THEME.DARK;
+export type LanguageTypes = LANG.EN | LANG.LT;
+export type SetOnSync = ON_SYNC.BUTTON | ON_SYNC.USER | ON_SYNC.APP;
+export type ApiProps<T> = (email: string, password?: string) => Promise<T>;
 export type CartNaviHandleProps = {
   currentScreen:
     | ROUTES.CartItemsView
     | ROUTES.CartAddressView
     | ROUTES.CartPaymentView;
 };
+
 export type RootStackParamList = {
   [ROUTES.Home]: undefined;
   [ROUTES.HomeTab]: undefined;
   [ROUTES.TabNav]: undefined;
   [ROUTES.AuthNav]: undefined;
-  [ROUTES.Error]: undefined;
-  [ROUTES.Product]: undefined;
+  [ROUTES.Product]: ProductViewProps | undefined;
   [ROUTES.CartTab]: undefined;
-  [ROUTES.Cart]: undefined;
   [ROUTES.CartItemsView]: undefined;
   [ROUTES.CartAddressView]: undefined;
   [ROUTES.CartPaymentView]: undefined;
@@ -36,11 +48,10 @@ export type RootStackParamList = {
   [ROUTES.SingleCompany]: CompanyItemProps | undefined;
   [ROUTES.CompanyCategory]: CompanyItemProps | undefined;
   [ROUTES.Ads]: undefined;
-  [ROUTES.AddAd]: undefined;
+  [ROUTES.AddAd]: AddAdViewProps | undefined;
   [ROUTES.SingleAdView]: undefined;
   [ROUTES.Address]: undefined;
   [ROUTES.AddAddress]: undefined;
-  [ROUTES.EditAddress]: undefined;
   [ROUTES.AdsTab]: undefined;
   [ROUTES.Profile]: undefined;
   [ROUTES.ProfileEdit]: undefined;
@@ -52,6 +63,13 @@ export type RootStackParamList = {
 };
 
 // Interfaces
+interface ProductViewProps extends ProductScreenProps {
+  item?: CompanyProduct;
+}
+interface AddAdViewProps {
+  onPress?: (event: GestureResponderEvent) => void;
+}
+
 export interface PayloadAction<T> {
   payload: T;
   type: string;
@@ -68,6 +86,15 @@ export interface ItemCardProps {
   productOwnerTitle?: string;
 }
 
+export interface ProductScreenProps {
+  item?: CompanyProduct;
+  allCompanies?: CompanyProps[];
+  width?: number;
+  height?: number;
+  productOwnerTitle?: string;
+  onPress?: (event: GestureResponderEvent) => void;
+}
+
 export interface ProfileRowProps {
   onPress?: (e: GestureResponderEvent) => void;
   rowLeft?: React.ReactElement;
@@ -82,9 +109,15 @@ export interface ProfileRowProps {
   placeholderTextColor?: string;
   keyboardType?: TextInputProps['keyboardType'];
   onChangeText?: (text: string) => void;
+  textSize?: number;
 }
 
 export interface SizeProps {
   width: number;
   height: number;
+}
+
+export interface ProfileTextProps {
+  label?: string;
+  textSize?: number;
 }

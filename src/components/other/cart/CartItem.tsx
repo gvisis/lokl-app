@@ -1,18 +1,22 @@
-import React, { useCallback } from 'react';
+import React, { SetStateAction, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import { Value } from 'react-native-reanimated';
 
 import { actions } from '../../../state/actions';
 import { CompanyProduct } from '../../../state/app/AppInterfaces';
-import { getProductOwnerTitle } from '../../../utils/functions';
+import {
+  getFormatedPrice,
+  getProductOwnerTitle,
+} from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
 import { CART_ACTION } from '../../../utils/variables';
 
 interface CartItem {
   item: CompanyProduct;
-  shouldRemove: number;
+  shouldRemove: Value<number>;
 }
 
 export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
@@ -25,14 +29,12 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
     actions.cart.checkCartActions(CART_ACTION.ADD, item),
   );
 
-  const handleDecreaseAmount = useCallback(
-    (item: CompanyProduct) => {
-      item.amount === 1
-        ? shouldRemove.setValue(1)
-        : dispatch(actions.cart.checkCartActions(CART_ACTION.REMOVE, item));
-    },
-    [item],
-  );
+  const handleDecreaseAmount = useCallback(() => {
+    item.amount === 1
+      ? shouldRemove.setValue(1)
+      : dispatch(actions.cart.checkCartActions(CART_ACTION.REMOVE, item));
+  }, [item]);
+
   return (
     <CartItemWrap>
       <CartItemLeft>
@@ -41,14 +43,14 @@ export const CartItem: React.FC<CartItem> = ({ item, shouldRemove }) => {
       <CartItemMid>
         <ItemName>{title}</ItemName>
         <ItemSeller>{getProductOwnerTitle(allCompanies, item)}</ItemSeller>
-        <ItemPrice>€ {price}</ItemPrice>
+        <ItemPrice>{getFormatedPrice(parseFloat(price))}</ItemPrice>
       </CartItemMid>
       <CartItemRight>
         <TouchableOpacity onPress={handleIncreaseAmount}>
           <IncDecButton name="plus-circle" size={25} />
         </TouchableOpacity>
         <QuantityValue>{amount}</QuantityValue>
-        <TouchableOpacity onPress={() => handleDecreaseAmount(item)}>
+        <TouchableOpacity onPress={handleDecreaseAmount}>
           <IncDecButton name="minus-circle" size={25} />
         </TouchableOpacity>
       </CartItemRight>

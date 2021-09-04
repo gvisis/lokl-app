@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { useTranslation } from 'react-i18next';
 
 interface EmptyViewProps {
   text?: string;
 }
 
-export const EmptyView: React.FC<EmptyViewProps> = ({ text }) => (
-  <NoItemsText>{text}</NoItemsText>
-);
+export const EmptyView: React.FC<EmptyViewProps> = ({ text }) => {
+  const { t } = useTranslation();
+
+  return <NoItemsText>{text ? text : t('common:noItems')}</NoItemsText>;
+};
 
 const NoItemsText = styled.Text`
   align-self: center;
@@ -17,12 +20,8 @@ const NoItemsText = styled.Text`
   text-align: center;
   padding: 30px;
   width: 80%;
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.textPrimary};
   border-radius: ${({ theme }) => theme.border.radius25}px;
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.secondary};
 `;
-
-EmptyView.defaultProps = {
-  text: 'No items to display',
-};

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity } from 'react-native';
+// import { TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 interface RowProps {
@@ -14,9 +14,9 @@ export const HomeRow: React.FC<RowProps> = ({ title, children }) => {
     <RowContainer>
       <TitleWrap>
         <RowTitle>{title}</RowTitle>
-        <TouchableOpacity onPress={() => console.warn(title)}>
+        {/* <TouchableOpacity onPress={() => console.warn(title)}>
           <MoreText>{t('home:viewMore')}</MoreText>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </TitleWrap>
       <RowWrap>{children}</RowWrap>
     </RowContainer>

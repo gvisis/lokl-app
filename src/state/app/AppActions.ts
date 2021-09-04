@@ -1,5 +1,6 @@
 import { constants } from '../constants';
 import {
+  AdsProps,
   CompanyProduct,
   CompanyProps,
   RatingData,
@@ -11,16 +12,11 @@ export const setLanguage = (payload: string) => ({
   payload,
 });
 
-export const setAllAds = ads => ({
+export const setAllAds = (ads: AdsProps) => ({
   type: constants.app.SET_ALL_ADS,
   ads,
 });
 
-export const uploadAdImages = (adId: string, images: UploadImageProps[]) => ({
-  type: constants.app.UPLOAD_AD_IMAGES,
-  adId,
-  images,
-});
 export const pickImage = () => ({
   type: constants.app.PICK_IMAGE,
 });
@@ -72,5 +68,4 @@ export const appActions = {
   setLanguage,
   fetchCategories,
   pickImage,
-  uploadAdImages,
 };

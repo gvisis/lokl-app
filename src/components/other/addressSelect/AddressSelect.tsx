@@ -1,5 +1,5 @@
-import React from 'react';
-import { GestureResponderEvent } from 'react-native';
+import React, { useCallback } from 'react';
+import { Alert, GestureResponderEvent } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
@@ -31,10 +31,20 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
 
-  const handleRemoveAddress = (addressId: string) => {
-    dispatch(actions.user.removeAddress(addressId));
-  };
+  const handleRemoveAddress = useCallback(addressId => {
+    Alert.alert(t('cart:remove'), t('profile:addressRemoveConfirm'), [
+      {
+        text: t('profile:cancel'),
+        style: 'cancel',
+      },
+      {
+        text: t('profile:confirm'),
+        onPress: () => dispatch(actions.user.removeAddress(addressId)),
+      },
+    ]);
+  }, []);
 
+  //
   const handleEditAddress = (addressId: string) => {
     navigate(ROUTES.AddAddress, { addressId });
   };
@@ -111,6 +121,7 @@ const FullName = styled.Text`
   margin-bottom: 5px;
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   font-family: ${({ theme }) => theme.fonts.family.nexaBold};
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 const RowWrap = styled.View`
   flex-direction: row;
@@ -121,6 +132,7 @@ const RowLine = styled.Text`
   font-size: ${({ theme }) => theme.fonts.size.s}px;
   margin-left: 5px;
   font-family: ${({ theme }) => theme.fonts.family.nexaLight};
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 const WrapRight = styled.View`

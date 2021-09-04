@@ -1,9 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AnyObject } from '../../types/general';
-import { themes } from '../../styles';
+import { ErrorType, SetOnSync, ThemeTypes } from '../../types/general';
 import { constants } from '../constants';
-import { ERROR_TYPE } from '../../utils/variables';
+import { ERROR_TYPE, THEME } from '../../utils/variables';
 
 export interface UiReducerState {
   onSync: {
@@ -17,7 +16,7 @@ export interface UiReducerState {
     message: string;
   };
   passResetStatus: boolean;
-  theme: AnyObject;
+  appTheme: ThemeTypes;
 }
 
 const INITIAL_STATE: UiReducerState = {
@@ -32,21 +31,26 @@ const INITIAL_STATE: UiReducerState = {
     message: '',
   },
   passResetStatus: false,
-  theme: themes.light,
+  appTheme: THEME.LIGHT,
 };
-
-export interface UiStateSetter {
-  key: string;
+export interface UiStateSetter<T> {
+  key: T;
   bool: boolean;
   message?: string;
 }
 
 export const uiReducer = createReducer(INITIAL_STATE, {
-  [constants.ui.SET_ON_SYNC]: (state, { key, bool }: UiStateSetter) => {
+  [constants.ui.SET_ON_SYNC]: (
+    state,
+    { key, bool }: UiStateSetter<SetOnSync>,
+  ) => {
     state.onSync[key] = bool;
   },
 
-  [constants.ui.SET_STATUS]: (state, { key, bool, message }: UiStateSetter) => {
+  [constants.ui.SET_STATUS]: (
+    state,
+    { key, bool, message }: UiStateSetter<ErrorType>,
+  ) => {
     if (key === ERROR_TYPE.SUCCESS) {
       state.status.error = false;
     }
@@ -61,7 +65,7 @@ export const uiReducer = createReducer(INITIAL_STATE, {
     state.status = INITIAL_STATE.status;
   },
 
-  [constants.ui.PASS_RESET_SUCCESS]: (state, { bool }: UiStateSetter) => {
+  [constants.ui.PASS_RESET_SUCCESS]: (state, { bool }: { bool: boolean }) => {
     state.passResetStatus = bool;
   },
 
@@ -69,7 +73,7 @@ export const uiReducer = createReducer(INITIAL_STATE, {
     state.passResetStatus = INITIAL_STATE.passResetStatus;
   },
 
-  [constants.ui.SET_THEME]: (state, { bool }: UiStateSetter) => {
-    state.theme = bool ? themes.light : themes.dark;
+  [constants.ui.SET_THEME]: (state, { theme }: { theme: ThemeTypes }) => {
+    state.appTheme = theme;
   },
 });

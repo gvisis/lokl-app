@@ -3,9 +3,8 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
-import { ROUTES } from '../../routes/RouteNames';
 import { ItemCardProps } from '../../types/general';
-import { getImagesFromObject } from '../../utils/functions';
+import { getFormatedPrice, getImagesFromObject } from '../../utils/functions';
 import { useFunction } from '../../utils/hooks';
 
 export const ItemCard: React.FC<ItemCardProps> = ({
@@ -22,15 +21,16 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     item,
     productOwnerTitle,
   });
-
   return (
     <ItemCardWrap onPress={handlePress} isAdsItem={isAdsItem}>
       {(productImage || adImage) && (
         <ImageBackgrounds source={{ uri: productImage || adImage }} />
       )}
       <ItemFooter>
-        <ItemCardTitle>{item.title}</ItemCardTitle>
-        <ItemPrice>{item.price}</ItemPrice>
+        <ItemCardTitle numberOfLines={1} ellipsizeMode="tail">
+          {item.title}
+        </ItemCardTitle>
+        <ItemPrice>{getFormatedPrice(item.price)}</ItemPrice>
       </ItemFooter>
     </ItemCardWrap>
   );
@@ -55,9 +55,8 @@ const ImageBackgrounds = styled.ImageBackground`
 
 const ItemFooter = styled.View`
   flex-direction: row;
-  width: 100%;
   background: ${({ theme }) => theme.colors.secondary};
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 5px;
 `;
 
@@ -67,7 +66,11 @@ const itemTitleStyle = css`
 `;
 const ItemCardTitle = styled.Text`
   ${itemTitleStyle}
+  width: 70%;
 `;
 const ItemPrice = styled.Text`
   ${itemTitleStyle}
+  align-self: center;
+  text-align: right;
+  font-size: ${({ theme }) => theme.fonts.size.s}px;
 `;

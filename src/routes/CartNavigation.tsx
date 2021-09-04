@@ -32,7 +32,7 @@ export const CartNavigation: React.FC = () => {
   if (finishPurchase) {
     return (
       <>
-        <EmptyView text={'Finishing your purchase... Thank you for waiting'} />
+        <EmptyView text={t('cart:finishPurchase')} />
         <ScreenLoader size={50} color={theme.colors.primary} />
       </>
     );
@@ -40,10 +40,7 @@ export const CartNavigation: React.FC = () => {
 
   return (
     <Container>
-      <TopBar.Navigator
-        screenOptions={{
-          swipeEnabled: false,
-        }}>
+      <TopBar.Navigator>
         <TopBar.Screen
           name={ROUTES.CartItemsView}
           component={CartItemsView}
@@ -60,7 +57,7 @@ export const CartNavigation: React.FC = () => {
           options={{ tabBarLabel: t('cart:payment') }}
         />
       </TopBar.Navigator>
-      <CartFooter quantity={quantity} total={total} />
+      <CartFooter quantity={quantity} total={total.toString()} />
     </Container>
   );
 };

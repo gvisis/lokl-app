@@ -14,7 +14,7 @@ const checkCartActions = (
   selectedQuantity,
 });
 
-const updateCart = newCart => ({
+const updateCart = (newCart: CompanyProduct[]) => ({
   type: constants.cart.UPDATE_CART,
   newCart,
 });
@@ -32,6 +32,7 @@ const navigateCart = (currentScreen: string) => ({
 const getCartTotals = () => ({
   type: constants.cart.GET_CART_TOTALS,
 });
+
 const cartFinishPurchase = (finishPurchase: boolean) => ({
   type: constants.cart.CART_FINISH_PURCHASE,
   finishPurchase,
@@ -42,10 +43,12 @@ const updateCartTotals = (total: number, quantity: number) => ({
   total,
   quantity,
 });
+
 const removeFromCart = (itemToRemove: CompanyProduct) => ({
   type: constants.cart.REMOVE_FROM_CART,
   itemToRemove,
 });
+
 export const setShippingAddress = (shippingAddress: UserAddress) => ({
   type: constants.cart.SET_SHIPPING_ADDRESS,
   shippingAddress,

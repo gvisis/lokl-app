@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import { actions } from '../../state/actions';
 import {
   Container,
   CustomBtn,
@@ -16,6 +15,7 @@ import {
 } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { useFunction } from '../../utils/hooks';
+import { AdsProps } from '../../state/app/AppInterfaces';
 
 export const AdsView: React.FC = () => {
   const { t } = useTranslation();
@@ -24,13 +24,17 @@ export const AdsView: React.FC = () => {
   const { navigate } = useNavigation();
   const handleCreateAd = useFunction(navigate, ROUTES.AddAd);
 
-  const renderItem = ({ item }) => (
+  interface RenderItemProps {
+    item: AdsProps;
+  }
+
+  const renderItem = ({ item }: RenderItemProps) => (
     <ItemCard isAdsItem={true} onPress={ROUTES.SingleAdView} item={item} />
   );
 
   return (
     <Container>
-      <HomeHeader isAdsView={true} title={t('ads:title')} />
+      <HomeHeader title={t('ads:title')} />
       <AdContainer>
         {adsFromState.length !== 0 ? (
           <FlatList
@@ -51,6 +55,6 @@ export const AdsView: React.FC = () => {
 };
 
 const AdContainer = styled.View`
-  flex: 1;
+  flex: 0.7;
   padding-bottom: 25px;
 `;

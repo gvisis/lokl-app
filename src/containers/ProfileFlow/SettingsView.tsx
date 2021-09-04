@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTranslation } from 'react-i18next';
 
 import { Container, ProfileRow, ToggleSwitcher } from '../../components';
+import { LANG, THEME } from '../../utils/variables';
 
 export const SettingsView: React.FC = () => {
   const { t } = useTranslation();
@@ -14,12 +15,12 @@ export const SettingsView: React.FC = () => {
         <ProfileRow
           text={t('profile:changeTheme')}
           rowLeft={<StyledIcon name={'paint-brush'} />}
-          rowRight={<ToggleSwitcher toggle="themeSwitch" />}
+          rowRight={<ToggleSwitcher toggle={THEME.SWITCH} />}
         />
         <ProfileRow
           text={t('profile:changeLang')}
           rowLeft={<StyledIcon name={'language'} />}
-          rowRight={<ToggleSwitcher toggle="langSwitch" />}
+          rowRight={<ToggleSwitcher toggle={LANG.SWITCH} />}
         />
       </SettingsWrap>
     </Container>

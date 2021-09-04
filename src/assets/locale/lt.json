@@ -1,27 +1,50 @@
 {
-  "landing": {
-    "appName": "NyanCapp!"
-  },
   "home": {
     "title": "Rask savo produktą",
-    "row Produce": "Produktai",
-    "row Company": "Pardavėjai",
-    "row Items": "Produkcija",
-    "row Ads": "Skelbimai",
-    "search bar": "Ieškau...",
-    "view more": "Daugiau"
+    "home": "Pradinis",
+    "rowProduce": "Kategorijos",
+    "rowCompany": "Pardavėjai",
+    "rowProducts": "Produkcija",
+    "rowAds": "Skelbimai",
+    "searchBar": "Ieškau...",
+    "viewMore": "Daugiau"
   },
   "login": {
     "title": "Prisijungimas",
     "login": "Prisijungti",
-    "logout": "Atsijungti",
-    "signup": "Susikurti naują",
+    "signout": "Atsijungti",
+    "signup": "Užsiregistruoti",
     "noAccount": "Dar neturite paskyros?",
     "forgotPass": "Pamiršote slaptažodį?",
     "password": "Slaptažodis"
   },
   "signup": {
     "title": "Nauja registracija"
+  },
+  "cart": {
+    "title": "Krepšelis",
+    "shoppingCart": "Prekių krepšelis",
+    "empty": "Jūsų prekių krepšelis tuščias",
+    "items": "Prekės:",
+    "checkout": "Pereiti prie mokėjimo",
+    "payment": "Mokėjimas",
+    "total": "Viso: ",
+    "remove": "Pašalinti",
+    "paymentDetails": "Apmokėjimas",
+    "completePaymentSubtitle": "Apmokėjimas",
+    "cardDetails": "Kortelės duomenys",
+    "cardDetailsPlaceholder": "Įvesti kortelės duomenis",
+    "noAddress": "Pridėti naują adresą",
+    "selectAddress": "Pasirinkti adresą",
+    "selectShippingAddress": "Pasirinkti pristatymo adresą",
+    "shippingAddress": "Pristatymo adresas",
+    "addToCart": "Pridėti į krepšelį",
+    "productAdded": "Produktas sėkmingai pridėtas",
+    "purchaseSuccess": "Sėkmingai apmokėta",
+    "finishPurchase": "Užabigiamas pirkimas... Gali užtrukti kelias sekundes",
+    "howMany": "Kiek?",
+    "pay": "Mokėti",
+    "addShippingAddress": "Nepasirinktas adresas"
   },
   "common": {
     "passReset": "Slaptažodžio atstatymas",
@@ -30,18 +53,80 @@
     "goBack": "Grįžti",
     "register": "Registruotis",
     "enterEmail": "Įveskite el.paštą",
-    "enterPass": "Įveskite slaptažodė",
+    "enterPass": "Įveskite slaptažodį",
     "confirmPass": "Patvirtinkite slaptažodį",
-    "createAcc": "Sukurti nauja paskyra",
+    "createAcc": "Sukurti naują paskyrą",
+    "getStarted": "Pradėti",
     "alreadyAcc": "Jau turite paskyrą?",
     "registerSucc": "Sėkmingai užsiregistravote!",
     "loginSucc": "Sėkmingai prisijungėte!",
     "logoutSucc": "Atsijungėte. Iki kito karto!",
-    "passSent": "Naujas slaptažodis išsiųstas nurodytu adresu",
-    "default": "Nuolatinis"
+    "passSent": "Naujas slaptažodis išsiųstas nurodytu el.paštu",
+    "default": "Pagrindinis",
+    "continue": "Tęsti",
+    "rating": "Įvertinimas",
+    "noItems": "Nieko nėra",
+    "send": "Siųsti",
+    "addNewAddress": "Pridėti naują adresą"
+  },
+  "category": {
+    "title": "Kategorija",
+    "empty": "Produktų nėra"
+  },
+  "categoryPicker": {
+    "placeholder": "Pasirinkti kategoriją"
   },
   "company": {
     "delivery": "Pristatymas"
+  },
+  "profile": {
+    "title": "Profilis",
+    "namePlaceholder": "Vardas, pavardė",
+    "emailPlaceholder": "El.paštas",
+    "addressPlaceholder": "(Namo/buto numerisi)",
+    "usernamePlaceholder": "Vartotojo vardas",
+    "username": "Vartotojo vardas",
+    "fullName": "Vardas, pavardė",
+    "phone": "Telefono numeris",
+    "postCode": "Pašto kodas",
+    "city": "Miestas",
+    "country": "Šalis",
+    "address": "Adresas",
+    "edit": "Taisyti",
+    "save": "Išsaugoti",
+    "cancel": "Atšaukti",
+    "confirm": "Patvirtinti",
+    "password": "Slaptažodis",
+    "newPassword": "Naujas slaptažodis",
+    "confirmPassword": "Patvirtinti slaptažodį ",
+    "changePassword": "Pakeisti slaptažodį",
+    "changePasswordSuccess": "Slaptažodis pakeistas sėkmingai",
+    "changePasswordError": "Slaptažodis pakeistas nesėkmingai",
+    "settings": "Nustatymai",
+    "editProfile": "Redaguoti profilį",
+    "addresses": "Adresai",
+    "changeTheme": "Keisti temą",
+    "changeLang": "Keisti kalbą",
+    "newAddressAdded": "Adresas pridėtas",
+    "editAddress": "Keisti adresą",
+    "addressRemoved": "Adresas ištrintas",
+    "addressRemoveConfirm": "Ar tikrai norite ištrinti šį adresą?",
+    "addressUpdated": "Adresas pakeistas",
+    "logoutConfirm": "Ar tikrai atsijungiate?"
+  },
+  "ads": {
+    "title": "Visi skelbimai",
+    "titlePlaceholder": "Skelbimo pavadinimas",
+    "descriptionPlaceholder": "Apibūdinkite ko ieškote",
+    "pricePlaceholder": "Kaina iki",
+    "exampleImg": "Įkelti pavyzdinę nuotrauką",
+    "needBy": "Reikia iki:",
+    "payUpTo": "Kaina iki:",
+    "createNew": "Sukurti naują skelbimą",
+    "added": "Pridėta",
+    "owner": "Skelbimo autorius",
+    "sendMessage": "Siųsti žinutę skelbimo autoriui",
+    "messageSuccess": "Žinutė išsiųsta"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",
@@ -55,11 +140,15 @@
     "auth/user-disabled": "Vartotojas sustabdytas",
     "auth/user-not-found": "Vartotojas nerastas",
     "auth/weak-password": "Silpnas slaptažodis",
-    "auth/wrong-password": "Blogas slaptažodis",
+    "auth/wrong-password": "Netinkamas slaptažodis:",
     "auth/network-request-failed": "Prisijungimo klaida",
-    "auth/too-many-requests": "Per daug bandymu",
+    "auth/too-many-requests": "Per daug bandymų",
     "auth/unknown": "Nežinoma klaida",
-    "auth/fill-all-fields": "Užpildyke laukelius"
+    "auth/fill-all-fields": "Užpildyke laukelius",
+    "thereWasError": "Klaida",
+    "watcher/fetchingAds": "Klaida",
+    "watcher/companies": "Klaida",
+    "address/adddressRemoveError": "Klaida"
   },
   "yup": {
     "email-required": "Įveskite el.paštą",
@@ -68,6 +157,7 @@
     "pass-confirm": "Patvirtinkite slaptažodį",
     "pass-match": "Slaptažodžiai nesutampa",
     "pass-size-min": "Slaptažodis netrumpesnis nei {{min}} simboliai",
-    "pass-size-max": "Slaptažodis neilgesnis nei {{max}} simbolių"
+    "pass-size-max": "Slaptažodis neilgesnis nei {{max}} simbolių",
+    "ads-categoryErr": "Pasirinkite kategoriją"
   }
 }

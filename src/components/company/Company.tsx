@@ -12,6 +12,7 @@ import { ROUTES } from '../../routes/RouteNames';
 import { Category, CompanyProps } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
 import { SizeProps } from '../../types/general';
+import { RATING_ICON } from '../../utils/variables';
 
 export interface CompanyItemProps {
   companyItem: CompanyProps;
@@ -28,7 +29,6 @@ export const Company: React.FC<CompanyItemProps> = ({
 }) => {
   const theme = useTheme();
   const navigation = useNavigation();
-  const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleSingleProductNav = useCallback(() => {
     navigation.navigate(ROUTES.SingleCompany, { companyItem });
@@ -62,8 +62,9 @@ export const Company: React.FC<CompanyItemProps> = ({
                 defaultRating={calcRatingAverage(companyItem.ratings)}
                 size={15}
                 selectedColor={theme.colors.red}
+                //TODO: how to declare missing type from the library
                 unSelectedColor={theme.colors.red1}
-                starImage={ratingCustomImage}
+                starImage={RATING_ICON}
               />
             </CompanyRating>
           </CompanyRight>

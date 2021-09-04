@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/core';
 
 import { useFunction } from '../../utils/hooks';
 import { validator } from '../../utils/validators';
@@ -11,15 +12,13 @@ import { CustomBtn, CustomInput } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { actions } from '../../state/actions';
 
-export const LoginView: React.FC<Container> = ({ navigation }) => {
+export const LoginView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { navigate } = useNavigation();
 
-  const navigateToSignup = useFunction(navigation.navigate, ROUTES.Signup);
-  const navigateToForgotPassword = useFunction(
-    navigation.navigate,
-    ROUTES.ForgotPassword,
-  );
+  const navigateToSignup = useFunction(navigate, ROUTES.Signup);
+  const navigateToForgotPassword = useFunction(navigate, ROUTES.ForgotPassword);
 
   const handleLoginSubmit = useCallback(
     (email: string, password: string): void => {
@@ -32,33 +31,25 @@ export const LoginView: React.FC<Container> = ({ navigation }) => {
     <AuthContainer headerTitle={t('login:title')}>
       <Formik
         initialValues={{ email: '', password: '' }}
+        validateOnChange={false}
+        validateOnBlur={false}
         validationSchema={validator.login}
-        onSubmit={({ email, password }) => handleLoginSubmit(email, password)}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          errors,
-          values,
-          touched,
-        }) => (
+        onSubmit={({ email, password }) => handleLoginSubmit(email, password)}
+      >
+        {({ handleChange, handleSubmit, errors, values }) => (
           <>
             <CustomInput
               placeholder={t('common:email')}
               onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
               value={values.email}
               error={errors.email}
-              touched={touched.email}
               iconName={'account'}
             />
             <CustomInput
               placeholder={t('login:password')}
               onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
               value={values.password}
               error={errors.password}
-              touched={touched.password}
               iconName={'key-variant'}
               secureTextEntry
             />
@@ -94,7 +85,7 @@ const LoginFooter = styled.View`
 `;
 
 const StyledText = styled.Text`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fonts.size.m}px;
   font-family: ${({ theme }) => theme.fonts.family.bentonLight};
   text-decoration: underline;
@@ -103,7 +94,7 @@ const StyledText = styled.Text`
 `;
 
 const StyledTextSecondary = styled(StyledText)`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   text-decoration: none;
   margin: 10px 0;
 `;

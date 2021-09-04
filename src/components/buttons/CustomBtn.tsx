@@ -1,10 +1,6 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components/native';
-import {
-  ActivityIndicator,
-  GestureResponderEvent,
-  StyleProp,
-} from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 interface StyledButtonProps {
   width?: number;
@@ -21,7 +17,7 @@ interface CustomBtnProps {
   center?: boolean;
   activeOpacity?: number;
   disabled?: boolean;
-  onPress?: (e: GestureResponderEvent) => void;
+  onPress?: () => void;
   width?: number;
   fontSize?: number;
   secondary?: boolean;
@@ -63,9 +59,6 @@ const StyledButtonText = styled.Text<StyledButtonProps>`
     fontSize ? fontSize : theme.fonts.size.l}px;
   text-align: center;
   font-family: ${({ theme }) => theme.fonts.family.bentonMedium};
-  text-transform: ${({ textTransform }) => textTransform};
+  text-transform: ${({ textTransform }) =>
+    textTransform ? textTransform : 'none'};
 `;
-
-StyledButtonText.defaultProps = {
-  textTransform: 'none',
-};

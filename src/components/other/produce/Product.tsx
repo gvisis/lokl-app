@@ -1,31 +1,22 @@
 import React, { useCallback } from 'react';
-import { GestureResponderEvent, TouchableNativeFeedback } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../../routes/RouteNames';
-import { CompanyProduct, CompanyProps } from '../../../state/app/AppInterfaces';
 import { actions } from '../../../state/actions';
 import {
   calcRatingAverage,
+  getFormatedPrice,
   getProductOwnerTitle,
 } from '../../../utils/functions';
 import { useFunction } from '../../../utils/hooks';
-import { CART_ACTION } from '../../../utils/variables';
-
-export interface ProductScreenProps {
-  item?: CompanyProduct;
-  allCompanies?: CompanyProps[];
-  width?: number;
-  height?: number;
-  productOwnerTitle?: string;
-  onPress?: (event: GestureResponderEvent) => void;
-}
+import { CART_ACTION, RATING_ICON } from '../../../utils/variables';
+import { ProductScreenProps } from '../../../types/general';
 
 export const Product: React.FC<ProductScreenProps> = ({
   item,
@@ -36,8 +27,6 @@ export const Product: React.FC<ProductScreenProps> = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
-  const { t } = useTranslation();
-  const ratingCustomImage = require('../../../assets/images/ratingfull.png');
 
   const productOwnerTitle: string = getProductOwnerTitle(allCompanies, item);
 
@@ -76,15 +65,12 @@ export const Product: React.FC<ProductScreenProps> = ({
               <CartIcon name={'basket-fill'} size={25} />
             </LinearGradient>
           </AddToCart>
-          {item.delivery && (
-            <ProductDelivery>{t('company:delivery')}</ProductDelivery>
-          )}
           <ProductImage resizeMode="cover" source={{ uri: item.image }} />
           <ProductOwner>{productOwnerTitle}</ProductOwner>
         </ProductTop>
         <ProductBottom>
           <ProductName>{item.title}</ProductName>
-          <ProductPrice>€ {item.price}</ProductPrice>
+          <ProductPrice>{getFormatedPrice(item.price)}</ProductPrice>
           <ProductRating>
             <AirbnbRating
               count={5}
@@ -94,7 +80,7 @@ export const Product: React.FC<ProductScreenProps> = ({
               size={15}
               selectedColor={theme.colors.red}
               unSelectedColor={theme.colors.red1}
-              starImage={ratingCustomImage}
+              starImage={RATING_ICON}
             />
           </ProductRating>
         </ProductBottom>
