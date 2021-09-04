@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from 'typed-redux-saga';
+import { call, delay, put, select, takeEvery } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -7,88 +7,125 @@ import { constants } from '../constants';
 import { api } from '../../api';
 import { guidGenerator } from '../../utils/functions';
 import { firebaseDb } from '../../api/firebaseDb';
-import { UserAddress, UserProps } from './UserReducer';
-
-interface UserAuthCredentials {
-  email: string;
-  password: string;
-}
+import {
+  CreateNewAdProps,
+  EditAddressProps,
+  UserAddress,
+  UserAuthCredentials,
+  UserProps,
+} from './UserInterfaces';
+import { ERROR_TYPE, ON_SYNC } from '../../utils/variables';
 
 function* handleLogin({ email, password }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
     yield* call(api.login, email, password);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Login success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:loginSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 
 function* handleLogout() {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
     yield* call(api.logout);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Logout success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:logoutSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
     yield* put(actions.user.clearUserState());
     yield* put(actions.cart.clearCart());
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 function* handleSignup({ email, password }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('user', true));
-    yield* call(api.signup, email, password);
-    yield* call(handleCreateUserDb, email);
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
+    const signedUpUserId = yield* call(api.signup, email, password);
+    const userInfo: UserProps = {
+      username: '',
+      name: '',
+      email,
+      phone: '',
+    };
+    yield* call(firebaseDb.createUserDb, signedUpUserId, userInfo);
     yield* put(
-      actions.ui.setStatus('success', true, i18n.t('common:Register success')),
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('common:registerSucc'),
+      ),
     );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('user', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.USER, false));
   }
 }
 
 function* handlePasswordReset({ email }: UserAuthCredentials) {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* call(api.passworReset, email);
     yield* put(actions.ui.passResetSuccess(true));
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, i18n.t(`errors:${e.code}`)));
+    yield* put(
+      actions.ui.setStatus(ERROR_TYPE.ERROR, true, i18n.t(`errors:${e.code}`)),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
-function* handleUpdateUserDb({ updatedInfo }) {
-  const userId: string = api.getUserInfo().uid;
+function* handleUpdateUserDb({ updatedInfo }: { updatedInfo: UserProps }) {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
-    database().ref(`/users/${userId}`).update(updatedInfo);
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
+    yield call(firebaseDb.updateUser, updatedInfo);
   } catch (e) {
-    console.log('huserinfoupdate', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:profile/userUpdate'),
+      ),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
-function* handleAddNewAddress({ newAddressData }) {
+function* handleAddNewAddress({
+  newAddressData,
+}: {
+  newAddressData: UserAddress;
+}) {
   const { street, city, name, phone, country, postcode } = newAddressData;
   const userInfo: UserProps = yield* select(state => state.user.userInfo);
-  const addressId = guidGenerator();
+  const newAddressId = guidGenerator();
   let updatedUserData;
   const newAddressObject: UserAddress = {
-    id: addressId,
+    id: newAddressId,
     name,
     phone,
     street,
@@ -110,68 +147,137 @@ function* handleAddNewAddress({ newAddressData }) {
         address: [newAddressObject],
       };
     }
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     yield* put(actions.user.updateUserInfo(updatedUserData));
-    yield* put(actions.ui.setStatus('success', true, 'New address added'));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('profile:newAddressAdded'),
+      ),
+    );
   } catch (e) {
-    yield* put(actions.ui.setStatus('error', true, 'There was an error'));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
-
-function* handleCreateUserDb(email: string) {
-  const userInfo: UserProps = {
-    username: '',
-    name: '',
-    email,
-    phone: '',
-    address: [],
-    ads: [],
-  };
+function* handleEditAddress({ addressId, editedAddress }: EditAddressProps) {
   try {
-    const newUserId: string = api.getUserInfo().uid;
-    database().ref(`/users/${newUserId}`).set(userInfo);
-    yield* put(actions.user.setUserInfo(userInfo));
+    const addresses: UserAddress[] = yield* select(
+      state => state.user.userInfo.address,
+    );
+
+    const updatedAddresses = addresses
+      .map(address => {
+        if (address.id === addressId) {
+          return {
+            ...address,
+            ...editedAddress,
+          };
+        }
+        return address;
+      })
+      .flat();
+
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
+    yield* put(actions.user.updateUserInfo({ address: updatedAddresses }));
   } catch (e) {
-    console.log('huserinfocreate', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
+  } finally {
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
-function* handleCreateNewAd({ newAd, images }) {
-  console.log('newAd', newAd);
 
+function* handleRemoveAddress({ addressId }: { addressId: string }) {
+  const addresses: UserAddress[] = yield* select(
+    state => state.user.userInfo.address,
+  );
   try {
+    const filteredAddresses = addresses.filter(
+      address => address.id !== addressId,
+    );
+    yield* put(actions.user.updateUserInfo({ address: filteredAddresses }));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('profile:addressRemoved'),
+      ),
+    );
+  } catch (e) {
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('address/adddressRemoveError'),
+      ),
+    );
+  } finally {
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
+  }
+}
+
+function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
+  try {
+    yield* put(actions.ui.setOnSync(ON_SYNC.APP, true));
     if (images.length === 0) {
       const defaultAdImage = yield* call(firebaseDb.fetchDefaultImage);
       newAd.image = defaultAdImage;
     }
-    yield* put(actions.ui.setOnSync('app', true));
     const currentUserId = api.getUserInfo().uid;
     const newAdKey: string = yield* call(
       firebaseDb.createAd,
       currentUserId,
       newAd,
     );
-    yield* call(firebaseDb.uploadImageToStorage, newAdKey, newAd.id, images);
+    yield* call(firebaseDb.uploadAdImagesToStorage, newAdKey, images);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.SUCCESS,
+        true,
+        i18n.t('ads:adSuccessfull'),
+      ),
+    );
   } catch (e) {
-    console.log('newaderror', e);
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   } finally {
-    yield* put(actions.ui.setOnSync('app', false));
+    yield* delay(3500);
+    yield* put(actions.ui.setOnSync(ON_SYNC.APP, false));
   }
 }
 
 function* handleGetUserAds() {
   try {
-    yield* put(actions.ui.setOnSync('button', true));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, true));
     const currentUser: string = api.getUserInfo().uid;
     database()
       .ref(`/users/${currentUser}`)
       .once('value')
       .then(snap => snap.val().ads);
   } catch (e) {
-    console.log('get user ads error', e);
+    yield* put(
+      actions.ui.setStatus(
+        ERROR_TYPE.ERROR,
+        true,
+        i18n.t('errors:thereWasError'),
+      ),
+    );
   } finally {
-    yield* put(actions.ui.setOnSync('button', false));
+    yield* put(actions.ui.setOnSync(ON_SYNC.BUTTON, false));
   }
 }
 
@@ -184,4 +290,6 @@ export function* userSaga() {
   yield* takeEvery(constants.user.GET_USER_ADS, handleGetUserAds);
   yield* takeEvery(constants.user.CREATE_NEW_AD, handleCreateNewAd);
   yield* takeEvery(constants.user.ADD_ADDRESS, handleAddNewAddress);
+  yield* takeEvery(constants.user.REMOVE_ADDRESS, handleRemoveAddress);
+  yield* takeEvery(constants.user.EDIT_ADDRESS, handleEditAddress);
 }

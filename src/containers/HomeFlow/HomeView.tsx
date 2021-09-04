@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { FlatList } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Company,
-  Container,
   EmptyView,
   HomeHeader,
   HomeRow,
@@ -16,105 +14,116 @@ import {
   ScreenLoader,
 } from '../../components';
 import { actions } from '../../state/actions';
+import { ROUTES } from '../../routes/RouteNames';
+import {
+  Category,
+  CompanyProduct,
+  CompanyProps,
+} from '../../state/app/AppInterfaces';
 
 export const HomeView: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const allCompanies = useSelector(state => state.app.allCompanies);
-  const allCategories = useSelector(state => state.app.categories);
-  const allProducts = useSelector(state => state.app.allProducts);
-  const allAds = useSelector(state => state.app.allAppAds);
+  const theme = useTheme();
+  const { allCompanies, categories, allProducts, allAppAds } = useSelector(
+    state => state.app,
+  );
 
   useEffect(() => {
-    // later add functionality to fetch everything with only one dispatch
     dispatch(actions.app.fetchCategories());
-    dispatch(actions.app.fetchAllCompanies());
-    dispatch(actions.app.fetchAllAds());
   }, [dispatch]);
 
   const renderAllAds = useCallback(
-    ({ item }) => <ProduceItem width={200} item={item} />,
+    ({ item }) => (
+      <ProduceItem
+        width={200}
+        item={item}
+        onPress={ROUTES.SingleAdView}
+        isAdItem={true}
+      />
+    ),
     [],
+  );
+  const renderAllCategories = ({ item }: { item: Category }) => (
+    <ProduceItem onPress={ROUTES.SingleCategory} item={item} />
+  );
+  const renderAllCompanies = ({ item }: { item: CompanyProps }) => (
+    <Company width={325} companyItem={item} />
+  );
+  const renderAllProducts = ({ item }: { item: CompanyProduct }) => (
+    <Product width={325} allCompanies={allCompanies} item={item} height={200} />
   );
 
   return (
-    <Container>
-      <HomeHeader title={t('home:title')} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <HomeContent>
-          {/* CATEGORIES ROW ( RENAME NEEDED ) */}
-          <HomeRow title={t('home:row Produce')}>
-            {allCategories ? (
-              <FlatList
-                data={allCategories}
-                renderItem={({ item }) => <ProduceItem item={item} />}
-                keyExtractor={item => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            ) : (
-              <ScreenLoader color={'red'} size={50} />
-            )}
-          </HomeRow>
-          {/* COMPANIES ROW */}
-          <HomeRow title={t('home:row Company')}>
-            {allCompanies ? (
-              <FlatList
-                data={allCompanies}
-                renderItem={({ item }) => (
-                  <Company width={325} companyItem={item} />
-                )}
-                keyExtractor={item => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            ) : (
-              <ScreenLoader color={'red'} size={50} />
-            )}
-          </HomeRow>
-          {/* PRODUCTS ROW */}
-          <HomeRow title={t('home:row Products')}>
-            {allProducts ? (
-              <FlatList
-                data={allProducts}
-                renderItem={({ item }) => (
-                  <Product
-                    width={325}
-                    allCompanies={allCompanies}
-                    item={item}
-                    height={200}
-                  />
-                )}
-                keyExtractor={item => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            ) : (
-              <ScreenLoader color={'red'} size={50} />
-            )}
-          </HomeRow>
-          {/* ADS ROW */}
-          <HomeRow title={t('home:row Ads')}>
-            {allAds ? (
-              <FlatList
-                data={allAds}
-                renderItem={renderAllAds}
-                keyExtractor={item => item.id}
-                horizontal
-                ListEmptyComponent={<EmptyView text={'No ads available'} />}
-                showsHorizontalScrollIndicator={false}
-              />
-            ) : (
-              <ScreenLoader color={'red'} size={50} />
-            )}
-          </HomeRow>
-        </HomeContent>
-      </ScrollView>
-    </Container>
+    <>
+      <HomeContent keyboardShouldPersistTaps="always">
+        <HomeHeader title={t('home:title')} />
+        {/* CATEGORIES ROW */}
+        <HomeRow title={t('home:rowProduce')}>
+          {categories ? (
+            <FlatList
+              nestedScrollEnabled
+              data={categories}
+              renderItem={renderAllCategories}
+              keyExtractor={item => item.id.toString()}
+              horizontal
+              ListEmptyComponent={<EmptyView />}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : (
+            <ScreenLoader color={theme.colors.primary} size={50} />
+          )}
+        </HomeRow>
+        {/* COMPANIES ROW */}
+        <HomeRow title={t('home:rowCompany')}>
+          {allCompanies ? (
+            <FlatList
+              data={allCompanies}
+              renderItem={renderAllCompanies}
+              keyExtractor={item => item.id}
+              horizontal
+              ListEmptyComponent={<EmptyView />}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : (
+            <ScreenLoader color={theme.colors.primary} size={50} />
+          )}
+        </HomeRow>
+        {/* PRODUCTS ROW */}
+        <HomeRow title={t('home:rowProducts')}>
+          {allProducts ? (
+            <FlatList
+              data={allProducts}
+              renderItem={renderAllProducts}
+              ListEmptyComponent={<EmptyView />}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : (
+            <ScreenLoader color={theme.colors.primary} size={50} />
+          )}
+        </HomeRow>
+        {/* ADS ROW */}
+        <HomeRow title={t('home:rowAds')}>
+          {allAppAds ? (
+            <FlatList
+              data={allAppAds}
+              renderItem={renderAllAds}
+              keyExtractor={item => item.id}
+              horizontal
+              ListEmptyComponent={<EmptyView />}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : (
+            <ScreenLoader color={theme.colors.primary} size={50} />
+          )}
+        </HomeRow>
+      </HomeContent>
+    </>
   );
 };
 
-const HomeContent = styled.View`
-  flex: 1;
-  align-items: center;
+const HomeContent = styled.ScrollView.attrs({ flex: 1 })`
+  background-color: ${props => props.theme.colors.background};
 `;

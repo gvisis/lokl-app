@@ -1,32 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { actions } from '../actions';
-import { AdsProps } from '../app/AppInterfaces';
 import { constants } from '../constants';
-
-export interface UserAddress {
-  id: string;
-  name: string;
-  phone: string;
-  street: string;
-  city: string;
-  country: string;
-  postcode: string;
-  default: boolean;
-}
-
-export interface UserProps {
-  username: string;
-  name: string;
-  email: string;
-  phone?: string;
-  address?: UserAddress[];
-  ads?: AdsProps[];
-}
-
-export interface UserReducerState {
-  userInfo: UserProps;
-}
+import { UserReducerState } from './UserInterfaces';
 
 const INITIAL_STATE: UserReducerState = {
   userInfo: null,

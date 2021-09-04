@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { actions } from '../../state/actions';
 import { ErrorType } from '../../types/general';
+import { ERROR_TYPE } from '../../utils/variables';
 
 export const GlobalErrorSuccess: React.FC = () => {
   const { error, success, message } = useSelector(state => state.ui.status);
@@ -11,10 +12,10 @@ export const GlobalErrorSuccess: React.FC = () => {
   let errorType: ErrorType = null;
 
   if (error) {
-    errorType = 'error';
+    errorType = ERROR_TYPE.ERROR;
   }
   if (success) {
-    errorType = 'success';
+    errorType = ERROR_TYPE.SUCCESS;
   }
 
   const dispatch = useDispatch();

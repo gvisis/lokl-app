@@ -21,10 +21,11 @@ export const AuthNavigation: React.FC = () => (
       headerShown: false,
       gestureDirection: 'horizontal',
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    }}>
-    <AuthStack.Screen name={ROUTES.Signup} component={RegisterView} />
-    <AuthStack.Screen name={ROUTES.Login} component={LoginView} />
+    }}
+  >
     <AuthStack.Screen name={ROUTES.Landing} component={LandingView} />
+    <AuthStack.Screen name={ROUTES.Login} component={LoginView} />
+    <AuthStack.Screen name={ROUTES.Signup} component={RegisterView} />
     <AuthStack.Screen
       name={ROUTES.ForgotPassword}
       component={ForgotPasswordView}

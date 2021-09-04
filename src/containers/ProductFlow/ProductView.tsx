@@ -1,5 +1,4 @@
 import React, {
-  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -8,151 +7,159 @@ import React, {
 } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import { ROUTES } from 'src/routes/RouteNames';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { AirbnbRating } from 'react-native-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useNavigation, useRoute } from '@react-navigation/core';
+import * as _ from 'lodash';
 
-import {
-  CART_ACTION,
-  ComponentNavProps,
-  ProductAddAction,
-} from '../../types/general';
+import { ProductAddAction, ProductScreenProps } from '../../types/general';
 import { Container, CustomBtn } from '../../components';
 import { actions } from '../../state/actions';
-import { CompanyProduct } from '../../state/app/AppInterfaces';
-import { calcRatingAverage } from '../../utils/functions';
+import {
+  calcRatingAverage,
+  getCategoryTitleFromId,
+  getFormatedPrice,
+} from '../../utils/functions';
+import { CART_ACTION, ERROR_TYPE, RATING_ICON } from '../../utils/variables';
 import { api } from '../../api';
-import { ItemHeader } from '../../components/itemHeader/ItemHeader';
+import { ItemHeader } from '../../components/headers/ItemHeader';
 
-interface ProductViewProps extends ComponentNavProps<ROUTES.SingleProduct> {
-  item?: CompanyProduct;
-}
+export const ProductView: React.FC = () => {
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [productTotalPrice, setProductTotalPrice] = useState(0);
 
-// eslint-disable-next-line react/display-name
-export const ProductView: React.FC<ProductViewProps> = memo(
-  ({ navigation, route }) => {
-    const [selectedQuantity, setSelectedQuantity] = useState(0);
-    const [productTotalPrice, setProductTotalPrice] = useState(0);
-    const { item, productOwnerTitle } = route.params;
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { params } = useRoute();
+  const categories = useSelector(state => state.app.categories);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ['0%', '40%'], []);
 
-    const dispatch = useDispatch();
+  const { item, productOwnerTitle }: ProductScreenProps = params;
 
-    // =========== BottomSheet config =================
-    const bottomSheetRef = useRef<BottomSheet>(null);
-    const snapPoints = useMemo(() => ['0%', '40%'], []);
+  const handleSheetChanges = useCallback(() => {
+    setSelectedQuantity(0);
+  }, []);
 
-    const handleSheetChanges = useCallback(() => {
-      setSelectedQuantity(0);
-    }, []);
+  const handleOpenSheet = () => bottomSheetRef.current.expand();
 
-    const handleOpenSheet = () => bottomSheetRef.current.expand();
+  const handleAddToCart = () => {
+    if (selectedQuantity !== 0) {
+      dispatch(
+        actions.cart.checkCartActions(CART_ACTION.ADD, item, selectedQuantity),
+      );
+      dispatch(
+        actions.ui.setStatus(ERROR_TYPE.SUCCESS, true, t('cart:productAdded')),
+      );
+    }
+    bottomSheetRef.current.close();
+  };
 
-    const handleAddToCart = () => {
-      if (selectedQuantity !== 0) {
-        dispatch(actions.cart.checkCartActions('add', item, selectedQuantity));
-        dispatch(
-          actions.ui.setStatus('success', true, 'Product added to cart'),
-        );
+  const handleQuantityChange = useCallback(
+    (actions: ProductAddAction) => {
+      if (actions === CART_ACTION.INC && selectedQuantity < 10) {
+        setSelectedQuantity(selectedQuantity + 1);
       }
-      bottomSheetRef.current.close();
-    };
-    //==================================================
+      if (actions === CART_ACTION.DEC && selectedQuantity > 0) {
+        setSelectedQuantity(selectedQuantity - 1);
+      }
+    },
+    [selectedQuantity],
+  );
 
-    const handleQuantityChange = useCallback(
-      (actions: ProductAddAction) => {
-        if (actions === 'inc' && selectedQuantity < 10) {
-          setSelectedQuantity(selectedQuantity + 1);
-        }
-        if (actions === 'dec' && selectedQuantity > 0) {
-          setSelectedQuantity(selectedQuantity - 1);
-        }
-      },
-      [selectedQuantity],
-    );
+  useEffect(() => {
+    setProductTotalPrice(_.multiply(parseFloat(item.price), selectedQuantity));
+  }, [selectedQuantity]);
 
-    useEffect(() => {
-      setProductTotalPrice(item.price * selectedQuantity);
-    }, [selectedQuantity]);
+  useEffect(() => {
+    navigation.setOptions({ title: item.title });
+  }, [item]);
 
-    useEffect(() => {
-      navigation.setOptions({ title: item.title });
-    }, [item]);
+  const handleRating = (userRating: number) => {
+    const currentUserId = api.getUserInfo().uid;
+    const newRatingObject = { id: currentUserId, rating: userRating };
+    dispatch(actions.app.setProductRating(item, newRatingObject));
+  };
+  const categoryTitle = getCategoryTitleFromId(categories, item.category);
+  return (
+    <Container>
+      <ItemHeader
+        productOwnerTitle={productOwnerTitle}
+        categoryTitle={categoryTitle}
+        item={item}
+      />
+      <ItemMidSection>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <ItemDescription>{item.description}</ItemDescription>
+        </ScrollView>
+      </ItemMidSection>
+      <ItemFooter>
+        <ItemRating>{t('common:rating')}</ItemRating>
+        <AirbnbRating
+          count={5}
+          showRating={false}
+          defaultRating={calcRatingAverage(item.ratings)}
+          onFinishRating={handleRating}
+          size={25}
+          starImage={RATING_ICON}
+        />
+      </ItemFooter>
+      <AddWrap>
+        <CustomBtn
+          onPress={handleOpenSheet}
+          center
+          secondary
+          label={t('cart:addToCart')}
+        />
+      </AddWrap>
 
-    const handleRating = (userRating: number) => {
-      const currentUserId = api.getUserInfo().uid;
-      const newRatingObject = { id: currentUserId, rating: userRating };
-      dispatch(actions.app.setProductRating(item, newRatingObject));
-    };
-
-    const ratingCustomImage = require('../../assets/images/ratingfull.png');
-    return (
-      <Container>
-        <ItemHeader productOwnerTitle={productOwnerTitle} item={item} />
-        <ItemMidSection>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <ItemDescription>{item.description}</ItemDescription>
-          </ScrollView>
-        </ItemMidSection>
-        <ItemFooter>
-          <ItemRating>Rate:</ItemRating>
-          <AirbnbRating
-            count={5}
-            showRating={false}
-            defaultRating={calcRatingAverage(item.ratings)}
-            onFinishRating={handleRating}
-            size={25}
-            starImage={ratingCustomImage}
-          />
-        </ItemFooter>
-        <AddWrap>
-          <CustomBtn
-            onPress={handleOpenSheet}
-            center
-            secondary
-            label="Add to cart"
-          />
-        </AddWrap>
-
-        <BottomSheet
-          ref={bottomSheetRef}
-          index={0}
-          animateOnMount
-          backdropComponent={BottomSheetBackdrop}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
-          <SheetWrap>
-            <SheetTitle>{item.title}</SheetTitle>
-            <SelectWrap>
-              <SelectTitle>How many?</SelectTitle>
-              <SelectOptionWrap>
-                <TouchableOpacity
-                  onPress={() => handleQuantityChange(CART_ACTION.DEC)}>
-                  <IncDecButton name="minus-circle" size={50} />
-                </TouchableOpacity>
-                <QuantityValue>{selectedQuantity}</QuantityValue>
-                <TouchableOpacity
-                  onPress={() => handleQuantityChange(CART_ACTION.INC)}>
-                  <IncDecButton name="plus-circle" size={50} />
-                </TouchableOpacity>
-              </SelectOptionWrap>
-              <SelectTitle>Total price: ${productTotalPrice}</SelectTitle>
-            </SelectWrap>
-            <SheetFooter>
-              <CustomBtn
-                onPress={handleAddToCart}
-                center
-                secondary
-                label="Add items"
-              />
-            </SheetFooter>
-          </SheetWrap>
-        </BottomSheet>
-      </Container>
-    );
-  },
-);
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={0}
+        animateOnMount
+        backdropComponent={BottomSheetBackdrop}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+      >
+        <SheetWrap>
+          <SheetTitle>{item.title}</SheetTitle>
+          <SelectWrap>
+            <SelectTitle>{t('cart:howMany')}</SelectTitle>
+            <SelectOptionWrap>
+              <TouchableOpacity
+                onPress={() => handleQuantityChange(CART_ACTION.DEC)}
+              >
+                <IncDecButton name="minus-circle" size={50} />
+              </TouchableOpacity>
+              <QuantityValue>{selectedQuantity}</QuantityValue>
+              <TouchableOpacity
+                onPress={() => handleQuantityChange(CART_ACTION.INC)}
+              >
+                <IncDecButton name="plus-circle" size={50} />
+              </TouchableOpacity>
+            </SelectOptionWrap>
+            <SelectTitle>
+              {t('cart:total')}
+              {getFormatedPrice(productTotalPrice)}
+            </SelectTitle>
+          </SelectWrap>
+          <SheetFooter>
+            <CustomBtn
+              onPress={handleAddToCart}
+              center
+              secondary
+              label={t('cart:addToCart')}
+            />
+          </SheetFooter>
+        </SheetWrap>
+      </BottomSheet>
+    </Container>
+  );
+};
 
 const ItemMidSection = styled.View`
   flex: 2;
@@ -226,8 +233,8 @@ const IncDecButton = styled(Icon)`
   color: ${({ theme }) => theme.colors.primary};
 `;
 const QuantityValue = styled.Text`
-  margin: 5px;
-  padding: 5px;
+  margin: 5px 10px;
+  width: 50px;
   font-size: ${({ theme }) => theme.fonts.size.xxxl}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.secondary};

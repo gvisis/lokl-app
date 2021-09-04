@@ -13,6 +13,7 @@ export const lightTheme = {
     tertiary1: '#2ECF80',
     tertiary2: '#23C77C',
     tertiary3: '#F0F9F5',
+    tertiary85: '#25C97CD9',
     background: '#F9FAFE',
     background5: '#F9FAFE0D',
     background10: '#F9FAFE1A',
@@ -26,6 +27,8 @@ export const lightTheme = {
     red: '#FF1D1D',
     red1: '#FFE8E8',
     error: '#edfe00',
+    transparent: 'transparent',
+    textPrimary: '#1D203A',
   },
   fonts: {
     size: {

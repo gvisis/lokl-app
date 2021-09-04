@@ -1,2 +1,2 @@
 export * from './CompanyView';
-export * from './CategoryView';
+export * from './CompCategoryView';

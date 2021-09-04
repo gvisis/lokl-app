@@ -1,44 +1,51 @@
-import React, { useCallback, useState } from 'react';
-import {
-  GestureResponderEvent,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { css, useTheme } from 'styled-components/native';
 import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {
+  ImageLibraryOptions,
+  launchImageLibrary,
+} from 'react-native-image-picker';
+import { useTranslation } from 'react-i18next';
 
 import {
   CategoryPicker,
   Container,
   CustomBtn,
   ProfileRow,
+  ScreenLoader,
 } from '../../components';
 import { actions } from '../../state/actions';
 import { validator } from '../../utils/validators';
 import { getImageObject, guidGenerator } from '../../utils/functions';
 import { api } from '../../api';
+import { ERROR_TYPE } from '../../utils/variables';
 
-interface AddAdViewProps {
-  onPress?: (event: GestureResponderEvent) => void;
-}
-export const AddAdView: React.FC<AddAdViewProps> = () => {
+export const AddAdView: React.FC = () => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState<string>('date');
   const [tempImages, setTempImages] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [pickedCategory, setPickedCategory] = useState<string>(null);
+  const { onSync } = useSelector(state => state.ui);
 
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const handleAdSubmit = values => {
+  interface AdSubmitValues {
+    title: string;
+    description: string;
+    price: string;
+  }
+
+  //! MOVE VALUES TO SAGA, SAVE SPACE. SAVE THE PLANET
+  const handleAdSubmit = (values: AdSubmitValues) => {
     const { title, description, price } = values;
     dispatch(
       actions.user.createNewAd(
@@ -49,38 +56,41 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
           price,
           description,
           ownerId: api.getUserInfo().uid,
-          dateRequired: date.toLocaleDateString(),
+          dateRequired: date.toString(),
           dateAdded: new Date().toString(),
         },
         tempImages,
       ),
     );
-    navigation.goBack();
   };
-  // ===== IMAGE PICKER =====
+
+  useEffect(() => {
+    if (onSync.app) {
+      navigation.goBack();
+    }
+  }, [onSync.app]);
+
   const handleImagePicker = useCallback(() => {
-    const options = {
+    const options: ImageLibraryOptions = {
       mediaType: 'photo',
       quality: 1,
-      maxWidth: 1920,
-      maxHeight: 1080,
+      maxWidth: 1280,
+      maxHeight: 1024,
     };
     launchImageLibrary(options, ({ errorMessage, assets }) => {
       if (assets) {
         setTempImages(tempImages => [...tempImages, getImageObject(assets)]);
       }
       if (errorMessage) {
-        dispatch(actions.ui.setStatus('error', true, errorMessage));
+        dispatch(actions.ui.setStatus(ERROR_TYPE.ERROR, true, errorMessage));
       }
     });
   }, [tempImages]);
-  // ===== END IMAGE PICKER =====
 
-  // ======== DATE PICKER ========
   const showDatepicker = () => {
     showMode('date');
   };
-  const onChange = (event, selectedDate) => {
+  const onChange = (_event: Event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
     setDate(currentDate);
@@ -90,114 +100,104 @@ export const AddAdView: React.FC<AddAdViewProps> = () => {
     setShowDatePicker(true);
     setMode(currentMode);
   };
-  // ===== END DATE PICKER =====
 
   return (
     <Container>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Formik
-          initialValues={{
-            price: '',
-            description: '',
-            title: '',
-          }}
-          enableReinitialize
-          validationSchema={validator.ad}
-          onSubmit={values => handleAdSubmit(values)}>
-          {({ errors, values, handleChange, handleSubmit, touched }) => (
-            <AdContainer>
-              {errors.title && touched.title && (
-                <ErrorMessage>{errors.title}</ErrorMessage>
+      <Formik
+        initialValues={{
+          price: '',
+          description: '',
+          title: '',
+        }}
+        enableReinitialize
+        validationSchema={validator.ad}
+        onSubmit={values => handleAdSubmit(values)}
+      >
+        {({ errors, values, handleChange, handleSubmit, touched }) => (
+          <AdContainer>
+            {errors.title && touched.title && (
+              <ErrorMessage>{errors.title}</ErrorMessage>
+            )}
+            <ProfileRow
+              onChangeText={handleChange('title')}
+              text={values.title}
+              editable
+              placeholder={t('ads:titlePlaceholder')}
+            />
+            <AdHeader>
+              {tempImages.length != 0 &&
+                tempImages.map(image => (
+                  <AddedImage key={image.id} source={{ uri: image.url }} />
+                ))}
+              {(tempImages === null || tempImages.length != 3) && (
+                <AddImage onPress={handleImagePicker}>
+                  <AddImageText>{t('ads:exampleImg')}</AddImageText>
+                  <Icon name={'image-plus'} size={25} />
+                </AddImage>
+              )}
+            </AdHeader>
+            {errors.price && (
+              <AdRowWrap errorText={true}>
+                {errors.price && touched.price && (
+                  <ErrorMessage>{errors.price}</ErrorMessage>
+                )}
+              </AdRowWrap>
+            )}
+            <AdRowWrap>
+              <CategoryPicker
+                value={pickedCategory}
+                onValueChange={setPickedCategory}
+              />
+              <PriceInput
+                placeholderTextColor={theme.colors.lightGrey1}
+                keyboardType="numeric"
+                onChangeText={handleChange('price')}
+                placeholder={t('ads:pricePlaceholder')}
+                value={values.price}
+              />
+            </AdRowWrap>
+            <AdDescriptionWrap>
+              {errors.description && touched.description && (
+                <ErrorMessage>{errors.description}</ErrorMessage>
               )}
               <ProfileRow
-                onChangeText={handleChange('title')}
-                text={values.title}
+                onChangeText={handleChange('description')}
+                text={values.description}
                 editable
-                placeholder={'What are you looking for?'}
+                placeholder={t('ads:descriptionPlaceholder')}
+                multiline
               />
-              {/* TITLE */}
-              <AdHeader>
-                {tempImages.length != 0 &&
-                  tempImages.map(image => (
-                    <AddedImage key={image.id} source={{ uri: image.url }} />
-                  ))}
-                {(tempImages === null || tempImages.length != 3) && (
-                  <AddImage onPress={handleImagePicker}>
-                    <AddImageText>Select example image</AddImageText>
-                    <Icon name={'image-plus'} size={25} />
-                  </AddImage>
-                )}
-              </AdHeader>
-              {/* TITLE END */}
-              {/* ERRORS TOP*/}
-              {errors.price && (
-                <AdRowWrap errorText>
-                  {errors.category && touched.category && (
-                    <ErrorMessage>Please select a category</ErrorMessage>
-                  )}
-                  {errors.price && touched.price && (
-                    <ErrorMessage>{errors.price}</ErrorMessage>
-                  )}
-                </AdRowWrap>
+            </AdDescriptionWrap>
+            <AdRowWrap>
+              <ProfileRow
+                rowLeft={<CalendarIcon name={'calendar-outline'} />}
+                rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
+                onPress={showDatepicker}
+                text={t('ads:needBy')}
+              />
+              {showDatePicker && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  minimumDate={new Date()}
+                  maximumDate={new Date(2030, 11, 31)}
+                  is24Hour={true}
+                  display="calendar"
+                  onChange={onChange}
+                />
               )}
-              {/* ERRORS TOP END */}
-              {/* CATEGORY PICKER */}
-              <AdRowWrap>
-                <CategoryPicker
-                  value={pickedCategory}
-                  onValueChange={setPickedCategory}
-                />
-                <PriceInput
-                  placeholderTextColor={theme.colors.lightGrey1}
-                  keyboardType="numeric"
-                  onChangeText={handleChange('price')}
-                  placeholder={'Enter max price'}
-                  value={values.price}
-                />
-              </AdRowWrap>
-              {/* CATEGORY PICKER END */}
-              {/* DESCRIPTION */}
-              <AdDescriptionWrap>
-                {errors.description && touched.description && (
-                  <ErrorMessage>{errors.description}</ErrorMessage>
-                )}
-                <ProfileRow
-                  onChangeText={handleChange('description')}
-                  text={values.description}
-                  editable
-                  placeholder="Describe what are you looking for.."
-                  multiline
-                />
-              </AdDescriptionWrap>
-              {/* DESCRIPTION END */}
-              {/* DATE PICKER  */}
-              <AdRowWrap>
-                <ProfileRow
-                  rowLeft={<CalendarIcon name={'calendar-outline'} />}
-                  rowRight={<DateText>{date.toLocaleDateString()}</DateText>}
-                  onPress={showDatepicker}
-                  text={'I need it by (select): '}
-                />
-                {showDatePicker && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    minimumDate={new Date()}
-                    maximumDate={new Date(2030, 11, 31)}
-                    is24Hour={true}
-                    format="DD-MM-YYYY"
-                    display="calendar"
-                    onChange={onChange}
-                  />
-                )}
-              </AdRowWrap>
-              {/* DATE PICKER END */}
-              <CustomBtn center label={'Create'} onPress={handleSubmit} />
-            </AdContainer>
-          )}
-        </Formik>
-      </TouchableWithoutFeedback>
+            </AdRowWrap>
+            <CustomBtn
+              disabled={onSync.app}
+              center
+              label={'Create'}
+              onPress={handleSubmit}
+            />
+          </AdContainer>
+        )}
+      </Formik>
+      {onSync.app && <ScreenLoader size={50} color={theme.colors.primary} />}
     </Container>
   );
 };
@@ -221,7 +221,7 @@ const AdHeader = styled.View`
   border-color: ${({ theme }) => theme.colors.lightGrey1}; ;
 `;
 
-const AdRowWrap = styled.View`
+const AdRowWrap = styled.View<{ errorText?: boolean }>`
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -238,12 +238,14 @@ const CalendarIcon = styled(Icon)`
   color: ${({ theme }) => theme.colors.secondary};
 `;
 const DateText = styled.Text`
-  background-color: ${({ theme }) => theme.colors.primary};
-  padding: 10px 5px;
+	margin-right: 5px;
+  padding: 5px;
   border-radius: ${({ theme }) => theme.border.radius5}px;
-  color: ${({ theme }) => theme.colors.primary3};
+  color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.family.benton};
-  elevation: 1;
+  border-width: 1px;
+	text-align: center
+  border-color: ${({ theme }) => theme.colors.primary};
 `;
 const PriceInput = styled.TextInput`
   flex: 0.3;
@@ -285,4 +287,3 @@ const AddImageText = styled.Text`
   color: ${({ theme }) => theme.colors.lightGrey};
   text-align: center;
 `;
-// IMAGE PICKER END

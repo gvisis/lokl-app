@@ -1,2 +1,2 @@
 export * from './HomeView';
-export * from './ProduceView';
+export * from './CategoriesView';

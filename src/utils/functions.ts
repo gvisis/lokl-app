@@ -1,18 +1,29 @@
-import storage from '@react-native-firebase/storage';
+import i18n from 'i18next';
+import { Asset } from 'react-native-image-picker';
 
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import { ROUTES } from '../routes/RouteNames';
 import {
+  AdsProps,
+  Category,
   CompanyProduct,
   CompanyProps,
   RatingData,
 } from '../state/app/AppInterfaces';
 import { AnyObject } from '../types/general';
+import { TAB_ICONS } from './variables';
 
 export const capitalizeFirst = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
 
 export const sortAsc = (a: string, b: string) => a.localeCompare(b);
 export const sortDesc = (a: string, b: string) => b.localeCompare(a);
+
+export const getCategoryTitleFromId = (categories: Category[], id: string) => {
+  const category = categories.find(category => category.id === id);
+  return category ? category.title : '';
+};
 
 export const guidGenerator = () => {
   const S4 = function () {
@@ -34,6 +45,59 @@ export const guidGenerator = () => {
   );
 };
 
+export const getSearchFilteredResults = (
+  products: CompanyProduct[],
+  companies: CompanyProps[],
+  ads: AdsProps[],
+  searchValue: string,
+) => {
+  let searchResults: AnyObject[] = [];
+
+  if (searchValue !== '') {
+    const filteredProducts = products.filter(
+      product =>
+        product.title.includes(searchValue) ||
+        product.description.includes(searchValue),
+    );
+    const filteredCompanies = companies.filter(
+      company =>
+        company.title.includes(searchValue) ||
+        company.description.includes(searchValue),
+    );
+    const filteredAds = ads.filter(
+      ad =>
+        ad.title.includes(searchValue) || ad.description.includes(searchValue),
+    );
+    searchResults = [...filteredProducts, ...filteredCompanies, ...filteredAds];
+  } else {
+    searchResults = [];
+  }
+  return searchResults;
+};
+
+export const getCategoryItemsFromIds = (
+  companies: CompanyProps[],
+  categoryId: string,
+) =>
+  companies
+    .map(company => company['produce'])
+    .flat()
+    .filter(product => product.category === categoryId);
+
+export const getFormatedPrice = (price: number) =>
+  new Intl.NumberFormat('lt-LT', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(price);
+
+export const getImagesFromObject = (item: ImagesFromObject) => {
+  const imgArray = [];
+  for (const key in item.images) {
+    imgArray.push({ id: key, url: item.images[key] });
+  }
+  return imgArray;
+};
+
 export const getProductOwnerTitle = (
   allCompanies: CompanyProps[],
   item: CompanyProduct,
@@ -42,11 +106,19 @@ export const getProductOwnerTitle = (
     .filter(company => company.id === item.owner)
     .map(company => company.title)[0];
 
-export const calcRatingAverage = (ratings: RatingData[]) =>
-  ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length;
+export const calcRatingAverage = (ratings: RatingData[]) => {
+  if (ratings && ratings.length !== 0) {
+    return (
+      ratings.reduce((acc, rating) => acc + rating.rating, 0) / ratings.length
+    );
+  }
+  return 0;
+};
+
+export type CheckForRatings = CompanyProduct | CompanyProps;
 
 export const checkForRatings = (
-  ratedItem: AnyObject,
+  ratedItem: CheckForRatings,
   ratingData: RatingData,
 ) => {
   const { id, rating } = ratingData;
@@ -78,61 +150,55 @@ export const checkForRatings = (
   return updatedData;
 };
 
-export const getHeaderTitle = routeName => {
-  // If the focused route is not found, we need to assume it's the initial screen
-  // This can happen during if there hasn't been any navigation inside the screen
-  // In our case, it's "Home" as that's the first screen inside the navigator
+export const getHeaderTitle = (routeName: string) => {
   switch (routeName) {
     case ROUTES.Profile:
-      return 'Profile';
+      return i18n.t('profile:title');
     case ROUTES.ProfileEdit:
-      return 'Edit Profile';
+      return i18n.t('profile:editProfile');
     case ROUTES.Settings:
-      return 'Settings';
+      return i18n.t('profile:settings');
     case ROUTES.Home:
-      return 'Home';
-    case ROUTES.Cart:
-      return 'Shopping Cart';
+      return i18n.t('home:home');
     case ROUTES.Address:
-      return 'Addresses';
+      return i18n.t('profile:addresses');
     case ROUTES.AddAddress:
-      return 'Add new address';
+      return i18n.t('common:addNewAddress');
     default:
-      return 'Home';
+      return i18n.t('home:home');
   }
 };
 
 export const getTabLabel = (routeName: string) => {
   switch (routeName) {
     case ROUTES.HomeTab:
-      return capitalizeFirst(ROUTES.Home);
+      return capitalizeFirst(i18n.t('home:home'));
     case ROUTES.AdsTab:
-      return capitalizeFirst(ROUTES.Ads);
+      return capitalizeFirst(i18n.t('ads:title'));
     case ROUTES.Profile:
-      return capitalizeFirst(ROUTES.Profile);
+      return capitalizeFirst(i18n.t('profile:title'));
     case ROUTES.CartTab:
-      return capitalizeFirst(ROUTES.Cart);
+      return capitalizeFirst(i18n.t('cart:title'));
     default:
-      return capitalizeFirst(ROUTES.Home);
+      return capitalizeFirst(i18n.t('home:home'));
   }
 };
-
 export const getTabIconName = (routeName: string) => {
   switch (routeName) {
     case ROUTES.HomeTab:
-      return 'home';
+      return TAB_ICONS.Home;
     case ROUTES.AdsTab:
-      return 'tag';
+      return TAB_ICONS.Tag;
     case ROUTES.Profile:
-      return 'user';
+      return TAB_ICONS.User;
     case ROUTES.CartTab:
-      return 'shopping-cart';
+      return TAB_ICONS.Cart;
     default:
-      return 'home';
+      return TAB_ICONS.Home;
   }
 };
 
-export const getImageObject = assets => {
+export const getImageObject = (assets: Asset[]) => {
   const imageUrl = assets[0].uri;
   const imageId = assets[0].uri.split('temp_')[1].split('.jpg')[0];
   return { url: imageUrl, id: imageId };

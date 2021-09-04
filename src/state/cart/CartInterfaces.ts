@@ -1,13 +1,16 @@
 import { CompanyProduct } from '../app/AppInterfaces';
-import { UserAddress } from '../user/UserReducer';
+import { UserAddress } from '../user/UserInterfaces';
+import { CART_ACTION } from '../../utils/variables';
 
-export type ActionType = 'add' | 'remove';
+export type ActionType = CART_ACTION.ADD | CART_ACTION.REMOVE;
 
 export interface CartReducer {
   cart: CompanyProduct[];
   total: number;
   quantity: number;
   shippingAddress: UserAddress;
+  stage: string;
+  finishPurchase: boolean;
 }
 
 // CartSagas
@@ -18,5 +21,6 @@ export interface CartActions {
   type?: string;
 }
 export interface CartRemove {
+  type: CART_ACTION.REMOVE;
   itemToRemove: CompanyProduct;
 }

@@ -16,6 +16,7 @@ declare module 'styled-components/native' {
       tertiary1: string;
       tertiary2: string;
       tertiary3: string;
+      tertiary85: string;
       background: string;
       background5: string;
       background10: string;
@@ -29,6 +30,8 @@ declare module 'styled-components/native' {
       red: string;
       red1: string;
       error: string;
+      transparent: string;
+      textPrimary: string;
     };
     fonts: {
       size: {
@@ -53,7 +56,6 @@ declare module 'styled-components/native' {
         bentonBook: string;
       };
     };
-    width: number;
     border: {
       radius5: number;
       radius10: number;

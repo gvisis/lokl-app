@@ -11,6 +11,8 @@ import { AirbnbRating } from 'react-native-ratings';
 import { ROUTES } from '../../routes/RouteNames';
 import { Category, CompanyProps } from '../../state/app/AppInterfaces';
 import { calcRatingAverage } from '../../utils/functions';
+import { SizeProps } from '../../types/general';
+import { RATING_ICON } from '../../utils/variables';
 
 export interface CompanyItemProps {
   companyItem: CompanyProps;
@@ -27,7 +29,6 @@ export const Company: React.FC<CompanyItemProps> = ({
 }) => {
   const theme = useTheme();
   const navigation = useNavigation();
-  const ratingCustomImage = require('../../assets/images/ratingfull.png');
 
   const handleSingleProductNav = useCallback(() => {
     navigation.navigate(ROUTES.SingleCompany, { companyItem });
@@ -41,7 +42,8 @@ export const Company: React.FC<CompanyItemProps> = ({
           false,
         )}
         useForeground={true}
-        onPress={handleSingleProductNav}>
+        onPress={handleSingleProductNav}
+      >
         <ProductWrap width={width} height={height}>
           <CompanyLeft>
             <CompanyImage
@@ -60,8 +62,9 @@ export const Company: React.FC<CompanyItemProps> = ({
                 defaultRating={calcRatingAverage(companyItem.ratings)}
                 size={15}
                 selectedColor={theme.colors.red}
+                //TODO: how to declare missing type from the library
                 unSelectedColor={theme.colors.red1}
-                starImage={ratingCustomImage}
+                starImage={RATING_ICON}
               />
             </CompanyRating>
           </CompanyRight>
@@ -71,10 +74,10 @@ export const Company: React.FC<CompanyItemProps> = ({
   }
 };
 
-const ProductWrap = styled.View`
+const ProductWrap = styled.View<SizeProps>`
   margin: 10px;
-  width: ${(props: CompanyItemProps) => props.width}px;
-  height: ${(props: CompanyItemProps) => props.height}px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   flex-direction: row;
   justify-content: center;
   align-items: center;

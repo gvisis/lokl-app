@@ -1,7 +1,7 @@
-import { ErrorType } from '../../types/general';
+import { ErrorType, SetOnSync, ThemeTypes } from '../../types/general';
 import { constants } from '../constants';
 
-const setOnSync = (key: string, bool: boolean) => ({
+const setOnSync = (key: SetOnSync, bool: boolean) => ({
   type: constants.ui.SET_ON_SYNC,
   key,
   bool,
@@ -14,9 +14,9 @@ const setStatus = (key: ErrorType, bool: boolean, message: string) => ({
   message,
 });
 
-const setTheme = (bool: boolean) => ({
+const setTheme = (theme: ThemeTypes) => ({
   type: constants.ui.SET_THEME,
-  bool,
+  theme,
 });
 
 const clearErrors = () => ({

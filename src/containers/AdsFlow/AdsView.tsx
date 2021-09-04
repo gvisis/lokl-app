@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
-import { actions } from '../../state/actions';
 import {
   Container,
   CustomBtn,
@@ -15,28 +15,26 @@ import {
 } from '../../components';
 import { ROUTES } from '../../routes/RouteNames';
 import { useFunction } from '../../utils/hooks';
+import { AdsProps } from '../../state/app/AppInterfaces';
 
 export const AdsView: React.FC = () => {
-  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const adsFromState = useSelector(state => state.app.allAppAds);
   const { onSync } = useSelector(state => state.ui);
   const { navigate } = useNavigation();
   const handleCreateAd = useFunction(navigate, ROUTES.AddAd);
 
-  const renderItem = ({ item }) => (
-    <ItemCard ads onPress={ROUTES.SingleAdView} item={item} />
-  );
+  interface RenderItemProps {
+    item: AdsProps;
+  }
 
-  // Fetch all ads from server
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(actions.app.fetchAllAds());
-    }, []),
+  const renderItem = ({ item }: RenderItemProps) => (
+    <ItemCard isAdsItem={true} onPress={ROUTES.SingleAdView} item={item} />
   );
 
   return (
     <Container>
-      <HomeHeader title={'Ads View'} />
+      <HomeHeader title={t('ads:title')} />
       <AdContainer>
         {adsFromState.length !== 0 ? (
           <FlatList
@@ -47,16 +45,16 @@ export const AdsView: React.FC = () => {
             showsVerticalScrollIndicator={false}
           />
         ) : (
-          <EmptyView text="No ads available" />
+          <EmptyView />
         )}
         {onSync.app && <ScreenLoader size={100} color={'red'} />}
-        <CustomBtn label="Create new ad" center onPress={handleCreateAd} />
+        <CustomBtn label={t('ads:createNew')} center onPress={handleCreateAd} />
       </AdContainer>
     </Container>
   );
 };
 
 const AdContainer = styled.View`
-  flex: 1;
+  flex: 0.7;
   padding-bottom: 25px;
 `;

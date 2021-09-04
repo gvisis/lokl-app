@@ -1,9 +1,9 @@
 export enum ROUTES {
   // Misc
   Home = 'home',
-  Error = 'error',
   TabNav = 'tabNav',
   AuthNav = 'authNav',
+  SingleCategory = 'singleCategory',
 
   // Product
   Product = 'product',
@@ -42,9 +42,4 @@ export enum ROUTES {
   AddAddress = 'addAddress',
   EditAddress = 'editAddress',
   Settings = 'settings',
-
-  // Search flow
-  Search = 'search',
-  SearchModal = 'searchModal',
-  SearchResults = 'searchResults',
 }
