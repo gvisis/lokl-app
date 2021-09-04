@@ -10,9 +10,15 @@ import { UserProps } from './UserInterfaces';
 async function usersChannel(uid: string) {
   const db = database().ref(`/users/${uid}`);
   return eventChannel(emitter => {
-    db.on('value', snapshot => {
-      emitter({ user: snapshot.val() });
-    });
+    db.on(
+      'value',
+      snapshot => {
+        emitter({ user: snapshot.val() });
+      },
+      error => {
+        console.log('db error', error);
+      },
+    );
     return () => db.off();
   });
 }
@@ -23,15 +29,13 @@ interface UserWatcherProps {
 
 export function* watchUser() {
   const uid: string = api.getUserInfo() && api.getUserInfo().uid;
-  if (uid) {
-    const channel = yield* call(usersChannel, uid as string);
-    try {
-      while (true) {
-        const { user }: UserWatcherProps = yield* take(channel);
-        yield* put(actions.user.setUserInfo(user));
-      }
-    } catch (e) {
-      yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
+  const channel = yield* call(usersChannel, uid as string);
+  try {
+    while (true) {
+      const { user }: UserWatcherProps = yield* take(channel);
+      yield* put(actions.user.setUserInfo(user));
     }
+  } catch (e) {
+    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
   }
 }

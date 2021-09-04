@@ -13,7 +13,7 @@ import storeRegistry from '../utils/redux/storeRegistry';
 const persistorConfig = {
   key: '@<Lokl>:state',
   storage: storage,
-  whitelist: ['app'],
+  whitelist: ['app', 'cart', 'ui'],
 };
 
 export const configStore = (initialState?: PersistedAppState) => {

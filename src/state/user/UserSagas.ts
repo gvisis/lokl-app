@@ -1,11 +1,4 @@
-import {
-  call,
-  delay,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-} from 'typed-redux-saga';
+import { call, delay, put, select, takeEvery } from 'typed-redux-saga';
 import database from '@react-native-firebase/database';
 import i18n from 'i18next';
 
@@ -67,8 +60,14 @@ function* handleLogout() {
 function* handleSignup({ email, password }: UserAuthCredentials) {
   try {
     yield* put(actions.ui.setOnSync(ON_SYNC.USER, true));
-    yield* call(api.signup, email, password);
-    yield* call(handleCreateUserDb, email);
+    const signedUpUserId = yield* call(api.signup, email, password);
+    const userInfo: UserProps = {
+      username: '',
+      name: '',
+      email,
+      phone: '',
+    };
+    yield* call(firebaseDb.createUserDb, signedUpUserId, userInfo);
     yield* put(
       actions.ui.setStatus(
         ERROR_TYPE.SUCCESS,
@@ -232,23 +231,6 @@ function* handleRemoveAddress({ addressId }: { addressId: string }) {
   }
 }
 
-function* handleCreateUserDb(email: string) {
-  const userInfo: UserProps = {
-    username: '',
-    name: '',
-    email,
-    phone: '',
-    address: [],
-    ads: [],
-  };
-  try {
-    const newUserId: string = api.getUserInfo().uid;
-    database().ref(`/users/${newUserId}`).set(userInfo);
-    yield* put(actions.user.setUserInfo(userInfo));
-  } catch (e) {
-    yield* put(actions.ui.setStatus(ERROR_TYPE.ERROR, true, e.message));
-  }
-}
 function* handleCreateNewAd({ newAd, images }: CreateNewAdProps) {
   try {
     yield* put(actions.ui.setOnSync(ON_SYNC.APP, true));

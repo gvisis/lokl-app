@@ -14,8 +14,10 @@ export interface AuthInterface {
   password: string;
 }
 
-const signup: ApiProps<void> = async (email, password) => {
-  auth().createUserWithEmailAndPassword(email, password);
+const signup: ApiProps<string> = async (email, password) => {
+  const key = (await auth().createUserWithEmailAndPassword(email, password))
+    .user.uid;
+  return key;
 };
 
 const passworReset: ApiProps<void> = async (email: string) =>

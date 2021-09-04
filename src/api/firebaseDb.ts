@@ -24,6 +24,11 @@ const createAd = async (userId: string, adInfo: AdsProps): Promise<string> => {
   return newAdRef.key;
 };
 
+const createUserDb = async (id: string, userData: UserProps): Promise<void> => {
+  const newUserRef = await database().ref(`/users/${id}`);
+  await newUserRef.set(userData);
+};
+
 const fetchDefaultImage = async (): Promise<string> => {
   const defaultImageRef = await storage()
     .ref(`/images/ads/default.png`)
@@ -97,6 +102,7 @@ export const firebaseDb = {
   updateCompany,
   updateUser,
   updateProduct,
+  createUserDb,
   fetchDefaultImage,
   fetchCategories,
   fetchAdOwnerDetails,
