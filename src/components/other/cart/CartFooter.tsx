@@ -4,7 +4,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -25,7 +25,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
   const route = useRoute();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { stage, cart, finishPurchase, shippingAddress } = useSelector(
+  const { stage, finishPurchase, shippingAddress } = useSelector(
     state => state.cart,
   );
 
@@ -41,10 +41,6 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
     }
   }, [stage]);
 
-  useEffect(() => {
-    dispatch(actions.cart.getCartTotals());
-  }, [cart, dispatch]);
-
   useFocusEffect(
     useCallback(() => {
       const currentScreen = getFocusedRouteNameFromRoute(route);
@@ -59,7 +55,7 @@ export const CartFooter: React.FC<CartFooter> = memo(({ quantity, total }) => {
       </TotalItems>
       <TotalPrice>
         {t('cart:total')}
-        {getFormatedPrice(total)}
+        {getFormatedPrice(parseFloat(total))}
       </TotalPrice>
       {stage !== ROUTES.CartPaymentView ? (
         <CustomBtn

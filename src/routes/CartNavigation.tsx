@@ -17,8 +17,6 @@ export const CartNavigation: React.FC = () => {
   const { finishPurchase, stage, quantity, total } = useSelector(
     state => state.cart,
   );
-  console.log('quantity cart nav', quantity);
-
   const { t } = useTranslation();
 
   const theme = useTheme();
