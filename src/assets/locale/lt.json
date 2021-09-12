@@ -46,38 +46,20 @@
     "pay": "Mokėti",
     "addShippingAddress": "Nepasirinktas adresas"
   },
-  "common": {
-    "passReset": "Slaptažodžio atstatymas",
-    "email": "El.paštas",
-    "reset": "Atstatyti",
-    "goBack": "Grįžti",
-    "register": "Registruotis",
-    "enterEmail": "Įveskite el.paštą",
-    "enterPass": "Įveskite slaptažodį",
-    "confirmPass": "Patvirtinkite slaptažodį",
-    "createAcc": "Sukurti naują paskyrą",
-    "getStarted": "Pradėti",
-    "alreadyAcc": "Jau turite paskyrą?",
-    "registerSucc": "Sėkmingai užsiregistravote!",
-    "loginSucc": "Sėkmingai prisijungėte!",
-    "logoutSucc": "Atsijungėte. Iki kito karto!",
-    "passSent": "Naujas slaptažodis išsiųstas nurodytu el.paštu",
-    "default": "Pagrindinis",
-    "continue": "Tęsti",
-    "rating": "Įvertinimas",
-    "noItems": "Nieko nėra",
-    "send": "Siųsti",
-    "addNewAddress": "Pridėti naują adresą"
-  },
   "category": {
     "title": "Kategorija",
     "empty": "Produktų nėra"
   },
-  "categoryPicker": {
-    "placeholder": "Pasirinkti kategoriją"
-  },
   "company": {
-    "delivery": "Pristatymas"
+    "delivery": "Pristatymas",
+    "postCode": "Pašto kodas",
+    "address": "Adresas",
+    "street": "Gatvė",
+    "contactInfo": "Kontaktinė informacija",
+    "city": "Miestas",
+    "phone": "Telefonas",
+    "email": "El.paštas",
+    "website": "Svetainė"
   },
   "profile": {
     "title": "Profilis",
@@ -126,7 +108,34 @@
     "added": "Pridėta",
     "owner": "Skelbimo autorius",
     "sendMessage": "Siųsti žinutę skelbimo autoriui",
-    "messageSuccess": "Žinutė išsiųsta"
+    "messageSuccess": "Žinutė išsiųsta",
+    "adSuccessfull": "Skelbimas sėkmingai išsaugotas"
+  },
+  "common": {
+    "passReset": "Slaptažodžio atstatymas",
+    "email": "El.paštas",
+    "reset": "Atstatyti",
+    "goBack": "Grįžti",
+    "register": "Registruotis",
+    "enterEmail": "Įveskite el.paštą",
+    "enterPass": "Įveskite slaptažodį",
+    "confirmPass": "Patvirtinkite slaptažodį",
+    "createAcc": "Sukurti naują paskyrą",
+    "getStarted": "Pradėti",
+    "alreadyAcc": "Jau turite paskyrą?",
+    "registerSucc": "Sėkmingai užsiregistravote!",
+    "loginSucc": "Sėkmingai prisijungėte!",
+    "logoutSucc": "Atsijungėte. Iki kito karto!",
+    "passSent": "Naujas slaptažodis išsiųstas nurodytu el.paštu",
+    "default": "Pagrindinis",
+    "continue": "Tęsti",
+    "rating": "Įvertinimas",
+    "noItems": "Nieko nėra",
+    "send": "Siųsti",
+    "addNewAddress": "Pridėti naują adresą"
+  },
+  "categoryPicker": {
+    "placeholder": "Pasirinkti kategoriją"
   },
   "errors": {
     "auth/account-exists-with-different-credential": "Tokia paskyra jau egzistuoja",
@@ -144,11 +153,14 @@
     "auth/network-request-failed": "Prisijungimo klaida",
     "auth/too-many-requests": "Per daug bandymų",
     "auth/unknown": "Nežinoma klaida",
-    "auth/fill-all-fields": "Užpildyke laukelius",
+    "auth/fill-all-fields": "Užpildykite laukelius",
+    "profile/userUpdate": "Nepavyko atnaujinti profilio",
     "thereWasError": "Klaida",
     "watcher/fetchingAds": "Klaida",
     "watcher/companies": "Klaida",
-    "address/adddressRemoveError": "Klaida"
+    "address/adddressRemoveError": "Klaida",
+    "cart/cartUpdating": "There was an error updating your cart",
+    "cart/removeFromCart": "There was an error removing your item from cart"
   },
   "yup": {
     "email-required": "Įveskite el.paštą",
@@ -158,6 +170,26 @@
     "pass-match": "Slaptažodžiai nesutampa",
     "pass-size-min": "Slaptažodis netrumpesnis nei {{min}} simboliai",
     "pass-size-max": "Slaptažodis neilgesnis nei {{max}} simbolių",
-    "ads-categoryErr": "Pasirinkite kategoriją"
+    "ads-categoryErr": "Pasirinkite kategoriją",
+    "addressStreet": "Įveskite gatvės pavadinimą",
+    "addressCity": "Įveskite miestą",
+    "addressPostCode": "Įveskite pašto kodą",
+    "addressCountry": "Įveskite šalį",
+    "addressName": "Įveskite adreso pavadinimą",
+    "addressPhone": "Įveskite telefono numerį",
+    "minCharacters": "Įveskite bent {{min}} simbolius",
+    "maxCharacters": "Ne daugiau kaip {{max}} simbolių",
+    "adTitle": "Įveskite skelbimo pavadinimą",
+    "adSizeMin": "Title must be at least {{min}} characters long",
+    "adSizeMax": "Title must be at most {{max}} characters long",
+    "adPrice": "Įveskite skelbimo kainą",
+    "adDigits": "Įveskite tik skaitmenis",
+    "adPositive": "Įveskite tik teigiamus skaičius",
+    "adDescription": "Įveskite skelbimo aprašymą",
+    "pay-cardMin": "Kortelės numeris ne mažiau {{min}} skaitmenų",
+    "pay-cardMax": "Kortelės numeris ne daugiau {{max}} skaitmenų",
+    "pay-cardNumber": "Įveskite kortelės numerį",
+    "pay-expDate": "Įveskite kortelės galiojimo datą",
+    "pay-cvc": "Įveskite CVC kodą"
   }
 }

@@ -3,27 +3,42 @@ import i18n from 'i18next';
 
 const t = i18n.t.bind(i18n);
 
-const pass = {
+const PASS_LENGTH = {
   min: 6,
   max: 50,
 };
+const MAX_CHARACTERS = 40;
+const ADDRESS_LENGTHS = {
+  min2: 2,
+  min5: 5,
+  min6: 6,
+};
+const ADS = {
+  minTitle: 3,
+};
+const PAYMENTS_LENGTH = {
+  Card: 16,
+  Date: 5,
+  Cvc: 3,
+};
+
 const loginValidatorSchema = Yup.object().shape({
   email: Yup.string()
     .required(t('yup:email-required'))
     .email(t('yup:email-invalid-format'))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
   password: Yup.string()
     .required(t('yup:pass-required'))
-    .min(pass.min, t('yup:pass-size-min', { min: pass.min }))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .min(PASS_LENGTH.min, t('yup:pass-size-min', { min: PASS_LENGTH.min }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
 });
 const passwordResetValidatorSchema = Yup.object().shape({
   email: Yup.string()
     .required(t('yup:email-required'))
     .email(t('yup:email-invalid-format'))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
 });
 
@@ -31,18 +46,18 @@ const signupValidatorSchema = Yup.object().shape({
   email: Yup.string()
     .required(t('yup:email-required'))
     .email(t('yup:email-invalid-format'))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
   password: Yup.string()
     .required(t('yup:pass-required'))
-    .min(pass.min, t('yup:pass-size-min', { min: pass.min }))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .min(PASS_LENGTH.min, t('yup:pass-size-min', { min: PASS_LENGTH.min }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
   confirmPassword: Yup.string()
     .required(t('yup:pass-confirm'))
     .oneOf([Yup.ref('password')], t('yup:pass-match'))
-    .min(pass.min, t('yup:pass-size-min', { min: pass.min }))
-    .max(pass.max, t('yup:pass-size-max', { max: pass.max }))
+    .min(PASS_LENGTH.min, t('yup:pass-size-min', { min: PASS_LENGTH.min }))
+    .max(PASS_LENGTH.max, t('yup:pass-size-max', { max: PASS_LENGTH.max }))
     .trim(),
 });
 
@@ -51,71 +66,107 @@ const adValidatorSchema = Yup.object().shape({
   // description: Yup.string()
   //   .required('Description required')
   //   .min(5, 'Minimum characters ${min}')
-  //   .max(300, 'Maximum characters ${max}')
+  //   .max(300, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
   //   .trim(),
   title: Yup.string()
-    .required('Please enter the title')
-    .min(5, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:adEnterTitle'))
+    .min(ADS.minTitle, t('yup:adSizeMin', { min: ADS.minTitle }))
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   price: Yup.number()
-    .required('Price needed')
-    .typeError('Digits only')
-    .positive('Positive no. only')
+    .required(t('yup:adPrice'))
+    .typeError(t('yup:adDigits'))
+    .positive(t('yup:adPositive'))
     .test(
       'maxDigits',
-      'No more than 6 digits',
+      t('pay-cardMax', { max: 6 }),
       number => String(number).length <= 6,
     ),
 });
 const addressValidatorSchema = Yup.object().shape({
   street: Yup.string()
-    .required('Street required')
-    .min(5, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressStreet'))
+    .min(
+      ADDRESS_LENGTHS.min5,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min5 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   city: Yup.string()
-    .required('City required')
-    .min(2, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressCity'))
+    .min(
+      ADDRESS_LENGTHS.min2,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min2 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   name: Yup.string()
-    .required('Name required')
-    .min(2, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressName'))
+    .min(
+      ADDRESS_LENGTHS.min2,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min2 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   phone: Yup.string()
-    .required('Phone required')
-    .min(6, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressPhone'))
+    .min(
+      ADDRESS_LENGTHS.min6,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min6 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   country: Yup.string()
-    .required('Country required')
-    .min(2, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressCountry'))
+    .min(
+      ADDRESS_LENGTHS.min2,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min2 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
   postCode: Yup.string()
-    .required('Post code required')
-    .min(2, 'At least ${min} characters')
-    .max(40, 'Maximum characters ${max}')
+    .required(t('yup:addressPostCode'))
+    .min(
+      ADDRESS_LENGTHS.min2,
+      t('yup:minCharacters', { min: ADDRESS_LENGTHS.min2 }),
+    )
+    .max(MAX_CHARACTERS, t('yup:maxCharacters', { max: MAX_CHARACTERS }))
     .trim(),
 });
 
 const paymentValidatorSchema = Yup.object().shape({
   cardNumber: Yup.string()
-    .required('Card number required')
-    .min(16, 'Minimum 16 digits')
-    .max(16, 'Maximum 16 digits')
+    .required(t('yup:pay-cardNumber'))
+    .min(
+      PAYMENTS_LENGTH.Card,
+      t('yup:pay-cardMin', { min: PAYMENTS_LENGTH.Card }),
+    )
+    .max(
+      PAYMENTS_LENGTH.Card,
+      t('yup:pay-cardMax', { max: PAYMENTS_LENGTH.Card }),
+    )
     .trim(),
   expiryDate: Yup.string()
-    .required('Expiry date required')
-    .min(5, 'Minimum 5 digits')
-    .max(5, 'Maximum 5 digits')
+    .required(t('yup:pay-expDate'))
+    .min(
+      PAYMENTS_LENGTH.Date,
+      t('yup:pay-cardMin', { min: PAYMENTS_LENGTH.Date }),
+    )
+    .max(
+      PAYMENTS_LENGTH.Date,
+      t('yup:pay-cardMax', { max: PAYMENTS_LENGTH.Date }),
+    )
     .trim(),
   cvc: Yup.string()
-    .required('CVC required')
-    .min(3, 'Minimum 3 digits')
-    .max(3, 'Maximum 3 digits')
+    .required(t('yup:pay-cvc'))
+    .min(
+      PAYMENTS_LENGTH.Cvc,
+      t('yup:pay-cardMin', { min: PAYMENTS_LENGTH.Cvc }),
+    )
+    .max(
+      PAYMENTS_LENGTH.Cvc,
+      t('yup:pay-cardMax', { max: PAYMENTS_LENGTH.Cvc }),
+    )
     .trim(),
 });
 
