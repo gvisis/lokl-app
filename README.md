@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/gvisis/library-crud-laravel/">
+  <a href="https://github.com/gvisis/lokl-app/">
     <img src="https://i.imgur.com/YpxygKc.png" alt="Logo" width="132" height="180">
   </a>
 
